@@ -1,0 +1,453 @@
+---
+title: "Data Processing"
+format: 
+    html:
+        echo: false
+        cache: true
+---
+
+Data were downloaded at 17:30 AM GMT+7, from scopus with query:
+
+AFFILCOUNTRY ( japan AND viet* )
+Initial results yelded 14,240 document 
+
+Only journal papers are selected, as it is a primary research outputs accross discipline, and the completeneess of journal papers data help ease the analysis later.
+
+First screening results in 9,982 documents.
+Data file is stored in `all_1020.csv`.
+
+Additional data will be incorporated in this document.
+
+```{r}
+#| label: load_reg_data
+
+library(tidyverse)
+
+# Loading dataset
+data_reg <- read.csv("data/all_1020.csv") |> 
+  select(Year, Source.title, Cited.by, Affiliations, DOI, Open.Access) |> 
+  rename(
+    year = Year,
+    title = Source.title,
+    cited = Cited.by,
+    affiliations = Affiliations,
+    OA = Open.Access
+  ) |> 
+  mutate(OA = if_else(OA == "", 0, 1)) |>
+  mutate(id = row_number()) |> 
+  relocate(id, .before = 1)
+```
+
+Sources data are September version from Scopus.
+
+```{r}
+#| label: load_sources_data
+
+data_source <- read.csv("data/sources.csv") |> 
+  arrange(title) |> 
+  distinct(title, .keep_all = TRUE)
+
+data_reg <- data_reg |> 
+    left_join(data_source, by = "title")
+
+```
+
+
+This part deal with types of cooporation (bilateral vs multilateral).
+
+```{r}
+affiliations_long <- data_reg |> 
+  select(!mult:heal) |> 
+  separate_rows(affiliations, sep = ";") |> 
+  mutate(affiliations = str_trim(affiliations)) |> 
+  mutate(country = str_extract(affiliations, "[^,]+$") |> 
+  str_trim())
+
+affiliations_count <- affiliations_long |> 
+  distinct(id, affiliations, .keep_all = TRUE) |> 
+  count(affiliations, sort = TRUE)
+
+country_counts <- affiliations_long |> 
+  distinct(id, country) |> 
+  count(country, sort = TRUE)
+
+coop_type <- affiliations_long |> 
+  distinct(id, country) |>
+  group_by(id) |> 
+  summarise(
+    countries = list(country),
+    n_countries = n(),
+    .groups = "drop"
+  ) |> 
+  mutate(
+    coop = case_when(
+      n_countries == 2 ~ 1,
+      n_countries > 2 ~ 2,
+      TRUE ~ NA_real_
+    )
+  ) |> 
+  select(id, coop)
+
+data_reg <- data_reg |> 
+  left_join(coop_type, by = "id")
+```
+
+
+For funder, as Scopus stop exporting funder data in recent time, the authors have mannually categorize sponsors in broader categories, based on types of funders and funders origins, then select in the search filter. After downloading, data are merged back to main dataset.
+
+```{r}
+#| label: load_funder_data
+
+asian_pub <- read.csv("data/data_by_funders/asian_pub.csv") |> 
+  select(DOI) |> 
+  mutate(
+    asian = 1,
+    pub = 1
+  )
+
+asian_uni <- read.csv("data/data_by_funders/asian_uni.csv") |> 
+  select(DOI) |> 
+  mutate(
+    asian = 1,
+    uni = 1
+  )
+
+eu_ind <- read.csv("data/data_by_funders/eu_ind.csv") |> 
+  select(DOI) |> 
+  mutate(
+    eu = 1,
+    ind = 1
+  )
+
+eu_pub <- read.csv("data/data_by_funders/eu_pub.csv") |> 
+  select(DOI) |> 
+  mutate(
+    eu = 1,
+    pub = 1
+  )
+
+eu_uni <- read.csv("data/data_by_funders/eu_uni.csv") |>
+  select(DOI) |> 
+  mutate(
+    eu = 1,
+    uni = 1
+  )
+
+int_ind <- read.csv("data/data_by_funders/int_ind.csv") |> 
+  select(DOI) |> 
+  mutate(
+    int = 1,
+    ind = 1
+  )
+
+int_pub <- read.csv("data/data_by_funders/int_pub.csv") |>
+  select(DOI) |> 
+  mutate(
+    int = 1,
+    pub = 1
+  )
+
+jap_ind <- read.csv("data/data_by_funders/jap_ind.csv") |> 
+  select(DOI) |> 
+  mutate(
+    jap = 1,
+    ind = 1
+  )
+
+jap_pub <- read.csv("data/data_by_funders/jap_pub.csv") |> 
+  select(DOI) |> 
+  mutate(
+    jap = 1, 
+    pub = 1
+  )
+
+jap_pub_2 <- read.csv("data/data_by_funders/jap_pub_2.csv") |> 
+  select(DOI) |> 
+  mutate(
+    jap = 1, 
+    pub = 1
+  )
+
+jap_uni <- read.csv("data/data_by_funders/jap_uni.csv") |> 
+  select(DOI) |> 
+  mutate(
+    jap = 1, 
+    uni = 1
+  )
+
+us_ind <- read.csv("data/data_by_funders/us_ind.csv") |> 
+  select(DOI) |> 
+  mutate(
+    us = 1,
+    ind = 1
+  )
+
+us_pub <- read.csv("data/data_by_funders/us_pub.csv") |> 
+  select(DOI) |> 
+  mutate(
+    us = 1,
+    pub = 1
+  ) 
+
+vn_pub <- read.csv("data/data_by_funders/vn_pub.csv") |> 
+  select(DOI) |> 
+  mutate(
+    vn = 1,
+    pub = 1
+  )
+
+vn_uni <- read.csv("data/data_by_funders/vn_uni.csv") |> 
+  select(DOI) |> 
+  mutate(
+    vn = 1,
+    uni = 1
+  )
+
+dfs <- list(
+  asian_pub, asian_uni,
+  eu_ind, eu_pub, eu_uni,
+  int_ind, int_pub,
+  jap_ind, jap_pub, jap_pub_2, jap_uni,
+  us_ind, us_pub,
+  vn_pub, vn_uni
+)
+
+merged <- bind_rows(dfs) %>%
+  group_by(DOI) %>%
+  summarise(
+    across(
+      .cols = everything(),
+      .fns  = ~ as.integer(any(. == 1, na.rm = TRUE))
+    ),
+    .groups = "drop"
+  )
+
+data_reg <- data_reg |> 
+  left_join(merged, by = "DOI")
+
+data_reg <- data_reg |> 
+  mutate(across(asian:vn, ~ replace_na(., 0))) |> 
+  mutate(fund = as.integer(if_any(asian:vn, ~ . != 0)))
+
+data_reg <- data_reg |> 
+  mutate(
+    n_funder = asian + eu + int + jap + us + vn,
+    n_ftype = ind + pub + ind
+  )
+```
+
+
+Next time is SJR data for quartiles. Its incorporation leads to missingness is 6% of data, this could due to the unparallel between 2 datasets.
+
+```{r}
+sjr <- read_delim("data/sjr.csv", delim = ";") |> 
+  filter(Type == "journal") |> 
+  select(Title, SJR, 'SJR Best Quartile') |> 
+  rename(
+    title = Title,
+    sjr_score = SJR,
+    quartile = 'SJR Best Quartile'
+  ) |> 
+  mutate(sjr_score = parse_number(sjr_score, locale = locale(grouping_mark = ","))) |> 
+  mutate(
+    sjr_score = sjr_score/1000,
+    quartile = as.factor(quartile)
+  ) |> 
+  arrange(title) |> 
+  distinct(title, .keep_all = TRUE)
+
+data_reg <- data_reg |> 
+  left_join(sjr, by = "title")
+```
+
+Category data will be factorized here:
+
+```{r}
+data_reg <- data_reg |> 
+  mutate(
+    OA = factor(OA, labels = c("Not OA", "OA")),
+    coop = factor(coop, labels = c("bilateral", "multilateral")), 
+    fund = factor(fund, labels = c("Not funded", "Funded")),
+    n_funder = as.factor(n_funder),
+    n_ftype = as.factor(n_ftype)
+  )
+
+write.csv(data_reg, "data/processed_data.csv")
+```
+
+After processing, data is stored in `processed_data.csv`.
+
+## Number of outputs per year by type of cooperation.
+
+1990 is selected as a cutoff year as before this year, the number of outputs is minimal.
+Number of outputs by bilateral cooporation always higher than multilateral cooporation, until 2019.
+
+```{r}
+data_reg |> 
+  mutate(coop = factor(coop, labels = c("bilateral", "multilateral"))) |>
+  na.omit() |> 
+  filter(year > 1990) |> 
+  ggplot(aes(x = year, fill = coop)) +
+  geom_bar(position = "dodge") +
+  theme_bw()
+```
+
+## Number of outputs per year by OA
+
+Number of OA paper increased sharply after 2010, surpassed non-OA paper after 2017.
+
+```{r}
+data_reg |>
+  select(year, OA) |> 
+  na.omit() |>
+  filter(year > 1990) |>
+  group_by(year, OA) |>
+  summarise(Count = n(), .groups = "drop") |>
+  ggplot(aes(x = year, y = Count, color = OA)) +
+  geom_line(linewidth = 1) +
+  theme_bw()
+
+data_reg |>
+  select(year, OA, coop) |> 
+  na.omit() |>
+  filter(year > 1990) |>
+  group_by(year, OA, coop) |>
+  summarise(Count = n(), .groups = "drop") |>
+  ggplot(aes(x = year, y = Count, color = OA)) +
+  geom_line(linewidth = 1) +
+  theme_bw() +
+  facet_wrap(~coop)
+```
+
+## Number of outputs per year by domains
+
+Physical sciences domain lead the outputs, has been the one start first and still top leading.
+Social Sciences fields are much more humble.
+
+```{r}
+data_reg |>
+  filter(year > 1990) |>
+  select(year, LS, SS, PS, HS) |>
+  pivot_longer(cols = LS:HS, names_to = "Category", values_to = "Value") |>
+  filter(Value == 1) |>
+  group_by(year, Category) |>
+  summarise(Count = n(), .groups = "drop") |>
+  ggplot(aes(x = year, y = Count, color = Category)) +
+  geom_line(linewidth = 1) +
+  theme_bw()
+
+data_reg |>
+  filter(year > 1990) |>
+  select(year, OA, LS, SS, PS, HS) |>
+  na.omit() |> 
+  pivot_longer(cols = LS:HS, names_to = "Category", values_to = "Value") |>
+  filter(Value == 1) |>
+  group_by(year, Category, OA) |>
+  summarise(Count = n(), .groups = "drop") |>
+  ggplot(aes(x = year, y = Count, color = Category)) +
+  geom_line(linewidth = 1) +
+  theme_bw() +
+  facet_wrap(~OA)
+
+data_reg |>
+  filter(year > 1990) |>
+  select(year, coop, LS, SS, PS, HS) |>
+  na.omit() |> 
+  pivot_longer(cols = LS:HS, names_to = "Category", values_to = "Value") |>
+  filter(Value == 1) |>
+  group_by(year, Category, coop) |>
+  summarise(Count = n(), .groups = "drop") |>
+  ggplot(aes(x = year, y = Count, color = Category)) +
+  geom_line(linewidth = 1) +
+  theme_bw() +
+  facet_wrap(~coop)
+```
+
+## Number of outputs per year by funder
+
+### Sponsor Origins
+
+Japan and Vietnam are top funders.
+
+```{r}
+data_reg |>
+  filter(year > 1990) |>
+  select(year, asian, eu, int, us, jap, vn) |>
+  pivot_longer(cols = asian:vn, names_to = "Funder", values_to = "Value") |>
+  filter(Value == 1) |>
+  group_by(year, Funder) |>
+  summarise(Count = n(), .groups = "drop") |>
+  ggplot(aes(x = year, y = Count, color = Funder)) +
+  geom_line(linewidth = 1) +
+  theme_bw()
+```
+
+### Sponsor types
+
+
+```{r}
+data_reg |>
+  filter(year > 1990) |>
+  select(year, ind, pub, uni) |>
+  pivot_longer(cols = ind:uni, names_to = "Funder", values_to = "Value") |>
+  filter(Value == 1) |>
+  group_by(year, Funder) |>
+  summarise(Count = n(), .groups = "drop") |>
+  ggplot(aes(x = year, y = Count, color = Funder)) +
+  geom_line(linewidth = 1) +
+  theme_bw()
+
+data_reg |>
+  filter(year > 1990) |>
+  select(year, OA, coop, ind, pub, uni) |>
+  na.omit() |>
+  pivot_longer(cols = ind:uni, names_to = "Funder", values_to = "Value") |>
+  filter(Value == 1) |>
+  group_by(year, Funder, OA, coop) |>
+  summarise(Count = n(), .groups = "drop") |>
+  ggplot(aes(x = year, y = Count, color = Funder)) +
+  geom_line(linewidth = 1) +
+  theme_bw() +
+  facet_grid(OA ~ coop)
+```
+
+## Number of outputs per year by quartile
+
+```{r}
+data_reg |>
+  filter(year > 1990) |>
+  na.omit() |>
+  group_by(year, quartile) |>
+  summarise(Count = n(), .groups = "drop") |>
+  ggplot(aes(x = year, y = Count, fill = quartile)) +
+  geom_col(position = "stack") +
+  theme_bw()
+```
+
+## Number of citations
+
+
+```{r}
+ggplot(data_reg, aes(x = log1p(cited))) +
+  geom_histogram(bins = 21, color = "white") +
+  theme_bw()
+```
+
+## Comparing citations:
+
+```{r}
+# By OA
+data_reg$OA <- factor(data_reg$OA, labels = c("Not OA", "OA"))
+wilcox.test(cited ~ OA, data = data_reg)
+
+# By coop
+data_reg$coop <- factor(data_reg$coop, labels = c("bilateral", "multilateral"))
+wilcox.test(cited ~ coop, data = data_reg)
+
+# By funder
+data_reg$fund <- factor(data_reg$fund, labels = c("Not funded", "Funded"))
+wilcox.test(cited ~ fund, data = data_reg)
+
+# By quartile
+kruskal.test(cited ~ quartile, data = data_reg)
+```

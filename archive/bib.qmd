@@ -1,0 +1,55 @@
+---
+title: "ICIS2026"
+format:
+    html:
+        echo: false
+        cache: true
+---
+
+
+```{r}
+#| label: setting_up
+
+library(tidyverse)
+library(bibliometrix)
+
+M <- convert2df(file = "data/vie_jap_all.csv", dbsource = "scopus", format = "csv")
+results <- biblioAnalysis(M, sep = ";")
+```
+
+# Bibliometric Analysis
+
+```{r}
+options(width=100)
+S <- summary(object = results, k = 10, pause = FALSE)
+plot(x = results, k = 10, pause = FALSE)
+```
+
+# Analysis of Cited References
+
+```{r}
+CR <- citations(M, field = "article", sep = ";")
+cbind(CR$Cited[1:10])
+```
+
+
+```{r}
+# Create a country collaboration network
+
+M <- metaTagExtraction(M, Field = "AU_CO", sep = ";")
+NetMatrix <- biblioNetwork(M, analysis = "collaboration", network = "countries", sep = ";")
+
+# Plot the network
+net=networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Country Collaboration", type = "circle", size=TRUE, remove.multiple=FALSE,labelsize=0.7,cluster="none")
+```
+
+
+```{r}
+NetMatrix <- biblioNetwork(M, analysis = "co-occurrences", network = "keywords", sep = ";")
+
+# Plot the network
+net=networkPlot(NetMatrix, normalize="association", weighted=T, n = 30, Title = "Keyword Co-occurrences", type = "fruchterman", size=T,edgesize = 5,labelsize=0.7)
+
+CS <- conceptualStructure(M,field="ID", method="CA", minDegree=4, clust=5, stemming=FALSE, labelsize=10, documents=10)
+
+```

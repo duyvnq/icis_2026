@@ -1,0 +1,300 @@
+﻿id	country	documents	citations	total link strength
+1	(fipi	1	8	2
+2	(nitep)	1	12	12
+3	aalphi	1	48	73
+4	afghanistan	36	37813	1905
+5	ahivcos	1	48	73
+6	albania	28	2360	1708
+7	algeria	157	103238	8294
+8	amacs	1	48	73
+9	american samoa	1	38	95
+10	amp	2	14	114
+11	américas	1	4	66
+12	andorra	4	1510	158
+13	angola	13	9072	854
+14	anguilla	39	85628	3039
+15	anrs co13 hepavih	1	48	73
+16	anrs co2 seroco	1	48	73
+17	anrs co3 aquitaine	1	48	73
+18	anrs co4 fhdh	1	48	73
+19	anrs co6 primo	1	48	73
+20	anrs co8 copilote	1	48	73
+21	antigua and barbuda	4	76	157
+22	argentina	291	153615	13369
+23	armenia	53	26060	2620
+24	army medical university	1	16	17
+25	aruba	1	2	9
+26	asian development bank	1	101	9
+27	athena	1	48	73
+28	australia	1082	237210	24729
+29	austria	253	118681	11287
+30	azerbaijan	51	20190	2744
+31	bahamas	2	29	52
+32	bahrain	115	129521	7994
+33	bangladesh	372	165396	14623
+34	barbados	20	9033	1454
+35	belarus	15	960	511
+36	belgium	391	159805	13963
+37	belize	9	15995	525
+38	benin	75	115737	5002
+39	bermuda	1	27	87
+40	bhutan	23	19263	1019
+41	bolivia	42	12382	2409
+42	bosnia and herzegovina	51	14425	3172
+43	botswana	61	54980	4419
+44	brazil	519	212780	21097
+45	brunei darussalam	87	43923	4042
+46	bulgaria	124	92686	6736
+47	burkina faso	20	2038	1092
+48	burundi	16	16543	910
+49	cambodia	168	17745	3973
+50	cameroon	122	134797	8137
+51	canada	701	228042	22306
+52	cape verde	3	362	249
+53	caribbean	1	0	4
+54	cascade	1	48	73
+55	center	5	3311	214
+56	central african republic	6	7103	374
+57	chad	3	516	229
+58	chile	295	139731	13287
+59	china	1495	252584	26338
+60	chips	1	48	73
+61	city	2	38	13
+62	collection	1	12	3
+63	colombia	305	180369	15574
+64	committee	1	3	9
+65	comoros	3	137	187
+66	congo	9	1132	427
+67	coris	1	48	73
+68	corispe-cat	1	48	73
+69	costa rica	79	86612	4882
+70	cote d'ivoire	47	49499	3066
+71	croatia	250	101903	12253
+72	cuba	24	13085	1310
+73	cyprus	75	54998	4838
+74	czech republic	294	84797	11044
+75	danish hiv cohort	1	48	73
+76	democratic republic congo	68	77055	4250
+77	denmark	255	169683	12407
+78	department	1	433	24
+79	deve-mairie de paris	1	155	7
+80	diseases	1	3	4
+81	disorders	1	67	62
+82	djibouti	1	95	62
+83	dominica	1	3	47
+84	dominican republic	16	2142	1004
+85	dutch lady vietnam	1	62	3
+86	ecs	1	48	73
+87	ecuador	113	59424	6611
+88	egypt	447	190368	15808
+89	el salvador	8	5141	386
+90	electro-communications	1	2	2
+91	ent department	1	2640	70
+92	epf	1	48	73
+93	equatorial guinea	2	4233	139
+94	estonia	179	143178	10145
+95	ethiopia	202	169032	11669
+96	eurosida	1	48	73
+97	faculdade de farmácia	1	141	49
+98	falkland islands (malvinas)	1	3	47
+99	fauna & amp	1	1	6
+100	fhdh	1	48	73
+101	fiji	26	24444	1047
+102	finland	287	178834	14689
+103	france	810	197613	20329
+104	french guiana	15	1770	770
+105	french polynesia	1	3	47
+106	gabon	18	1667	883
+107	gambia	56	39612	3637
+108	gemes-haemo	1	48	73
+109	georgia	60	56705	3591
+110	georgian national hiv/aids	1	48	73
+111	german clinsurv	1	48	73
+112	germany	887	237736	24040
+113	ghana	204	148143	12079
+114	gibraltar	3	49	205
+115	greece	273	146317	13887
+116	greenland	7	9869	550
+117	group	3	3	10
+118	guadeloupe	2	46	120
+119	guam	4	48	184
+120	guatemala	31	12562	1955
+121	guinea	3	279	155
+122	guinea-bissau	2	148	106
+123	guyana	30	3738	2023
+124	haiti	6	1529	367
+125	hanoi	1	5	3
+126	health	1	420	86
+127	health management	1	433	24
+128	honduras	13	573	510
+129	hong kong	511	167460	16885
+130	hospital	1	59	51
+131	http://www.onlineresearchclub.org/	1	1	6
+132	hue healthcare center	1	0	1
+133	hungary	263	60512	8893
+134	iassy	1	59	51
+135	icc	1	48	73
+136	iceland	78	113479	5585
+137	icona	1	48	73
+138	india	885	221505	22247
+139	indonesia	738	167359	18458
+140	infection	1	3	4
+141	institute	1	141	49
+142	iran	398	200178	16602
+143	iraq	176	138319	10176
+144	ireland	237	121607	10431
+145	isglobal	1	23	12
+146	israel	191	129734	9767
+147	italian master cohort	1	48	73
+148	italy	725	219021	22862
+149	jamaica	33	24166	2232
+150	japan	12915	474766	48476
+151	jordan	201	167293	11717
+152	kazakhstan	140	72891	7904
+153	kenya	179	139304	10033
+154	kompnet	1	48	73
+155	kosovo	3	133	130
+156	kuwait	117	84114	6698
+157	kyrgyzstan	108	97277	7134
+158	laboratory	3	48	27
+159	laos	82	4203	1426
+160	latvia	52	11859	2955
+161	lebanon	143	129579	8740
+162	lesotho	7	262	346
+163	level 5	1	54	3
+164	liberia	26	30160	1634
+165	libya	76	47553	4580
+166	lithuania	64	17077	3233
+167	luxembourg	70	84730	4064
+168	macao	27	22845	1495
+169	madagascar	18	4452	570
+170	malawi	29	1903	1155
+171	malaysia	795	197460	20190
+172	maldives	1	20	7
+173	mali	8	2598	423
+174	malta	31	15258	2164
+175	martinique	4	329	258
+176	mauritania	6	512	366
+177	mauritius	27	3910	1626
+178	mayotte	3	485	164
+179	medicine	1	91	3
+180	mexico	366	190054	17659
+181	micronesia	47	87629	3577
+182	moldova	31	4239	1278
+183	monaco	1	27	87
+184	mongolia	81	11187	2291
+185	montenegro	6	141	368
+186	morocco	106	79159	6456
+187	mozambique	62	86901	4288
+188	myanmar	120	49285	2646
+189	namibia	45	28614	3174
+190	nebius ai	1	2	11
+191	nenexp	1	48	73
+192	nepal	228	107936	10574
+193	netherlands	540	206609	19592
+194	network)	1	40	43
+195	nevis	1	31	11
+196	new caledonia	37	44721	2273
+197	new zealand	352	179858	13946
+198	nhfp einstein fellow	1	3	16
+199	nicaragua	10	3241	335
+200	niger	7	3480	349
+201	nigeria	279	180973	15236
+202	nork marash mc	1	7	50
+203	north macedonia	39	6586	1989
+204	northern mariana islands	1	10	2
+205	norway	411	193177	16721
+206	nshpc	1	48	73
+207	office	3	3	10
+208	oman	134	86635	8107
+209	pakistan	362	184570	15925
+210	palau	1	15	16
+211	palestine	87	116155	6303
+212	panama	114	122834	7804
+213	papua new guinea	35	30618	1500
+214	paraguay	26	11317	1644
+215	part)	14	4028	797
+216	peru	196	92623	10479
+217	philippines	576	169211	15895
+218	piscis	1	48	73
+219	poland	441	177317	17782
+220	portugal	366	190428	17477
+221	principe	3	433	190
+222	puerto rico	34	15393	1977
+223	qatar	169	132322	10524
+224	reproduction	1	42	43
+225	research	1	123	50
+226	reunion	5	91	292
+227	romania	331	150164	15770
+228	russian federation	517	193172	17774
+229	rwanda	64	94640	4626
+230	saint helena	2	3	63
+231	saint lucia	3	4469	248
+232	samoa	6	986	186
+233	saudi arabia	383	175544	15851
+234	school of medicine	1	123	50
+235	science	1	47	2
+236	sciences	2	699	107
+237	senegal	24	2344	1224
+238	serbia	252	169480	14310
+239	service strategy sector	1	1	2
+240	seychelles	19	10526	1397
+241	shcs	1	48	73
+242	sierra leone	8	1325	532
+243	singapore	601	172991	17373
+244	slovakia	135	112020	7842
+245	slovenia	131	45345	4869
+246	société internationale d'urologie	1	42	43
+247	solomon islands	11	1806	436
+248	somalia	19	4550	1447
+249	south africa	345	186605	16986
+250	south korea	1210	220062	24100
+251	south sudan	1	95	62
+252	spain	756	223733	23326
+253	sri lanka	249	139759	10972
+254	student research committee	1	67	62
+255	study	1	40	43
+256	sudan	87	21495	4141
+257	surgeon	1	2640	70
+258	suriname	22	1559	1239
+259	swaziland	2	122	149
+260	sweden	409	204075	16687
+261	swedish infcare	1	48	73
+262	switzerland	454	180862	16640
+263	syrian arab republic	32	22517	1414
+264	taiwan	830	187630	18872
+265	tajikistan	2	259	93
+266	tanzania	90	99503	5759
+267	technical staff	1	3	9
+268	technology	2	0	5
+269	thailand	985	96121	14214
+270	timor-leste	4	16	82
+271	togo	17	34744	1049
+272	tonga	2	4708	176
+273	toxoplasmosis research center	1	141	49
+274	trinidad and tobago	37	21506	2571
+275	tunisia	99	93186	5857
+276	turkey	300	139797	14223
+277	uganda	110	88784	6637
+278	uk chic	1	48	73
+279	ukraine	166	110302	9287
+280	unit	1	67	62
+281	united arab emirates	288	158711	14690
+282	united kingdom	1131	254893	26130
+283	united states	1629	275699	28213
+284	university of dź	1	73	18
+285	uruguay	80	44736	4229
+286	uzbekistan	32	22674	1810
+287	vach	1	48	73
+288	vanuatu	2	90	31
+289	venezuela	41	14671	2416
+290	viet nam	12924	473973	48145
+291	vietnam atomic commission	1	0	1
+292	vietnam-netherlands economics program	1	4	6
+293	vinmec healthcare system	1	23	12
+294	virgin islands (u.s.)	1	40	68
+295	work	1	0	2
+296	yemen	77	76947	5619
+297	yugoslavia	3	273	162
+298	zambia	72	84584	4538
+299	zimbabwe	22	5192	1128

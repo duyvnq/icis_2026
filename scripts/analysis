@@ -1,0 +1,14 @@
+---
+title: "Analysis"
+format: html
+---
+
+# Load data and packages
+
+```{r}
+library(tidyverse)
+library(bibliometrix)
+
+data_reg <- read.csv("data/processed_data.csv")
+data_bib <- read.csv("data/all_1020.csv")
+```
