@@ -1,0 +1,161 @@
+﻿OA,n,Year,n,Author,n,Subject,n,Type,n,Source,n,Affliation,n,Funding,,Country,
+All Open Access,5838,2026,5,"Hay, S.I.",161,Engineering,2895,Article,10650,Scientific Reports,144,"Vietnam National University, Hanoi",1365,Japan Society for the Promotion of Science,3265,Japan,13030
+Gold,3222,2025,702,"Yonemoto, N.",151,Medicine,2335,Conference Paper,2038,Lecture Notes in Computer Science Including Subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics,139,Vietnam Academy of Science and Technology,1361,"Ministry of Education, Culture, Sports, Science and Technology",925,Viet Nam,13030
+Hybrid Gold,1053,2024,1103,"Mokdad, A.H.",148,Computer Science,2242,Book Chapter,331,Plos One,126,Hanoi University of Science and Technology,1247,National Foundation for Science and Technology Development,764,United States,1630
+Bronze,951,2023,1086,"Fischer, F.",145,Agricultural and Biological Sciences,2102,Book,11,IEEE Access,103,The University of Tokyo,1072,Japan Science and Technology Agency,346,China,1519
+Green,3490,2022,1188,"Huy, N.T.",138,Environmental Science,1764,,,Journal of the Faculty of Agriculture Kyushu University,100,Viet Nam National University Ho Chi Minh City,1065,Japan Agency for Medical Research and Development,270,South Korea,1236
+,,2021,1167,"Bui, T.Q.",135,Physics and Astronomy,1742,,,Lecture Notes in Civil Engineering,95,Kyoto University,822,National Natural Science Foundation of China,268,United Kingdom,1134
+,,2020,1219,"Jonas, J.B.",131,Materials Science,1454,,,Science of the Total Environment,82,Duy Tan University,678,Japan International Cooperation Agency,240,Australia,1104
+,,2019,934,"Olagunju, A.T.",124,"Biochemistry, Genetics and Molecular Biology",1405,,,Lancet,79,Kyushu University,649,European Commission,207,Thailand,1009
+,,2018,788,"Samy, A.M.",123,Chemistry,1009,,,International Conference on Advanced Technologies for Communications,62,"University of Science, Viet Nam National University Ho Chi Minh City",624,National Institutes of Health,207,Germany,928
+,,2017,699,"Singh, J.A.",122,Mathematics,949,,,Applied Sciences Switzerland,58,Institute of Science Tokyo,572,Vietnam Academy of Science and Technology,207,India,919
+,,2016,592,"Mohammed, S.",120,Earth and Planetary Sciences,870,,,Journal of Veterinary Medical Science,56,The University of Osaka,567,National Science Foundation,200,Taiwan,851
+,,2015,474,"Shaikh, M.A.",120,Immunology and Microbiology,753,,,Sustainability Switzerland,54,Nagasaki University,564,National Research Foundation of Korea,187,France,828
+,,2014,446,"Rawaf, S.",119,Social Sciences,719,,,Chemosphere,52,Tohoku University,552,Bill and Melinda Gates Foundation,170,Malaysia,821
+,,2013,364,"Khader, Y.S.",117,Chemical Engineering,617,,,ACM International Conference Proceeding Series,50,Can Tho University,519,Horizon 2020 Framework Programme,168,Spain,792
+,,2012,347,"Arabloo, J.",115,Energy,559,,,Zootaxa,50,Hanoi Medical University,492,Viet Nam National University Ho Chi Minh City,156,Indonesia,770
+,,2011,284,"Dandona, R.",113,Multidisciplinary,425,,,Physical Review C,47,Hiroshima University,478,Science and Technology Research Partnership for Sustainable Development,155,Italy,761
+,,2010,242,"Dandona, L.",111,"Pharmacology, Toxicology and Pharmaceutics",394,,,Phytotaxa,43,Japan Advanced Institute of Science and Technology,463,Ministry of Science and Technology,139,Canada,728
+,,2009,215,"Kisa, A.",111,"Business, Management and Accounting",304,,,Physical Review C Nuclear Physics,42,University of Medicine and Pharmacy at HCMC,433,Seventh Framework Programme,139,Singapore,629
+,,2008,195,"Vos, T.",110,Decision Sciences,230,,,Journal of Physics Conference Series,38,Vietnam National University of Agriculture,382,National Health and Medical Research Council,128,Philippines,615
+,,2007,147,"Sepanlou, S.G.",108,"Economics, Econometrics and Finance",229,,,Physical Review Letters,37,Ho Chi Minh City University of Technology - HCMUT,382,Medical Research Council,123,Netherlands,562
+,,2006,146,"Malekzadeh, R.",104,Veterinary,215,,,Astrophysical Journal,36,University of Tsukuba,367,Deutsche Forschungsgemeinschaft,122,Russian Federation,548
+,,2005,128,"Mestrovic, T.",104,Arts and Humanities,129,,,Environmental Science and Pollution Research,36,Universidade de São Paulo,345,Fundação para a Ciência e a Tecnologia,118,Brazil,547
+,,2004,116,"Monasta, L.",104,Neuroscience,117,,,Water Switzerland,36,Imperial College London,325,Wellcome Trust,116,Hong Kong,542
+,,2003,114,"Tran, L.S.P.",104,Nursing,115,,,Communications in Computer and Information Science,35,Ton-Duc-Thang University,317,Bundesministerium für Bildung und Forschung,115,Egypt,476
+,,2002,60,"Alvis-Guzman, N.",103,Psychology,98,,,Rsc Advances,35,University of Oxford,311,UK Research and Innovation,115,Poland,468
+,,2001,50,"Pham, A.T.",102,Health Professions,51,,,Aip Conference Proceedings,34,CNRS Centre National de la Recherche Scientifique,307,Australian Research Council,111,Switzerland,445
+,,2000,56,"Fujita, H.",100,Dentistry,36,,,Animal Science Journal,32,Hokkaido University,301,"Ministry of Science and Technology, Taiwan",103,Norway,438
+,,1999,31,"Hamidi, S.",99,,,,,Environmental Pollution,32,Nagoya University,300,National Institute of Allergy and Infectious Diseases,100,Sweden,435
+,,1998,38,"Mendoza, W.",99,,,,,Physical Review D,32,National University of Singapore,299,U.S. Department of Energy,97,Iran,422
+,,1997,28,"Tran, B.X.",99,,,,,Physics Letters Section B Nuclear Elementary Particle and High Energy Physics,32,University of Danang,298,Science and Technology Facilities Council,95,Belgium,414
+,,1996,25,"Lim, S.S.",98,,,,,International Journal of Environmental Research and Public Health,31,Hue University,294,Core Research for Evolutional Science and Technology,94,Saudi Arabia,408
+,,1995,12,"Yu, C.",98,,,,,Iop Conference Series Earth and Environmental Science,31,Osaka Metropolitan University,293,Conselho Nacional de Desenvolvimento Científico e Tecnológico,91,Mexico,393
+,,1994,14,"Ilesanmi, O.S.",97,,,,,Lecture Notes in Mechanical Engineering,31,Seoul National University,278,European Research Council,87,Portugal,392
+,,1993,4,"Pham, C.K.",97,,,,,Japan Agricultural Research Quarterly,30,National Institute of Infectious Diseases,274,National Cancer Institute,82,Bangladesh,391
+,,1992,5,"Butt, Z.A.",96,,,,,Nature Communications,30,Research Organization of Information and Systems National Institute of Informatics,263,"Ministry of Health, Labour and Welfare",81,Pakistan,384
+,,1991,1,"Kim, Y.J.",96,,,,,Journal of Material Cycles and Waste Management,29,Ho Chi Minh City University of Technology - HUTECH,263,Ministry of Education,80,New Zealand,374
+,,1989,2,"Miller, T.R.",94,,,,,Construction and Building Materials,28,UNSW Sydney,260,University of Tokyo,80,South Africa,371
+,,1982,1,"Banach, M.",93,,,,,Fisheries Science,28,The University of Hong Kong,258,European Regional Development Fund,76,Romania,354
+,,1975,1,"Farzadfar, F.",93,,,,,Japanese Journal of Applied Physics,28,Okayama University,254,Schweizerischer Nationalfonds zur Förderung der Wissenschaftlichen Forschung,76,Colombia,330
+,,1972,1,"Naghavi, M.",93,,,,,Journal of Medical Virology,28,Chinese Academy of Sciences,251,Trường Đại học Bách Khoa Hà Nội,76,Chile,323
+,,,,"Huy, D.T.N.",91,,,,,Chemical and Pharmaceutical Bulletin,27,Riken,250,"Ministry of the Environment, Government of Japan",72,Turkey,322
+,,,,"Kumar, G.A.",91,,,,,Lecture Notes in Networks and Systems,27,The University of Sydney,249,Oregon Department of Agriculture,72,Czech Republic,316
+,,,,"Koyanagi, A.",90,,,,,Soil Science and Plant Nutrition,27,University of Melbourne,249,Natural Sciences and Engineering Research Council of Canada,71,Argentina,314
+,,,,"Hosseinzadeh, M.",89,,,,,Archives of Virology,26,National Center for Global Health and Medicine,247,Narodowe Centrum Nauki,70,Finland,310
+,,,,"Khan, E.A.",89,,,,,Proceedings of SPIE the International Society for Optical Engineering,26,London School of Hygiene & Tropical Medicine,244,Bộ Giáo dục và Ðào tạo,68,United Arab Emirates,307
+,,,,"Nangia, V.",89,,,,,Tropical Medicine and Health,26,Vietnamese Academy of Science and Technology Institute of Ecology and Biological Resources,244,"Ministry of Science, ICT and Future Planning",68,Nigeria,300
+,,,,"Chu, D.T.",88,,,,,Breeding Science,25,Kobe University,240,Alexander von Humboldt-Stiftung,65,Greece,295
+,,,,"Sahebkar, A.",88,,,,,Physical Chemistry Chemical Physics,25,Universidade do Porto,237,RIKEN,60,Hungary,281
+,,,,"Bensenor, I.M.",86,,,,,Physical Review A Atomic Molecular and Optical Physics,25,The University of Queensland,237,World Health Organization,59,Denmark,278
+,,,,"Owolabi, M.O.",86,,,,,Advances in Intelligent Systems and Computing,24,Monash University,232,AstraZeneca,58,Austria,274
+,,,,"Shiri, R.",86,,,,,BMC Infectious Diseases,24,Vietnamese Academy of Science and Technology Institute of Physics and Electronics,229,Chinese Academy of Sciences,57,Serbia,274
+,,,,"Tovani-Palone, M.R.",85,,,,,Composite Structures,24,The University of Edinburgh,227,Natural Environment Research Council,54,Croatia,271
+,,,,"Krishan, K.",84,,,,,IEICE Transactions on Communications,24,University College London,223,Kyoto University,53,Sri Lanka,268
+,,,,"Radfar, A.",84,,,,,Information Sciences,24,Vietnam Atomic Energy Institute,223,Royal Society,53,Peru,265
+,,,,"Rahimi-Movaghar, V.",84,,,,,International Journal of Molecular Sciences,24,University of Toronto,222,Fogarty International Center,52,Ireland,257
+,,,,"Shigematsu, M.",84,,,,,Materials Transactions,23,Nagaoka University of Technology,222,"Ministry of Agriculture, Forestry and Fisheries",50,Nepal,251
+,,,,"Rawaf, D.L.",83,,,,,Applied Physics Letters,22,Chinese University of Hong Kong,220,National Key Research and Development Program of China,50,Ghana,229
+,,,,"Waheed, Y.",83,,,,,Ceur Workshop Proceedings,22,The University of Electro-Communications,220,National Institute on Aging,49,Ethiopia,222
+,,,,"Alahdab, F.",82,,,,,Environmental Science and Technology,22,Le Quy Don Technical University,217,National Institute of Mental Health,48,Jordan,222
+,,,,"Chattu, V.K.",82,,,,,International Journal of Innovative Computing Information and Control,22,Kanazawa University,213,New Energy and Industrial Technology Development Organization,48,Israel,214
+,,,,"Violante, F.S.",81,,,,,Journal of Alloys and Compounds,22,Tehran University of Medical Sciences,212,National Aeronautics and Space Administration,47,Estonia,197
+,,,,"Bijani, A.",80,,,,,Journal of Virology,22,McMaster University,212,"Department of Science and Technology, Ministry of Science and Technology, India",46,Kenya,197
+,,,,"Negoi, I.",80,,,,,Knowledge Based Systems,22,Ehime University,211,Eunice Kennedy Shriver National Institute of Child Health and Human Development,45,Iraq,189
+,,,,"Viet, P.H.",80,,,,,Nature,22,King's College London,210,Fundação de Amparo à Pesquisa do Estado de São Paulo,45,Qatar,186
+,,,,"Kasaeian, A.",79,,,,,IEICE Transactions on Information and Systems,21,Universitat de València,207,Instituto Nazionale di Fisica Nucleare,44,Cambodia,181
+,,,,"Rahim, F.",79,,,,,International Journal of Geomate,21,Mahidol University,207,National Heart Foundation of Australia,43,Ukraine,181
+,,,,"Temsah, M.H.",79,,,,,Proceedings International Conference on Knowledge and Systems Engineering Kse,21,Chulalongkorn University,207,National Science and Technology Council,43,Algeria,178
+,,,,"Guo, Y.",78,,,,,Proceedings of Science,21,University of Washington,206,Russian Science Foundation,43,Kazakhstan,162
+,,,,"Jha, R.P.",78,,,,,Japanese Journal of Infectious Diseases,20,Universitas Indonesia,205,Okayama University,42,Lebanon,157
+,,,,"Khubchandani, J.",77,,,,,Journal of Asian Earth Sciences,20,Bach Mai Hospital,199,Pfizer,42,Panama,150
+,,,,"Ronfani, L.",77,,,,,Journal of Physical Chemistry C,20,Harvard University,197,Centre National de la Recherche Scientifique,41,Slovakia,149
+,,,,"Hostiuc, S.",76,,,,,Molecules,20,The University of British Columbia,197,Universiti Kebangsaan Malaysia,41,Slovenia,149
+,,,,"Ilic, M.D.",76,,,,,Natural Product Research,20,The University of Aizu,196,Chulalongkorn University,40,Bulgaria,144
+,,,,"Kosen, S.",76,,,,,Parasitology International,20,National Institute of Hygiene and Epidemiology Hanoi,194,Ministerio de Economía y Competitividad,40,Cameroon,142
+,,,,"Filip, I.",75,,,,,Proceedings of the National Academy of Sciences of the United States of America,20,Yokohama National University,192,National Institute for Health and Care Research,40,Myanmar,142
+,,,,"Sartorius, B.",75,,,,,Zookeys,20,King Saud University,190,Osaka University,40,Oman,142
+,,,,"Carvalho, F.",74,,,,,ACS Omega,19,Gifu University,189,Tập đoàn Vingroup - Công ty CP,40,Kuwait,136
+,,,,"Sawhney, M.",74,,,,,American Journal of Tropical Medicine and Hygiene,19,National Institute of Advanced Industrial Science and Technology,189,Asia-Pacific Network for Global Change Research,39,Ecuador,133
+,,,,"Ilic, I.M.",73,,,,,International Journal of Hydrogen Energy,19,Universiti Malaya,189,"Ministry of Education, Science and Technology",39,Uganda,130
+,,,,"Majeed, A.",73,,,,,Journal of Electronic Materials,19,Harvard T.H. Chan School of Public Health,188,National Research Council Canada,39,Bahrain,126
+,,,,"Murray, C.J.L.",73,,,,,Marine Pollution Bulletin,19,Sungkyunkwan University,187,Nagasaki University,38,Morocco,125
+,,,,"Postma, M.J.",73,,,,,Parasitology Research,19,University of Belgrade,186,Agence Nationale de la Recherche,37,Kyrgyzstan,124
+,,,,"Rahman, M.A.",73,,,,,Phytochemistry,19,Rijksuniversiteit Groningen,184,Instituto de Salud Carlos III,37,Tunisia,119
+,,,,"Westerman, R.",73,,,,,Remote Sensing,19,Shibaura Institute of Technology,184,Anhui University of Science and Technology,36,Tanzania,106
+,,,,"Yoshida, L.M.",73,,,,,Aquaculture,18,Karolinska Institutet,181,Environmental Restoration and Conservation Agency,36,Palestine,103
+,,,,"Younis, M.Z.",73,,,,,Asian Pacific Journal of Cancer Prevention,18,Universität Heidelberg,181,"Ministério da Ciência, Tecnologia e Ensino Superior",36,Brunei Darussalam,99
+,,,,"Bedi, N.",72,,,,,Frontiers in Plant Science,18,Tokyo University of Agriculture and Technology,180,National Research Foundation,36,Sudan,99
+,,,,"Djalalinia, S.",72,,,,,Ifmbe Proceedings,18,Shahid Beheshti University of Medical Sciences,179,Nemzeti Kutatási Fejlesztési és Innovációs Hivatal,36,Laos,95
+,,,,"Golechha, M.",72,,,,,Sensors,18,VNUHCM - University of Information Technology,177,South African Medical Research Council,36,Costa Rica,94
+,,,,"Kimokoti, R.W.",72,,,,,Emerging Infectious Diseases,17,Kagoshima University,176,University of New South Wales,36,Uruguay,93
+,,,,"Li, S.",72,,,,,Energies,17,Ain Shams University,175,Coordenação de Aperfeiçoamento de Pessoal de Nível Superior,35,Yemen,93
+,,,,"Menezes, R.G.",72,,,,,Environmental Monitoring and Assessment,17,University of Cape Town,173,Manipal Academy of Higher Education,35,Iceland,90
+,,,,"Satpathy, M.",72,,,,,Infection Genetics and Evolution,17,Consejo Superior de Investigaciones Científicas,173,National Institute on Drug Abuse,35,Benin,89
+,,,,"Sreeramareddy, C.T.",72,,,,,Journal of Applied Physics,17,The University of Adelaide,173,"National Heart, Lung, and Blood Institute",34,Mongolia,88
+,,,,"Thang, T.C.",72,,,,,Journal of Natural Products,17,Institute for Health Metrics and Evaluation,171,Grantová Agentura České Republiky,33,Cyprus,87
+,,,,"Xuan, T.D.",72,,,,,Physical Review B Condensed Matter and Materials Physics,17,Dại học Nguyen Tat Thanh,171,Horizon 2020,33,Libya,85
+,,,,"Kabir, Z.",71,,,,,Plos Neglected Tropical Diseases,17,Duke University,169,Ministerio de Ciencia e Innovación,33,Luxembourg,81
+,,,,"Khang, Y.H.",71,,,,,Vietnam Journal of Earth Sciences,17,University of Toyama,169,National Institute of Diabetes and Digestive and Kidney Diseases,33,Zambia,80
+,,,,"Murray, C.J.L.",71,,,,,BMC Public Health,16,National Taiwan University,168,"Secretaría Nacional de Ciencia, Tecnología e Innovación",33,Mozambique,77
+,,,,"Padubidri, J.R.",71,,,,,Bioresource Technology,16,University of Ibadan,167,Tokyo Metropolitan University,33,Lithuania,75
+,,,,"Roshandel, G.",71,,,,,Bioscience Biotechnology and Biochemistry,16,Universitetet i Oslo,167,United States Agency for International Development,33,Gambia,74
+,,,,"Bell, M.L.",70,,,,,Journal of Nutritional Science and Vitaminology,16,Iran University of Medical Sciences,167,Fundamental Research Funds for the Central Universities,32,Georgia,74
+,,,,"Fukumoto, T.",70,,,,,Materials,16,Stanford University,166,National Institute of Child Health and Human Development,32,Rwanda,74
+,,,,"Jakovljevic, M.",70,,,,,Nuclear Instruments and Methods in Physics Research Section A Accelerators Spectrometers Detectors and Associated Equipment,16,Universidad Autónoma de Madrid,166,University of Tsukuba,32,Botswana,70
+,,,,"Malta, D.C.",70,,,,,Plant Production Science,16,Case Western Reserve University,165,Chandigarh University,31,Latvia,68
+,,,,"Mansournia, M.A.",70,,,,,Soils and Foundations,16,Charité – Universitätsmedizin Berlin,165,Kyushu University,31,Bosnia and Herzegovina,65
+,,,,"Sheikh, A.",70,,,,,Viruses,16,Helsingin Yliopisto,164,"Ministerstvo Školství, Mládeže a Tělovýchovy",30,Armenia,59
+,,,,"Tanabe, S.",70,,,,,Water Science and Technology,16,Università degli Studi di Catania,164,National Research Council of Thailand,30,Azerbaijan,58
+,,,,"Castañeda-Orjuela, C.A.",69,,,,,Acta Phytotaxonomica Et Geobotanica,15,Cairo University,164,"Ministerio de Ciencia, Innovación y Universidades",29,Cote d'Ivoire,56
+,,,,"Dharmaratne, S.D.",69,,,,,Biochemical and Biophysical Research Communications,15,Università degli Studi di Milano,164,Ministero della Salute,29,Federated States of Micronesia,54
+,,,,"Kisa, S.",69,,,,,Electronics Switzerland,15,Stellenbosch University,162,Takeda Science Foundation,29,Democratic Republic Congo,53
+,,,,"Meretoja, A.",69,,,,,Journal of Water and Environment Technology,15,Universiti Kebangsaan Malaysia,162,University Grants Commission,29,Malawi,53
+,,,,"Panda-Jonas, S.",69,,,,,Mammal Study,15,Johns Hopkins University,162,Đại học Đà Nẵng,29,Namibia,53
+,,,,"Renzaho, A.M.N.",69,,,,,Mycoscience,15,Harvard Medical School,161,Academia Sinica,28,Venezuela,52
+,,,,"Roever, L.",69,,,,,Phytokeys,15,University of Liverpool,161,China Scholarship Council,28,Afghanistan,51
+,,,,"Sathian, B.",69,,,,,Plants,15,Tokyo Metropolitan University,159,Generalitat Valenciana,28,Bolivia,51
+,,,,"Schwebel, D.C.",69,,,,,Radiation Physics and Chemistry,15,Waseda University,159,Sistema Nacional de Investigadores,28,North Macedonia,51
+,,,,"Takahashi, S.",69,,,,,Vaccine,15,Fudan University,156,Tohoku University,28,Guatemala,46
+,,,,"Al-Aly, Z.",68,,,,,Acta Tropica,14,IN2P3 - Institut National de Physique Nucléaire et de Physique Des Particules,156,Bayer,27,Trinidad and Tobago,45
+,,,,"Andrei, C.L.",68,,,,,Agronomy,14,Keio University,156,Boehringer Ingelheim,27,Albania,44
+,,,,"Diaz, D.",68,,,,,EPJ Web of Conferences,14,The University of Alabama at Birmingham,156,Ministerstwo Edukacji i Nauki,27,Malta,43
+,,,,"Jozwiak, J.J.",68,,,,,Ecology and Evolution,14,Addis Ababa University,155,Ministry of Education and Science of the Russian Federation,27,Puerto Rico,41
+,,,,"Kubono, S.",68,,,,,Engineering Fracture Mechanics,14,Thuyloi University,155,Tokyo Institute of Technology,27,Congo,40
+,,,,"Morrison, S.D.",68,,,,,Heliyon,14,Yonsei University College of Medicine,154,Economic and Social Research Council,26,Barbados,39
+,,,,"Shibuya, K.",68,,,,,Journal of Applied Phycology,14,Instituto Nacional de Salud Publica,154,"Ministarstvo Prosvete, Nauke i Tehnološkog Razvoja",26,Mauritius,39
+,,,,"Yip, P.",68,,,,,Journal of Applied Polymer Science,14,Universidade Federal de Minas Gerais,153,"Ministry of Higher Education, Malaysia",26,Syrian Arab Republic,39
+,,,,"Antonio, C.A.T.",67,,,,,Journal of Cleaner Production,14,Sapienza Università di Roma,153,National Institute of General Medical Sciences,26,Uzbekistan,38
+,,,,"Holla, R.",67,,,,,Journal of Clinical Microbiology,14,Sorbonne Université,152,Russian Foundation for Basic Research,26,Moldova,37
+,,,,"Baba, H.",66,,,,,Journal of Marine Science and Engineering,14,Peking University,152,Đại học Huế,26,New Caledonia,37
+,,,,"Hankey, G.J.",66,,,,,Microbiology and Immunology,14,Universitetet i Bergen,152,Canada Foundation for Innovation,25,Papua New Guinea,37
+,,,,"Le, D.D.",66,,,,,Paddy and Water Environment,14,Jordan University of Science and Technology,152,National Institute of Information and Communications Technology,25,Jamaica,36
+,,,,"Moraga, P.",66,,,,,Sensors and Actuators A Physical,14,University of Gondar,152,Public Health Agency of Canada,25,Paraguay,36
+,,,,"Ranabhat, C.L.",66,,,,,Thin Solid Films,14,National Institutes of Health NIH,151,Thailand Research Fund,25,Anguilla,34
+,,,,"Abe, K.",65,,,,,Advances in Natural Sciences Nanoscience and Nanotechnology,13,Japan Science and Technology Agency,151,Air Force Office of Scientific Research,24,Cuba,34
+,,,,"Alipour, V.",65,,,,,Antimicrobial Agents and Chemotherapy,13,Trường Đại học Sư phạm Hà Nội,151,Amgen,24,Guyana,34
+,,,,"Feigin, V.L.",65,,,,,Applied Surface Science,13,Chiba University,150,Autoritatea Natională pentru Cercetare Stiintifică,24,Senegal,33
+,,,,"Gupta, R.",65,,,,,BMJ Open,13,Yale University,150,Korea Astronomy and Space Science Institute,24,Fiji,32
+,,,,"Hamadeh, R.R.",65,,,,,Chemical Engineering Transactions,13,The Australian National University,150,Nagoya University,24,Liberia,29
+,,,,"Bhardwaj, P.",64,,,,,Coastal Engineering Journal,13,Universitatea de Medicina si Farmacie Carol Davila din Bucuresti,150,National Center for Global Health and Medicine,24,Seychelles,26
+,,,,"Herteliu, C.",64,,,,,Computational Materials Science,13,Western Sydney University,149,Asahi Glass Foundation,23,Zimbabwe,26
+,,,,"Islam, S.M.S.",64,,,,,Hydrological Processes,13,University of the Philippines Manila,149,"Research Management Centre, International Islamic University Malaysia",23,Burkina Faso,25
+,,,,"Oancea, B.",64,,,,,Journal of Disaster Research,13,James Cook University,148,Science and Technology Commission of Shanghai Municipality,23,Dominican Republic,25
+,,,,"Qorbani, M.",64,,,,,Journal of Geophysical Research Space Physics,13,Korea University,147,University of Science Ho Chi Minh City,23,Macao,25
+,,,,"Dadras, O.",63,,,,,Journal of Magnetism and Magnetic Materials,13,University of Warwick,147,Đại học Quốc gia Hà Nội,23,Somalia,25
+,,,,"Faro, A.",63,,,,,Journal of Physics Condensed Matter,13,Charles University,146,Bristol-Myers Squibb,22,Togo,25
+,,,,"Fereshtehnejad, S.M.",63,,,,,Journal of Physics D Applied Physics,13,Università degli Studi di Napoli Federico II,146,GlaxoSmithKline,22,Bhutan,24
+,,,,"Haj-Mirzaian, A.",63,,,,,Molecular Phylogenetics and Evolution,13,Wuhan University,146,H2020 Marie Skłodowska-Curie Actions,22,Suriname,23
+,,,,"Lal, D.K.",63,,,,,Proceedings IEEE International Symposium on Circuits and Systems,13,Public Health England,146,Institut National de Physique Nucléaire et de Physique des Particules,22,Madagascar,21
+,,,,"Rahman, M.",63,,,,,Theoretical and Applied Fracture Mechanics,13,Phenikaa University,146,Novartis,22,Burundi,20
+,,,,"Topor-Madry, R.",63,,,,,AIDS Research and Human Retroviruses,12,University of Technology Sydney,145,Sanofi,22,French Guiana,19
+,,,,"Vollset, S.E.",63,,,,,Aip Advances,12,Public Health Foundation of India,145,Sixth Framework Programme,22,Gabon,19
+,,,,"Yano, Y.",63,,,,,Archives of Environmental Contamination and Toxicology,12,University of Lagos,144,Vetenskapsrådet,22,Belarus,18
+,,,,"Badawi, A.",62,,,,,Atmospheric Environment,12,Yonsei University,144,Department of Health and Social Care,21,Angola,17
+,,,,"Baig, A.A.",62,,,,,Biological and Pharmaceutical Bulletin,12,Curtin University,144,Engineering and Physical Sciences Research Council,21,Honduras,17
+,,,,"Cárdenas, R.",62,,,,,Ctu Journal of Innovation and Sustainable Development,12,King Abdulaziz University,143,Nagao Natural Environment Foundation,21,Solomon Islands,17
+,,,,"Eskandarieh, S.",62,,,,,Energy Reports,12,Organisation Mondiale de la Santé,143,National Institute of Advanced Industrial Science and Technology,21,Nicaragua,14
+,,,,"Haro, J.M.",62,,,,,Environment International,12,Hanoi University of Civil Engineering,143,Thammasat University,21,Haiti,12
+,,,,"Hoang, T.T.",62,,,,,Environmental Research,12,Emory University,142,"amfAR, The Foundation for AIDS Research",21,Montenegro,12
+,,,,"Ibitoye, S.E.",62,,,,,Expert Systems with Applications,12,University of Washington School of Medicine,142,Asian Institute of Technology,20,Belize,11
+,,,,"Nguyen, L.M.",62,,,,,International Journal of Infectious Diseases,12,The University of Western Australia,142,Deakin University,20,Mali,11
