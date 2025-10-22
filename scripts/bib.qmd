@@ -1,0 +1,60 @@
+---
+title: "Bibliometrix"
+format: html
+---
+
+
+```{r}
+library(tidyverse)
+library(bibliometrix)
+
+data_reg<- read_csv("data/processed_data.csv")
+data_bib <- read.csv("data/all_1020.csv")
+```
+
+
+```{r}
+# Convert Scopus data to bibliometrix format
+M <- convert2df("data/all_1020.csv", dbsource = "scopus", format = "csv")
+
+# Get basic information about your dataset
+results <- biblioAnalysis(M)
+summary(results, k = 10, pause = FALSE)
+```
+
+
+```{r}
+# Main information about the collection
+results <- biblioAnalysis(M, sep = ";")
+options(width = 100)
+S <- summary(object = results, k = 10, pause = FALSE)
+plot(x = results, k = 10, pause = FALSE)
+
+# Most cited papers
+CR <- citations(M, field = "article", sep = ";")
+cbind(CR$Cited[1:10])
+
+# Most cited authors
+CR <- citations(M, field = "author", sep = ";")
+cbind(CR$Cited[1:10])
+
+# Co-citation network
+NetMatrix <- biblioNetwork(M, analysis = "co-citation", 
+                           network = "references", sep = ";")
+
+# Collaboration network
+NetMatrix <- biblioNetwork(M, analysis = "collaboration", 
+                           network = "authors", sep = ";")
+
+# Co-occurrence network (keywords)
+NetMatrix <- biblioNetwork(M, analysis = "co-occurrences", 
+                           network = "keywords", sep = ";")
+
+
+# Three-field plot (relationships between fields)
+threeFieldsPlot(M, fields = c("AU", "DE", "SO"))
+
+# Thematic map
+Map <- thematicMap(M, field = "ID", n = 250, minfreq = 5)
+plot(Map$map)
+```

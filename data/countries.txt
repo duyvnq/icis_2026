@@ -1,0 +1,197 @@
+﻿id	country	documents	citations	total link strength
+1	(nitep)	1	12	12
+2	afghanistan	9	150	34
+3	algeria	21	2592	126
+4	amp	2	29	7
+5	andorra	2	68	45
+6	antigua and barbuda	2	1	7
+7	argentina	68	21439	1042
+8	armenia	10	637	197
+9	army medical university	1	16	17
+10	aruba	1	2	9
+11	asian development bank	1	101	9
+12	australia	615	42373	5260
+13	austria	61	3686	723
+14	azerbaijan	6	518	49
+15	bahamas	1	26	5
+16	bahrain	2	218	31
+17	bangladesh	138	4840	1058
+18	belarus	7	329	73
+19	belgium	158	14143	1549
+20	belize	2	81	33
+21	benin	5	4392	60
+22	bhutan	12	250	118
+23	bolivia	1	23	2
+24	bosnia and herzegovina	3	62	44
+25	brazil	161	22691	2338
+26	brunei darussalam	29	787	433
+27	bulgaria	17	8399	240
+28	burkina faso	2	19	10
+29	burundi	1	47	4
+30	cambodia	111	5994	997
+31	cameroon	4	2949	68
+32	canada	280	37164	2963
+33	caribbean	1	0	4
+34	center	2	472	33
+35	chile	70	4927	840
+36	china	1012	61368	7401
+37	city	1	24	12
+38	collection	1	12	3
+39	colombia	51	4029	630
+40	committee	1	3	9
+41	congo	2	78	27
+42	costa rica	8	494	127
+43	cote d'ivoire	1	75	21
+44	croatia	57	4926	939
+45	cuba	6	468	80
+46	cyprus	9	960	124
+47	czech republic	114	14412	1533
+48	democratic republic congo	7	2455	57
+49	denmark	64	10870	626
+50	department	1	442	24
+51	deve-mairie de paris	1	159	7
+52	diseases	1	3	4
+53	dominican republic	1	8	16
+54	dutch lady vietnam	1	62	3
+55	ecuador	10	989	145
+56	egypt	187	9444	967
+57	el salvador	2	130	4
+58	electro-communications	1	2	2
+59	estonia	23	5306	321
+60	ethiopia	20	2991	198
+61	fauna & amp	1	1	6
+62	fiji	12	1260	145
+63	finland	45	9122	565
+64	france	434	34011	4145
+65	french guiana	1	155	21
+66	gambia	4	762	79
+67	georgia	5	278	63
+68	germany	449	43415	4357
+69	ghana	18	1653	133
+70	greece	42	5276	472
+71	group	3	3	10
+72	guam	1	4	4
+73	guatemala	2	34	14
+74	haiti	1	53	22
+75	hanoi	1	5	3
+76	health management	1	442	24
+77	honduras	3	25	37
+78	hong kong	240	10032	2725
+79	http://www.onlineresearchclub.org/	1	2	6
+80	hue healthcare center	1	0	1
+81	hungary	109	12423	1112
+82	iceland	1	12	3
+83	india	508	33812	4402
+84	indonesia	405	13629	3176
+85	infection	1	3	4
+86	iran	113	12242	862
+87	iraq	18	707	122
+88	ireland	63	5695	652
+89	isglobal	1	24	12
+90	israel	36	1750	523
+91	italy	301	32346	3501
+92	jamaica	2	333	19
+93	japan	9554	269888	23244
+94	jordan	22	626	150
+95	kazakhstan	16	287	187
+96	kenya	28	1171	255
+97	kuwait	20	2631	191
+98	kyrgyzstan	5	392	68
+99	laboratory	2	48	25
+100	laos	51	1516	324
+101	latvia	6	793	107
+102	lebanon	14	3823	117
+103	lesotho	1	29	15
+104	libya	9	118	44
+105	lithuania	9	189	121
+106	luxembourg	15	613	70
+107	macao	6	126	97
+108	madagascar	7	171	54
+109	malawi	11	370	107
+110	malaysia	441	25186	3792
+111	maldives	1	20	7
+112	mauritius	2	154	10
+113	medicine	1	91	3
+114	mexico	83	13770	1266
+115	micronesia	1	0	2
+116	moldova	5	1045	88
+117	mongolia	43	1085	444
+118	morocco	8	1713	91
+119	mozambique	2	53	13
+120	myanmar	86	1954	752
+121	namibia	3	37	36
+122	nepal	67	2905	699
+123	netherlands	206	27216	2055
+124	nevis	1	31	11
+125	new caledonia	7	460	86
+126	new zealand	123	12374	1032
+127	nicaragua	3	56	38
+128	niger	1	11	8
+129	nigeria	26	1643	272
+130	north macedonia	3	115	57
+131	northern mariana islands	1	10	2
+132	norway	121	10496	1311
+133	office	3	3	10
+134	oman	8	191	97
+135	pakistan	98	4944	1033
+136	palau	1	15	16
+137	palestine	4	27	29
+138	panama	2	1517	33
+139	papua new guinea	13	1115	183
+140	part)	3	41	14
+141	peru	15	3190	257
+142	philippines	316	17273	2653
+143	poland	141	17997	1760
+144	portugal	69	8691	1049
+145	puerto rico	2	182	14
+146	qatar	8	137	83
+147	romania	64	4156	873
+148	russian federation	233	23621	2063
+149	rwanda	2	26	16
+150	saint helena	1	0	16
+151	samoa	3	887	42
+152	saudi arabia	123	10117	1013
+153	science	1	47	2
+154	sciences	1	442	24
+155	senegal	2	49	31
+156	serbia	15	5462	217
+157	singapore	317	14242	3328
+158	slovakia	13	7059	201
+159	slovenia	68	9834	1171
+160	solomon islands	7	1038	107
+161	south africa	62	4997	875
+162	south korea	761	35525	6055
+163	spain	360	34392	4028
+164	sri lanka	85	5890	863
+165	sudan	25	421	152
+166	suriname	2	111	29
+167	sweden	132	22160	1423
+168	switzerland	178	23727	1858
+169	syrian arab republic	13	320	84
+170	taiwan	517	31890	4525
+171	tajikistan	1	12	17
+172	tanzania	7	132	70
+173	technical staff	1	3	9
+174	technology	2	0	5
+175	thailand	706	32016	4601
+176	timor-leste	2	4	39
+177	togo	1	26	5
+178	tunisia	14	148	104
+179	turkey	54	2379	565
+180	uganda	15	840	150
+181	ukraine	22	999	342
+182	united arab emirates	48	1694	697
+183	united kingdom	651	60055	5623
+184	united states	1041	79941	7521
+185	uruguay	6	693	104
+186	uzbekistan	3	34	15
+187	vanuatu	2	91	31
+188	venezuela	3	124	55
+189	viet nam	9562	270233	23257
+190	vietnam atomic commission	1	0	1
+191	vietnam-netherlands economics program	1	4	6
+192	vinmec healthcare system	1	24	12
+193	work	1	1	2
+194	yemen	2	55	14
+195	zambia	6	79	39
+196	zimbabwe	4	2921	78
