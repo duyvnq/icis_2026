@@ -32,40 +32,40 @@ Below is a concise dictionary for `processed_data.csv` (formerly `reg_data` in c
 | `affiliations` | character | Semicolon-separated author affiliations (raw). |
 | `DOI` | character | Digital Object Identifier. |
 | `OA` | factor | Open access flag: `Not OA`, `OA` (derived from `Open.Access`). |
-| `LS` | integer | Life Sciences macro-area indicator (Scopus source mapping). |
-| `SS` | integer | Social Sciences macro-area indicator. |
-| `PS` | integer | Physical Sciences macro-area indicator. |
-| `HS` | integer | Health Sciences macro-area indicator. |
-| `mult` | integer | Multidisciplinary subject flag (journal scope). |
-| `agr_bio` | integer | Agriculture & Biological Sciences. |
-| `art_hum` | integer | Arts & Humanities. |
-| `bio_chem` | integer | Biochemistry / related biological chemistry fields. |
-| `buss` | integer | Business, Management & Accounting. |
-| `chem_eng` | integer | Chemical Engineering. |
-| `chem` | integer | Chemistry. |
-| `comp_sci` | integer | Computer Science. |
-| `des_sci` | integer | Decision Sciences. |
-| `earth` | integer | Earth & Planetary Sciences. |
-| `econ` | integer | Economics, Econometrics & Finance. |
-| `ener` | integer | Energy. |
-| `egin` | integer | Engineering (field code; appears as `egin` in source). |
-| `env_sci` | integer | Environmental Science. |
-| `immu` | integer | Immunology & Microbiology. |
-| `mat_sci` | integer | Materials Science. |
-| `math` | integer | Mathematics. |
-| `med` | integer | Medicine. |
-| `neuro` | integer | Neuroscience. |
-| `nurse` | integer | Nursing. |
-| `pharm` | integer | Pharmacology, Toxicology & Pharmaceutics. |
-| `phys` | integer | Physics & Astronomy. |
-| `psy` | integer | Psychology. |
-| `soc_sci` | integer | Social Sciences. |
-| `vet` | integer | Veterinary. |
-| `den` | integer | Dentistry. |
-| `heal` | integer | Health Professions / Allied Health. |
+| `LS` | binary | Life Sciences macro-area indicator (Scopus source mapping). |
+| `SS` | binary | Social Sciences macro-area indicator. |
+| `PS` | binary | Physical Sciences macro-area indicator. |
+| `HS` | binary | Health Sciences macro-area indicator. |
+| `mult` | binary | Multidisciplinary subject flag (journal scope). |
+| `agr_bio` | binary | Agriculture & Biological Sciences. |
+| `art_hum` | binary | Arts & Humanities. |
+| `bio_chem` | binary | Biochemistry / related biological chemistry fields. |
+| `buss` | binary | Business, Management & Accounting. |
+| `chem_eng` | binary | Chemical Engineering. |
+| `chem` | binary | Chemistry. |
+| `comp_sci` | binary | Computer Science. |
+| `des_sci` | binary | Decision Sciences. |
+| `earth` | binary | Earth & Planetary Sciences. |
+| `econ` | binary | Economics, Econometrics & Finance. |
+| `ener` | binary | Energy. |
+| `egin` | binary | Engineering (field code; appears as `egin` in source). |
+| `env_sci` | binary | Environmental Science. |
+| `immu` | binary | Immunology & Microbiology. |
+| `mat_sci` | binary | Materials Science. |
+| `math` | binary | Mathematics. |
+| `med` | binary | Medicine. |
+| `neuro` | binary | Neuroscience. |
+| `nurse` | binary | Nursing. |
+| `pharm` | binary | Pharmacology, Toxicology & Pharmaceutics. |
+| `phys` | binary | Physics & Astronomy. |
+| `psy` | binary | Psychology. |
+| `soc_sci` | binary | Social Sciences. |
+| `vet` | binary | Veterinary. |
+| `den` | binary | Dentistry. |
+| `heal` | binary | Health Professions / Allied Health. |
 | `coop` | factor | Cooperation type inferred from unique countries per paper: `bilateral` (exactly 2), `multilateral` (\>2). |
-| `asian` `eu` `int` `jap` `us` `vn` | integer | Funder **region** flags by DOI (1 = present). `int` = international (non-regional). |
-| `pub` `uni` `ind` | integer | Funder **sector** flags by DOI: public / university / industry (1 = present). |
+| `asian` `eu` `int` `jap` `us` `vn` | binary | Funder **region** flags by DOI (1 = present). `int` = international (non-regional). |
+| `pub` `uni` `ind` | binary | Funder **sector** flags by DOI: public / university / industry (1 = present). |
 | `fund` | factor | Funding presence derived from any region flag: `Not funded`, `Funded`. |
 | `n_funder` | factor | Count of regions with non-zero flags among `{asian, eu, int, jap, us, vn}`. |
 | `n_ftype` | factor | Count of sectors with non-zero flags among `{ind, pub, uni}`. *(Computed as sum of sector dummies.)* |
