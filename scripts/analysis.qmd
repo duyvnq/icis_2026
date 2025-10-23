@@ -8,7 +8,10 @@ format: html
 library(tidyverse)
 library(bibliometrix)
 
-data_reg<- read_csv("data/processed_data.csv")
+data_reg <- read.csv("data/processed_data.csv") |>
+  select(id:quartile) |>
+  select(-(agr_bio:heal))
+
 data_bib <- read.csv("data/all_1020.csv")
 ```
 
@@ -24,16 +27,6 @@ data_reg |>
   filter(year > 1990) |> 
   ggplot(aes(x = year, fill = coop)) +
   geom_bar(position = "dodge") +
-  theme_bw()
-
-data_reg |> 
-  select(year, coop) |> 
-  na.omit() |> 
-  filter(year > 1990) |> 
-  group_by(year, coop) |> 
-  summarise(n = n(), .groups = "drop") |> 
-  ggplot(aes(x = year, y = n, color = coop)) +
-  geom_line() +
   theme_bw()
 ```
 
@@ -51,17 +44,6 @@ data_reg |>
   ggplot(aes(x = year, y = Count, color = OA)) +
   geom_line(linewidth = 1) +
   theme_bw()
-
-data_reg |>
-  select(year, OA, coop) |> 
-  na.omit() |>
-  filter(year > 1990) |>
-  group_by(year, OA, coop) |>
-  summarise(Count = n(), .groups = "drop") |>
-  ggplot(aes(x = year, y = Count, color = OA)) +
-  geom_line(linewidth = 1) +
-  theme_bw() +
-  facet_wrap(~coop)
 ```
 
 ## Number of outputs per year by domains
@@ -80,32 +62,6 @@ data_reg |>
   ggplot(aes(x = year, y = Count, color = Category)) +
   geom_line(linewidth = 1) +
   theme_bw()
-
-data_reg |>
-  filter(year > 1990) |>
-  select(year, OA, LS, SS, PS, HS) |>
-  na.omit() |> 
-  pivot_longer(cols = LS:HS, names_to = "Category", values_to = "Value") |>
-  filter(Value == 1) |>
-  group_by(year, Category, OA) |>
-  summarise(Count = n(), .groups = "drop") |>
-  ggplot(aes(x = year, y = Count, color = Category)) +
-  geom_line(linewidth = 1) +
-  theme_bw() +
-  facet_wrap(~OA)
-
-data_reg |>
-  filter(year > 1990) |>
-  select(year, coop, LS, SS, PS, HS) |>
-  na.omit() |> 
-  pivot_longer(cols = LS:HS, names_to = "Category", values_to = "Value") |>
-  filter(Value == 1) |>
-  group_by(year, Category, coop) |>
-  summarise(Count = n(), .groups = "drop") |>
-  ggplot(aes(x = year, y = Count, color = Category)) +
-  geom_line(linewidth = 1) +
-  theme_bw() +
-  facet_wrap(~coop)
 ```
 
 ## Number of outputs per year by funder
@@ -141,19 +97,6 @@ data_reg |>
   ggplot(aes(x = year, y = Count, color = Funder)) +
   geom_line(linewidth = 1) +
   theme_bw()
-
-data_reg |>
-  filter(year > 1990) |>
-  select(year, OA, coop, ind, pub, uni) |>
-  na.omit() |>
-  pivot_longer(cols = ind:uni, names_to = "Funder", values_to = "Value") |>
-  filter(Value == 1) |>
-  group_by(year, Funder, OA, coop) |>
-  summarise(Count = n(), .groups = "drop") |>
-  ggplot(aes(x = year, y = Count, color = Funder)) +
-  geom_line(linewidth = 1) +
-  theme_bw() +
-  facet_grid(OA ~ coop)
 ```
 
 ## Number of outputs per year by quartile
@@ -177,8 +120,9 @@ ggplot(data_reg, aes(x = log1p(cited))) +
   geom_histogram(bins = 21, color = "white") +
   theme_bw()
 
-ggplot(data_reg, aes(x = log1p(cited))) +
-  geom_histogram(bins = 21, color = "white") +
+ggplot(data_reg, aes(x = n_funder, y = log1p(cited))) +
+  geom_point(alpha = 0.3) +
+  geom_jitter(alpha = 0.3) +
   theme_bw()
 ```
 
@@ -193,6 +137,8 @@ wilcox.test(cited ~ coop, data = data_reg)
 
 # By fund or not
 wilcox.test(cited ~ fund, data = data_reg)
+
+wilcox.test(cited ~ vn, data = data_reg)
 
 # By quartile
 kruskal.test(cited ~ quartile, data = data_reg)
@@ -219,7 +165,7 @@ table_oa <- table(data_reg$coop, data_reg$OA)
 chisq.test(table_oa)
 
 # ANOVA/Kruskal for SJR
-kruskal.test(sjr_score ~ coop, data = data_reg %>% filter(year > 1990, !is.na(sjr_score)))
+kruskal.test(sjr_score ~ coop, data = data_reg |> filter(year > 1990, !is.na(sjr_score)))
 ```
 
 Regression analysis
@@ -242,8 +188,172 @@ data_regre <- data_reg |>
   )
 
 # Fit negative binomial regression model
-nb_model <- glm.nb(cited ~ OA + coop + n_countries + old + quartile + LS + SS + PS + HS + ind + pub + uni + jap + vn + fund + n_funder + n_ftype, data = data_regre)
+nb_model <- glm.nb(cited ~ OA + coop + n_countries + old + quartile + ind + pub + uni + jap + vn, data = data_regre)
 
 # Summary of the model
 summary(nb_model)
 ```
+
+
+Model Diagnostics
+
+
+```{r}
+# Fit the model (assuming data_regre is prepared)
+# 1. Residual Diagnostics
+# Residuals vs. Fitted
+plot(nb_model, which = 1, main = "Residuals vs Fitted")
+
+# Q-Q Plot for normality of residuals
+plot(nb_model, which = 2, main = "Normal Q-Q Plot")
+
+# Scale-Location Plot (sqrt(|standardized residuals|) vs. Fitted)
+plot(nb_model, which = 3, main = "Scale-Location")
+
+# Residuals vs. Leverage (Cook's distance)
+plot(nb_model, which = 5, main = "Residuals vs Leverage")
+
+# 2. Overdispersion Check
+# Calculate dispersion parameter
+dispersion <- sum(residuals(nb_model, type = "pearson")^2) / df.residual(nb_model)
+print(paste("Dispersion Parameter:", round(dispersion, 3)))
+
+# 3. Goodness-of-Fit
+# Deviance and Pearson Chi-Square
+deviance <- nb_model$deviance
+pearson_chi <- sum(residuals(nb_model, type = "pearson")^2)
+print(paste("Deviance:", round(deviance, 3)))
+print(paste("Pearson Chi-Square:", round(pearson_chi, 3)))
+
+# 4. Influence Measures
+# Cook's distance
+cooksd <- cooks.distance(nb_model)
+influential <- cooks.distance(nb_model) > 4 / length(cooksd)  # Threshold: 4/n
+print(paste("Number of Influential Points:", sum(influential)))
+
+# Plot Cook's distance
+plot(cooksd, type = "h", main = "Cook's Distance", ylab = "Cook's Distance")
+abline(h = 4 / length(cooksd), col = "red")
+
+# 5. Summary of Model Fit
+summary(nb_model)
+```
+
+
+quartle as iv
+
+
+```{r}
+library(MASS)
+
+# Prepare data
+data_regre <- data_regre |>
+  mutate(quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1"), ordered = TRUE)) |>
+  na.omit(quartile, OA, coop, n_countries, old, ind, pub, uni, jap, vn)
+
+# Fit ordinal logistic regression
+ord_model <- polr(quartile ~ OA + coop + n_countries + old + ind + pub + uni + jap + vn, 
+                  data = data_regre, Hess = TRUE)
+
+# Summary
+summary(ord_model)
+
+# Odds ratios
+exp(coef(ord_model))
+```
+
+
+SDG
+
+
+```{r}
+install.packages("text2sdg")
+library(text2sdg)
+
+data_test <- data_bib |> 
+  filter(Year < 2000)
+
+sdg_results <- detect_sdg(text = data_bib$Abstract)
+
+sdg_results <- sdg_results|> 
+  pivot_wider(
+    id_cols = document,
+    names_from = sdg,
+    values_from = hit
+  )
+
+write.csv(sdg_results, "data/sdg.csv", row.names = FALSE, na = "")
+
+```
+
+
+
+```{r}
+data_reg <- data_reg |>
+  mutate(
+    # Extract first affiliation (before first semicolon)
+    first_affiliation = str_extract(affiliations, "^[^;]+"),
+    
+    # Create binary variables
+    fa_vn = if_else(str_detect(first_affiliation, regex("vietnam|viet nam", ignore_case = TRUE)), 1, 0),
+    fa_jp = if_else(str_detect(first_affiliation, regex("japan", ignore_case = TRUE)), 1, 0),
+    fa_o = if_else(fa_vn == 0 & fa_jp == 0, 1, 0)
+  ) |>
+  select(-first_affiliation)  # Remove temporary column if you don't need it
+
+# Verify - should sum to number of rows
+sum(data_reg$fa_vn + data_reg$fa_jp + data_reg$fa_o) == nrow(data_reg)
+
+# Check distribution
+table(data_reg$fa_vn, data_reg$fa_jp, data_reg$fa_o)
+```
+
+
+```{r}
+data_reg <- data_reg |>
+  mutate(
+    # Split affiliations by semicolon, count how many contain Vietnam/Japan
+    n_vn_authors = map_int(affiliations, ~{
+      affs <- str_split(.x, ";")[[1]]
+      sum(str_detect(affs, regex("vietnam|viet nam", ignore_case = TRUE)))
+    }),
+    
+    n_jp_authors = map_int(affiliations, ~{
+      affs <- str_split(.x, ";")[[1]]
+      sum(str_detect(affs, regex("japan", ignore_case = TRUE)))
+    })
+  )
+# Check distribution
+summary(data_reg$n_vn_authors)
+summary(data_reg$n_jp_authors)
+
+# Cross-tabulation
+table(data_reg$n_vn_authors, data_reg$n_jp_authors)
+
+data_reg <- data_reg |>
+  mutate(
+    # Total VN+JP authors
+    n_vn_jp_authors = n_vn_authors + n_jp_authors,
+    
+    # Proportion of VN authors in the paper
+    prop_vn_authors = n_vn_authors / n_vn_jp_authors,
+    
+    # Leadership patterns
+    vn_led = fa_vn == 1,  # if you created fa_vn earlier
+    jp_led = fa_jp == 1,
+    
+    # Collaboration intensity categories
+    collab_type = case_when(
+      n_vn_authors > n_jp_authors ~ "VN-dominated",
+      n_jp_authors > n_vn_authors ~ "JP-dominated",
+      n_vn_authors == n_jp_authors ~ "Balanced",
+      TRUE ~ "Other"
+    )
+  )
+
+  # Pick a random row and check manually
+sample_row <- sample(1:nrow(data_reg), 1)
+data_reg[sample_row, c("affiliations", "n_vn_authors", "n_jp_authors")]
+```
+
+
