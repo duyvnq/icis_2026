@@ -36,6 +36,8 @@ data_reg <- read.csv("data/all_1020.csv") |>
   mutate(OA = if_else(OA == "", 0, 1)) |>
   mutate(id = row_number()) |> 
   relocate(id, .before = 1)
+
+data_bib <- read.csv("data/all_1020.csv")
 ```
 
 Sources data are September version from Scopus.
@@ -298,4 +300,91 @@ sdg_results <- sdg_results|>
   )
 
 write.csv(sdg_results, "data/sdg.csv", row.names = FALSE, na = "")
+```
+
+
+
+```{r}
+data_reg <- data_reg |>
+  mutate(
+    # Extract first affiliation (before first semicolon)
+    first_affiliation = str_extract(affiliations, "^[^;]+"),
+    
+    # Create binary variables
+    fa_vn = if_else(str_detect(first_affiliation, regex("vietnam|viet nam", ignore_case = TRUE)), 1, 0),
+    fa_jp = if_else(str_detect(first_affiliation, regex("japan", ignore_case = TRUE)), 1, 0),
+    fa_o = if_else(fa_vn == 0 & fa_jp == 0, 1, 0)
+  ) |>
+  select(-first_affiliation)  # Remove temporary column if you don't need it
+
+# Verify - should sum to number of rows
+sum(data_reg$fa_vn + data_reg$fa_jp + data_reg$fa_o) == nrow(data_reg)
+
+# Check distribution
+table(data_reg$fa_vn, data_reg$fa_jp, data_reg$fa_o)
+```
+
+
+```{r}
+data_reg <- data_reg |>
+  mutate(
+    # Split affiliations by semicolon, count how many contain Vietnam/Japan
+    n_vn_authors = map_int(affiliations, ~{
+      affs <- str_split(.x, ";")[[1]]
+      sum(str_detect(affs, regex("vietnam|viet nam", ignore_case = TRUE)))
+    }),
+    
+    n_jp_authors = map_int(affiliations, ~{
+      affs <- str_split(.x, ";")[[1]]
+      sum(str_detect(affs, regex("japan", ignore_case = TRUE)))
+    })
+  )
+# Check distribution
+summary(data_reg$n_vn_authors)
+summary(data_reg$n_jp_authors)
+
+# Cross-tabulation
+table(data_reg$n_vn_authors, data_reg$n_jp_authors)
+
+data_reg <- data_reg |>
+  mutate(
+    # Total VN+JP authors
+    n_vn_jp_authors = n_vn_authors + n_jp_authors,
+    
+    # Proportion of VN authors in the paper
+    prop_vn_authors = n_vn_authors / n_vn_jp_authors,
+    
+    # Leadership patterns
+    vn_led = fa_vn == 1,  # if you created fa_vn earlier
+    jp_led = fa_jp == 1,
+    
+    # Collaboration intensity categories
+    collab_type = case_when(
+      n_vn_authors > n_jp_authors ~ "VN-dominated",
+      n_jp_authors > n_vn_authors ~ "JP-dominated",
+      n_vn_authors == n_jp_authors ~ "Balanced",
+      TRUE ~ "Other"
+    )
+  )
+
+  # Pick a random row and check manually
+sample_row <- sample(1:nrow(data_reg), 1)
+data_reg[sample_row, c("affiliations", "n_vn_authors", "n_jp_authors")]
+```
+
+export
+
+```{r}
+sdg_results$document <- as.integer(sdg_results$document)
+data_reg <- data_reg |>
+  left_join(sdg_results, by = c("id" = "document"))
+
+data_reg <- data_reg |>
+  mutate(
+    across(starts_with("SDG-"), ~ replace_na(., 0)),
+    across(starts_with("SDG-"), ~ if_else(. > 0, 1, 0)),
+    n_sdg = rowSums(pick(starts_with("SDG-")), na.rm = TRUE)
+  )
+
+write.csv(data_reg, "data/processed_data.csv", row.names = FALSE, na = "")
 ```
