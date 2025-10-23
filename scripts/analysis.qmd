@@ -25,6 +25,16 @@ data_reg |>
   ggplot(aes(x = year, fill = coop)) +
   geom_bar(position = "dodge") +
   theme_bw()
+
+data_reg |> 
+  select(year, coop) |> 
+  na.omit() |> 
+  filter(year > 1990) |> 
+  group_by(year, coop) |> 
+  summarise(n = n(), .groups = "drop") |> 
+  ggplot(aes(x = year, y = n, color = coop)) +
+  geom_line() +
+  theme_bw()
 ```
 
 ## Number of outputs per year by OA
@@ -166,6 +176,10 @@ data_reg |>
 ggplot(data_reg, aes(x = log1p(cited))) +
   geom_histogram(bins = 21, color = "white") +
   theme_bw()
+
+ggplot(data_reg, aes(x = log1p(cited))) +
+  geom_histogram(bins = 21, color = "white") +
+  theme_bw()
 ```
 
 ## Comparing citations:
@@ -200,13 +214,36 @@ Experiment
 
 
 ```{r}
-# Wilcoxon test for citations
-wilcox.test(cited ~ coop, data = data_reg %>% filter(year > 1990, !is.na(cited)))
-
 # Chi-square for OA rates
 table_oa <- table(data_reg$coop, data_reg$OA)
 chisq.test(table_oa)
 
 # ANOVA/Kruskal for SJR
 kruskal.test(sjr_score ~ coop, data = data_reg %>% filter(year > 1990, !is.na(sjr_score)))
+```
+
+Regression analysis
+
+```{r}
+library(MASS)
+
+# Prepare data
+data_regre <- data_reg |> 
+  mutate(
+    OA = factor(OA, labels = c("Not OA", "OA")),
+    coop = factor(coop, labels = c("Bilateral", "Multilateral")),
+    quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1")),
+    fund = as.factor(fund),
+    across(c(LS:HS, ind, pub, uni, jap, vn, n_funder, n_ftype), as.factor)
+  ) |> 
+  na.omit(cited, OA, coop, n_countries, year, quartile, LS, SS, PS, HS, ind, pub, uni, jap, vn, n_ftype) |> 
+  mutate(
+    old = 2025 - year
+  )
+
+# Fit negative binomial regression model
+nb_model <- glm.nb(cited ~ OA + coop + n_countries + old + quartile + LS + SS + PS + HS + ind + pub + uni + jap + vn + fund + n_funder + n_ftype, data = data_regre)
+
+# Summary of the model
+summary(nb_model)
 ```
