@@ -212,8 +212,8 @@ dfs <- list(
   vn_pub, vn_uni
 )
 
-merged <- bind_rows(dfs) %>%
-  group_by(DOI) %>%
+merged <- bind_rows(dfs) |>
+  group_by(DOI) |>
   summarise(
     across(
       .cols = everything(),
@@ -272,7 +272,30 @@ data_reg <- data_reg |>
     n_ftype = as.factor(n_ftype)
   )
 
-write.csv(data_reg, "data/processed_data.csv")
+write.csv(data_reg, "data/processed_data.csv", row.names = FALSE, na = "")
 ```
 
 After processing, data is stored in `processed_data.csv`.
+
+
+# SDG data
+
+
+```{r}
+install.packages("text2sdg")
+library(text2sdg)
+
+data_test <- data_bib |> 
+  filter(Year < 2000)
+
+sdg_results <- detect_sdg(text = data_bib$Abstract)
+
+sdg_results <- sdg_results|> 
+  pivot_wider(
+    id_cols = document,
+    names_from = sdg,
+    values_from = hit
+  )
+
+write.csv(sdg_results, "data/sdg.csv", row.names = FALSE, na = "")
+```
