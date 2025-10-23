@@ -86,7 +86,7 @@ coop_type <- affiliations_long |>
       TRUE ~ NA_real_
     )
   ) |> 
-  select(id, coop)
+  select(id, coop, n_countries)
 
 data_reg <- data_reg |> 
   left_join(coop_type, by = "id")
