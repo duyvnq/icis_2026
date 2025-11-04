@@ -8,9 +8,16 @@ format: html
 library(tidyverse)
 library(bibliometrix)
 
-data_reg <- read.csv("data/processed_data.csv") |>
-  select(id:quartile) |>
-  select(-(agr_bio:heal))
+data_reg <- read.csv("data/processed_data.csv") |> 
+  mutate(
+    OA = as.factor(OA),
+    coop = as.factor(coop),
+    fund = as.factor(fund),
+    quartile = as.factor(quartile),
+    collab_type = as.factor(collab_type),
+    across(c(asian, eu, us, int, vn, jap), ~ as.factor(.x)),
+    across(c(pub, ind, uni), ~ as.factor(.x))
+  )
 
 data_bib <- read.csv("data/all_1020.csv")
 ```
@@ -266,3 +273,31 @@ exp(coef(ord_model))
 
 
 
+# Initial
+
+
+```{r}
+# 1. Leadership patterns
+table(data_reg$fa_vn, data_reg$fa_jp, data_reg$fa_o)
+prop.table(table(data_reg$collab_type))
+
+# 2. SDG patterns
+top_sdgs <- colSums(select(data_reg, starts_with("SDG_"))) |> 
+  sort(decreasing = TRUE) |> head(5)
+
+# 3. Quality by leadership
+data_reg |> group_by(fa_vn, fa_jp) |> 
+  summarise(mean_cited = mean(cited, na.rm=T),
+            pct_q1 = mean(quartile=="Q1", na.rm=T))
+
+# 4. Funding impact
+data_reg |> group_by(fund) |> 
+  summarise(mean_cited = mean(cited, na.rm=T),
+            mean_sdg = mean(n_sdg, na.rm=T))
+
+# 5. Bilateral vs multilateral
+data_reg |> group_by(coop) |> 
+  summarise(mean_cited = mean(cited, na.rm=T),
+            pct_vn_led = mean(fa_vn==1, na.rm=T),
+            mean_sdg = mean(n_sdg, na.rm=T))
+```
