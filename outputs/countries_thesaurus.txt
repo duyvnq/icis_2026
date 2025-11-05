@@ -1,0 +1,99 @@
+label	replace by
+américas	americas
+democratic republic congo	democratic republic of the congo
+viet nam	vietnam
+russian federation	russia
+syrian arab republic	syria
+brunei darussalam	brunei
+cote d'ivoire	ivory coast
+falkland islands (malvinas)	falkland islands
+virgin islands (u.s.)	us virgin islands
+(nitep)	
+aalphi	
+ahivcos	
+amacs	
+amp	
+anrs co13 hepavih	
+anrs co2 seroco	
+anrs co3 aquitaine	
+anrs co4 fhdh	
+anrs co6 primo	
+anrs co8 copilote	
+army medical university	
+asian development bank	
+athena	
+cascade	
+center	
+chips	
+city	
+collection	
+committee	
+coris	
+corispe-cat	
+danish hiv cohort	
+department	
+deve-mairie de paris	
+diseases	
+disorders	
+dutch lady vietnam	
+ecs	
+electro-communications	
+ent department	
+epf	
+eurosida	
+faculdade de farmácia	
+fauna & amp	
+fhdh	
+gemes-haemo	
+georgian national hiv/aids	
+german clinsurv	
+group	
+hanoi	
+health	
+health management	
+hospital	
+http://www.onlineresearchclub.org/	
+hue healthcare center	
+iassy	
+icc	
+icona	
+infection	
+institute	
+isglobal	
+italian master cohort	
+kompnet	
+laboratory	
+level 5	
+medicine	
+nebius ai	
+nenexp	
+network)	
+nhfp einstein fellow	
+nork marash mc	
+nshpc	
+office	
+part)	
+piscis	
+reproduction	
+research	
+school of medicine	
+science	
+sciences	
+service strategy sector	
+shcs	
+société internationale d'urologie	
+student research committee	
+study	
+surgeon	
+swedish infcare	
+technical staff	
+technology	
+toxoplasmosis research center	
+uk chic	
+unit	
+university of dź	
+vach	
+vietnam atomic commission	vietnam
+vietnam-netherlands economics program	vietnam
+vinmec healthcare system	vietnam
+work	
