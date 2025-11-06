@@ -1,0 +1,747 @@
+label	replace by
+10-80 division, hanoi medical university, hanoi, viet nam	HANOI MEDICAL UNIVERSITY
+academia sinica, institute of astronomy and astrophysics, taipei, taiwan	INSTITUTE OF ASTRONOMY AND ASTROPHYSICS
+advanced materials and structures laboratory, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+advanced preventive medical sciences research center, kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+advanced science research center, japan atomic energy agency, kashiwa, japan	ADVANCED SCIENCE RESEARCH CENTER
+agricultural genetics institute, hanoi, viet nam	AGRICULTURAL GENETICS INSTITUTE
+agricultural genetics institute, vietnam academy of social sciences, hanoi, viet nam	AGRICULTURAL GENETICS INSTITUTE
+aids clinical center, national center for global health and medicine, tokyo, japan	NATIONAL CENTER FOR GLOBAL HEALTH AND MEDICINE
+amfar - the foundation for aids research, bangkok, thailand	THE FOUNDATION FOR AIDS RESEARCH
+asian development bank institute, tokyo, japan	ASIAN DEVELOPMENT BANK INSTITUTE
+bach mai hospital, hanoi, viet nam	BACH MAI HOSPITAL
+banking academy of vietnam, hanoi, viet nam	HANOI
+banking university of ho chi minh city, ho chi minh city, viet nam	HO CHI MINH CITY
+beijing ditan hospital capital medical university, beijing, china	CAPITAL MEDICAL UNIVERSITY
+biomedical and pharmaceutical research center, vietnam military medical university, hanoi, viet nam	VIETNAM MILITARY MEDICAL UNIVERSITY
+bioproductivity informatics research team, riken center for sustainable resource science, yokohama, japan	RIKEN CENTER FOR SUSTAINABLE RESOURCE SCIENCE
+biotechnology center of ho chi minh city, ho chi minh city, viet nam	HO CHI MINH CITY
+biotechnology research and development institute, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+bureau of international health cooperation, national center for global health and medicine, tokyo, japan	NATIONAL CENTER FOR GLOBAL HEALTH AND MEDICINE
+can tho university, can tho, viet nam	CAN THO UNIVERSITY
+cancer research laboratory, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF SCIENCE
+center for agricultural innovation, vietnam national university of agriculture, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+center for agricultural research and ecological studies (cares), vietnam national university of agriculture, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+center for aids research, kumamoto university, kumamoto, japan	KUMAMOTO UNIVERSITY
+center for animal disease control, university of miyazaki, miyazaki, japan	UNIVERSITY OF MIYAZAKI
+center for asian conservation ecology, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+center for atomic and molecular technologies, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+center for computational sciences, university of tsukuba, tsukuba, japan	UNIVERSITY OF TSUKUBA
+center for environmental technology and sustainable development (cetasd), vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+center for infectious disease research in asia and africa, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+center for informatics and computation in astronomy, national tsing hua university, hsinchu, taiwan	NATIONAL TSING HUA UNIVERSITY
+center for innovative materials and architectures (inomar), ho chi minh city, viet nam	HO CHI MINH CITY
+center for innovative materials and architectures (inomar), viet nam national university ho chi minh city, ho chi minh city, viet nam	VIET NAM NATIONAL UNIVERSITY HO CHI MINH CITY
+center for innovative materials and architectures, ho chi minh city, viet nam	HO CHI MINH CITY
+center for international collaborative research, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+center for marine environmental studies, ehime university, matsuyama, japan	EHIME UNIVERSITY
+center for material cycles and waste management research, national institute for environmental studies of japan, tsukuba, japan	NATIONAL INSTITUTE FOR ENVIRONMENTAL STUDIES OF JAPAN
+center for molecular biomedicine, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam	UNIVERSITY OF MEDICINE AND PHARMACY AT HCMC
+center for nuclear study, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+center for nuclear techniques, vietnam atomic energy institute, hanoi, viet nam	VIETNAM ATOMIC ENERGY INSTITUTE
+center for research and technology transfer, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+center for southeast asian studies, kyoto university, kyoto, japan	KYOTO UNIVERSITY
+center of advanced technology for the environment, ehime university, matsuyama, japan	EHIME UNIVERSITY
+centre for environmental technology and sustainable development (cetasd), vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+centre for interdisciplinary social research, phenikaa university, hanoi, viet nam	PHENIKAA UNIVERSITY
+centre for theoretical chemistry and physics, massey university auckland, auckland, new zealand	MASSEY UNIVERSITY AUCKLAND
+ceramics and biomaterials research group, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+chiangrai prachanukroh hospital, chiang rai, thailand	CHIANGRAI PRACHANUKROH HOSPITAL
+chiba university, chiba, japan	CHIBA UNIVERSITY
+children's hospital 2, ho chi minh city, viet nam	HO CHI MINH CITY
+children's hospital no. 1, ho chi minh city, viet nam	HO CHI MINH CITY
+cho ray hospital, ho chi minh city, viet nam	CHO RAY HOSPITAL
+civil and environmental engineering program, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+college of agriculture, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+college of aquaculture and fisheries, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+college of engineering and computer science, vinuniversity, hanoi, viet nam	VINUNIVERSITY
+college of engineering technology, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+college of environment and natural resources, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+college of natural sciences, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+college of systems engineering and science, shibaura institute of technology, tokyo, japan	SHIBAURA INSTITUTE OF TECHNOLOGY
+college of veterinary medicine, seoul national university, seoul, south korea	SEOUL NATIONAL UNIVERSITY
+commonwealth scientific and industrial research organisation, canberra, australia	COMMONWEALTH SCIENTIFIC AND INDUSTRIAL RESEARCH ORGANISATION
+community medicine support dentistry, ohu university, koriyama, japan	JAPAN
+computational astrophysics laboratory, riken, wako, japan	COMPUTATIONAL ASTROPHYSICS LABORATORY
+computer communications laboratory, the university of aizu, aizuwakamatsu, japan	THE UNIVERSITY OF AIZU
+cuu long delta rice research institute, can tho, viet nam	CUU LONG DELTA RICE RESEARCH INSTITUTE
+dai nam university, hanoi, viet nam	HANOI
+dalian university of technology, dalian, china	DALIAN UNIVERSITY OF TECHNOLOGY
+de la salle university, manila, philippines	DE LA SALLE UNIVERSITY
+department for management of science and technology development, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+department of agricultural and resource economics, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+department of agro-environmental sciences, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+department of animal health, ministry of agriculture and rural development, hanoi, viet nam	DEPARTMENT OF ANIMAL HEALTH
+department of applied biological science, kagawa university, takamatsu, japan	KAGAWA UNIVERSITY
+department of applied biology, kyoto institute of technology, kyoto, japan	KYOTO INSTITUTE OF TECHNOLOGY
+department of applied chemistry, national chiao tung university, hsinchu, taiwan	NATIONAL CHIAO TUNG UNIVERSITY
+department of applied chemistry, osaka metropolitan university, osaka, japan	OSAKA METROPOLITAN UNIVERSITY
+department of applied chemistry, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+department of applied physics and chemistry, the university of electro-communications, chofu, japan	THE UNIVERSITY OF ELECTRO-COMMUNICATIONS
+department of applied physics, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+department of architecture and civil engineering, toyohashi university of technology, toyohashi, japan	TOYOHASHI UNIVERSITY OF TECHNOLOGY
+department of architecture, nihon university, tokyo, japan	NIHON UNIVERSITY
+department of astronomy, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+department of astronomy, university of illinois urbana-champaign, urbana, united states	UNIVERSITY OF ILLINOIS URBANA-CHAMPAIGN
+department of astrophysics, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+department of bacteriology i, national institute of infectious diseases, tokyo, japan	NATIONAL INSTITUTE OF INFECTIOUS DISEASES
+department of bacteriology, national institute of hygiene and epidemiology hanoi, hanoi, viet nam	NATIONAL INSTITUTE OF HYGIENE AND EPIDEMIOLOGY HANOI
+department of bacteriology, national institute of hygiene and epidemiology, hanoi, viet nam	NATIONAL INSTITUTE OF HYGIENE AND EPIDEMIOLOGY
+department of biochemistry and molecular biology, gazipur agricultural university, gazipur, bangladesh	GAZIPUR AGRICULTURAL UNIVERSITY
+department of bioinformatics and genomics, kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+department of biological sciences, national university of singapore, singapore city, singapore	NATIONAL UNIVERSITY OF SINGAPORE
+department of biological sciences, tokyo metropolitan university, hachioji, japan	TOKYO METROPOLITAN UNIVERSITY
+department of biology, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+department of biology, chiba university, chiba, japan	CHIBA UNIVERSITY
+department of biomolecular engineering, kyoto institute of technology, kyoto, japan	KYOTO INSTITUTE OF TECHNOLOGY
+department of bioresource sciences, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+department of bioscience and biotechnology, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+department of botany and microbiology, college of sciences, riyadh, saudi arabia	COLLEGE OF SCIENCES
+department of botany, faculty of science, aswan, egypt	FACULTY OF SCIENCE
+department of business and it, university of south-eastern norway, kongsberg, norway	UNIVERSITY OF SOUTH-EASTERN NORWAY
+department of cardiology, national heart centre singapore, singapore city, singapore	NATIONAL HEART CENTRE SINGAPORE
+department of chemical engineering, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+department of chemical engineering, institut teknologi bandung, bandung, indonesia	INSTITUT TEKNOLOGI BANDUNG
+department of chemistry, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+department of chemistry, chulalongkorn university, bangkok, thailand	CHULALONGKORN UNIVERSITY
+department of chemistry, thammasat university, pathum thani, thailand	THAMMASAT UNIVERSITY
+department of civil & environmental engineering, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+department of civil & environmental engineering, institute of science tokyo, tokyo, japan	INSTITUTE OF SCIENCE TOKYO
+department of civil & environmental engineering, nagaoka university of technology, nagaoka, japan	NAGAOKA UNIVERSITY OF TECHNOLOGY
+department of civil & environmental engineering, tokyo metropolitan university, hachioji, japan	TOKYO METROPOLITAN UNIVERSITY
+department of civil & environmental engineering, waseda university, tokyo, japan	WASEDA UNIVERSITY
+department of civil engineering, chulalongkorn university, bangkok, thailand	CHULALONGKORN UNIVERSITY
+department of civil engineering, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+department of civil engineering, thuyloi university, hanoi, viet nam	THUYLOI UNIVERSITY
+department of civil engineering, tohoku university, sendai, japan	TOHOKU UNIVERSITY
+department of civil engineering, university of danang, da nang, viet nam	UNIVERSITY OF DANANG
+department of civil engineering, yokohama national university, yokohama, japan	YOKOHAMA NATIONAL UNIVERSITY
+department of clinical medicine, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+department of clinical product development, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+department of community and global health, graduate school of medicine, tokyo, japan	GRADUATE SCHOOL OF MEDICINE
+department of computer and network engineering, the university of electro-communications, chofu, japan	THE UNIVERSITY OF ELECTRO-COMMUNICATIONS
+department of crop sciences, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+department of dermatology and venereology, hanoi medical university, hanoi, viet nam	HANOI MEDICAL UNIVERSITY
+department of design of machinery and robot, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+department of development technology, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+department of developmental medical sciences, graduate school of medicine, tokyo, japan	GRADUATE SCHOOL OF MEDICINE
+department of disease control, graduate school of veterinary medicine, sapporo, japan	GRADUATE SCHOOL OF VETERINARY MEDICINE
+department of earth science education, seoul national university, seoul, south korea	SEOUL NATIONAL UNIVERSITY
+department of earth sciences, yamaguchi university, yamaguchi, japan	YAMAGUCHI UNIVERSITY
+department of electrical and electronic engineering, institute of science tokyo, tokyo, japan	INSTITUTE OF SCIENCE TOKYO
+department of electrical and electronic information engineering, toyohashi university of technology, toyohashi, japan	TOYOHASHI UNIVERSITY OF TECHNOLOGY
+department of electrical engineering and information systems, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+department of electrical engineering, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+department of electrical engineering, shibaura institute of technology, tokyo, japan	SHIBAURA INSTITUTE OF TECHNOLOGY
+department of electrical, gifu university, gifu, japan	GIFU UNIVERSITY
+department of endoscopy, cho ray hospital, ho chi minh city, viet nam	CHO RAY HOSPITAL
+department of engineering mechanics, hohai university, nanjing, china	HOHAI UNIVERSITY
+department of environment and energy systems, shizuoka university, shizuoka, japan	SHIZUOKA UNIVERSITY
+department of environmental and preventive medicine, oita university faculty of medicine, yufu, japan	OITA UNIVERSITY FACULTY OF MEDICINE
+department of environmental engineering, daegu university, gyeongsan, south korea	DAEGU UNIVERSITY
+department of environmental engineering, kyoto university, kyoto, japan	KYOTO UNIVERSITY
+department of environmental health, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam	UNIVERSITY OF MEDICINE AND PHARMACY AT HCMC
+department of environmental sciences, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+department of environmental sciences, okayama university, okayama, japan	OKAYAMA UNIVERSITY
+department of environmental technology and management, hanoi university of civil engineering, hanoi, viet nam	HANOI UNIVERSITY OF CIVIL ENGINEERING
+department of epidemiology and prevention, national center for global health and medicine, tokyo, japan	NATIONAL CENTER FOR GLOBAL HEALTH AND MEDICINE
+department of epidemiology and public health, kanazawa medical university, kahoku, japan	KANAZAWA MEDICAL UNIVERSITY
+department of food and nutrition, japan women's university, tokyo, japan	JAPAN WOMEN'S UNIVERSITY
+department of food and post-harvest technology, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+department of food technology, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+department of food technology, tien giang university, my tho city, viet nam	TIEN GIANG UNIVERSITY
+department of forest vegetation, forestry and forest products research institute, tsukuba, japan	FORESTRY AND FOREST PRODUCTS RESEARCH INSTITUTE
+department of functional chemistry, kyoto institute of technology, kyoto, japan	KYOTO INSTITUTE OF TECHNOLOGY
+department of geography, tokyo metropolitan university, hachioji, japan	TOKYO METROPOLITAN UNIVERSITY
+department of immunogenetics, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+department of immunology, vietnamese academy of science and technology institute of biotechnology, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF BIOTECHNOLOGY
+department of infectious disease epidemiology, london school of hygiene & tropical medicine, london, united kingdom	LONDON
+department of infectious diseases, bach mai hospital, hanoi, viet nam	BACH MAI HOSPITAL
+department of infectious diseases, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+department of infectious diseases, national center for global health and medicine, tokyo, japan	NATIONAL CENTER FOR GLOBAL HEALTH AND MEDICINE
+department of infectious diseases, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam	UNIVERSITY OF MEDICINE AND PHARMACY AT HCMC
+department of infectious diseases, university of miyazaki faculty of medicine, miyazaki, japan	UNIVERSITY OF MIYAZAKI
+department of internal medicine, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam	UNIVERSITY OF MEDICINE AND PHARMACY AT HCMC
+department of internal medicine, yonsei university college of medicine, seoul, south korea	YONSEI UNIVERSITY COLLEGE OF MEDICINE
+department of machinery and control systems, shibaura institute of technology, tokyo, japan	SHIBAURA INSTITUTE OF TECHNOLOGY
+department of marine sciences and convergent technology, hanyang university erica campus, ansan, south korea	HANYANG UNIVERSITY ERICA CAMPUS
+department of materials science and engineering, institute of science tokyo, tokyo, japan	INSTITUTE OF SCIENCE TOKYO
+department of materials science and engineering, nagoya institute of technology, nagoya, japan	NAGOYA INSTITUTE OF TECHNOLOGY
+department of materials science and technology, nagaoka university of technology, nagaoka, japan	NAGAOKA UNIVERSITY OF TECHNOLOGY
+department of materials science, kyushu institute of technology, kitakyushu, japan	KYUSHU INSTITUTE OF TECHNOLOGY
+department of materials science, university of tsukuba, tsukuba, japan	UNIVERSITY OF TSUKUBA
+department of mathematics, meiji university, tokyo, japan	MEIJI UNIVERSITY
+department of mathematics, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+department of mechanical engineering and science, kyoto university, kyoto, japan	KYOTO UNIVERSITY
+department of mechanical engineering, nagaoka university of technology, nagaoka, japan	NAGAOKA UNIVERSITY OF TECHNOLOGY
+department of mechanical engineering, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+department of medicine, siriraj hospital, bangkok, thailand	SIRIRAJ HOSPITAL
+department of medicine, universiti malaya, kuala lumpur, malaysia	UNIVERSITI MALAYA
+department of microbiology and immunology, pasteur institute in ho chi minh city, ho chi minh city, viet nam	PASTEUR INSTITUTE IN HO CHI MINH CITY
+department of microbiology and immunology, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+department of microbiology, osaka institute of public health, osaka, japan	INSTITUTE OF PUBLIC HEALTH
+department of molecular and environmental biotechnology, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF SCIENCE
+department of molecular and material sciences, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+department of molecular pathology, oita university faculty of medicine, yufu, japan	OITA UNIVERSITY FACULTY OF MEDICINE
+department of nanotechnology for sustainable energy, kwansei gakuin university, nishinomiya, japan	KWANSEI GAKUIN UNIVERSITY
+department of non-communicable disease control and nutrition, nha trang pasteur institute, khanh hoa province, viet nam	NHA TRANG PASTEUR INSTITUTE
+department of nursing, komatsu university, komatsu, japan	KOMATSU UNIVERSITY
+department of occupational health, hanoi medical university, hanoi, viet nam	HANOI MEDICAL UNIVERSITY
+department of parasitology, vietnam national university of agriculture, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+department of parasitology, vietnamese academy of science and technology institute of ecology and biological resources, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF ECOLOGY AND BIOLOGICAL RESOURCES
+department of pathobiological sciences, university of wisconsin school of veterinary medicine, madison, united states	UNIVERSITY OF WISCONSIN SCHOOL OF VETERINARY MEDICINE
+department of pathobiological sciences, university of wisconsin-madison, madison, united states	UNIVERSITY OF WISCONSIN-MADISON
+department of pathology, national institute of infectious diseases, tokyo, japan	NATIONAL INSTITUTE OF INFECTIOUS DISEASES
+department of pathology, shiga university of medical science, otsu, japan	SHIGA UNIVERSITY OF MEDICAL SCIENCE
+department of pathology, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam	UNIVERSITY OF MEDICINE AND PHARMACY AT HCMC
+department of pathophysiology and host defense, the research institute of tuberculosis, japan anti-tuberculosis association, kiyose, japan	THE RESEARCH INSTITUTE OF TUBERCULOSIS
+department of pediatrics, hanoi medical university, hanoi, viet nam	HANOI MEDICAL UNIVERSITY
+department of pediatrics, nagasaki university hospital, nagasaki, japan	NAGASAKI UNIVERSITY
+department of pediatrics, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam	UNIVERSITY OF MEDICINE AND PHARMACY AT HCMC
+department of physics and astronomy, kagoshima university, kagoshima, japan	KAGOSHIMA UNIVERSITY
+department of physics and astronomy, seoul national university, seoul, south korea	SEOUL NATIONAL UNIVERSITY
+department of physics and nanotechnology, srm institute of science and technology, kattankulathur, india	SCIENCE AND TECHNOLOGY
+department of physics, ewha womans university, seoul, south korea	EWHA WOMANS UNIVERSITY
+department of physics, hanoi university, hanoi, viet nam	HANOI
+department of physics, ho chi minh city university of education, ho chi minh city, viet nam	HO CHI MINH CITY UNIVERSITY OF EDUCATION
+department of physics, korea advanced institute of science and technology, daejeon, south korea	KOREA ADVANCED INSTITUTE OF SCIENCE AND TECHNOLOGY
+department of physics, kyoto university, kyoto, japan	KYOTO UNIVERSITY
+department of physics, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+department of physics, national tsing hua university, hsinchu, taiwan	NATIONAL TSING HUA UNIVERSITY
+department of physics, sungkyunkwan university, seoul, south korea	SUNGKYUNKWAN UNIVERSITY
+department of physics, the university of hong kong, hong kong, hong kong	THE UNIVERSITY OF HONG KONG
+department of physics, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+department of physics, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+department of physics, tohoku university, sendai, japan	TOHOKU UNIVERSITY
+department of physics, university of surrey, guildford, united kingdom	UNIVERSITY OF SURREY
+department of physiology, vietnam military medical university, hanoi, viet nam	VIETNAM MILITARY MEDICAL UNIVERSITY
+department of plant and soil science, texas tech university, lubbock, united states	TEXAS TECH UNIVERSITY
+department of plant protection, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+department of plant resources, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+department of population and quantitative health sciences, university of massachusetts chan medical school, worcester, united states	UNIVERSITY OF MASSACHUSETTS CHAN MEDICAL SCHOOL
+department of precision engineering, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+department of preventive environment and nutrition, tokushima university, tokushima, japan	TOKUSHIMA UNIVERSITY
+department of protozoology, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+department of public health, fukushima medical university, fukushima, japan	FUKUSHIMA MEDICAL UNIVERSITY
+department of public health, international university of health and welfare, otawara, japan	INTERNATIONAL UNIVERSITY OF HEALTH AND WELFARE
+department of public health, kanazawa medical university, kahoku, japan	KANAZAWA MEDICAL UNIVERSITY
+department of public health, kanazawa university school of medicine, kanazawa, japan	KANAZAWA UNIVERSITY
+department of public health, kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+department of public health, okayama university of science, okayama, japan	UNIVERSITY OF SCIENCE
+department of respiratory diseases, national center for global health and medicine, tokyo, japan	NATIONAL CENTER FOR GLOBAL HEALTH AND MEDICINE
+department of science of technology innovation, nagaoka university of technology, nagaoka, japan	NAGAOKA UNIVERSITY OF TECHNOLOGY
+department of soil sciences, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+department of surgery, graduate school of medicine, kyoto, japan	GRADUATE SCHOOL OF MEDICINE
+department of surgery, hanoi medical university, hanoi, viet nam	HANOI MEDICAL UNIVERSITY
+department of urban engineering, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+department of urban management, kyoto university, kyoto, japan	KYOTO UNIVERSITY
+department of vector ecology and environment, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+department of vertebrate zoology, vietnamese academy of science and technology institute of ecology and biological resources, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF ECOLOGY AND BIOLOGICAL RESOURCES
+department of veterinary clinical sciences, university of miyazaki, miyazaki, japan	UNIVERSITY OF MIYAZAKI
+department of veterinary medicine, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+department of veterinary pathology, university of miyazaki, miyazaki, japan	UNIVERSITY OF MIYAZAKI
+department of veterinary pharmacology, kagoshima university, kagoshima, japan	KAGOSHIMA UNIVERSITY
+department of veterinary public health, vietnam national university of agriculture, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+department of veterinary science, university of miyazaki, miyazaki, japan	UNIVERSITY OF MIYAZAKI
+department of virology and parasitology, fujita health university school of medicine, toyoake, japan	SCHOOL OF MEDICINE
+department of virology, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+department of virology, national institute of hygiene and epidemiology hanoi, hanoi, viet nam	NATIONAL INSTITUTE OF HYGIENE AND EPIDEMIOLOGY HANOI
+department of virology, national institute of hygiene and epidemiology, hanoi, viet nam	NATIONAL INSTITUTE OF HYGIENE AND EPIDEMIOLOGY
+department of water resources, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+department of zoology, national museum of nature and science, tokyo, japan	NATIONAL MUSEUM OF NATURE AND SCIENCE
+dermatology and stds, national center for hiv/aids, phnom penh, cambodia	NATIONAL CENTER FOR HIV/AIDS
+design engineering lab, toyota technological institute, nagoya, japan	TOYOTA TECHNOLOGICAL INSTITUTE
+discipline of business analytics, the university of sydney business school, sydney, australia	THE UNIVERSITY OF SYDNEY
+disease control and prevention center, national center for global health and medicine, tokyo, japan	NATIONAL CENTER FOR GLOBAL HEALTH AND MEDICINE
+division of animal sciences, institute of agrobiological sciences, naro, tsukuba, japan	INSTITUTE OF AGROBIOLOGICAL SCIENCES
+division of computational mathematics and engineering, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+division of computational physics, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+division of materials and manufacturing science, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+division of mechanical science and technology, gunma university, maebashi, japan	GUNMA UNIVERSITY
+division of natural drug discovery, university of toyama, toyama, japan	UNIVERSITY OF TOYAMA
+division of research and treatment for oral and maxillofacial congenital anomalies, aichi gakuin university, nisshin, japan	AICHI GAKUIN UNIVERSITY
+duke-nus medical school, singapore city, singapore	DUKE-NUS MEDICAL SCHOOL
+duy tan university, da nang, viet nam	DUY TAN UNIVERSITY
+dại học nguyen tat thanh, ho chi minh city, viet nam	HO CHI MINH CITY
+ehime university, matsuyama, japan	EHIME UNIVERSITY
+environment administration, ministry of natural resources and environment, vietnam, hanoi, viet nam	HANOI
+environmental and renewable energy systems division, gifu university, gifu, japan	GIFU UNIVERSITY
+estuary research center, shimane university, matsue, japan	SHIMANE UNIVERSITY
+european southern observatory santiago, santiago, chile	EUROPEAN SOUTHERN OBSERVATORY SANTIAGO
+evidence based medicine research group, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+faculty of advanced science and technology, kumamoto university, kumamoto, japan	KUMAMOTO UNIVERSITY
+faculty of agriculture and marine science, kochi university, kochi, japan	KOCHI UNIVERSITY
+faculty of agriculture, ehime university, matsuyama, japan	EHIME UNIVERSITY
+faculty of agriculture, kagawa university, takamatsu, japan	KAGAWA UNIVERSITY
+faculty of agriculture, kochi university, kochi, japan	KOCHI UNIVERSITY
+faculty of agriculture, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+faculty of agriculture, saga university, saga, japan	SAGA UNIVERSITY
+faculty of agriculture, university of miyazaki, miyazaki, japan	UNIVERSITY OF MIYAZAKI
+faculty of agriculture, university of the ryukyus, nishihara, japan	UNIVERSITY OF THE RYUKYUS
+faculty of agriculture, yamagata university, yamagata, japan	YAMAGATA UNIVERSITY
+faculty of agronomy, university of agriculture and forestry, hue university, hue, viet nam	UNIVERSITY OF AGRICULTURE AND FORESTRY
+faculty of agronomy, vietnam national university of agriculture, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of applied sciences, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+faculty of applied technology, van lang university, ho chi minh city, viet nam	VAN LANG UNIVERSITY
+faculty of biology, trường đại học sư phạm hà nội, hanoi, viet nam	HANOI
+faculty of biology, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of bioscience and bioindustry, tokushima university, tokushima, japan	TOKUSHIMA UNIVERSITY
+faculty of biotechnology, dại học nguyen tat thanh, ho chi minh city, viet nam	HO CHI MINH CITY
+faculty of chemical engineering, industrial university of ho chi minh city, ho chi minh city, viet nam	INDUSTRIAL UNIVERSITY OF HO CHI MINH CITY
+faculty of chemistry, hanoi university of education, hanoi, viet nam	HANOI UNIVERSITY OF EDUCATION
+faculty of chemistry, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF SCIENCE
+faculty of chemistry, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of civil engineering, duy tan university, da nang, viet nam	DUY TAN UNIVERSITY
+faculty of civil engineering, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam	HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY - HCMUT
+faculty of civil engineering, thuyloi university, hanoi, viet nam	THUYLOI UNIVERSITY
+faculty of civil engineering, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+faculty of civil engineering, đại học công nghệ giao thông vận tải, hanoi, viet nam	FACULTY OF CIVIL ENGINEERING
+faculty of civil engineering, đại học mở thành phố hồ chí minh, ho chi minh city, viet nam	FACULTY OF CIVIL ENGINEERING
+faculty of contemporary human life science, tezukayama university, nara, japan	JAPAN
+faculty of economics and rural development, vietnam national university of agriculture, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of electrical and electronics engineering, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+faculty of electronics and telecommunications, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of engineering physics and nanotechnology, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of environment and labour safety, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+faculty of environment and natural resources, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam	HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY - HCMUT
+faculty of environment, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF SCIENCE
+faculty of environment, vietnam national university of agriculture, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of environmental and chemical engineering, duy tan university, da nang, viet nam	DUY TAN UNIVERSITY
+faculty of environmental and food engineering, dại học nguyen tat thanh, ho chi minh city, viet nam	HO CHI MINH CITY
+faculty of environmental earth science, hokkaido university, sapporo, japan	HOKKAIDO UNIVERSITY
+faculty of environmental engineering, hanoi university of civil engineering, hanoi, viet nam	HANOI UNIVERSITY OF CIVIL ENGINEERING
+faculty of environmental engineering, the university of kitakyushu, kitakyushu, japan	THE UNIVERSITY OF KITAKYUSHU
+faculty of environmental science, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF SCIENCE
+faculty of environmental science, university of sciences, hue university, hue, viet nam	UNIVERSITY OF SCIENCE
+faculty of environmental sciences, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of fisheries sciences, hokkaido university, sapporo, japan	HOKKAIDO UNIVERSITY
+faculty of fisheries, kagoshima university, kagoshima, japan	KAGOSHIMA UNIVERSITY
+faculty of fisheries, university of agriculture and forestry, hue university, hue, viet nam	UNIVERSITY OF AGRICULTURE AND FORESTRY
+faculty of geology, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of geosciences and civil engineering, kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+faculty of health sciences, kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+faculty of information technology, ho chi minh city university of technology - hutech, ho chi minh city, viet nam	HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY - HUTECH
+faculty of life and environmental sciences, university of tsukuba, tsukuba, japan	UNIVERSITY OF TSUKUBA
+faculty of materials science and engineering, kyoto institute of technology, kyoto, japan	KYOTO INSTITUTE OF TECHNOLOGY
+faculty of materials science and engineering, phenikaa university, hanoi, viet nam	PHENIKAA UNIVERSITY
+faculty of materials science, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF SCIENCE
+faculty of materials technology, viet nam national university ho chi minh city, ho chi minh city, viet nam	VIET NAM NATIONAL UNIVERSITY HO CHI MINH CITY
+faculty of mathematics and statistics, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+faculty of mathematics, mechanics and informatics, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of mechanical engineering, hcmc university of technology and education, ho chi minh city, viet nam	HCMC UNIVERSITY OF TECHNOLOGY AND EDUCATION
+faculty of medicine - ain shams university, cairo, egypt	FACULTY OF MEDICINE
+faculty of medicine ramathibodi hospital, mahidol university, bangkok, thailand	FACULTY OF MEDICINE
+faculty of medicine, 6th october, egypt	FACULTY OF MEDICINE
+faculty of medicine, alexandria, egypt	FACULTY OF MEDICINE
+faculty of medicine, cairo, egypt	FACULTY OF MEDICINE
+faculty of medicine, minya, egypt	FACULTY OF MEDICINE
+faculty of medicine, pham ngoc thach university of medicine, ho chi minh city, viet nam	FACULTY OF MEDICINE
+faculty of medicine, tanta, egypt	FACULTY OF MEDICINE
+faculty of medicine, universitas udayana, bali, indonesia	FACULTY OF MEDICINE
+faculty of medicine, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam	UNIVERSITY OF MEDICINE AND PHARMACY AT HCMC
+faculty of natural sciences, duy tan university, da nang, viet nam	DUY TAN UNIVERSITY
+faculty of pharmaceutical sciences, tokushima bunri university, tokushima, japan	TOKUSHIMA BUNRI UNIVERSITY
+faculty of pharmacy, lac hong university, bien hoa, viet nam	LAC HONG UNIVERSITY
+faculty of pharmacy, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+faculty of pharmacy, university medicine and pharmacy, hue university, hue, viet nam	UNIVERSITY MEDICINE AND PHARMACY
+faculty of physics and engineering physics, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF SCIENCE
+faculty of physics, trường đại học sư phạm hà nội, hanoi, viet nam	HANOI
+faculty of physics, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of public health, haiphong university, haiphong, viet nam	HAIPHONG UNIVERSITY
+faculty of public health, university medicine and pharmacy, hue university, hue, viet nam	UNIVERSITY MEDICINE AND PHARMACY
+faculty of public health, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam	UNIVERSITY OF MEDICINE AND PHARMACY AT HCMC
+faculty of radio-electronic engineering, le quy don technical university, hanoi, viet nam	LE QUY DON TECHNICAL UNIVERSITY
+faculty of software and information science, iwate prefectural university, iwate district, japan	IWATE PREFECTURAL UNIVERSITY
+faculty of transportation mechanical engineering, university of danang, da nang, viet nam	UNIVERSITY OF DANANG
+faculty of veterinary medicine, vietnam national university of agriculture, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+faculty of veterinary science, prince of songkla university, hatyai, thailand	PRINCE OF SONGKLA UNIVERSITY
+faculty of water resources engineering, thuyloi university, hanoi, viet nam	THUYLOI UNIVERSITY
+forestry and forest products research institute, tsukuba, japan	FORESTRY AND FOREST PRODUCTS RESEARCH INSTITUTE
+fpt university, hanoi, viet nam	FPT UNIVERSITY
+fukuoka institute of health and environmental sciences, dazaifu, japan	FUKUOKA INSTITUTE OF HEALTH AND ENVIRONMENTAL SCIENCES
+geographic information science research group, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+geological survey of japan, tsukuba, japan	JAPAN
+gifu university, gifu, japan	GIFU UNIVERSITY
+global coe program, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+global collaboration center, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+goal-oriented technology research group, riken center for advanced intelligence project, tokyo, japan	RIKEN CENTER FOR ADVANCED INTELLIGENCE PROJECT
+graduate school for international development and cooperation, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+graduate school of advanced science and engineering, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+graduate school of agricultural and life sciences the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+graduate school of agricultural and life sciences, graduate school of agricultural and life sciences the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+graduate school of agricultural and life sciences, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+graduate school of agriculture, ehime university, matsuyama, japan	EHIME UNIVERSITY
+graduate school of agriculture, kyoto university, kyoto, japan	KYOTO UNIVERSITY
+graduate school of asia pacific studies, ritsumeikan asia pacific university, beppu, japan	RITSUMEIKAN ASIA PACIFIC UNIVERSITY
+graduate school of bioagricultural sciences, nagoya university, nagoya, japan	NAGOYA UNIVERSITY
+graduate school of biomedical sciences, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+graduate school of biomedical sciences, nagasaki, japan	GRADUATE SCHOOL OF BIOMEDICAL SCIENCES
+graduate school of bioresource and bioenvironmental sciences, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+graduate school of biosphere science, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+graduate school of engineering science, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+graduate school of engineering, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+graduate school of engineering, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+graduate school of environmental and life science, okayama university, okayama, japan	OKAYAMA UNIVERSITY
+graduate school of environmental engineering, the university of kitakyushu, kitakyushu, japan	THE UNIVERSITY OF KITAKYUSHU
+graduate school of environmental science, hokkaido university, sapporo, japan	HOKKAIDO UNIVERSITY
+graduate school of environmental studies, nagoya university, nagoya, japan	NAGOYA UNIVERSITY
+graduate school of fisheries and environmental sciences, nagasaki, japan	GRADUATE SCHOOL OF FISHERIES AND ENVIRONMENTAL SCIENCES
+graduate school of fisheries sciences, hokkaido university, sapporo, japan	HOKKAIDO UNIVERSITY
+graduate school of frontier sciences, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+graduate school of global environmental studies, kyoto university, kyoto, japan	KYOTO UNIVERSITY
+graduate school of global environmental studies, kyoto, japan	GRADUATE SCHOOL OF GLOBAL ENVIRONMENTAL STUDIES
+graduate school of horticulture, chiba university, chiba, japan	CHIBA UNIVERSITY
+graduate school of human and environmental studies, kyoto university, kyoto, japan	KYOTO UNIVERSITY
+graduate school of human and environmental studies, kyoto, japan	GRADUATE SCHOOL OF HUMAN AND ENVIRONMENTAL STUDIES
+graduate school of humanities and sciences, ochanomizu university, tokyo, japan	OCHANOMIZU UNIVERSITY
+graduate school of humanities and sustainable system sciences, osaka metropolitan university, osaka, japan	OSAKA METROPOLITAN UNIVERSITY
+graduate school of integrated sciences for global society, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+graduate school of integrated sciences for life, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+graduate school of international social sciences, yokohama, japan	GRADUATE SCHOOL OF INTERNATIONAL SOCIAL SCIENCES
+graduate school of life and environmental sciences, university of tsukuba, tsukuba, japan	UNIVERSITY OF TSUKUBA
+graduate school of life sciences, tohoku university, sendai, japan	TOHOKU UNIVERSITY
+graduate school of mathematical sciences, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+graduate school of medical science, kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+graduate school of natural science and technology, kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+graduate school of pharmaceutical sciences, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+graduate school of public health, st. luke’s international university, tokyo, japan	ST. LUKE’S INTERNATIONAL UNIVERSITY
+graduate school of science and engineering, ehime university, matsuyama, japan	EHIME UNIVERSITY
+graduate school of science and engineering, ritsumeikan university biwako-kusatsu campus, kusatsu, japan	RITSUMEIKAN UNIVERSITY BIWAKO-KUSATSU CAMPUS
+graduate school of science and engineering, saitama university, saitama, japan	SAITAMA UNIVERSITY
+graduate school of science and technology, gunma university, maebashi, japan	GUNMA UNIVERSITY
+graduate school of science and technology, kumamoto university, kumamoto, japan	KUMAMOTO UNIVERSITY
+graduate school of sciences and technology for innovation, yamaguchi university, yamaguchi, japan	YAMAGUCHI UNIVERSITY
+gsi helmholtz centre for heavy ion research gmbh, darmstadt, germany	GSI HELMHOLTZ CENTRE FOR HEAVY ION RESEARCH GMBH
+gunma university, maebashi, japan	GUNMA UNIVERSITY
+hanoi college of pharmacy, hanoi, viet nam	HANOI
+hanoi department of health, hanoi, viet nam	HANOI
+hanoi institute of mathematics, hanoi, viet nam	HANOI INSTITUTE OF MATHEMATICS
+hanoi lung hospital, hanoi, viet nam	HANOI LUNG HOSPITAL
+hanoi medical university, hanoi, viet nam	HANOI MEDICAL UNIVERSITY
+hanoi metropolitan university, hanoi, viet nam	HANOI
+hanoi school of public health, hanoi, viet nam	HANOI SCHOOL OF PUBLIC HEALTH
+hanoi university of civil engineering, hanoi, viet nam	HANOI UNIVERSITY OF CIVIL ENGINEERING
+hanoi university of industry, hanoi, viet nam	HANOI UNIVERSITY OF INDUSTRY
+hanoi university of mining and geology, hanoi, viet nam	HANOI UNIVERSITY OF MINING AND GEOLOGY
+hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+hcmc institute of resources geography, vast, ho chi minh city, viet nam	HCMC INSTITUTE OF RESOURCES GEOGRAPHY
+health service center, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+high energy accelerator research organization, tsukuba, tsukuba, japan	HIGH ENERGY ACCELERATOR RESEARCH ORGANIZATION
+hiroshima university graduate school of biomedical and health sciences, hiroshima, japan	HIROSHIMA UNIVERSITY
+hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+ho chi minh city university of industry and trade, ho chi minh city, viet nam	HO CHI MINH CITY UNIVERSITY OF INDUSTRY AND TRADE
+ho chi minh city university of technology - hcmut, ho chi minh city, viet nam	HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY - HCMUT
+ho chi minh city university of technology - hutech, ho chi minh city, viet nam	HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY - HUTECH
+hokkaido university, sapporo, japan	HOKKAIDO UNIVERSITY
+horia hulubei national institute for r&d in physics and nuclear engineering, magurele, romania	NATIONAL INSTITUTE
+hospital sungai buloh, sungai buloh, malaysia	HOSPITAL SUNGAI BULOH
+hun-ren institute for nuclear research, debrecen, hungary	HUN-REN INSTITUTE FOR NUCLEAR RESEARCH
+hydraulic construction institute, vietnam academy for water resources, hanoi, viet nam	HANOI
+in2p3 - institut national de physique nucléaire et de physique des particules, paris, france	PARIS
+infectious disease surveillance center, national institute of infectious diseases, tokyo, japan	NATIONAL INSTITUTE OF INFECTIOUS DISEASES
+innovative clinical research center, kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+innovative global program, shibaura institute of technology, tokyo, japan	SHIBAURA INSTITUTE OF TECHNOLOGY
+insect ecology department, vietnamese academy of science and technology institute of ecology and biological resources, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF ECOLOGY AND BIOLOGICAL RESOURCES
+institute for agro-environmental sciences, naro, tsukuba, japan	INSTITUTE FOR AGRO-ENVIRONMENTAL SCIENCES
+institute for basic science, daejeon, daejeon, south korea	INSTITUTE FOR BASIC SCIENCE
+institute for environment and resources, viet nam national university ho chi minh city, ho chi minh city, viet nam	VIET NAM NATIONAL UNIVERSITY HO CHI MINH CITY
+institute for global environmental strategies, hayama, japan	INSTITUTE FOR GLOBAL ENVIRONMENTAL STRATEGIES
+institute for nuclear science and technique, vietnam atomic energy institute, hanoi, viet nam	VIETNAM ATOMIC ENERGY INSTITUTE
+institute for preventive medicine and public health, hanoi medical university, hanoi, viet nam	HANOI MEDICAL UNIVERSITY
+institute for space-earth environmental research, nagoya university, nagoya, japan	NAGOYA UNIVERSITY
+institute for tropical technology, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+institute of advanced sciences, yokohama national university, yokohama, japan	YOKOHAMA NATIONAL UNIVERSITY
+institute of agricultural genetics, hanoi, viet nam	HANOI
+institute of agrobiological sciences, naro, tsukuba, japan	INSTITUTE OF AGROBIOLOGICAL SCIENCES
+institute of archaeology, hanoi, viet nam	INSTITUTE OF ARCHAEOLOGY
+institute of archaeology, vietnam academy of social sciences, hanoi, viet nam	INSTITUTE OF ARCHAEOLOGY
+institute of astronomy, national tsing hua university, hsinchu, taiwan	NATIONAL TSING HUA UNIVERSITY
+institute of biomedicine and pharmacy, vietnam military medical university, hanoi, viet nam	VIETNAM MILITARY MEDICAL UNIVERSITY
+institute of biotechnology, vietnamese academy of science and technology institute of biotechnology, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF BIOTECHNOLOGY
+institute of engineering innovation, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+institute of engineering physics, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+institute of environmental technology, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+institute of fundamental and applied sciences, duy tan university, da nang, viet nam	DUY TAN UNIVERSITY
+institute of genome research, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+institute of geography, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+institute of geological sciences, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+institute of geophysics, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+institute of industrial science, tokyo, japan	INSTITUTE OF INDUSTRIAL SCIENCE
+institute of infectious diseases, pune, india	INSTITUTE OF INFECTIOUS DISEASES
+institute of laser engineering, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+institute of livestock and grassland science, naro, tsukuba, japan	INSTITUTE OF LIVESTOCK AND GRASSLAND SCIENCE
+institute of marine environment and resources, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+institute of materials science, vietnamese academy of science and technology institute of materials science, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF MATERIALS SCIENCE
+institute of mathematics, hanoi institute of mathematics, hanoi, viet nam	HANOI INSTITUTE OF MATHEMATICS
+institute of medical science, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+institute of microbiology and biotechnology, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+institute of modern physics chinese academy of sciences, lanzhou, china	CHINESE ACADEMY OF SCIENCES
+institute of multidisciplinary research for advanced materials, tohoku university, sendai, japan	TOHOKU UNIVERSITY
+institute of natural medicine, university of toyama, toyama, japan	UNIVERSITY OF TOYAMA
+institute of philosophy, vietnam academy of social sciences, hanoi, viet nam	HANOI
+institute of physics, vietnamese academy of science and technology institute of physics and electronics, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF PHYSICS AND ELECTRONICS
+institute of plant science and resources, okayama university, okayama, japan	OKAYAMA UNIVERSITY
+institute of public health, ho chi minh city, viet nam	INSTITUTE OF PUBLIC HEALTH
+institute of research and development, duy tan university, da nang, viet nam	DUY TAN UNIVERSITY
+institute of science tokyo, tokyo, japan	INSTITUTE OF SCIENCE TOKYO
+institute of theoretical and applied research, duy tan university, da nang, viet nam	DUY TAN UNIVERSITY
+institute of transport science and technology, hanoi, viet nam	HANOI
+institute of tropical agriculture, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+institute of tropical medicine, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+instituto andaluz interuniversitario en data science and computational intelligence, granada, spain	INSTITUTO ANDALUZ INTERUNIVERSITARIO EN DATA SCIENCE AND COMPUTATIONAL INTELLIGENCE
+interdisciplinary graduate school of engineering sciences, kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+international collaboration unit, hokkaido university, sapporo, japan	HOKKAIDO UNIVERSITY
+international rice research institute, makati, philippines	INTERNATIONAL RICE RESEARCH INSTITUTE
+international school, hue university, hue, viet nam	HUE UNIVERSITY
+international training institute for materials science, hanoi, viet nam	INTERNATIONAL TRAINING INSTITUTE FOR MATERIALS SCIENCE
+international university of japan, minamiuonuma, japan	INTERNATIONAL UNIVERSITY OF JAPAN
+iriomote station, university of the ryukyus, nishihara, japan	UNIVERSITY OF THE RYUKYUS
+istituto di calcolo e reti ad alte prestazioni, rende, rende, italy	ISTITUTO DI CALCOLO E RETI AD ALTE PRESTAZIONI
+iwate prefectural university, iwate district, japan	IWATE PREFECTURAL UNIVERSITY
+iwate university, morioka, japan	IWATE UNIVERSITY
+james cook university, townsville, australia	JAMES COOK UNIVERSITY
+japan advanced institute of science and technology, nomi, japan	JAPAN ADVANCED INSTITUTE OF SCIENCE AND TECHNOLOGY
+japan atomic energy agency, kashiwa, japan	JAPAN
+japan international cooperation agency, tokyo, japan	TOKYO
+japan international research center for agricultural sciences, tsukuba, japan	JAPAN INTERNATIONAL RESEARCH CENTER FOR AGRICULTURAL SCIENCES
+japan science and technology agency, kawaguchi, japan	JAPAN SCIENCE AND TECHNOLOGY AGENCY
+japan society for the promotion of science, tokyo, japan	TOKYO
+japan synchrotron radiation research institute, sayo district, japan	JAPAN SYNCHROTRON RADIATION RESEARCH INSTITUTE
+jiangsu province wind power structural engineering research center, nanjing, china	RESEARCH
+joining and welding research institute, ibaraki, japan	JOINING AND WELDING RESEARCH INSTITUTE
+kagoshima university, kagoshima, japan	KAGOSHIMA UNIVERSITY
+kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+keio university, tokyo, japan	KEIO UNIVERSITY
+key laboratory of advanced waste treatment technology, viet nam national university ho chi minh city, ho chi minh city, viet nam	VIET NAM NATIONAL UNIVERSITY HO CHI MINH CITY
+key laboratory of mollisols agroecology, northeast institute of geography and agroecology, changchun, china	NORTHEAST INSTITUTE OF GEOGRAPHY AND AGROECOLOGY
+khanh hoa health service, nha trang, viet nam	KHANH HOA HEALTH SERVICE
+kobe university, kobe, japan	KOBE UNIVERSITY
+komarov botanical institute, russian academy of sciences, saint petersburg, russian federation	KOMAROV BOTANICAL INSTITUTE
+korea astronomy and space science institute, daejeon, south korea	KOREA ASTRONOMY AND SPACE SCIENCE INSTITUTE
+kyoto institute of technology, kyoto, japan	KYOTO INSTITUTE OF TECHNOLOGY
+kyoto university, kyoto, japan	KYOTO UNIVERSITY
+kyushu okinawa agricultural research center naro, koshi, japan	KYUSHU OKINAWA AGRICULTURAL RESEARCH CENTER NARO
+kyushu university, fukuoka, japan	KYUSHU UNIVERSITY
+laboratory for nanotechnology, viet nam national university ho chi minh city, ho chi minh city, viet nam	VIET NAM NATIONAL UNIVERSITY HO CHI MINH CITY
+laboratory of advanced materials, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF SCIENCE
+laboratory of organic geochemistry, tokyo university of agriculture and technology, fuchu, japan	TOKYO UNIVERSITY OF AGRICULTURE AND TECHNOLOGY
+laboratory of wildlife biology, obihiro university of agriculture and veterinary medicine, obihiro, japan	OBIHIRO UNIVERSITY OF AGRICULTURE AND VETERINARY MEDICINE
+le quy don technical university, hanoi, viet nam	LE QUY DON TECHNICAL UNIVERSITY
+livestock and environment division, japan international research center for agricultural sciences, tsukuba, japan	JAPAN INTERNATIONAL RESEARCH CENTER FOR AGRICULTURAL SCIENCES
+london school of hygiene & tropical medicine, london, united kingdom	LONDON
+master's program in environmental engineering, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+ministry of health vitenam, hanoi, viet nam	MINISTRY OF HEALTH VITENAM
+monash university, melbourne, australia	MONASH UNIVERSITY
+nagaoka university of technology, nagaoka, japan	NAGAOKA UNIVERSITY OF TECHNOLOGY
+nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+nagoya institute of technology, nagoya, japan	NAGOYA INSTITUTE OF TECHNOLOGY
+nagoya university, nagoya, japan	NAGOYA UNIVERSITY
+nanotechnology program, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+nara institute of science and technology, ikoma, japan	NARA INSTITUTE OF SCIENCE AND TECHNOLOGY
+national center for global health and medicine, tokyo, japan	NATIONAL CENTER FOR GLOBAL HEALTH AND MEDICINE
+national economics university hanoi, hanoi, viet nam	NATIONAL ECONOMICS UNIVERSITY HANOI
+national graduate institute for policy studies, minato, japan	NATIONAL GRADUATE INSTITUTE FOR POLICY STUDIES
+national heart centre singapore, singapore city, singapore	NATIONAL HEART CENTRE SINGAPORE
+national hospital for tropical diseases, hanoi, viet nam	NATIONAL HOSPITAL FOR TROPICAL DISEASES
+national hospital of tropical diseases, hanoi, viet nam	NATIONAL HOSPITAL OF TROPICAL DISEASES
+national institute for environmental studies of japan, tsukuba, japan	NATIONAL INSTITUTE FOR ENVIRONMENTAL STUDIES OF JAPAN
+national institute for materials science, tsukuba, japan	NATIONAL INSTITUTE FOR MATERIALS SCIENCE
+national institute of advanced industrial science and technology, tsukuba, japan	NATIONAL INSTITUTE OF ADVANCED INDUSTRIAL SCIENCE AND TECHNOLOGY
+national institute of animal health, naro, tsukuba, japan	NATIONAL INSTITUTE OF ANIMAL HEALTH
+national institute of hygiene and epidemiology hanoi, hanoi, viet nam	NATIONAL INSTITUTE OF HYGIENE AND EPIDEMIOLOGY HANOI
+national institute of hygiene and epidemiology, hanoi, viet nam	NATIONAL INSTITUTE OF HYGIENE AND EPIDEMIOLOGY
+national institute of infectious diseases, tokyo, japan	NATIONAL INSTITUTE OF INFECTIOUS DISEASES
+national institute of information and communications technology, koganei, japan	NATIONAL INSTITUTE OF INFORMATION AND COMMUNICATIONS TECHNOLOGY
+national institute of malariology, parasitology and entomology hanoi, hanoi, viet nam	NATIONAL INSTITUTE OF MALARIOLOGY
+national institute of medicinal materials, hanoi, viet nam	NATIONAL INSTITUTE OF MEDICINAL MATERIALS
+national institute of nutrition vietnam, hanoi, viet nam	NATIONAL INSTITUTE OF NUTRITION VIETNAM
+national institute of technology and evaluation, tokyo, japan	NATIONAL INSTITUTE OF TECHNOLOGY AND EVALUATION
+national institute of veterinary research hanoi, hanoi, viet nam	NATIONAL INSTITUTE OF VETERINARY RESEARCH HANOI
+national institutes for the humanities, research institute for humanity and nature, kyoto, japan	RESEARCH INSTITUTE
+national institutes of natural sciences - national astronomical observatory of japan, mitaka, japan	NATIONAL INSTITUTES OF NATURAL SCIENCES - NATIONAL ASTRONOMICAL OBSERVATORY OF JAPAN
+national radio astronomy observatory, charlottesville, united states	NATIONAL RADIO ASTRONOMY OBSERVATORY
+national university of singapore, singapore city, singapore	NATIONAL UNIVERSITY OF SINGAPORE
+ncgm-bmh medical collaboration center, hanoi, viet nam	HANOI
+new industry creation hatchery center, tohoku university, sendai, japan	TOHOKU UNIVERSITY
+nha trang pasteur institute, khanh hoa province, viet nam	NHA TRANG PASTEUR INSTITUTE
+niels bohr institutet, copenhagen, denmark	NIELS BOHR INSTITUTET
+niigata university, niigata, japan	NIIGATA UNIVERSITY
+nong lam university, ho chi minh city, ho chi minh city, viet nam	NONG LAM UNIVERSITY
+ntt hi-tech institute, dại học nguyen tat thanh, ho chi minh city, viet nam	HO CHI MINH CITY
+obihiro university of agriculture and veterinary medicine, obihiro, japan	OBIHIRO UNIVERSITY OF AGRICULTURE AND VETERINARY MEDICINE
+ocean research institute, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+okayama university, okayama, japan	OKAYAMA UNIVERSITY
+online research club (http://www.onlineresearchclub.org), nagasaki, japan	ONLINE RESEARCH CLUB
+online research club, nagasaki, japan	ONLINE RESEARCH CLUB
+osaka institute of public health, osaka, japan	INSTITUTE OF PUBLIC HEALTH
+osaka metropolitan university, osaka, japan	OSAKA METROPOLITAN UNIVERSITY
+osaka museum of natural history, osaka, japan	OSAKA
+oxford university clinical research unit, ho chi minh city, viet nam	OXFORD UNIVERSITY CLINICAL RESEARCH UNIT
+pasteur institute in ho chi minh city, ho chi minh city, viet nam	PASTEUR INSTITUTE IN HO CHI MINH CITY
+peking university, beijing, china	PEKING UNIVERSITY
+pham ngoc thach university of medicine, ho chi minh city, viet nam	PHAM NGOC THACH UNIVERSITY OF MEDICINE
+pharmaceutical and health sciences, kanazawa university, kanazawa, japan	KANAZAWA UNIVERSITY
+plant genomic network research team, riken center for sustainable resource science, yokohama, japan	RIKEN CENTER FOR SUSTAINABLE RESOURCE SCIENCE
+plant protection research institute, hanoi, viet nam	HANOI
+plant stress research group & faculty of applied sciences, ton-duc-thang university, ho chi minh city, viet nam	TON-DUC-THANG UNIVERSITY
+posts and telecommunications institute of technology vietnam, hanoi, viet nam	POSTS AND TELECOMMUNICATIONS INSTITUTE OF TECHNOLOGY VIETNAM
+quantum hadron physics laboratory, riken nishina center for accelerator-based science, wako, japan	RIKEN NISHINA CENTER FOR ACCELERATOR-BASED SCIENCE
+queen elizabeth hospital hong kong, hong kong, china	QUEEN ELIZABETH HOSPITAL HONG KONG
+ramathibodi hospital, bangkok, thailand	RAMATHIBODI HOSPITAL
+regional research center, iwate prefectural university, iwate district, japan	IWATE PREFECTURAL UNIVERSITY
+research and development center for precision medicine, university of tsukuba, tsukuba, japan	UNIVERSITY OF TSUKUBA
+research and education center for prevention of global infectious diseases of animals, tokyo university of agriculture and technology, fuchu, japan	TOKYO UNIVERSITY OF AGRICULTURE AND TECHNOLOGY
+research center for nuclear physics (rcnp), the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+research center for nuclear physics, the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+research center for water environment technology, the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+research center for zoonosis control, hokkaido university, sapporo, japan	HOKKAIDO UNIVERSITY
+research faculty of agriculture, hokkaido university, sapporo, japan	HOKKAIDO UNIVERSITY
+research group (environmental health), sumitomo chemical company, limited, tokyo, japan	RESEARCH GROUP (ENVIRONMENTAL HEALTH)
+research institute for biotechnology and environment, nong lam university, ho chi minh city, ho chi minh city, viet nam	NONG LAM UNIVERSITY
+research institute for health sciences, chaing mai, thailand	RESEARCH INSTITUTE
+research institute for health sciences, chiang mai university, chiang mai, thailand	CHIANG MAI UNIVERSITY
+research institute for sustainable humanosphere, uji, japan	RESEARCH INSTITUTE
+research institute for tropical medicine, manila, philippines	RESEARCH INSTITUTE
+research institute of natural sciences, okayama university of science, okayama, japan	UNIVERSITY OF SCIENCE
+research institute, national center for global health and medicine, tokyo, japan	NATIONAL CENTER FOR GLOBAL HEALTH AND MEDICINE
+research organization of information and systems national institute of informatics, tokyo, japan	RESEARCH ORGANIZATION OF INFORMATION AND SYSTEMS NATIONAL INSTITUTE OF INFORMATICS
+reuse and management, vietnamese-german university, thu dau mot, viet nam	VIETNAMESE-GERMAN UNIVERSITY
+riken (the institute of physical and chemical research), wako, japan	RIKEN (THE INSTITUTE OF PHYSICAL AND CHEMICAL RESEARCH)
+riken center for sustainable resource science, yokohama, japan	RIKEN CENTER FOR SUSTAINABLE RESOURCE SCIENCE
+riken nishina center for accelerator-based science, wako, japan	RIKEN NISHINA CENTER FOR ACCELERATOR-BASED SCIENCE
+riken, wako, japan	JAPAN
+ritsumeikan asia pacific university, beppu, japan	RITSUMEIKAN ASIA PACIFIC UNIVERSITY
+ritsumeikan university biwako-kusatsu campus, kusatsu, japan	RITSUMEIKAN UNIVERSITY BIWAKO-KUSATSU CAMPUS
+saitama university, saitama, japan	SAITAMA UNIVERSITY
+school of archaeology and anthropology, the australian national university, canberra, australia	THE AUSTRALIAN NATIONAL UNIVERSITY
+school of biotechnology and food technology, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of biotechnology, international university - vietnam national university hcm city, ho chi minh city, viet nam	VIETNAM NATIONAL UNIVERSITY
+school of chemical engineering, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of chemistry and life sciences, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of computing, engineering and mathematics, university of brighton, brighton, united kingdom	UNIVERSITY OF BRIGHTON
+school of education, can tho university, can tho, viet nam	CAN THO UNIVERSITY
+school of electrical and electronic engineering, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of electronics and telecommunications, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of engineering physics, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of environmental science and technology, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of health sciences, sapporo medical university, sapporo, japan	SAPPORO MEDICAL UNIVERSITY
+school of information and communication technology, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of knowledge science, japan advanced institute of science and technology, nomi, japan	JAPAN ADVANCED INSTITUTE OF SCIENCE AND TECHNOLOGY
+school of materials science and engineering, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of materials science, japan advanced institute of science and technology, nomi, japan	JAPAN ADVANCED INSTITUTE OF SCIENCE AND TECHNOLOGY
+school of mechanical and electrical engineering, university of southern queensland, toowoomba, australia	UNIVERSITY OF SOUTHERN QUEENSLAND
+school of mechanical engineering, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of medicine and pharmacy, duy tan university, da nang, viet nam	DUY TAN UNIVERSITY
+school of medicine and pharmacy, university of danang, da nang, viet nam	UNIVERSITY OF DANANG
+school of medicine and pharmacy, vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+school of medicine, viet nam national university ho chi minh city, ho chi minh city, viet nam	VIET NAM NATIONAL UNIVERSITY HO CHI MINH CITY
+school of public health, imperial college london, london, united kingdom	IMPERIAL COLLEGE LONDON
+school of systems engineering, kochi university of technology, kami, japan	KOCHI UNIVERSITY
+school of textile-leather and fashion, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of transportation engineering, hanoi university of science and technology, hanoi, viet nam	HANOI UNIVERSITY OF SCIENCE AND TECHNOLOGY
+school of tropical medicine and global health, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+sciences po paris, paris, france	SCIENCES PO PARIS
+seoul national university, seoul, south korea	SEOUL NATIONAL UNIVERSITY
+shibaura institute of technology, tokyo, japan	SHIBAURA INSTITUTE OF TECHNOLOGY
+shizuoka university, shizuoka, japan	SHIZUOKA UNIVERSITY
+signaling pathway research unit, riken center for sustainable resource science, yokohama, japan	RIKEN CENTER FOR SUSTAINABLE RESOURCE SCIENCE
+silviculture research institute, vietnamese academy of forest sciences, hanoi, viet nam	SILVICULTURE RESEARCH INSTITUTE
+siriraj hospital, bangkok, thailand	SIRIRAJ HOSPITAL
+soete laboratory, universiteit gent, ghent, belgium	UNIVERSITEIT GENT
+sorbonne université, paris, france	SORBONNE UNIVERSITÉ
+southern institute of ecology, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+system emotional science, graduate school of medicine and pharmaceutical sciences, toyama, japan	GRADUATE SCHOOL OF MEDICINE
+system emotional science, university of toyama, toyama, japan	UNIVERSITY OF TOYAMA
+taipei veterans general hospital, taipei, taiwan	TAIPEI VETERANS GENERAL HOSPITAL
+tan tock seng hospital, singapore city, singapore	TAN TOCK SENG HOSPITAL
+technische universität darmstadt, darmstadt, germany	TECHNISCHE UNIVERSITÄT DARMSTADT
+thai nguyen university of information and communication technology (ictu), thai nguyen, viet nam	THAI NGUYEN UNIVERSITY
+thai nguyen university, thai nguyen, viet nam	THAI NGUYEN UNIVERSITY
+thai red cross agency, bangkok, thailand	BANGKOK
+the australian national university, canberra, australia	THE AUSTRALIAN NATIONAL UNIVERSITY
+the foundation for aids research, bangkok, thailand	THE FOUNDATION FOR AIDS RESEARCH
+the graduate university for advanced studies, hayama, japan	THE GRADUATE UNIVERSITY FOR ADVANCED STUDIES
+the kirby institute, kensington, australia	THE KIRBY INSTITUTE
+the kyoto university museum, kyoto, japan	KYOTO UNIVERSITY
+the research institute of tuberculosis, japan anti-tuberculosis association, kiyose, japan	THE RESEARCH INSTITUTE OF TUBERCULOSIS
+the united graduate school of veterinary science, yamaguchi university, yamaguchi, japan	YAMAGUCHI UNIVERSITY
+the university of aizu, aizuwakamatsu, japan	THE UNIVERSITY OF AIZU
+the university of edinburgh, edinburgh, united kingdom	THE UNIVERSITY OF EDINBURGH
+the university of electro-communications, chofu, japan	THE UNIVERSITY OF ELECTRO-COMMUNICATIONS
+the university of kitakyushu, kitakyushu, japan	THE UNIVERSITY OF KITAKYUSHU
+the university of osaka, suita, japan	THE UNIVERSITY OF OSAKA
+the university of queensland, brisbane, australia	THE UNIVERSITY OF QUEENSLAND
+the university of sydney, sydney, australia	THE UNIVERSITY OF SYDNEY
+the university of tokyo, tokyo, japan	THE UNIVERSITY OF TOKYO
+theoretical nuclear physics laboratory, riken nishina center for accelerator-based science, wako, japan	RIKEN NISHINA CENTER FOR ACCELERATOR-BASED SCIENCE
+thuongmai university, hanoi, viet nam	THUONGMAI UNIVERSITY
+thuyloi university, hanoi, viet nam	THUYLOI UNIVERSITY
+tohoku university, sendai, japan	TOHOKU UNIVERSITY
+tokyo university of agriculture and technology, fuchu, japan	TOKYO UNIVERSITY OF AGRICULTURE AND TECHNOLOGY
+tokyo university of marine science and technology, tokyo, japan	TOKYO UNIVERSITY OF MARINE SCIENCE AND TECHNOLOGY
+tokyo university of science, tokyo, japan	UNIVERSITY OF SCIENCE
+toyota physical and chemical research institute, nagakute, japan	RESEARCH INSTITUTE
+toyota technological institute, nagoya, japan	TOYOTA TECHNOLOGICAL INSTITUTE
+transdisciplinary science and engineering program, hiroshima university, higashihiroshima, japan	HIROSHIMA UNIVERSITY
+tropical biosphere research center, university of the ryukyus, nishihara, japan	UNIVERSITY OF THE RYUKYUS
+trường đại học giao thông vận tải, hanoi, viet nam	HANOI
+trường đại học sư phạm hà nội, hanoi, viet nam	HANOI
+universidad de granada, granada, spain	UNIVERSIDAD DE GRANADA
+universitas indonesia, depok, indonesia	UNIVERSITAS INDONESIA
+universitas indonesia, rsupn dr. cipto mangunkusumo, central jakarta, indonesia	UNIVERSITAS INDONESIA
+universiti malaya, kuala lumpur, malaysia	UNIVERSITI MALAYA
+universiti teknologi malaysia kuala lumpur, kuala lumpur, malaysia	UNIVERSITI TEKNOLOGI MALAYSIA
+university college london hospitals nhs foundation trust, london, united kingdom	UNIVERSITY COLLEGE LONDON
+university hawaii institute for astronomy, honolulu, united states	UNIVERSITY HAWAII INSTITUTE FOR ASTRONOMY
+university medicine and pharmacy, hue university, hue, viet nam	UNIVERSITY MEDICINE AND PHARMACY
+university of agriculture and forestry, hue university, hue, viet nam	UNIVERSITY OF AGRICULTURE AND FORESTRY
+university of chinese academy of sciences, beijing, china	UNIVERSITY OF CHINESE ACADEMY OF SCIENCES
+university of danang, da nang, viet nam	UNIVERSITY OF DANANG
+university of economics ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF ECONOMICS HO CHI MINH CITY
+university of finance - marketing, ho chi minh city, viet nam	UNIVERSITY OF FINANCE - MARKETING
+university of malaya medical centre, kuala lumpur, malaysia	UNIVERSITY OF MALAYA MEDICAL CENTRE
+university of medicine and pharmacy at hcmc, ho chi minh city, viet nam	UNIVERSITY OF MEDICINE AND PHARMACY AT HCMC
+university of miyazaki, miyazaki, japan	UNIVERSITY OF MIYAZAKI
+university of science and technology, university of danang, da nang, viet nam	UNIVERSITY OF SCIENCE
+university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam	UNIVERSITY OF SCIENCE
+university of sciences, hue university, hue, viet nam	UNIVERSITY OF SCIENCE
+university of technology sydney, sydney, australia	UNIVERSITY OF TECHNOLOGY SYDNEY
+university of the ryukyus, nishihara, japan	UNIVERSITY OF THE RYUKYUS
+university of tsukuba, tsukuba, japan	UNIVERSITY OF TSUKUBA
+university of virginia, charlottesville, united states	UNIVERSITY OF VIRGINIA
+universität zu köln, koln, germany	UNIVERSITÄT ZU KÖLN
+université de strasbourg, strasbourg, france	UNIVERSITÉ DE STRASBOURG
+université paris-saclay, gif-sur-yvette, france	UNIVERSITÉ PARIS-SACLAY
+vhs medical centre india, chennai, india	VHS MEDICAL CENTRE INDIA
+viet nam national university ho chi minh city, ho chi minh city, viet nam	VIET NAM NATIONAL UNIVERSITY HO CHI MINH CITY
+vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+vietnam atomic energy institute, hanoi, viet nam	VIETNAM ATOMIC ENERGY INSTITUTE
+vietnam military medical university, hanoi, viet nam	VIETNAM MILITARY MEDICAL UNIVERSITY
+vietnam national children's hospital, hanoi, viet nam	VIETNAM NATIONAL CHILDREN'S HOSPITAL
+vietnam national museum of nature, hanoi, viet nam	HANOI
+vietnam national museum of nature, vietnam academy of science and technology, hanoi, viet nam	VIETNAM ACADEMY OF SCIENCE AND TECHNOLOGY
+vietnam national university institute of physics, ho chi minh city, viet nam	VIETNAM NATIONAL UNIVERSITY
+vietnam national university of agriculture, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+vietnam national university of forestry, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+vietnam national university, hanoi, hanoi, viet nam	VIETNAM NATIONAL UNIVERSITY
+vietnam research station, nagasaki university, nagasaki, japan	NAGASAKI UNIVERSITY
+vietnamese academy of forest sciences, hanoi, viet nam	HANOI
+vietnamese academy of science and technology institute of biotechnology, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF BIOTECHNOLOGY
+vietnamese academy of science and technology institute of chemistry, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF CHEMISTRY
+vietnamese academy of science and technology institute of ecology and biological resources, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF ECOLOGY AND BIOLOGICAL RESOURCES
+vietnamese academy of science and technology institute of information technology, hanoi, viet nam	HANOI
+vietnamese academy of science and technology institute of materials science, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF MATERIALS SCIENCE
+vietnamese academy of science and technology institute of mechanics, hanoi, viet nam	HANOI
+vietnamese academy of science and technology institute of physics and electronics, hanoi, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF PHYSICS AND ELECTRONICS
+vietnamese academy of science and technology institute of tropical biology, dalat, viet nam	VIETNAMESE ACADEMY OF SCIENCE AND TECHNOLOGY INSTITUTE OF TROPICAL BIOLOGY
+vinuniversity, hanoi, viet nam	VINUNIVERSITY
+viện khoa học và công nghệ tính toán, ho chi minh city, viet nam	HO CHI MINH CITY
+vnu-university of medicine and pharmacy, hanoi, viet nam	HANOI
+vnuhcm - university of information technology, ho chi minh city, viet nam	VNUHCM - UNIVERSITY OF INFORMATION TECHNOLOGY
+waseda university, tokyo, japan	WASEDA UNIVERSITY
+water resources research center, kyoto university, kyoto, japan	KYOTO UNIVERSITY
+yamaguchi university, yamaguchi, japan	YAMAGUCHI UNIVERSITY
+yokohama city university, yokohama, japan	YOKOHAMA CITY UNIVERSITY
+yokohama national university, yokohama, japan	YOKOHAMA NATIONAL UNIVERSITY
+đại học công nghệ giao thông vận tải, hanoi, viet nam	HANOI
+đại học mở thành phố hồ chí minh, ho chi minh city, viet nam	HO CHI MINH CITY
