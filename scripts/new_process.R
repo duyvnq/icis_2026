@@ -24,7 +24,7 @@ data_reg <- data_raw |>
   ) |> 
   mutate(
     id = row_number(),
-    OA = if_else(open_access == "", 0, 1)
+    OA = if_else(!is.na(open_access) & open_access != "", 1, 0)
   ) |> 
   select(-open_access) |> 
   relocate(id, .before = 1)
@@ -266,82 +266,3 @@ data_reg <- data_reg |>
 # Write final processed data
 output_file <- file.path(DATA_DIR, "processed_data.csv")
 write_csv(data_reg, output_file, na = "")
-
-message(sprintf("\n=== PROCESSING COMPLETE ==="))
-message(sprintf("Final dataset: %d articles × %d variables", 
-                nrow(data_reg), ncol(data_reg)))
-message(sprintf("Saved to: %s", output_file))
-
-# Print summary statistics
-message("\n=== SUMMARY STATISTICS ===")
-cat(sprintf("
-Time period: %d - %d
-Publications by phase:
-  Phase 1 (2000-2008): %d
-  Phase 2 (2009-2013): %d
-  Phase 3 (2014-2025): %d
-
-Collaboration:
-  Bilateral: %d (%.1f%%)
-  Multilateral: %d (%.1f%%)
-
-Funding:
-  Funded: %d (%.1f%%)
-  Mean funding regions: %.2f
-  Bilateral co-funding: %d (%.1f%%)
-
-Authorship:
-  VN-led: %d (%.1f%%)
-  JP-led: %d (%.1f%%)
-  Mean VN author proportion: %.2f
-
-Open Access:
-  OA papers: %d (%.1f%%)
-
-VJU affiliation:
-  VJU papers: %d (%.1f%%)
-
-Journal quality:
-  Q1: %d (%.1f%%)
-  Q2: %d (%.1f%%)
-  Q3: %d (%.1f%%)
-  Q4: %d (%.1f%%)
-  Missing: %d (%.1f%%)
-",
-min(data_reg$year), max(data_reg$year),
-sum(data_reg$phase == "Phase 1 (2000-2008)", na.rm = TRUE),
-sum(data_reg$phase == "Phase 2 (2009-2013)", na.rm = TRUE),
-sum(data_reg$phase == "Phase 3 (2014-2025)", na.rm = TRUE),
-sum(data_reg$coop == "bilateral", na.rm = TRUE), 
-100 * mean(data_reg$coop == "bilateral", na.rm = TRUE),
-sum(data_reg$coop == "multilateral", na.rm = TRUE),
-100 * mean(data_reg$coop == "multilateral", na.rm = TRUE),
-sum(data_reg$fund == "Funded", na.rm = TRUE),
-100 * mean(data_reg$fund == "Funded", na.rm = TRUE),
-mean(data_reg$n_regions, na.rm = TRUE),
-sum(data_reg$bilateral_funding == 1, na.rm = TRUE),
-100 * mean(data_reg$bilateral_funding == 1, na.rm = TRUE),
-sum(data_reg$vn_led == 1, na.rm = TRUE),
-100 * mean(data_reg$vn_led == 1, na.rm = TRUE),
-sum(data_reg$jp_led == 1, na.rm = TRUE),
-100 * mean(data_reg$jp_led == 1, na.rm = TRUE),
-mean(data_reg$prop_vn_authors, na.rm = TRUE),
-sum(data_reg$OA == "OA", na.rm = TRUE),
-100 * mean(data_reg$OA == "OA", na.rm = TRUE),
-sum(data_reg$vju_affiliated == 1, na.rm = TRUE),
-100 * mean(data_reg$vju_affiliated == 1, na.rm = TRUE),
-sum(data_reg$quartile == "Q1", na.rm = TRUE),
-100 * mean(data_reg$quartile == "Q1", na.rm = TRUE),
-sum(data_reg$quartile == "Q2", na.rm = TRUE),
-100 * mean(data_reg$quartile == "Q2", na.rm = TRUE),
-sum(data_reg$quartile == "Q3", na.rm = TRUE),
-100 * mean(data_reg$quartile == "Q3", na.rm = TRUE),
-sum(data_reg$quartile == "Q4", na.rm = TRUE),
-100 * mean(data_reg$quartile == "Q4", na.rm = TRUE),
-sum(is.na(data_reg$quartile)),
-100 * mean(is.na(data_reg$quartile))
-))
-
-# ==============================================================================
-# END OF PROCESSING SCRIPT
-# ==============================================================================
