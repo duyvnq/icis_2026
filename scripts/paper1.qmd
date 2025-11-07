@@ -1,0 +1,674 @@
+---
+title: "Paper 1"
+format: html
+---
+
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(scales)
+
+nature_colors <- c(
+  "#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+  "#CA9161", "#949494", "#ECE133", "#56B4E9"
+)
+
+# Define the Nature theme
+theme_nature <- function(base_size = 8, base_family = "Arial") {
+  theme_classic(base_size = base_size, base_family = base_family) +
+    theme(
+      # Text elements - Nature uses small, precise text
+      plot.title = element_text(
+        size = base_size + 2,
+        face = "bold",
+        hjust = 0,
+        margin = margin(b = 5)
+      ),
+      plot.subtitle = element_text(
+        size = base_size,
+        color = "gray30",
+        hjust = 0,
+        margin = margin(b = 8)
+      ),
+      
+      # Axis elements
+      axis.title = element_text(size = base_size, face = "bold", color = "black"),
+      axis.text = element_text(size = base_size - 1, color = "black"),
+      axis.line = element_line(color = "black", linewidth = 0.5),
+      axis.ticks = element_line(color = "black", linewidth = 0.5),
+      axis.ticks.length = unit(2, "pt"),
+      
+      # Legend - Nature style is compact and clear
+      legend.title = element_text(size = base_size, face = "bold"),
+      legend.text = element_text(size = base_size - 1),
+      legend.key.size = unit(4, "mm"),
+      legend.position = "right",
+      legend.background = element_blank(),
+      legend.box.background = element_blank(),
+      legend.key = element_blank(),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.box.margin = margin(0, 0, 0, -5),
+      
+      # Panel - clean white background
+      panel.background = element_rect(fill = "white", color = NA),
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      
+      # Plot background
+      plot.background = element_rect(fill = "white", color = NA),
+      plot.margin = margin(10, 10, 10, 10),
+      
+      # Strip (for facets)
+      strip.background = element_rect(fill = "gray95", color = "black", linewidth = 0.5),
+      strip.text = element_text(size = base_size, face = "bold", color = "black")
+    )
+}
+
+# Set as global theme
+theme_set(theme_nature())
+
+# Set Nature color scales as default
+scale_colour_discrete <- function(...) {
+  scale_colour_manual(values = nature_colors, ...)
+}
+
+scale_fill_discrete <- function(...) {
+  scale_fill_manual(values = nature_colors, ...)
+}
+
+dat_reg <- read.csv("/Users/duyvnq/Library/CloudStorage/OneDrive-Personal/Documents/Projects/icis_2026/data/processed_data.csv")
+```
+
+
+# Descriptive/Baseline Analysis
+
+## Temporal Trends
+
+
+```{r}
+#| label: annual_outputs
+#| warning: false
+
+dat_reg |>
+  count(year, name = "n") |>
+  filter(year > 1999) |>
+  arrange(year) |>
+  mutate(growth = n / lag(n) - 1) |>
+  ggplot(aes(x = year)) +
+  geom_col(aes(y = n), fill = "#4A90E2", alpha = 0.6) +
+  geom_line(aes(y = growth * max(n, na.rm = TRUE)), 
+            color = "#E85D75", linewidth = 1) +
+  geom_point(aes(y = growth * max(n, na.rm = TRUE)), 
+             color = "#E85D75", size = 2) +
+  geom_vline(xintercept = 2014, linetype = "dashed", 
+             color = "gray30", linewidth = 0.5) +
+  annotate("text", x = 2014, y = Inf, 
+           label = "Vietnam-Japan Extensive\nStrategic Partnership\nand VJU establishment", 
+           hjust = -0.05, vjust = 1.2, size = 2.5, 
+           color = "gray30", lineheight = 0.9) +
+  scale_y_continuous(
+    name = "Publications",
+    sec.axis = sec_axis(
+      ~ . / max(dat_reg |> count(year, name = 'n') |> filter(year > 1999) |> pull(n), na.rm = TRUE),
+      name = "Growth rate", 
+      labels = scales::percent
+    )
+  ) +
+  labs(
+    title = "Publication trends and growth rate",
+    x = "Year"
+  )
+```
+
+
+
+```{r}
+# Alternative: Find crossing without pivot_wider
+bilateral_data <- dat_reg |> 
+  filter(year >= 2000, coop == "bilateral") |> 
+  count(year, name = "bilateral")
+
+multilateral_data <- dat_reg |> 
+  filter(year >= 2000, coop == "multilateral") |> 
+  count(year, name = "multilateral")
+
+crossing_data <- bilateral_data |>
+  full_join(multilateral_data, by = "year") |>
+  arrange(year) |>
+  mutate(
+    bilateral = replace_na(bilateral, 0),
+    multilateral = replace_na(multilateral, 0),
+    diff = bilateral - multilateral,
+    sign_change = sign(diff) != sign(lag(diff))
+  )
+
+crossing_year <- crossing_data |>
+  filter(sign_change == TRUE) |>
+  pull(year) |>
+  first()
+
+# Create the plot (same as before)
+dat_reg |> 
+  filter(year >= 2000) |> 
+  drop_na(coop) |> 
+  count(year, coop) |> 
+  ggplot(aes(x = year, y = n, color = coop, group = coop)) + 
+  geom_line(linewidth = 1) + 
+  geom_point(size = 2) + 
+  geom_vline(xintercept = crossing_year, linetype = "dotted", 
+             color = "gray50", linewidth = 0.5) +
+  annotate("text", x = crossing_year, y = Inf, 
+           label = paste0("Crossover point\n(", crossing_year, ")"), 
+           hjust = 1.05, vjust = 1.2, size = 2.5, 
+           color = "gray50", lineheight = 0.9) +
+  scale_color_manual(
+    values = c("bilateral" = "#4A90E2", "multilateral" = "#E85D75"), 
+    labels = c("Bilateral", "Multilateral")
+  ) + 
+  labs(
+    title = "Bilateral vs. multilateral collaboration trends", 
+    x = "Year", 
+    y = "Number of publications", 
+    color = "Cooperation type"
+  ) + 
+  theme(legend.position = "bottom")
+```
+
+
+```{r}
+dat_bib <- read.csv("data/all_1020.csv")
+
+dat_bib |> 
+    filter(Year < 2026) |> 
+    write.csv("data/bib_data/phase.csv")
+```
+
+
+
+```{r}
+# Create macro-area counts
+macro_data <- dat_reg |>
+  filter(year >= 2000) |>
+  select(year, PS, LS, HS, SS) |>
+  group_by(year) |>
+  summarise(
+    Physical = sum(PS, na.rm = TRUE),
+    Life = sum(LS, na.rm = TRUE),
+    Health = sum(HS, na.rm = TRUE),
+    Social = sum(SS, na.rm = TRUE)
+  ) |>
+  pivot_longer(-year, names_to = "macro_area", values_to = "n_papers")
+
+# Stacked area chart
+macro_data |>
+  ggplot(aes(x = year, y = n_papers, fill = macro_area)) +
+  geom_area(alpha = 0.7) +
+  scale_fill_manual(
+    values = c("Physical" = "#4A90E2", "Life" = "#95B8A8", 
+               "Health" = "#E85D75", "Social" = "#C2674C"),
+    labels = c("Physical Sciences", "Life Sciences", 
+               "Health Sciences", "Social Sciences")
+  ) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(
+    title = "Publication trends by macro-area",
+    x = "Year",
+    y = "Number of publications",
+    fill = "Macro-area"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+
+
+```{r}
+library(tidyverse)
+
+# function for summary
+summ <- \(data, group) data %>%
+  group_by({{group}}) %>%
+  summarise(
+    n = n(),
+    mean = mean(cited, na.rm = TRUE),
+    median = median(cited, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# OA vs. Not OA
+summ(dat_reg, OA)
+
+# Collaboration (bilateral vs multilateral)
+summ(dat_reg %>% filter(coop %in% c("bilateral","multilateral")), coop)
+
+# Leadership (VN-led vs JP-led)
+dat_reg %>%
+  mutate(leader = case_when(vn_led == 1 ~ "VN-led",
+                            jp_led == 1 ~ "JP-led",
+                            TRUE ~ "Other")) %>%
+  summ(leader)
+
+# Funding (Funded vs Not funded)
+summ(dat_reg %>% filter(fund %in% c("Funded","Not funded")), fund)
+
+# Disciplinary field (binary columns)
+field_cols <- c("PS", "LS", "HS", "SS")
+
+dat_reg %>%
+  select(all_of(field_cols), cited) %>%
+  pivot_longer(all_of(field_cols), names_to = "field", values_to = "flag") %>%
+  filter(flag == 1) %>%
+  summ(field) %>%
+  arrange(desc(mean))
+
+```
+
+
+
+```{r}
+dat_reg |>
+  filter(year >= 2000, !is.na(quartile), quartile %in% c("Q1", "Q2", "Q3", "Q4")) |>
+  count(year, quartile) |>
+  ggplot(aes(x = year, y = n, color = quartile, group = quartile)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  geom_vline(xintercept = 2014, linetype = "dashed", 
+             color = "gray30", linewidth = 0.5) +
+  annotate("text", x = 2014, y = Inf, 
+           label = "Vietnam-Japan Extensive\nStrategic Partnership\nand VJU establishment", 
+           hjust = -0.05, vjust = 1.2, size = 2.5, 
+           color = "gray30", lineheight = 0.9) +
+  scale_color_manual(
+    values = c("Q1" = "#4A90E2", "Q2" = "#95B8A8", 
+               "Q3" = "#E8B861", "Q4" = "#E85D75"),
+    labels = c("Q1" = "Q1 (Top quartile)", "Q2" = "Q2", 
+               "Q3" = "Q3", "Q4" = "Q4")
+  ) +
+  labs(
+    title = "Journal quartile distribution over time",
+    x = "Year",
+    y = "Number of publications",
+    color = "Quartile"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+
+```{r}
+dat_reg |>
+  filter(year >= 2000, coop %in% c("bilateral", "multilateral")) |>
+  ggplot(aes(x = coop, y = cited, fill = coop)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3, 
+               fill = "white", color = "black") +
+  scale_fill_manual(
+    values = c("bilateral" = "#4A90E2", "multilateral" = "#E85D75")
+  ) +
+  scale_y_log10() +
+  labs(
+    title = "Citations by collaboration type",
+    subtitle = "Diamond = mean, box = median and IQR (log scale)",
+    x = "Collaboration type",
+    y = "Number of citations (log scale)"
+  ) +
+  theme(legend.position = "none")
+```
+
+
+```{r}
+dat_reg |>
+  filter(year >= 2000) |>
+  mutate(leadership = case_when(
+    vn_led == 1 ~ "VN-led",
+    jp_led == 1 ~ "JP-led",
+    TRUE ~ "Other-led"
+  )) |>
+  count(year, leadership) |>
+  ggplot(aes(x = year, y = n, fill = leadership)) +
+  geom_area(alpha = 0.7, position = "fill") +
+  geom_hline(yintercept = 0.5, linetype = "dotted", 
+             color = "white", linewidth = 0.5) +
+  scale_fill_manual(
+    values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75", "Other-led" = "#95B8A8")
+  ) +
+  scale_y_continuous(labels = scales::percent, expand = c(0, 0)) +
+  labs(
+    title = "Temporal evolution of leadership balance",
+    x = "Year",
+    y = "Proportion of publications",
+    fill = "Leadership"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+
+```{r}
+dat_reg |>
+  filter(year >= 2000, quartile %in% c("Q1", "Q2", "Q3", "Q4")) |>
+  count(fund, quartile) |>
+  group_by(fund) |>
+  mutate(prop = n / sum(n)) |>
+  ggplot(aes(x = quartile, y = prop, fill = fund)) +
+  geom_col(position = "dodge", alpha = 0.7) +
+  scale_fill_manual(
+    values = c("Funded" = "#95B8A8", "Not funded" = "#C2674C")
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Journal quartile distribution by funding status",
+    x = "Quartile",
+    y = "Proportion of publications",
+    fill = "Funding status"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+
+```{r}
+dat_reg |>
+  filter(year >= 2000, fund == "Funded") |>
+  select(year, asian, eu, int, jap, us, vn) |>
+  pivot_longer(-year, names_to = "region", values_to = "has_funding") |>
+  filter(has_funding == 1) |>
+  mutate(region = case_when(
+    region == "jap" ~ "Japan",
+    region == "vn" ~ "Vietnam",
+    region == "us" ~ "US",
+    region == "eu" ~ "EU",
+    region == "asian" ~ "Asian",
+    region == "int" ~ "International"
+  )) |>
+  count(year, region) |>
+  ggplot(aes(x = year, y = n, fill = region)) +
+  geom_area(alpha = 0.7) +
+  scale_fill_manual(
+    values = c("Japan" = "#4A90E2", "Vietnam" = "#E85D75", 
+               "US" = "#95B8A8", "EU" = "#E8B861",
+               "Asian" = "#C2674C", "International" = "#9B59B6")
+  ) +
+  labs(
+    title = "Evolution of funding regions over time",
+    subtitle = "Number of publications by funding region",
+    x = "Year",
+    y = "Number of publications",
+    fill = "Funding region"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+
+```{r}
+dat_reg |>
+  filter(year >= 2000, fund == "Funded") |>
+  select(year, asian, eu, int, jap, us, vn) |>
+  pivot_longer(-year, names_to = "region", values_to = "has_funding") |>
+  filter(has_funding == 1) |>
+  mutate(region = case_when(
+    region == "jap" ~ "Japan",
+    region == "vn" ~ "Vietnam",
+    region == "us" ~ "US",
+    region == "eu" ~ "EU",
+    region == "asian" ~ "Asian",
+    region == "int" ~ "International"
+  )) |>
+  count(year, region) |>
+  ggplot(aes(x = year, y = n, color = region, group = region)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c("Japan" = "#4A90E2", "Vietnam" = "#E85D75", 
+               "US" = "#95B8A8", "EU" = "#E8B861",
+               "Asian" = "#C2674C", "International" = "#9B59B6")
+  ) +
+  labs(
+    title = "Evolution of funding regions over time",
+    subtitle = "Number of publications by funding region",
+    x = "Year",
+    y = "Number of publications",
+    color = "Funding region"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+
+```{r}
+dat_reg |>
+  filter(year >= 2000, fund == "Funded") |>
+  select(year, ind, pub, uni) |>
+  pivot_longer(-year, names_to = "sector", values_to = "has_funding") |>
+  filter(has_funding == 1) |>
+  mutate(sector = case_when(
+    sector == "ind" ~ "Industry",
+    sector == "pub" ~ "Public",
+    sector == "uni" ~ "University"
+  )) |>
+  count(year, sector) |>
+  ggplot(aes(x = year, y = n, color = sector, group = sector)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c("Industry" = "#4A90E2", "Public" = "#95B8A8", "University" = "#E85D75")
+  ) +
+  labs(
+    title = "Growth of funding sector participation",
+    subtitle = "Number of publications by funding sector",
+    x = "Year",
+    y = "Number of publications",
+    color = "Funding sector"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+
+```{r}
+library(patchwork)
+
+p1 <- dat_reg |>
+  filter(year >= 2000, fund == "Funded") |>
+  select(year, jap, vn, us) |>
+  pivot_longer(-year, names_to = "region", values_to = "has_funding") |>
+  filter(has_funding == 1) |>
+  mutate(region = case_when(
+    region == "jap" ~ "Japan",
+    region == "vn" ~ "Vietnam",
+    region == "us" ~ "US"
+  )) |>
+  count(year, region) |>
+  ggplot(aes(x = year, y = n, color = region, group = region)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c("Japan" = "#2C3E50", "Vietnam" = "#E74C3C", "US" = "#3498DB")
+  ) +
+  labs(
+    title = "Top funding regions",
+    x = NULL,
+    y = "Number of publications",
+    color = NULL
+  ) +
+  theme(legend.position = "bottom")
+
+p2 <- dat_reg |>
+  filter(year >= 2000, fund == "Funded") |>
+  select(year, ind, pub, uni) |>
+  pivot_longer(-year, names_to = "sector", values_to = "has_funding") |>
+  filter(has_funding == 1) |>
+  mutate(sector = case_when(
+    sector == "ind" ~ "Industry",
+    sector == "pub" ~ "Public",
+    sector == "uni" ~ "University"
+  )) |>
+  count(year, sector) |>
+  ggplot(aes(x = year, y = n, color = sector, group = sector)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c("Industry" = "#8E44AD", "Public" = "#16A085", "University" = "#F39C12")
+  ) +
+  labs(
+    title = "Funding sectors",
+    x = "Year",
+    y = "Number of publications",
+    color = NULL
+  ) +
+  theme(legend.position = "bottom")
+
+p1 / p2
+```
+
+
+```{r}
+library(tidyverse)
+
+# 1️⃣ Import data
+dat_bib <- read.csv("data/all_1020.csv")
+dat_reg <- read.csv("data/processed_data.csv")
+
+# 2️⃣ Normalize DOI in both tables
+dat_bib <- dat_bib %>% mutate(DOI = str_to_lower(str_trim(DOI)))
+dat_reg <- dat_reg %>% mutate(DOI = str_to_lower(str_trim(DOI)))
+
+# 3️⃣ Join SDG columns by DOI and append unique SDG tags
+dat_bib <- dat_bib %>%
+  left_join(
+    dat_reg %>%
+      select(DOI, starts_with("SDG.")) %>%
+      distinct(DOI, .keep_all = TRUE),
+    by = "DOI"
+  ) %>%
+  rowwise() %>%
+  mutate(
+    # Build unique SDG tags
+    sdg_list = {
+      nm   <- names(across(starts_with("SDG.")))
+      vals <- c_across(starts_with("SDG."))
+      labs <- nm[vals == 1]
+      labs <- tolower(gsub("^SDG\\.(0)?", "sdg", labs))
+      labs <- unique(labs)
+      paste(labs, collapse = "; ")
+    },
+    # Clean existing SDG tags then append new ones
+    Author.Keywords = {
+      base <- coalesce(Author.Keywords, "")
+      base_clean <- base %>%
+        str_replace_all("(?i)(^|[;,]\\s*)sdg\\s*0?\\d{1,2}(?=\\s*(;|,|$))", "") %>%
+        str_replace_all(",\\s*", "; ") %>%
+        str_replace_all("[;]\\s*[;]+", "; ") %>%
+        str_replace_all("^\\s*[;]\\s*|\\s*[;]\\s*$", "") %>%
+        str_squish()
+
+      add <- coalesce(sdg_list, "")
+      if (add == "") base_clean
+      else if (base_clean == "") add
+      else paste(base_clean, add, sep = "; ")
+    }
+  ) %>%
+  ungroup() %>%
+  select(-starts_with("SDG."), -sdg_list)
+
+dat_bib_org <- read.csv("data/all_1020.csv")
+colnames(dat_bib) <- colnames(dat_bib_org)
+dat_bib$Author.Keywords <- gsub(",", ";", dat_bib$Author.Keywords)
+colnames(dat_bib)[colnames(dat_bib) == "Author.Keywords"] <- "Author Keywords"
+
+
+# 4️⃣ Export cleaned file
+write.csv(dat_bib, "data/bib_data/sdg.csv", row.names = FALSE, na = "", fileEncoding = "UTF-8")
+
+```
+
+
+```{r}
+library(tidyverse)
+library(MASS)
+library(pscl)
+library(margins)
+library(lmtest); library(sandwich)  # robust/clustered SEs
+
+# Prep: macro-area, age, bins, top10 within (year × macro_area)
+dat <- dat_reg |>
+  mutate(
+    macro_area = case_when(
+      HS == 1 ~ "HS", LS == 1 ~ "LS", PS == 1 ~ "PS", SS == 1 ~ "SS",
+      TRUE ~ "Other"
+    ) |> factor(),
+    quartile_f = factor(quartile),
+    age = pmax(2025 - year, 1),
+    age_bin = cut(age, breaks = c(0,2,5,10,Inf), right = TRUE,
+                  labels = c("≤2y","3–5y","6–10y",">10y")),
+    cited_ln = log1p(cited)
+  ) |>
+  group_by(year, macro_area) |>
+  mutate(top10 = as.integer(percent_rank(cited) >= 0.9)) |>
+  ungroup()
+
+# (A) NB2 with exposure to publication age (offset)
+m_nb <- dat |>
+  glm.nb(cited ~ coop + OA + fund +
+           prop_vn_authors + vn_led + n_regions + n_sectors + n_sdg +
+           quartile_f + macro_area + age_bin +
+           offset(log(age)),
+         data = _)
+summary(m_nb)
+
+# (B) Log-OLS (same covariates; keep age_bin not year FE)
+m_lols <- dat |>
+  lm(cited_ln ~ coop + OA + fund +
+        prop_vn_authors + vn_led + n_regions + n_sectors + n_sdg +
+        quartile_f + macro_area + age_bin,
+      data = _)
+summary(m_lols)
+exp(coef(m_lols)) - 1  # % change
+
+# (C) Top-10% logit (avoid year FE; use age_bin) + AMEs
+m_logit <- dat |>
+  glm(top10 ~ coop + OA + fund +
+        prop_vn_authors + vn_led + n_regions + n_sectors + n_sdg +
+        quartile_f + macro_area + age_bin,
+      data = _, family = binomial)
+summary(m_logit)
+
+# AMEs for policy variables (concise)
+margins(m_logit,
+        variables = c("OA","fund","coop","vn_led",
+                      "n_regions","n_sectors","n_sdg")) |>
+  summary()
+
+# Optional: clustered SEs by year for NB/Logit
+coeftest(m_nb, vcov = vcovCL(m_nb, cluster = ~ year))
+coeftest(m_logit, vcov = vcovCL(m_logit, cluster = ~ year))
+
+# Overdispersion: Poisson vs NB
+vars <- c("cited","coop","OA","fund","bilateral_funding",
+          "prop_vn_authors","vn_led","n_regions","n_sectors","n_sdg",
+          "quartile_f","macro_area","age_bin","age")
+
+df <- dat |>
+  dplyr::select(all_of(vars)) |>
+  tidyr::drop_na()
+
+# Poisson, NB, and ZINB with IDENTICAL RHS and offset
+f_rhs <- cited ~ coop + OA + fund + bilateral_funding +
+  prop_vn_authors + vn_led + n_regions + n_sectors + n_sdg +
+  quartile_f + macro_area + age_bin + offset(log(age))
+
+m_pois2 <- glm(f_rhs, data = df, family = poisson)
+m_nb2   <- glm.nb(f_rhs, data = df)
+m_zinb2 <- zeroinfl(f_rhs, data = df, dist = "negbin", EM = TRUE, link = "logit")
+
+# LR test for overdispersion (Poisson vs NB)
+lrtest(m_pois2, m_nb2)
+
+# Or manual p-value (coerce logLik to numeric!)
+LR <- 2 * (as.numeric(logLik(m_nb2)) - as.numeric(logLik(m_pois2)))
+p_overdisp <- pchisq(LR, df = 1, lower.tail = FALSE)
+p_overdisp
+
+# Vuong test (NB vs ZINB) — now they have the same N
+vuong(m_nb2, m_zinb2)
+
+```

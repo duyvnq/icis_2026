@@ -1,0 +1,7 @@
+﻿id	label	x	y	cluster	weight<Links>	weight<Total link strength>	weight<Documents>	score<Avg. pub. year>
+173	"hanoi institute of mathematics, hanoi, viet nam"	0.7763	-0.0919	2	0	0	7	1996
+208	"institute of mathematics, hanoi institute of mathematics, hanoi, viet nam"	-0.7765	-0.0899	3	0	0	10	1993
+212	"institute of pharmaceutical sciences, hiroshima university school of medicine, hiroshima, japan"	-0.0002	-0.4191	1	1	4	9	1995.6667
+262	"natl. institute of labour protection, hanoi, viet nam"	-0.3773	0.6002	4	0	0	7	1996.7143
+317	"the science-production centre of vietnamese ginseng, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	-0.0013	-0.5984	1	1	4	5	1994.2
+337	"vietnam atomic energy institute, hanoi, viet nam"	0.379	0.5991	5	0	0	6	1998.1667
