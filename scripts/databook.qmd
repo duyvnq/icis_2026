@@ -1,0 +1,681 @@
+---
+title: "Japan-Vietnam Research Collaboration"
+subtitle: "Data Documentation and Codebook"
+author: "Your Name"
+date: today
+format:
+  pdf:
+    documentclass: article
+    geometry:
+      - top=2cm
+      - bottom=2cm
+      - left=2.5cm
+      - right=2.5cm
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    highlight-style: github
+    fig-width: 7
+    fig-height: 5
+    keep-tex: false
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(tidyverse)
+library(knitr)
+library(scales)
+
+# Load processed data
+data_reg <- read_csv("/Users/duyvnq/Library/CloudStorage/OneDrive-Personal/Documents/Projects/icis_2026/data/processed_data.csv", show_col_types = FALSE) |> 
+  rename_with(~ gsub("SDG-", "SDG_", .), starts_with("SDG-"))
+
+# Helper functions
+summarize_numeric <- function(x) {
+  tibble(
+    N = sum(!is.na(x)),
+    Missing = sum(is.na(x)),
+    `Missing %` = round(100 * mean(is.na(x)), 1),
+    Mean = round(mean(x, na.rm = TRUE), 2),
+    SD = round(sd(x, na.rm = TRUE), 2),
+    Median = round(median(x, na.rm = TRUE), 2),
+    Min = round(min(x, na.rm = TRUE), 2),
+    Max = round(max(x, na.rm = TRUE), 2)
+  )
+}
+
+summarize_categorical <- function(x) {
+  tab <- table(x, useNA = "always")
+  prop <- round(100 * prop.table(tab), 1)
+  tibble(
+    Category = names(tab),
+    Frequency = as.integer(tab),
+    Percentage = prop
+  )
+}
+```
+
+\newpage
+
+# Overview
+
+## Dataset Description
+
+**Source**: Scopus bibliometric database  
+**Query**: `AFFILCOUNTRY(japan AND viet*)`  
+**Date extracted**: October 20, 2025 at 17:30 GMT+7  
+**Document type**: Journal articles only  
+**Time period**: 1972–2025  
+**Total records**: `r format(nrow(data_reg), big.mark = ",")` articles
+
+**Total columns**: `r ncol(data_reg)`
+
+**Variable categories**:
+
+- Identifiers & temporal: 7 (id, DOI, year, phase, post_2009, post_2014, post_vju)
+- Impact/Quality: 3 (cited, quartile, sjr_score)
+- Collaboration: 3 (coop, n_countries, affiliations)
+- Funding: 15 (fund, 6 regions, 3 sectors, n_regions, n_sectors, bilateral_funding)
+- Authorship: 10 (fa_vn, fa_jp, fa_o, vn_led, jp_led, n_vn_authors, n_jp_authors, n_vn_jp_authors, prop_vn_authors, collab_type)
+- Institutional: 1 (vju_affiliated)
+- Open Access: 1 (OA)
+- Disciplines: 31 (4 macro-areas + 1 multidisciplinary + 26 subject areas)
+- SDGs: 18 (17 individual SDGs + n_sdg)
+- Other: 1 (title)
+
+## Data Processing
+
+The raw Scopus export was processed through multiple stages:
+
+1. **Filtering**: Restricted to journal articles (primary research outputs)
+2. **Merging**: Integrated external data sources:
+   - Journal-level subject classifications (Scopus sources file)
+   - SJR scores and quartiles (SCImago portal)
+   - Funding information (manual Scopus filter exports by region/sector)
+   - SDG alignment (text2sdg package with SDGO system)
+3. **Variable construction**: Derived collaboration metrics, authorship patterns, and aggregated indicators
+4. **Quality control**: Validated country extraction, standardized names, checked for duplicates
+
+**Processing script**: `data_processing.R`  
+**Output file**: `data/processed_data.csv`
+
+## Key Limitations
+
+- **SJR missingness**: ~6% of articles could not be matched to SJR data due to title variants
+- **Affiliation parsing**: Author counts based on affiliation strings may contain errors or inconsistencies
+
+\newpage
+
+# Variable Codebook
+
+## Identifiers and Basic Information
+
+### id {-}
+**Type**: Integer  
+**Description**: Unique row identifier (1 to `r nrow(data_reg)`)  
+**Missing**: `r sum(is.na(data_reg$id))`
+
+### DOI {-}
+**Type**: Character  
+**Description**: Digital Object Identifier  
+**Missing**: `r sum(is.na(data_reg$DOI))` (`r round(100*mean(is.na(data_reg$DOI)), 1)`%)
+
+### year {-}
+**Type**: Integer  
+**Description**: Publication year  
+**Range**: `r min(data_reg$year, na.rm=TRUE)` – `r max(data_reg$year, na.rm=TRUE)`  
+**Missing**: `r sum(is.na(data_reg$year))`
+
+```{r year-summary}
+summarize_numeric(data_reg$year) |> 
+  kable(caption = "Summary statistics: year") 
+```
+
+
+### title {-}
+**Type**: Character  
+**Description**: Journal title (source)  
+**Unique values**: `r n_distinct(data_reg$title, na.rm = TRUE)`  
+**Missing**: `r sum(is.na(data_reg$title))`
+
+## Impact and Quality Indicators
+
+### cited {-}
+**Type**: Integer  
+**Description**: Total citation count as of October 2025  
+**Range**: `r min(data_reg$cited, na.rm=TRUE)` – `r max(data_reg$cited, na.rm=TRUE)`
+
+```{r cited-summary}
+summarize_numeric(data_reg$cited) |> 
+  kable(caption = "Summary statistics: cited") 
+```
+
+```{r cited-dist}
+#| fig.height: 3.5
+
+data_reg |> 
+  ggplot(aes(x = cited)) +
+  geom_histogram(bins = 50, fill = "steelblue", color = "white") +
+  scale_x_log10(labels = comma) +
+  labs(
+    title = "Citation Distribution (log scale)",
+    x = "Citations",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+### quartile {-}
+**Type**: Factor (4 levels)  
+**Description**: Best SJR quartile ranking  
+**Levels**: Q1 (highest) to Q4 (lowest)
+
+```{r quartile-summary}
+summarize_categorical(data_reg$quartile) |> 
+  kable(caption = "Frequency distribution: quartile") 
+```
+
+### sjr_score {-}
+**Type**: Numeric  
+**Description**: SCImago Journal Rank score (continuous measure of journal prestige)
+
+```{r sjr-summary}
+summarize_numeric(data_reg$sjr_score) |> 
+  kable(caption = "Summary statistics: sjr_score") 
+```
+
+## Collaboration Variables
+
+### coop {-}
+**Type**: Factor (2 levels)  
+**Description**: Collaboration type based on unique country count  
+**Levels**:  
+- bilateral: Exactly 2 countries (Japan + Vietnam)  
+- multilateral: More than 2 countries
+
+```{r coop-summary}
+summarize_categorical(data_reg$coop) |> 
+  kable(caption = "Frequency distribution: coop") 
+```
+
+### n_countries {-}
+**Type**: Integer  
+**Description**: Number of unique countries involved in collaboration
+
+```{r ncountries-summary}
+summarize_numeric(data_reg$n_countries) |> 
+  kable(caption = "Summary statistics: n_countries") 
+```
+
+### affiliations {-}
+**Type**: Character  
+**Description**: Semicolon-separated list of author affiliations (raw)  
+**Note**: Used for deriving country and authorship variables
+
+## Funding Variables
+
+### fund {-}
+**Type**: Factor (2 levels)  
+**Description**: Overall funding presence  
+**Levels**: Not funded, Funded
+
+```{r fund-summary}
+summarize_categorical(data_reg$fund) |> 
+  kable(caption = "Frequency distribution: fund") 
+```
+
+### Regional Funders {-}
+
+Binary indicators (0/1) for funding from each region:
+
+- **asian**: Asian countries (excluding Japan)
+- **eu**: European Union countries
+- **int**: International organizations (e.g., World Bank, UN agencies)
+- **jap**: Japan
+- **us**: United States
+- **vn**: Vietnam
+
+```{r funder-regions}
+data_reg |> 
+  summarise(
+    across(c(asian, eu, int, jap, us, vn), 
+           ~ sum(., na.rm = TRUE))
+  ) |> 
+  pivot_longer(everything(), names_to = "Region", values_to = "Articles") |> 
+  mutate(
+    Region = toupper(Region),
+    Percentage = round(100 * Articles / nrow(data_reg), 1)
+  ) |> 
+  arrange(desc(Articles)) |> 
+  kable(
+    caption = "Funding by region",
+    format.args = list(big.mark = ",")
+  ) 
+```
+
+### Funder Sectors {-}
+
+Binary indicators (0/1) for funding from each sector:
+
+- **pub**: Public/government funding
+- **uni**: University funding
+- **ind**: Industry/private sector funding
+
+```{r funder-sectors}
+data_reg |> 
+  summarise(
+    across(c(pub, uni, ind), 
+           ~ sum(., na.rm = TRUE))
+  ) |> 
+  pivot_longer(everything(), names_to = "Sector", values_to = "Articles") |> 
+  mutate(
+    Sector = case_when(
+      Sector == "pub" ~ "Public",
+      Sector == "uni" ~ "University",
+      Sector == "ind" ~ "Industry"
+    ),
+    Percentage = round(100 * Articles / nrow(data_reg), 1)
+  ) |> 
+  arrange(desc(Articles)) |> 
+  kable(
+    caption = "Funding by sector",
+    format.args = list(big.mark = ",")
+  ) 
+```
+
+### n_regions {-}
+**Type**: Factor  
+**Description**: Number of distinct funder regions (0–6)
+
+```{r nregions-summary}
+summarize_categorical(data_reg$n_regions) |> 
+  kable(caption = "Frequency distribution: n_regions") 
+```
+
+### n_sectors {-}
+**Type**: Factor  
+**Description**: Number of distinct funder sectors (0–3)
+
+```{r nsectors-summary}
+summarize_categorical(data_reg$n_sectors) |> 
+  kable(caption = "Frequency distribution: n_sectors") 
+```
+
+### bilateral_funding {-}
+**Type**: Binary (0/1)  
+**Description**: Japan AND Vietnam co-funding (both jap=1 and vn=1)
+
+```{r bilateral-funding}
+data_reg |> 
+  count(bilateral_funding) |> 
+  mutate(
+    bilateral_funding = if_else(bilateral_funding == 1, "Yes", "No"),
+    Percentage = round(100 * n / sum(n), 1)
+  ) |> 
+  kable(
+    caption = "Bilateral co-funding (Japan + Vietnam)",
+    col.names = c("Bilateral Funding", "Articles", "Percentage (%)"),
+    format.args = list(big.mark = ",")
+  ) 
+```
+
+## Authorship Variables
+
+### First Author Location {-}
+
+Binary indicators (0/1) identifying first author affiliation:
+
+- **fa_vn**: First author from Vietnam
+- **fa_jp**: First author from Japan
+- **fa_o**: First author from other country
+
+```{r first-author}
+data_reg |> 
+  summarise(
+    Vietnam = sum(fa_vn, na.rm = TRUE),
+    Japan = sum(fa_jp, na.rm = TRUE),
+    Other = sum(fa_o, na.rm = TRUE)
+  ) |> 
+  pivot_longer(everything(), names_to = "Location", values_to = "Articles") |> 
+  mutate(Percentage = round(100 * Articles / sum(Articles), 1)) |> 
+  kable(
+    caption = "First author location",
+    format.args = list(big.mark = ",")
+  ) 
+```
+
+### Author Counts {-}
+
+- **n_vn_authors**: Count of Vietnamese author affiliations
+- **n_jp_authors**: Count of Japanese author affiliations
+- **n_vn_jp_authors**: Total Vietnam + Japan authors (sum of above)
+
+```{r author-counts}
+data_reg |> 
+  summarise(
+    Variable = c("n_vn_authors", "n_jp_authors", "n_vn_jp_authors"),
+    Mean = round(c(
+      mean(n_vn_authors, na.rm = TRUE),
+      mean(n_jp_authors, na.rm = TRUE),
+      mean(n_vn_jp_authors, na.rm = TRUE)
+    ), 2),
+    Median = c(
+      median(n_vn_authors, na.rm = TRUE),
+      median(n_jp_authors, na.rm = TRUE),
+      median(n_vn_jp_authors, na.rm = TRUE)
+    ),
+    Max = c(
+      max(n_vn_authors, na.rm = TRUE),
+      max(n_jp_authors, na.rm = TRUE),
+      max(n_vn_jp_authors, na.rm = TRUE)
+    )
+  ) |> 
+  kable(caption = "Author count statistics") 
+```
+
+### prop_vn_authors {-}
+**Type**: Numeric (0–1)  
+**Description**: Proportion of Vietnamese authors = n_vn_authors / n_vn_jp_authors  
+**Interpretation**: 0.5 = perfectly balanced, <0.5 = JP-dominated, >0.5 = VN-dominated
+
+```{r prop-vn-summary}
+summarize_numeric(data_reg$prop_vn_authors) |> 
+  kable(caption = "Summary statistics: prop_vn_authors") 
+```
+
+```{r prop-vn-dist}
+#| fig.height: 3.5
+
+data_reg |> 
+  ggplot(aes(x = prop_vn_authors)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+  geom_vline(xintercept = 0.5, linetype = "dashed", color = "red", linewidth = 1) +
+  labs(
+    title = "Distribution of Vietnamese Author Proportion",
+    subtitle = "Red line = perfect balance (0.5)",
+    x = "Proportion Vietnamese Authors",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+### Leadership Flags {-}
+
+Binary indicators (0/1) based on first author location:
+
+- **vn_led**: Vietnamese-led article (fa_vn = 1)
+- **jp_led**: Japanese-led article (fa_jp = 1)
+
+```{r leadership}
+data_reg |> 
+  summarise(
+    `VN-led` = sum(vn_led, na.rm = TRUE),
+    `JP-led` = sum(jp_led, na.rm = TRUE),
+    `Other-led` = sum(fa_o, na.rm = TRUE)
+  ) |> 
+  pivot_longer(everything(), names_to = "Leadership", values_to = "Articles") |> 
+  mutate(Percentage = round(100 * Articles / sum(Articles), 1)) |> 
+  kable(
+    caption = "Research leadership distribution",
+    format.args = list(big.mark = ",")
+  ) 
+```
+
+### collab_type {-}
+**Type**: Factor (4 levels)  
+**Description**: Collaboration intensity classification  
+**Levels**:  
+- VN-dominated: prop_vn_authors > 0.6  
+- JP-dominated: prop_vn_authors < 0.4  
+- Balanced: prop_vn_authors between 0.4–0.6  
+- Other: First author from third country
+
+```{r collab-type}
+summarize_categorical(data_reg$collab_type) |> 
+  kable(caption = "Frequency distribution: collab_type") 
+```
+
+## Open Access
+
+### OA {-}
+**Type**: Factor (2 levels)  
+**Description**: Open access status  
+**Levels**: Not OA, OA
+
+```{r oa-summary1}
+summarize_categorical(data_reg$OA) |> 
+  kable(caption = "Frequency distribution: OA") 
+```
+
+```{r oa-trend}
+#| fig.height: 3.5
+
+data_reg |> 
+  group_by(year) |> 
+  summarise(oa_rate = 100 * mean(OA == "OA", na.rm = TRUE)) |> 
+  ggplot(aes(x = year, y = oa_rate)) +
+  geom_line(color = "darkgreen", linewidth = 1) +
+  geom_point(color = "darkgreen", size = 2) +
+  labs(
+    title = "Open Access Adoption Over Time",
+    x = "Year",
+    y = "Open Access Rate (%)"
+  ) +
+  theme_minimal()
+```
+
+## Disciplinary Classification
+
+### Macro-Areas {-}
+
+Binary indicators (0/1) for broad disciplinary categories:
+
+- **LS**: Life Sciences
+- **SS**: Social Sciences
+- **PS**: Physical Sciences
+- **HS**: Health Sciences
+- **mult**: Multidisciplinary
+
+*Note*: Papers can belong to multiple macro-areas.
+
+```{r macro-areas}
+data_reg |> 
+  summarise(
+    across(c(LS, SS, PS, HS, mult), ~ sum(., na.rm = TRUE))
+  ) |> 
+  pivot_longer(everything(), names_to = "Macro_area", values_to = "Articles") |> 
+  mutate(
+    Macro_area = case_when(
+      Macro_area == "LS" ~ "Life Sciences",
+      Macro_area == "SS" ~ "Social Sciences",
+      Macro_area == "PS" ~ "Physical Sciences",
+      Macro_area == "HS" ~ "Health Sciences",
+      Macro_area == "mult" ~ "Multidisciplinary"
+    ),
+    Percentage = round(100 * Articles / nrow(data_reg), 1)
+  ) |> 
+  arrange(desc(Articles)) |> 
+  kable(
+    caption = "Distribution across macro-areas",
+    format.args = list(big.mark = ",")
+  ) 
+```
+
+### Subject Areas {-}
+
+26 specific subject areas (binary 0/1 indicators):
+
+```{r subject-areas}
+subject_cols <- c("agr_bio", "art_hum", "bio_chem", "buss", "chem_eng", 
+                  "chem", "comp_sci", "des_sci", "earth", "econ", "ener", 
+                  "egin", "env_sci", "immu", "mat_sci", "math", "med", 
+                  "neuro", "nurse", "pharm", "phys", "psy", "soc_sci", 
+                  "vet", "den", "heal")
+
+subject_labels <- c(
+  "Agriculture & Biological Sciences", "Arts & Humanities", 
+  "Biochemistry", "Business/Management", "Chemical Engineering",
+  "Chemistry", "Computer Science", "Decision Sciences",
+  "Earth & Planetary Sciences", "Economics/Finance", "Energy",
+  "Engineering", "Environmental Science", "Immunology & Microbiology",
+  "Materials Science", "Mathematics", "Medicine",
+  "Neuroscience", "Nursing", "Pharmacology/Toxicology",
+  "Physics & Astronomy", "Psychology", "Social Sciences",
+  "Veterinary", "Dentistry", "Health Professions"
+)
+
+data_reg |> 
+  summarise(across(all_of(subject_cols), ~ sum(., na.rm = TRUE))) |> 
+  pivot_longer(everything(), names_to = "Code", values_to = "Articles") |> 
+  mutate(
+    Subject = subject_labels,
+    Percentage = round(100 * Articles / nrow(data_reg), 1)
+  ) |> 
+  arrange(desc(Articles)) |> 
+  select(Subject, Articles, Percentage) |> 
+  slice(1:15) |>  # Top 15 only
+  kable(
+    caption = "Top 15 subject areas",
+    format.args = list(big.mark = ",")
+  ) 
+```
+
+## Sustainable Development Goals (SDGs)
+
+### SDG Variables {-}
+
+17 binary indicators (0/1) mapping articles to UN Sustainable Development Goals:
+
+- **SDG_1** through **SDG_17**: Individual SDG flags
+- **n_sdg**: Total number of SDGs addressed per article
+
+**Mapping method**: text2sdg package using SDGO system on article abstracts
+
+```{r sdg-distribution}
+# Update SDG column names to match the ones in your dataset
+sdg_cols <- paste0("SDG_", sprintf("%02d", 1:17))  # This will create SDG_01, SDG_02, ..., SDG_17
+
+# SDG names remain the same
+sdg_names <- c(
+  "1. No Poverty", "2. Zero Hunger", "3. Good Health", "4. Quality Education",
+  "5. Gender Equality", "6. Clean Water", "7. Affordable Energy", "8. Decent Work",
+  "9. Industry/Innovation", "10. Reduced Inequalities", "11. Sustainable Cities",
+  "12. Responsible Consumption", "13. Climate Action", "14. Life Below Water",
+  "15. Life on Land", "16. Peace & Justice", "17. Partnerships"
+)
+
+# Summarize and process the data
+data_reg |> 
+  summarise(across(all_of(sdg_cols), ~ sum(., na.rm = TRUE))) |> 
+  pivot_longer(everything(), names_to = "SDG", values_to = "Articles") |> 
+  mutate(
+    SDG_num = parse_number(SDG),
+    SDG_name = sdg_names[SDG_num],
+    Percentage = round(100 * Articles / nrow(data_reg), 1)
+  ) |> 
+  arrange(desc(Articles)) |> 
+  select(SDG = SDG_name, Articles, Percentage) |> 
+  kable(
+    caption = "SDG coverage across all articles",
+    format.args = list(big.mark = ",")
+  )
+
+```
+
+### n_sdg {-}
+**Type**: Integer  
+**Description**: Total number of SDGs addressed per article (0–17)
+
+```{r nsdg-summary}
+summarize_numeric(data_reg$n_sdg) |> 
+  kable(caption = "Summary statistics: n_sdg") 
+```
+
+```{r nsdg-dist}
+#| fig.height: 3.5
+
+data_reg |> 
+  count(n_sdg) |> 
+  ggplot(aes(x = n_sdg, y = n)) +
+  geom_col(fill = "steelblue", color = "white") +
+  labs(
+    title = "Distribution of SDG Coverage per Article",
+    x = "Number of SDGs Addressed",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+\newpage
+
+```{r variable-list}
+#| results: asis
+
+var_info <- tribble(
+  ~Variable, ~Type, ~Description,
+  "id", "Integer", "Unique row identifier",
+  "DOI", "Character", "Digital Object Identifier",
+  "year", "Integer", "Publication year (2000-2025)",
+  "title", "Character", "Journal title",
+  "cited", "Integer", "Citation count",
+  "quartile", "Factor", "SJR quartile (Q1-Q4)",
+  "sjr_score", "Numeric", "SJR score",
+  "OA", "Factor", "Open access status",
+  "coop", "Factor", "Bilateral/multilateral",
+  "n_countries", "Integer", "Number of countries",
+  "affiliations", "Character", "Raw affiliation string",
+  "fund", "Factor", "Funding status",
+  "asian", "Binary", "Asian funder",
+  "eu", "Binary", "EU funder",
+  "int", "Binary", "International funder",
+  "jap", "Binary", "Japan funder",
+  "us", "Binary", "US funder",
+  "vn", "Binary", "Vietnam funder",
+  "pub", "Binary", "Public sector funder",
+  "uni", "Binary", "University funder",
+  "ind", "Binary", "Industry funder",
+  "n_regions", "Factor", "Number of funder regions",
+  "n_sectors", "Factor", "Number of funder sectors",
+  "bilateral_funding", "Binary", "Japan + Vietnam co-funding",
+  "fa_vn", "Binary", "First author Vietnam",
+  "fa_jp", "Binary", "First author Japan",
+  "fa_o", "Binary", "First author other",
+  "vn_led", "Binary", "VN-led paper",
+  "jp_led", "Binary", "JP-led paper",
+  "n_vn_authors", "Integer", "Count VN authors",
+  "n_jp_authors", "Integer", "Count JP authors",
+  "n_vn_jp_authors", "Integer", "Total VN+JP authors",
+  "prop_vn_authors", "Numeric", "Proportion VN authors (0-1)",
+  "collab_type", "Factor", "Collaboration intensity (4 levels)",
+  "LS", "Binary", "Life Sciences",
+  "SS", "Binary", "Social Sciences",
+  "PS", "Binary", "Physical Sciences",
+  "HS", "Binary", "Health Sciences",
+  "mult", "Binary", "Multidisciplinary",
+  "[26 subjects]", "Binary", "Specific subject areas",
+  "SDG_1 to SDG_17", "Binary", "Individual SDG flags",
+  "n_sdg", "Integer", "Total SDGs addressed"
+)
+
+var_info |> 
+  kable(
+    caption = "Complete variable list",
+    format = "latex",
+    booktabs = TRUE
+  ) 
+```
+
+\newpage
+
+# Session Information
+
+```{r session-info}
+sessionInfo()
+```
+
+---
+
+**End of Databook**

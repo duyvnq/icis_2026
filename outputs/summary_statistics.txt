@@ -1,0 +1,14 @@
+     cited                collab_type             coop      bilateral_funding quartile       OA      
+ Min.   :    0.00   JP-dominated:3370   bilateral   :4938   Min.   :0.00000   Q4: 324   Not OA:5214  
+ 1st Qu.:    5.00   Balanced    :3881   multilateral:4349   1st Qu.:0.00000   Q3:1135   OA    :4073  
+ Median :   12.00   VN-dominated:2027                       Median :0.00000   Q2:2595                
+ Mean   :   51.93   Other       :   9                       Mean   :0.07333   Q1:5233                
+ 3rd Qu.:   30.00                                           3rd Qu.:0.00000                          
+ Max.   :13697.00                                           Max.   :1.00000                          
+     n_sdg       
+ Min.   : 0.000  
+ 1st Qu.: 1.000  
+ Median : 2.000  
+ Mean   : 2.555  
+ 3rd Qu.: 4.000  
+ Max.   :12.000  
