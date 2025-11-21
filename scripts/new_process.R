@@ -7,23 +7,26 @@ DATA_DIR <- "data"
 FUNDER_DIR <- file.path(DATA_DIR, "data_by_funders")
 
 # 1. LOAD MAIN DATA ------------------------------------------------------------
-data_reg <- read_csv(file.path(DATA_DIR, "all_1020.csv"),
+data_raw <- read_csv(file.path(DATA_DIR, "all_1020.csv"),
   show_col_types = FALSE
-) |>
+)
+
+# Split into regression data (minimal columns) and full bibliometric data
+data_reg <- data_raw |>
   select(Year, "Source title", "Cited by", Affiliations, DOI, "Open Access", Abstract) |>
   rename(
     year = Year,
     title = "Source title",
     cited = "Cited by",
     affiliations = Affiliations,
-    open_access_status = "Open Access", # Renamed to avoid conflict with OA flag
+    open_access = "Open Access",
     abstract = Abstract
   ) |>
   mutate(
     id = row_number(),
-    OA = as.integer(!is.na(open_access_status) & open_access_status != "") # More direct 0/1
+    OA = if_else(!is.na(open_access) & open_access != "", 1, 0)
   ) |>
-  select(-open_access_status) |>
+  select(-open_access) |>
   relocate(id, .before = 1)
 
 # 2. MERGE JOURNAL-LEVEL DATA (SJR & SUBJECT AREAS) ---------------------------
@@ -32,7 +35,8 @@ data_reg <- read_csv(file.path(DATA_DIR, "all_1020.csv"),
 data_source <- read_csv(file.path(DATA_DIR, "sources.csv"),
   show_col_types = FALSE
 ) |>
-  distinct(title, .keep_all = TRUE) # Distinct before arranging if title is primary key
+  arrange(title) |>
+  distinct(title, .keep_all = TRUE)
 
 # Load SJR data
 sjr <- read_delim(file.path(DATA_DIR, "sjr.csv"),
@@ -60,17 +64,17 @@ data_reg <- data_reg |>
 message(sprintf("SJR missingness: %.1f%%", 100 * mean(is.na(data_reg$sjr_score))))
 
 # 3. EXTRACT COLLABORATION STRUCTURE -------------------------------------------
-affiliations_processed <- data_reg |>
+affiliations_long <- data_reg |>
   select(id, affiliations) |>
   separate_rows(affiliations, sep = ";") |>
   mutate(
     affiliations = str_trim(affiliations),
     country = str_extract(affiliations, "[^,]+$") |> str_trim()
-  ) |>
-  distinct(id, country) # Ensure unique country per paper for counting
+  )
 
 # Count unique countries per paper
-coop_type <- affiliations_processed |>
+coop_type <- affiliations_long |>
+  distinct(id, country) |>
   count(id, name = "n_countries") |>
   mutate(
     coop = case_when(
@@ -90,7 +94,8 @@ message(sprintf(
 ))
 
 # 4. MERGE FUNDING DATA --------------------------------------------------------
-funder_files_df <- tribble(
+# Define funder file mapping
+funder_files <- tribble(
   ~file,              ~region, ~sector,
   "asian_pub.csv",    "asian", "pub",
   "asian_uni.csv",    "asian", "uni",
@@ -109,41 +114,39 @@ funder_files_df <- tribble(
   "vn_uni.csv",       "vn",    "uni"
 )
 
-funder_data <- funder_files_df |>
-  rowwise() |> # Process row by row
-  group_map(~ { # use group_map for more controlled iteration
-    file_path <- file.path(FUNDER_DIR, .x$file)
-    if (file.exists(file_path)) {
-      read_csv(file_path, show_col_types = FALSE) |>
-        select(DOI) |>
-        mutate(
-          !!sym(.x$region) := 1L, # Use 1L for integer 1
-          !!sym(.x$sector) := 1L
-        )
-    } else {
-      warning(sprintf("File not found: %s", file_path))
-      tibble()
-    }
-  }, .keep = TRUE) |>
-  list_rbind() |> # Combine list of dataframes
+# Load and merge all funder files efficiently
+funder_data <- map_dfr(1:nrow(funder_files), function(i) {
+  file_path <- file.path(FUNDER_DIR, funder_files$file[i])
+  if (file.exists(file_path)) {
+    read_csv(file_path, show_col_types = FALSE) |>
+      select(DOI) |>
+      mutate(
+        !!funder_files$region[i] := 1,
+        !!funder_files$sector[i] := 1
+      )
+  } else {
+    warning(sprintf("File not found: %s", file_path))
+    tibble()
+  }
+}) |>
   group_by(DOI) |>
   summarise(
-    across(everything(), ~ as.integer(any(. == 1, na.rm = TRUE))), # Already good
+    across(everything(), ~ as.integer(any(. == 1, na.rm = TRUE))),
     .groups = "drop"
   )
 
 # Merge with main data
 data_reg <- data_reg |>
   left_join(funder_data, by = "DOI") |>
-  mutate(across(c(asian, eu, int, jap, us, vn, ind, pub, uni), ~ replace_na(., 0L))) # Specify columns
+  mutate(across(asian:vn, ~ replace_na(., 0)))
 
 # Create funding indicators
 data_reg <- data_reg |>
   mutate(
     fund = as.integer(if_any(asian:vn, ~ . == 1)),
     n_regions = asian + eu + int + jap + us + vn,
-    n_sectors = ind + pub + uni,
-    bilateral_funding = as.integer(jap == 1 & vn == 1)
+    n_sectors = ind + pub + uni, # FIXED: was ind + pub + ind
+    bilateral_funding = as.integer(jap == 1 & vn == 1) # NEW
   )
 
 message(sprintf(
@@ -153,21 +156,23 @@ message(sprintf(
 ))
 
 # 5. EXTRACT AUTHORSHIP PATTERNS -----------------------------------------------
-# Pre-split affiliations once for efficiency
 data_reg <- data_reg |>
   mutate(
-    affiliations_list = str_split(affiliations, ";")
-  ) |>
-  mutate(
     # First author location
-    first_affiliation = map_chr(affiliations_list, ~ str_trim(.x[1])),
+    first_affiliation = str_extract(affiliations, "^[^;]+"),
     fa_vn = as.integer(str_detect(first_affiliation, regex("vietnam|viet nam", ignore_case = TRUE))),
     fa_jp = as.integer(str_detect(first_affiliation, regex("japan", ignore_case = TRUE))),
     fa_o = as.integer(fa_vn == 0 & fa_jp == 0),
 
     # Count VN and JP authors
-    n_vn_authors = map_int(affiliations_list, ~ sum(str_detect(.x, regex("vietnam|viet nam", ignore_case = TRUE)))),
-    n_jp_authors = map_int(affiliations_list, ~ sum(str_detect(.x, regex("japan", ignore_case = TRUE)))),
+    n_vn_authors = map_int(affiliations, ~ {
+      affs <- str_split(.x, ";")[[1]]
+      sum(str_detect(affs, regex("vietnam|viet nam", ignore_case = TRUE)))
+    }),
+    n_jp_authors = map_int(affiliations, ~ {
+      affs <- str_split(.x, ";")[[1]]
+      sum(str_detect(affs, regex("japan", ignore_case = TRUE)))
+    }),
 
     # Derived authorship metrics
     n_vn_jp_authors = n_vn_authors + n_jp_authors,
@@ -185,7 +190,7 @@ data_reg <- data_reg |>
       TRUE ~ "Other"
     )
   ) |>
-  select(-first_affiliation, -affiliations_list) # Remove temporary columns
+  select(-first_affiliation)
 
 message(sprintf(
   "VN-led: %d | JP-led: %d | Other-led: %d",
@@ -193,23 +198,28 @@ message(sprintf(
 ))
 
 # 7. MAP TO SDGs ---------------------------------------------------------------
-sdg_results <- detect_sdg_systems(text = data_reg$abstract, system = "SDGO") |>
+sdg_results <- detect_sdg_systems(text = data_reg$abstract, system = "SDGO")
+
+sdg_results <- sdg_results |>
   mutate(document = as.integer(as.character(document))) |>
   distinct(document, sdg) |>
-  mutate(hit = 1L) |>
+  mutate(hit = 1) |>
   pivot_wider(
     id_cols = document,
     names_from = sdg,
     values_from = hit,
-    values_fill = 0L # Fill with integer 0
+    values_fill = 0
   )
 
+sdg_cols <- names(sdg_results)[str_starts(names(sdg_results), "SDG")]
+sdg_results <- sdg_results |>
+  mutate(across(all_of(sdg_cols), ~ if_else(. > 0, 1, 0)))
 
 # Merge with main data
 data_reg <- data_reg |>
   left_join(sdg_results, by = c("id" = "document")) |>
   mutate(
-    across(starts_with("SDG"), ~ replace_na(., 0L)), # Fill with integer 0
+    across(starts_with("SDG"), ~ replace_na(., 0)),
     n_sdg = rowSums(pick(starts_with("SDG")), na.rm = TRUE)
   )
 
@@ -241,7 +251,7 @@ data_reg <- data_reg |>
     title, cited, quartile, sjr_score, OA,
 
     # Collaboration
-    coop, n_countries, affiliations, # Keep original affiliations
+    coop, n_countries, affiliations,
 
     # Funding
     fund, n_regions, n_sectors, bilateral_funding,
