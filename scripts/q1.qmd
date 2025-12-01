@@ -1,0 +1,202 @@
+---
+title: "RQ1: Growth Trajectory"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+```{r setup}
+library(tidyverse)
+library(scales)
+
+nature_colors <- c("#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+                  "#CA9161", "#949494", "#ECE133", "#56B4E9")
+
+theme_nature <- function(base_size = 8) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title = element_blank(),
+      axis.title = element_text(size = base_size, face = "bold"),
+      axis.text = element_text(size = base_size - 1),
+      axis.line = element_line(linewidth = 0.5),
+      legend.title = element_text(size = base_size, face = "bold"),
+      legend.text = element_text(size = base_size - 1),
+      legend.position = "bottom",
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+}
+
+theme_set(theme_nature())
+
+dat <- read_csv("data/processed_data.csv") |>
+  filter(year >= 2000) |>
+  mutate(
+    phase = case_when(
+      year <= 2008 ~ "Phase 1 (2000-08)",
+      year <= 2013 ~ "Phase 2 (2009-13)",
+      TRUE ~ "Phase 3 (2014-24)"
+    ) |> factor(levels = c("Phase 1 (2000-08)", "Phase 2 (2009-13)", "Phase 3 (2014-24)")),
+    quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1"))
+  )
+```
+
+## Volume Trends
+```{r fig-annual-output}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  count(year) |>
+  arrange(year) |>
+  mutate(growth = (n / lag(n) - 1) * 100) |>
+  ggplot(aes(x = year)) +
+  geom_col(aes(y = n), fill = "#4A90E2", alpha = 0.6) +
+  geom_line(aes(y = growth * 10), color = "#E85D75", linewidth = 1) +
+  geom_point(aes(y = growth * 10), color = "#E85D75", size = 2) +
+  geom_vline(xintercept = c(2009, 2014), linetype = "dashed", 
+             color = "gray30", linewidth = 0.3) +
+  scale_y_continuous(
+    name = "Publications",
+    sec.axis = sec_axis(~ . / 10, name = "Growth rate (%)")
+  ) +
+  labs(x = "Year")
+```
+```{r fig-cooperation-type}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  drop_na(coop) |>
+  count(year, coop) |>
+  ggplot(aes(x = year, y = n, color = coop)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c("bilateral" = "#4A90E2", "multilateral" = "#E85D75"),
+    labels = c("Bilateral", "Multilateral")
+  ) +
+  labs(x = "Year", y = "Number of publications", color = NULL)
+```
+```{r tbl-phase-summary}
+dat |>
+  group_by(phase) |>
+  summarise(
+    N = n(),
+    `Mean/year` = round(N / n_distinct(year), 1),
+    .groups = "drop"
+  ) |>
+  knitr::kable(caption = "Table 1. Publication volume by phase")
+```
+
+## Quality Evolution
+```{r fig-quartile-trends}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(quartile)) |>
+  count(year, quartile) |>
+  ggplot(aes(x = year, y = n, color = quartile)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c("Q1" = "#4A90E2", "Q2" = "#95B8A8", 
+               "Q3" = "#E8B861", "Q4" = "#E85D75")
+  ) +
+  labs(x = "Year", y = "Number of publications", color = "Quartile")
+```
+```{r fig-q1-proportion}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(quartile)) |>
+  group_by(year) |>
+  summarise(q1_pct = 100 * mean(quartile == "Q1")) |>
+  ggplot(aes(x = year, y = q1_pct)) +
+  geom_line(color = "#4A90E2", linewidth = 1) +
+  geom_point(color = "#4A90E2", size = 2) +
+  geom_smooth(method = "loess", se = TRUE, color = "#E85D75", 
+              linetype = "dashed", linewidth = 0.8) +
+  labs(x = "Year", y = "Q1 publications (%)")
+```
+```{r tbl-quality-by-phase}
+dat |>
+  filter(!is.na(quartile)) |>
+  group_by(phase) |>
+  summarise(
+    N = n(),
+    `Q1 (%)` = round(100 * mean(quartile == "Q1"), 1),
+    `Mean SJR` = round(mean(sjr_score, na.rm = TRUE), 3),
+    `Median citations` = median(cited, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  knitr::kable(caption = "Table 2. Quality indicators by phase")
+```
+
+## Disciplinary Composition
+```{r fig-macroarea-trends}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  select(year, PS, LS, HS, SS) |>
+  pivot_longer(PS:SS, names_to = "domain", values_to = "value") |>
+  filter(value == 1) |>
+  count(year, domain) |>
+  ggplot(aes(x = year, y = n, fill = domain)) +
+  geom_area(alpha = 0.7) +
+  scale_fill_manual(
+    values = c("PS" = "#264653", "LS" = "#2A9D8F", 
+               "HS" = "#E76F51", "SS" = "#F4A261"),
+    labels = c("Physical Sciences", "Life Sciences", 
+               "Health Sciences", "Social Sciences")
+  ) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = "Year", y = "Number of publications", fill = NULL)
+```
+```{r tbl-top-subjects}
+subject_cols <- c("med", "agr_bio", "egin", "env_sci", "phys", 
+                 "bio_chem", "mat_sci", "chem", "comp_sci", "immu")
+
+subject_labels <- c("Medicine", "Agricultural & Biological Sciences",
+                   "Engineering", "Environmental Science", 
+                   "Physics & Astronomy", "Biochemistry/Genetics/Molecular Biology",
+                   "Materials Science", "Chemistry", "Computer Science",
+                   "Immunology & Microbiology")
+
+dat |>
+  select(all_of(subject_cols)) |>
+  summarise(across(everything(), sum, na.rm = TRUE)) |>
+  pivot_longer(everything(), names_to = "subject", values_to = "n") |>
+  mutate(subject = subject_labels) |>
+  arrange(desc(n)) |>
+  mutate(`%` = round(100 * n / nrow(dat), 1)) |>
+  knitr::kable(caption = "Table 3. Top 10 subject areas")
+```
+
+## Open Access Adoption
+```{r fig-oa-trends}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  group_by(year) |>
+  summarise(oa_rate = 100 * mean(OA == "OA")) |>
+  ggplot(aes(x = year, y = oa_rate)) +
+  geom_line(color = "#06A77D", linewidth = 1) +
+  geom_point(color = "#06A77D", size = 2) +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "gray50") +
+  labs(x = "Year", y = "Open Access rate (%)")
+```
+```{r tbl-oa-by-phase}
+dat |>
+  group_by(phase) |>
+  summarise(
+    N = n(),
+    `OA (%)` = round(100 * mean(OA == "OA"), 1),
+    .groups = "drop"
+  ) |>
+  knitr::kable(caption = "Table 4. Open Access adoption by phase")
+```
