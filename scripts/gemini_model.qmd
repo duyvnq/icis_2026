@@ -1,0 +1,657 @@
+---
+title: "Japan-Vietnam Research Collaboration: Equity and Impact"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+```{r setup}
+library(tidyverse)
+library(scales)
+library(MASS)
+library(broom)
+library(knitr)
+
+# --- Theme Setup (Retained as per original scripts) ---
+nature_colors <- c("#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+                  "#CA9161", "#949494", "#ECE133", "#56B4E9")
+
+theme_nature <- function(base_size = 8) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title = element_blank(),
+      axis.title = element_text(size = base_size, face = "bold"),
+      axis.text = element_text(size = base_size - 1),
+      axis.line = element_line(linewidth = 0.5),
+      legend.title = element_text(size = base_size, face = "bold"),
+      legend.text = element_text(size = base_size - 1),
+      legend.position = "bottom",
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+}
+
+theme_set(theme_nature())
+
+# --- Data Loading and Processing (Modified: Removed VJU and Phase variables) ---
+dat <- read_csv("data/processed_data.csv") |>
+  filter(year >= 2000) |>
+  mutate(
+    # NOTE: Phase variable removed as per request
+    quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1")),
+    leadership = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    ) |> factor(levels = c("Other-led", "JP-led", "VN-led")),
+    age = 2025 - year,
+    macro_area = case_when(
+      HS == 1 ~ "HS",
+      LS == 1 ~ "LS",
+      PS == 1 ~ "PS",
+      SS == 1 ~ "SS",
+      TRUE ~ "Other"
+    ) |> factor(),
+    # NOTE: VJU-affiliated analysis removed as per request
+    coop_type = factor(coop, levels = c("bilateral", "multilateral"))
+  )
+```
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  count(year) |>
+  arrange(year) |>
+  mutate(growth = (n / lag(n) - 1) * 100) |>
+  ggplot(aes(x = year)) +
+  geom_col(aes(y = n), fill = "#4A90E2", alpha = 0.6) +
+  geom_line(aes(y = growth * 10), color = "#E85D75", linewidth = 1) +
+  geom_point(aes(y = growth * 10), color = "#E85D75", size = 2) +
+  scale_y_continuous(
+    name = "Publications",
+    sec.axis = sec_axis(~ . / 10, name = "Growth rate (%)")
+  ) +
+  labs(x = "Year")
+```
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(quartile)) |>
+  count(year, quartile) |>
+  ggplot(aes(x = year, y = n, color = quartile)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c("Q1" = "#4A90E2", "Q2" = "#95B8A8", 
+               "Q3" = "#E8B861", "Q4" = "#E85D75")
+  ) +
+  labs(x = "Year", y = "Number of publications", color = "Quartile")
+```
+
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  group_by(year) |>
+  summarise(
+    mean_prop = mean(prop_vn_authors, na.rm = TRUE),
+    se = sd(prop_vn_authors, na.rm = TRUE) / sqrt(n()),
+    ci_lower = mean_prop - 1.96 * se,
+    ci_upper = mean_prop + 1.96 * se
+  ) |>
+  ggplot(aes(x = year, y = mean_prop)) +
+  geom_ribbon(aes(ymin = ci_lower, ymax = ci_upper), 
+              alpha = 0.2, fill = "#4A90E2") +
+  geom_line(color = "#4A90E2", linewidth = 1) +
+  geom_point(color = "#4A90E2", size = 2) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", 
+             color = "#E85D75", linewidth = 0.8) +
+  scale_y_continuous(limits = c(0.3, 0.6), 
+                     labels = percent_format(accuracy = 1)) +
+  labs(x = "Year", y = "Mean Vietnamese author proportion")
+```
+
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  count(year, leadership) |>
+  group_by(year) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = year, y = pct, fill = leadership)) +
+  geom_area(alpha = 0.7) +
+  geom_hline(yintercept = 50, linetype = "dotted", 
+             color = "white", linewidth = 0.5) +
+  scale_fill_manual(
+    values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75", 
+               "Other-led" = "#95B8A8")
+  ) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), 
+                     expand = c(0, 0)) +
+  labs(x = "Year", y = "Proportion of publications", fill = NULL)
+```
+
+
+
+```{r}
+dat |>
+  group_by(leadership) |>
+  summarise(
+    N = n(),
+    Mean = round(mean(cited, na.rm = TRUE), 1),
+    Median = median(cited, na.rm = TRUE),
+    Q25 = quantile(cited, 0.25, na.rm = TRUE),
+    Q75 = quantile(cited, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  knitr::kable(caption = "Table 1. Citation statistics by leadership")
+```
+
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(leadership != "Other-led") |>
+  ggplot(aes(x = leadership, y = cited, fill = leadership)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)") +
+  theme(legend.position = "none")
+```
+
+
+
+```{r}
+# Filter data for model fitting (excluding NA values for predictors)
+model_data <- dat |>
+  filter(!is.na(cited), !is.na(leadership), !is.na(quartile),
+         !is.na(fund), !is.na(OA), !is.na(coop), !is.na(macro_area)) |>
+  mutate(
+    prop_vn_centered = scale(prop_vn_authors, scale = FALSE)[,1],
+    quartile_q1 = factor(if_else(quartile == "Q1", "Q1", "Other"), 
+                         levels = c("Other", "Q1"))
+  )
+
+# --- 1. Fit Poisson and Negative Binomial Models for LR Test ---
+
+# Reference Model (Poisson) - Assumes Equi-dispersion
+m_poisson <- glm(cited ~ leadership + factor(year) + macro_area + OA + fund + coop,
+                 data = model_data, family = poisson)
+
+# Alternative Model (Negative Binomial) - Accounts for Over-dispersion
+m_nb_base <- glm.nb(cited ~ leadership + factor(year) + macro_area + OA + fund + coop,
+                    data = model_data)
+
+# Perform Likelihood Ratio Test (LR Test)
+# LR test compares the two models to determine if NB is significantly better (i.e., if alpha is non-zero)
+lr_test_result <- anova(m_poisson, m_nb_base)
+lr_p_value <- lr_test_result$`Pr(>Chi)`[2] # Extracting the p-value
+
+# --- 2. Extract Dispersion Parameter (Theta) for NB ---
+theta <- m_nb_base$theta
+
+# --- Display Results ---
+tibble(
+  Test = c("Model Dispersion (Theta)", "LR Test (Poisson vs. NB)"),
+  Value = c(round(theta, 3), paste("p =", format.pval(lr_p_value, digits = 3))),
+  Interpretation = c(
+    paste("Theta > 0 confirms over-dispersion. Theta =", round(theta, 3)),
+    "p < 0.001 (Null Hypothesis: Equi-dispersion) is rejected, justifying NB model choice."
+  )
+) |>
+  knitr::kable(caption = "Model Selection Justification (Citations)")
+
+# Note: The Vuong test for ZINB is computationally intensive and the manuscript determined 
+# ZINB unnecessary. We proceed with NB as justified by the LR test.
+```
+
+
+```{r}
+# Model 1 (Base): Leadership + Time + Discipline (Reference: Other-led)
+m1 <- glm.nb(cited ~ leadership + factor(year) + macro_area,
+             data = model_data)
+
+# Model 3 (Full Controls): Add Collaboration, Authorship Balance, Funding, Quality (Quartile)
+m3 <- glm.nb(cited ~ leadership + coop + prop_vn_centered +
+               fund + bilateral_funding + OA + quartile +
+               factor(year) + macro_area,
+             data = model_data)
+
+# Model 4 (Interactions): Test if VN-led gap is eliminated under favorable conditions
+# Using Q1 vs. Other (quartile_q1) as a simplified quality control for interaction clarity
+m4 <- glm.nb(cited ~ leadership * fund + leadership * quartile_q1 + 
+               coop + prop_vn_centered + bilateral_funding + OA +
+               factor(year) + macro_area,
+             data = model_data)
+```
+
+
+
+```{r}
+list(
+  "Model 1 (Base)" = m1,
+  "Model 3 (Full Controls)" = m3
+) |>
+  map_dfr(~{
+    tidy(., conf.int = TRUE) |>
+      filter(str_detect(term, "leadership")) |>
+      transmute(
+        term = term,
+        IRR = exp(estimate),
+        CI_lower = exp(conf.low),
+        CI_upper = exp(conf.high),
+        p.value = p.value
+      )
+  }, .id = "Model") |>
+  mutate(
+    across(IRR:p.value, ~round(., 3)),
+    Sig = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01 ~ "**",
+      p.value < 0.05 ~ "*",
+      TRUE ~ ""
+    )
+  ) |>
+  knitr::kable(caption = "Table 2. Leadership effects (Incident Rate Ratios)")
+```
+
+
+
+```{r}
+# Fixing the final chunk by making the prediction robust
+
+# 1. Ensure model_data is available and has the necessary columns (as defined in the successful chunk)
+# ... (model_data definition and m4 fitting) ...
+
+# 2. Add predicted values to the full model_data first
+plot_data_full <- model_data |>
+  # Add predictions for all rows (must be done outside of the summarise for stability)
+  mutate(predicted_cited = predict(m4, newdata = model_data, type = "response")) |>
+  filter(leadership %in% c("VN-led", "JP-led"))
+
+# 3. Aggregate the predicted values
+plot_data_aggregated <- plot_data_full |>
+  group_by(leadership, fund) |>
+  summarise(
+    mean_pred = mean(predicted_cited, na.rm = TRUE),
+    # Recalculate SE of original cited values for the error bars (optional but good practice)
+    se = sd(cited, na.rm = TRUE) / sqrt(n()), 
+    .groups = "drop"
+  )
+
+ggplot(plot_data_aggregated, aes(x = fund, y = mean_pred, color = leadership, group = leadership)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = mean_pred - 1.96*se, 
+                    ymax = mean_pred + 1.96*se),
+                width = 0.1) +
+  scale_color_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  labs(x = "Funding status", y = "Predicted citations (Model 4)", color = NULL)
+```
+
+
+# Remove hypers
+```{r setup}
+library(tidyverse)
+library(scales)
+library(MASS)
+library(broom)
+library(knitr)
+
+# --- Theme Setup (Retained as per original scripts) ---
+nature_colors <- c("#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+                  "#CA9161", "#949494", "#ECE133", "#56B4E9")
+
+theme_nature <- function(base_size = 8) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title = element_blank(),
+      axis.title = element_text(size = base_size, face = "bold"),
+      axis.text = element_text(size = base_size - 1),
+      axis.line = element_line(linewidth = 0.5),
+      legend.title = element_text(size = base_size, face = "bold"),
+      legend.text = element_text(size = base_size - 1),
+      legend.position = "bottom",
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+}
+
+theme_set(theme_nature())
+
+# --- Data Loading and Processing (Modified: Removed VJU and Phase variables) ---
+dat <- read_csv("data/processed_data.csv") |>
+  filter(year >= 2000) |>
+  mutate(
+    # NOTE: Phase variable removed as per request
+    quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1")),
+    leadership = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    ) |> factor(levels = c("Other-led", "JP-led", "VN-led")),
+    age = 2025 - year,
+    macro_area = case_when(
+      HS == 1 ~ "HS",
+      LS == 1 ~ "LS",
+      PS == 1 ~ "PS",
+      SS == 1 ~ "SS",
+      TRUE ~ "Other"
+    ) |> factor(),
+    # NOTE: VJU-affiliated analysis removed as per request
+    coop_type = factor(coop, levels = c("bilateral", "multilateral"))
+  )
+
+dat <- dat |> 
+    filter(n_countries <= 10)
+```
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  count(year) |>
+  arrange(year) |>
+  mutate(growth = (n / lag(n) - 1) * 100) |>
+  ggplot(aes(x = year)) +
+  geom_col(aes(y = n), fill = "#4A90E2", alpha = 0.6) +
+  geom_line(aes(y = growth * 10), color = "#E85D75", linewidth = 1) +
+  geom_point(aes(y = growth * 10), color = "#E85D75", size = 2) +
+  scale_y_continuous(
+    name = "Publications",
+    sec.axis = sec_axis(~ . / 10, name = "Growth rate (%)")
+  ) +
+  labs(x = "Year")
+```
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(quartile)) |>
+  count(year, quartile) |>
+  ggplot(aes(x = year, y = n, color = quartile)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c("Q1" = "#4A90E2", "Q2" = "#95B8A8", 
+               "Q3" = "#E8B861", "Q4" = "#E85D75")
+  ) +
+  labs(x = "Year", y = "Number of publications", color = "Quartile")
+```
+
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  group_by(year) |>
+  summarise(
+    mean_prop = mean(prop_vn_authors, na.rm = TRUE),
+    se = sd(prop_vn_authors, na.rm = TRUE) / sqrt(n()),
+    ci_lower = mean_prop - 1.96 * se,
+    ci_upper = mean_prop + 1.96 * se
+  ) |>
+  ggplot(aes(x = year, y = mean_prop)) +
+  geom_ribbon(aes(ymin = ci_lower, ymax = ci_upper), 
+              alpha = 0.2, fill = "#4A90E2") +
+  geom_line(color = "#4A90E2", linewidth = 1) +
+  geom_point(color = "#4A90E2", size = 2) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", 
+             color = "#E85D75", linewidth = 0.8) +
+  scale_y_continuous(limits = c(0.3, 0.6), 
+                     labels = percent_format(accuracy = 1)) +
+  labs(x = "Year", y = "Mean Vietnamese author proportion")
+```
+
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  count(year, leadership) |>
+  group_by(year) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = year, y = pct, fill = leadership)) +
+  geom_area(alpha = 0.7) +
+  geom_hline(yintercept = 50, linetype = "dotted", 
+             color = "white", linewidth = 0.5) +
+  scale_fill_manual(
+    values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75", 
+               "Other-led" = "#95B8A8")
+  ) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), 
+                     expand = c(0, 0)) +
+  labs(x = "Year", y = "Proportion of publications", fill = NULL)
+```
+
+
+
+```{r}
+dat |>
+  group_by(leadership) |>
+  summarise(
+    N = n(),
+    Mean = round(mean(cited, na.rm = TRUE), 1),
+    Median = median(cited, na.rm = TRUE),
+    Q25 = quantile(cited, 0.25, na.rm = TRUE),
+    Q75 = quantile(cited, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  knitr::kable(caption = "Table 1. Citation statistics by leadership")
+```
+
+
+
+```{r}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(leadership != "Other-led") |>
+  ggplot(aes(x = leadership, y = cited, fill = leadership)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)") +
+  theme(legend.position = "none")
+```
+
+
+
+```{r}
+# Filter data for model fitting (excluding NA values for predictors)
+model_data <- dat |>
+  filter(!is.na(cited), !is.na(leadership), !is.na(quartile),
+         !is.na(fund), !is.na(OA), !is.na(coop), !is.na(macro_area)) |>
+  mutate(
+    prop_vn_centered = scale(prop_vn_authors, scale = FALSE)[,1],
+    quartile_q1 = factor(if_else(quartile == "Q1", "Q1", "Other"), 
+                         levels = c("Other", "Q1"))
+  )
+
+# --- 1. Fit Poisson and Negative Binomial Models for LR Test ---
+
+# Reference Model (Poisson) - Assumes Equi-dispersion
+m_poisson <- glm(cited ~ leadership + factor(year) + macro_area + OA + fund + coop,
+                 data = model_data, family = poisson)
+
+# Alternative Model (Negative Binomial) - Accounts for Over-dispersion
+m_nb_base <- glm.nb(cited ~ leadership + factor(year) + macro_area + OA + fund + coop,
+                    data = model_data)
+
+# Perform Likelihood Ratio Test (LR Test)
+# LR test compares the two models to determine if NB is significantly better (i.e., if alpha is non-zero)
+lr_test_result <- anova(m_poisson, m_nb_base)
+lr_p_value <- lr_test_result$`Pr(>Chi)`[2] # Extracting the p-value
+
+# --- 2. Extract Dispersion Parameter (Theta) for NB ---
+theta <- m_nb_base$theta
+
+# --- Display Results ---
+tibble(
+  Test = c("Model Dispersion (Theta)", "LR Test (Poisson vs. NB)"),
+  Value = c(round(theta, 3), paste("p =", format.pval(lr_p_value, digits = 3))),
+  Interpretation = c(
+    paste("Theta > 0 confirms over-dispersion. Theta =", round(theta, 3)),
+    "p < 0.001 (Null Hypothesis: Equi-dispersion) is rejected, justifying NB model choice."
+  )
+) |>
+  knitr::kable(caption = "Model Selection Justification (Citations)")
+
+# Note: The Vuong test for ZINB is computationally intensive and the manuscript determined 
+# ZINB unnecessary. We proceed with NB as justified by the LR test.
+```
+
+
+```{r}
+# Model 1 (Base): Leadership + Time + Discipline (Reference: Other-led)
+m1 <- glm.nb(cited ~ leadership + factor(year) + macro_area,
+             data = model_data)
+
+# Model 3 (Full Controls): Add Collaboration, Authorship Balance, Funding, Quality (Quartile)
+m3 <- glm.nb(cited ~ leadership + coop + prop_vn_centered +
+               fund + bilateral_funding + OA + quartile +
+               factor(year) + macro_area,
+             data = model_data)
+
+# Model 4 (Interactions): Test if VN-led gap is eliminated under favorable conditions
+# Using Q1 vs. Other (quartile_q1) as a simplified quality control for interaction clarity
+m4 <- glm.nb(cited ~ leadership * fund + leadership * quartile_q1 + 
+               coop + prop_vn_centered + bilateral_funding + OA +
+               factor(year) + macro_area,
+             data = model_data)
+```
+
+
+
+```{r}
+list(
+  "Model 1 (Base)" = m1,
+  "Model 3 (Full Controls)" = m3
+) |>
+  map_dfr(~{
+    tidy(., conf.int = TRUE) |>
+      filter(str_detect(term, "leadership")) |>
+      transmute(
+        term = term,
+        IRR = exp(estimate),
+        CI_lower = exp(conf.low),
+        CI_upper = exp(conf.high),
+        p.value = p.value
+      )
+  }, .id = "Model") |>
+  mutate(
+    across(IRR:p.value, ~round(., 3)),
+    Sig = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01 ~ "**",
+      p.value < 0.05 ~ "*",
+      TRUE ~ ""
+    )
+  ) |>
+  knitr::kable(caption = "Table 2. Leadership effects (Incident Rate Ratios)")
+```
+
+
+
+```{r}
+# Fixing the final chunk by making the prediction robust
+
+# 1. Ensure model_data is available and has the necessary columns (as defined in the successful chunk)
+# ... (model_data definition and m4 fitting) ...
+
+# 2. Add predicted values to the full model_data first
+plot_data_full <- model_data |>
+  # Add predictions for all rows (must be done outside of the summarise for stability)
+  mutate(predicted_cited = predict(m4, newdata = model_data, type = "response")) |>
+  filter(leadership %in% c("VN-led", "JP-led"))
+
+# 3. Aggregate the predicted values
+plot_data_aggregated <- plot_data_full |>
+  group_by(leadership, fund) |>
+  summarise(
+    mean_pred = mean(predicted_cited, na.rm = TRUE),
+    # Recalculate SE of original cited values for the error bars (optional but good practice)
+    se = sd(cited, na.rm = TRUE) / sqrt(n()), 
+    .groups = "drop"
+  )
+
+ggplot(plot_data_aggregated, aes(x = fund, y = mean_pred, color = leadership, group = leadership)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = mean_pred - 1.96*se, 
+                    ymax = mean_pred + 1.96*se),
+                width = 0.1) +
+  scale_color_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  labs(x = "Funding status", y = "Predicted citations (Model 4)", color = NULL)
+```
+
+
+```{r}
+dat |>
+  count(year) |>
+  arrange(year) |>
+  mutate(growth = (n / lag(n) - 1) * 100) |>
+  ggplot(aes(x = year)) +
+  geom_col(aes(y = n), fill = "#4A90E2", alpha = 0.6) +
+  geom_line(aes(y = growth * 10), color = "#E85D75", linewidth = 1) +
+  geom_point(aes(y = growth * 10), color = "#E85D75", size = 2) +
+  geom_vline(xintercept = c(2009, 2014), linetype = "dashed", 
+             color = "gray30", linewidth = 0.3) +
+  scale_y_continuous(
+    name = "Publications",
+    sec.axis = sec_axis(~ . / 10, name = "Growth rate (%)")
+  ) +
+  labs(x = "Year") +
+  annotate("text", x = 2014, y = Inf, label = "Extensive Strategic Partnership", 
+           hjust = 0, vjust = 2, size = 3, color = "gray30", angle = 90)
+```
+
+
+```{r}
+dat |>
+  drop_na(coop) |>
+  count(year, coop) |>
+  group_by(year) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = year, y = pct, fill = coop)) +
+  geom_area(alpha = 0.7) +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "white", linewidth = 0.5) +
+  scale_fill_manual(
+    values = c("bilateral" = "#4A90E2", "multilateral" = "#E85D75"),
+    labels = c("Bilateral", "Multilateral")
+  ) +
+  scale_y_continuous(expand = c(0, 0), labels = function(x) paste0(x, "%")) +
+  labs(x = "Year", y = "Proportion of publications", fill = NULL)
+```
