@@ -82,6 +82,7 @@ dat |>
   ) |>
   knitr::kable()
 ```
+
 ```{r fig-citations-coop-type}
 #| fig-width: 7
 #| fig-height: 4
@@ -99,6 +100,7 @@ dat |>
   labs(x = NULL, y = "Citations (log scale)") +
   theme(legend.position = "none")
 ```
+
 ```{r fig-citations-funding}
 #| fig-width: 7
 #| fig-height: 4
@@ -115,6 +117,7 @@ dat |>
   labs(x = NULL, y = "Citations (log scale)") +
   theme(legend.position = "none")
 ```
+
 ```{r fig-citations-quartile}
 #| fig-width: 7
 #| fig-height: 4
@@ -134,6 +137,7 @@ dat |>
   labs(x = NULL, y = "Citations (log scale)") +
   theme(legend.position = "none")
 ```
+
 ```{r fig-citations-oa}
 #| fig-width: 7
 #| fig-height: 4
@@ -149,6 +153,7 @@ dat |>
   labs(x = NULL, y = "Citations (log scale)") +
   theme(legend.position = "none")
 ```
+
 ```{r tbl-citations-by-conditions}
 dat |>
   group_by(leadership, coop, fund) |>
