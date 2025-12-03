@@ -727,3 +727,265 @@ dat |>
   scale_y_log10(labels = comma) +
   labs(x = "Vietnamese author proportion", y = "Citations (log scale)")
 ```
+
+# Desc Table
+
+```{r tbl-annual-output-summary}
+dat |>
+  group_by(year) |>
+  summarise(
+    Publications = n(),
+    `Growth rate (%)` = round((n() / lag(n()) - 1) * 100, 1),
+    .groups = "drop"
+  ) |>
+  knitr::kable()
+```
+
+```{r tbl-cooperation-type-summary}
+dat |>
+  filter(!is.na(coop)) |>
+  count(coop) |>
+  mutate(
+    `%` = round(100 * n / sum(n), 1),
+    `Mean per year` = round(n / n_distinct(dat$year), 1)
+  ) |>
+  knitr::kable()
+```
+
+```{r tbl-cooperation-by-year}
+dat |>
+  filter(!is.na(coop)) |>
+  count(year, coop) |>
+  pivot_wider(names_from = coop, values_from = n, values_fill = 0) |>
+  mutate(Total = bilateral + multilateral,
+         `Bilateral (%)` = round(100 * bilateral / Total, 1),
+         `Multilateral (%)` = round(100 * multilateral / Total, 1)) |>
+  knitr::kable()
+```
+
+```{r tbl-quartile-distribution}
+dat |>
+  filter(!is.na(quartile)) |>
+  count(quartile) |>
+  mutate(`%` = round(100 * n / sum(n), 1)) |>
+  arrange(quartile) |>
+  knitr::kable()
+```
+
+```{r tbl-quartile-by-year}
+dat |>
+  filter(!is.na(quartile)) |>
+  count(year, quartile) |>
+  group_by(year) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |>
+  select(year, quartile, n, pct) |>
+  pivot_wider(names_from = quartile, 
+              values_from = c(n, pct),
+              names_glue = "{quartile}_{.value}") |>
+  knitr::kable()
+```
+
+```{r tbl-quality-metrics}
+dat |>
+  filter(!is.na(quartile)) |>
+  summarise(
+    N = n(),
+    `Q1 (%)` = round(100 * mean(quartile == "Q1"), 1),
+    `Q2 (%)` = round(100 * mean(quartile == "Q2"), 1),
+    `Q3 (%)` = round(100 * mean(quartile == "Q3"), 1),
+    `Q4 (%)` = round(100 * mean(quartile == "Q4"), 1),
+    `Mean SJR` = round(mean(sjr_score, na.rm = TRUE), 3),
+    `SD SJR` = round(sd(sjr_score, na.rm = TRUE), 3),
+    `Median citations` = median(cited, na.rm = TRUE),
+    `Mean citations` = round(mean(cited, na.rm = TRUE), 1)
+  ) |>
+  knitr::kable()
+```
+
+```{r tbl-quartile-by-coop}
+dat |>
+  filter(!is.na(quartile), !is.na(coop)) |>
+  count(coop, quartile) |>
+  group_by(coop) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |>
+  select(coop, quartile, n, pct) |>
+  pivot_wider(names_from = quartile,
+              values_from = c(n, pct),
+              names_glue = "{quartile}_{.value}") |>
+  knitr::kable()
+```
+
+```{r tbl-macroarea-distribution}
+dat |>
+  summarise(
+    `Physical Sciences` = sum(PS == 1, na.rm = TRUE),
+    `Life Sciences` = sum(LS == 1, na.rm = TRUE),
+    `Health Sciences` = sum(HS == 1, na.rm = TRUE),
+    `Social Sciences` = sum(SS == 1, na.rm = TRUE)
+  ) |>
+  pivot_longer(everything(), names_to = "Macro-area", values_to = "N") |>
+  mutate(`%` = round(100 * N / nrow(dat), 1)) |>
+  arrange(desc(N)) |>
+  knitr::kable()
+```
+
+```{r tbl-macroarea-by-year-group}
+dat |>
+  mutate(period = cut(year, breaks = c(2000, 2010, 2015, 2020, 2025),
+                     include.lowest = TRUE,
+                     labels = c("2000-09", "2010-14", "2015-19", "2020-24"))) |>
+  filter(!is.na(period)) |>
+  group_by(period) |>
+  summarise(
+    N = n(),
+    PS = sum(PS == 1, na.rm = TRUE),
+    LS = sum(LS == 1, na.rm = TRUE),
+    HS = sum(HS == 1, na.rm = TRUE),
+    SS = sum(SS == 1, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(across(PS:SS, ~round(100 * . / N, 1), .names = "{.col}_pct")) |>
+  knitr::kable()
+```
+
+```{r tbl-top-subjects-detailed}
+subject_cols <- c("med", "agr_bio", "egin", "env_sci", "phys", 
+                 "bio_chem", "mat_sci", "chem", "comp_sci", "immu",
+                 "earth", "soc_sci", "math", "chem_eng", "energy")
+
+subject_labels <- c("Medicine", "Agricultural & Biological Sciences",
+                   "Engineering", "Environmental Science", 
+                   "Physics & Astronomy", "Biochemistry/Genetics/Molecular Biology",
+                   "Materials Science", "Chemistry", "Computer Science",
+                   "Immunology & Microbiology", "Earth & Planetary Sciences",
+                   "Social Sciences", "Mathematics", "Chemical Engineering",
+                   "Energy")
+
+dat |>
+  select(all_of(subject_cols)) |>
+  summarise(across(everything(), sum, na.rm = TRUE)) |>
+  pivot_longer(everything(), names_to = "subject", values_to = "n") |>
+  mutate(subject = subject_labels) |>
+  arrange(desc(n)) |>
+  mutate(`%` = round(100 * n / nrow(dat), 1),
+         `Cum %` = round(cumsum(n) / nrow(dat) * 100, 1)) |>
+  knitr::kable()
+```
+
+```{r tbl-oa-distribution}
+dat |>
+  count(OA) |>
+  mutate(`%` = round(100 * n / sum(n), 1)) |>
+  knitr::kable()
+```
+
+```{r tbl-oa-by-year}
+dat |>
+  group_by(year) |>
+  summarise(
+    Total = n(),
+    OA = sum(OA == "OA"),
+    `Not OA` = sum(OA == "Not OA"),
+    `OA (%)` = round(100 * mean(OA == "OA"), 1),
+    .groups = "drop"
+  ) |>
+  knitr::kable()
+```
+
+```{r tbl-oa-by-quartile}
+dat |>
+  filter(!is.na(quartile)) |>
+  count(quartile, OA) |>
+  group_by(quartile) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |>
+  select(quartile, OA, n, pct) |>
+  pivot_wider(names_from = OA,
+              values_from = c(n, pct),
+              names_glue = "{OA}_{.value}") |>
+  knitr::kable()
+```
+
+```{r tbl-oa-by-coop}
+dat |>
+  filter(!is.na(coop)) |>
+  count(coop, OA) |>
+  group_by(coop) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |>
+  select(coop, OA, n, pct) |>
+  pivot_wider(names_from = OA,
+              values_from = c(n, pct),
+              names_glue = "{OA}_{.value}") |>
+  knitr::kable()
+```
+
+```{r tbl-citations-by-quartile}
+dat |>
+  filter(!is.na(quartile)) |>
+  group_by(quartile) |>
+  summarise(
+    N = n(),
+    Mean = round(mean(cited, na.rm = TRUE), 1),
+    Median = median(cited, na.rm = TRUE),
+    SD = round(sd(cited, na.rm = TRUE), 1),
+    Q25 = quantile(cited, 0.25, na.rm = TRUE),
+    Q75 = quantile(cited, 0.75, na.rm = TRUE),
+    Max = max(cited, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  knitr::kable()
+```
+
+```{r tbl-citations-by-oa}
+dat |>
+  group_by(OA) |>
+  summarise(
+    N = n(),
+    Mean = round(mean(cited, na.rm = TRUE), 1),
+    Median = median(cited, na.rm = TRUE),
+    SD = round(sd(cited, na.rm = TRUE), 1),
+    Q25 = quantile(cited, 0.25, na.rm = TRUE),
+    Q75 = quantile(cited, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  knitr::kable()
+```
+
+```{r tbl-citations-by-coop}
+dat |>
+  filter(!is.na(coop)) |>
+  group_by(coop) |>
+  summarise(
+    N = n(),
+    Mean = round(mean(cited, na.rm = TRUE), 1),
+    Median = median(cited, na.rm = TRUE),
+    SD = round(sd(cited, na.rm = TRUE), 1),
+    Q25 = quantile(cited, 0.25, na.rm = TRUE),
+    Q75 = quantile(cited, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  knitr::kable()
+```
+
+```{r tbl-citations-by-macroarea}
+dat |>
+  mutate(macro_area = case_when(
+    HS == 1 ~ "Health Sciences",
+    LS == 1 ~ "Life Sciences",
+    PS == 1 ~ "Physical Sciences",
+    SS == 1 ~ "Social Sciences",
+    TRUE ~ "Other"
+  )) |>
+  filter(macro_area != "Other") |>
+  group_by(macro_area) |>
+  summarise(
+    N = n(),
+    Mean = round(mean(cited, na.rm = TRUE), 1),
+    Median = median(cited, na.rm = TRUE),
+    SD = round(sd(cited, na.rm = TRUE), 1),
+    .groups = "drop"
+  ) |>
+  arrange(desc(Mean)) |>
+  knitr::kable()
+```
+
+**Continue to next message for RQ2 tables?**
