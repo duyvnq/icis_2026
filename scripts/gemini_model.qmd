@@ -1,0 +1,655 @@
+---
+title: "Japan-Vietnam Research Collaboration: Equity and Impact"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+```{r setup}
+library(tidyverse)
+library(scales)
+library(MASS)
+library(broom)
+library(knitr)
+
+# --- Theme Setup (Retained as per original scripts) ---
+nature_colors <- c("#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+                  "#CA9161", "#949494", "#ECE133", "#56B4E9")
+
+theme_nature <- function(base_size = 8) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title = element_blank(),
+      axis.title = element_text(size = base_size, face = "bold"),
+      axis.text = element_text(size = base_size - 1),
+      axis.line = element_line(linewidth = 0.5),
+      legend.title = element_text(size = base_size, face = "bold"),
+      legend.text = element_text(size = base_size - 1),
+      legend.position = "bottom",
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+}
+
+theme_set(theme_nature())
+
+# --- Data Loading and Processing (Modified: Removed VJU and Phase variables) ---
+dat <- read_csv("data/processed_data.csv") |>
+  filter(year >= 2000) |>
+  mutate(
+    # NOTE: Phase variable removed as per request
+    quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1")),
+    leadership = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    ) |> factor(levels = c("Other-led", "JP-led", "VN-led")),
+    age = 2025 - year,
+    macro_area = case_when(
+      HS == 1 ~ "HS",
+      LS == 1 ~ "LS",
+      PS == 1 ~ "PS",
+      SS == 1 ~ "SS",
+      TRUE ~ "Other"
+    ) |> factor(),
+    # NOTE: VJU-affiliated analysis removed as per request
+    coop_type = factor(coop, levels = c("bilateral", "multilateral"))
+  )
+
+dat <- dat |>
+  mutate(
+    phase = case_when(
+      year < 2009 ~ "Phase 1 (2000-2008)",
+      year >= 2009 & year < 2014 ~ "Phase 2 (2009-2013)",
+      year >= 2014 ~ "Phase 3 (2014-2024)"
+    ) |> factor(levels = c("Phase 1 (2000-2008)", "Phase 2 (2009-2013)", "Phase 3 (2014-2024)"))
+  )
+```
+
+
+```{r}
+# Table 1: Annual Volume, Growth, and Collaboration Structure
+dat |>
+  group_by(year) |>
+  summarise(
+    N = n(),
+    Growth_Rate = round((n() / lag(n()) - 1) * 100, 1),
+    Strict_Bilateral_Pct = round(100 * mean(n_countries == 2, na.rm = TRUE), 1),
+    Multilateral_Pct = round(100 * mean(n_countries > 2 & n_countries <= 10, na.rm = TRUE), 1),
+    Hyper_Collab_Pct = round(100 * mean(n_countries > 10, na.rm = TRUE), 1),
+    Mean_Countries = round(mean(n_countries, na.rm = TRUE), 2)
+  ) |>
+  kable(caption = "Annual Evolution of Publication Volume and Collaboration Intensity") 
+```
+
+
+```{r}
+# Table 2: Annual Evolution of Research Quality (Quartiles & Impact)
+dat |>
+  filter(!is.na(quartile)) |>
+  group_by(year) |>
+  summarise(
+    Q1_Share = round(100 * mean(quartile == "Q1"), 1),
+    Q1_Q2_Share = round(100 * mean(quartile %in% c("Q1", "Q2")), 1),
+    Mean_SJR = round(mean(sjr_score, na.rm = TRUE), 3),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Year-by-Year Trends in Journal Quality and Citation Impact") 
+```
+
+
+```{r}
+# Table 3: Annual Shifts in Macro-Disciplinary Composition
+dat |>
+  group_by(year) |>
+  summarise(
+    Life_Sciences_Pct = round(100 * mean(LS == 1, na.rm = TRUE), 1),
+    Health_Sciences_Pct = round(100 * mean(HS == 1, na.rm = TRUE), 1),
+    Physical_Sciences_Pct = round(100 * mean(PS == 1, na.rm = TRUE), 1),
+    Social_Sciences_Pct = round(100 * mean(SS == 1, na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Annual Changes in Disciplinary Focus (Macro-Areas)") 
+```
+
+
+```{r}
+# Table 5: Annual Funding and Open Access Trends
+dat |>
+  group_by(year) |>
+  summarise(
+    Funded_Pct = round(100 * mean(fund == "Funded", na.rm = TRUE), 1),
+    Bilateral_Funding_Pct = round(100 * mean(bilateral_funding == 1, na.rm = TRUE), 1),
+    Funding_Diversity_Index = round(mean(n_regions, na.rm = TRUE), 2),
+    OA_Pct = round(100 * mean(OA == "OA", na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Annual Trends in Resource Availability and Open Science") 
+```
+
+
+```{r}
+# Table 6: Structural Comparison: Strict Bilateral vs. Multilateral vs. Hyper
+dat |>
+  mutate(collab_mode = case_when(
+    n_countries == 2 ~ "Strict Bilateral (2 Countries)",
+    n_countries > 2 & n_countries <= 10 ~ "Multilateral (3-10 Countries)",
+    n_countries > 10 ~ "Hyper-Collaboration (>10 Countries)"
+  )) |>
+  group_by(collab_mode) |>
+  summarise(
+    N = n(),
+    Share = round(100 * n() / nrow(dat), 1),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Q1_Pct = round(100 * mean(quartile == "Q1", na.rm = TRUE), 1),
+    Funded_Pct = round(100 * mean(fund == "Funded", na.rm = TRUE), 1),
+    Bilateral_Funding_Pct = round(100 * mean(bilateral_funding == 1, na.rm = TRUE), 1)
+  ) |>
+  arrange(mean(dat$n_countries)) |>
+  kable(caption = "Structural Comparison of Collaboration Modes") 
+```
+
+
+```{r}
+# Table 7: Top Publishing Venues (Journals)
+dat |>
+  count(title, quartile) |>
+  arrange(desc(n)) |>
+  slice_head(n = 15) |>
+  mutate(
+    Share = round(100 * n / nrow(dat), 2),
+    Cumulative_Share = round(cumsum(Share), 2)
+  ) |>
+  kable(caption = "Top 15 Most Frequent Publishing Venues") 
+```
+
+
+```{r}
+# Table 8: Evolution of Funding Sources (Geographic Origin)
+dat |>
+  group_by(year) |>
+  summarise(
+    Japan_Funded_Pct = round(100 * mean(jap == 1, na.rm = TRUE), 1),
+    Vietnam_Funded_Pct = round(100 * mean(vn == 1, na.rm = TRUE), 1),
+    US_Funded_Pct = round(100 * mean(us == 1, na.rm = TRUE), 1),
+    EU_Funded_Pct = round(100 * mean(eu == 1, na.rm = TRUE), 1),
+    Intl_Funded_Pct = round(100 * mean(int == 1, na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Annual Trends in Funding Origins (Percentage of Papers)") 
+```
+
+
+```{r}
+# Table 9: Evolution of Funding Sectors (Public vs. Uni vs. Industry)
+dat |>
+  group_by(year) |>
+  summarise(
+    Public_Sector_Pct = round(100 * mean(pub == 1, na.rm = TRUE), 1),
+    University_Sector_Pct = round(100 * mean(uni == 1, na.rm = TRUE), 1),
+    Industry_Sector_Pct = round(100 * mean(ind == 1, na.rm = TRUE), 1),
+    Mean_Sector_Diversity = round(mean(n_sectors, na.rm = TRUE), 2)
+  ) |>
+  kable(caption = "Annual Shifts in Funding Sectors") 
+```
+
+
+```{r}
+# Table 10: Journal Diversity and Concentration
+dat |>
+  group_by(year) |>
+  summarise(
+    Total_Papers = n(),
+    Unique_Journals = n_distinct(title),
+    Papers_Per_Journal = round(n() / n_distinct(title), 2),
+    Top_1_Journal_Share = round(100 * max(table(title)) / n(), 1)
+  ) |>
+  kable(caption = "Evolution of Publishing Venue Diversity") 
+```
+
+
+# RQ2
+
+```{r}
+# Table 1: Overall Authorship and Leadership Summary
+dat |>
+  summarise(
+    Total_Papers = n(),
+    Mean_VN_Prop = round(mean(prop_vn_authors, na.rm = TRUE), 3),
+    Median_VN_Prop = round(median(prop_vn_authors, na.rm = TRUE), 3),
+    VN_Led_Count = sum(leadership == "VN-led", na.rm = TRUE),
+    VN_Led_Pct = round(100 * mean(leadership == "VN-led", na.rm = TRUE), 1),
+    JP_Led_Pct = round(100 * mean(leadership == "JP-led", na.rm = TRUE), 1),
+    Balanced_Collab_Pct = round(100 * mean(collab_type == "Balanced", na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Overall Summary of Authorship Equity Indicators (2000-2024)") 
+```
+
+
+```{r}
+# Table 2: Annual Evolution of Equity Indicators
+dat |>
+  group_by(year) |>
+  summarise(
+    N = n(),
+    Mean_VN_Author_Share = round(mean(prop_vn_authors, na.rm = TRUE), 2),
+    VN_Led_Share = round(100 * mean(leadership == "VN-led", na.rm = TRUE), 1),
+    JP_Led_Share = round(100 * mean(leadership == "JP-led", na.rm = TRUE), 1),
+    Balanced_Paper_Share = round(100 * mean(collab_type == "Balanced", na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Year-by-Year Evolution of Equity Metrics") 
+```
+
+
+```{r}
+# Table 3: Distribution of Collaboration Balance Types
+dat |>
+  count(collab_type) |>
+  mutate(
+    Share = round(100 * n / sum(n), 1)
+  ) |>
+  arrange(desc(Share)) |>
+  kable(caption = "Distribution of Collaboration Balance Types (VN-Dominated, JP-Dominated, Balanced)") 
+```
+
+
+```{r}
+# Table 4: Leadership by Collaboration Balance Type (Cross-tabulation)
+dat |>
+  filter(!is.na(collab_type)) |>
+  count(collab_type, leadership) |>
+  group_by(collab_type) |>
+  mutate(Pct = round(100 * n / sum(n), 1)) |>
+  pivot_wider(names_from = leadership, values_from = c(n, Pct)) |>
+  select(collab_type, Pct_`VN-led`, Pct_`JP-led`, Pct_`Other-led`) |>
+  kable(caption = "Who Leads? Leadership Distribution within Collaboration Types") 
+```
+
+
+```{r}
+# Table 5: Equity Indicators by Collaboration Mode (Strict Bilateral vs Multilateral)
+dat |>
+  mutate(collab_mode = case_when(
+    n_countries == 2 ~ "Strict Bilateral",
+    n_countries > 2 ~ "Multilateral"
+  )) |>
+  group_by(collab_mode) |>
+  summarise(
+    N = n(),
+    Mean_VN_Prop = round(mean(prop_vn_authors, na.rm = TRUE), 3),
+    VN_Led_Pct = round(100 * mean(leadership == "VN-led", na.rm = TRUE), 1),
+    JP_Led_Pct = round(100 * mean(leadership == "JP-led", na.rm = TRUE), 1),
+    Other_Led_Pct = round(100 * mean(leadership == "Other-led", na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Equity Comparison: Strict Bilateral vs. Multilateral Tracks") 
+```
+
+
+```{r}
+# Table 6: Equity by Discipline (Macro-Area)
+dat |>
+  group_by(macro_area) |>
+  summarise(
+    N = n(),
+    Mean_VN_Prop = round(mean(prop_vn_authors, na.rm = TRUE), 2),
+    VN_Led_Pct = round(100 * mean(leadership == "VN-led", na.rm = TRUE), 1),
+    Balanced_Pct = round(100 * mean(collab_type == "Balanced", na.rm = TRUE), 1)
+  ) |>
+  arrange(desc(VN_Led_Pct)) |>
+  kable(caption = "Authorship Equity by Disciplinary Macro-Area") 
+```
+
+
+```{r}
+# Table 7: Equity by Journal Quality (Quartile)
+dat |>
+  filter(!is.na(quartile)) |>
+  group_by(quartile) |>
+  summarise(
+    Mean_VN_Prop = round(mean(prop_vn_authors, na.rm = TRUE), 3),
+    VN_Led_Pct = round(100 * mean(leadership == "VN-led", na.rm = TRUE), 1),
+    JP_Led_Pct = round(100 * mean(leadership == "JP-led", na.rm = TRUE), 1),
+    Balanced_Pct = round(100 * mean(collab_type == "Balanced", na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Equity Gradients Across Journal Quartiles") 
+```
+
+
+```{r}
+# Table 8: Equity by Funding Status
+dat |>
+  filter(!is.na(fund)) |>
+  group_by(fund) |>
+  summarise(
+    Mean_VN_Prop = round(mean(prop_vn_authors, na.rm = TRUE), 3),
+    VN_Led_Pct = round(100 * mean(leadership == "VN-led", na.rm = TRUE), 1),
+    JP_Led_Pct = round(100 * mean(leadership == "JP-led", na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Impact of Funding on Authorship Equity") 
+```
+
+
+
+
+```{r}
+# Table 11: Granular Distribution of Vietnamese Authorship (Binned)
+# Shows the exact shape of the contribution curve (Are most papers 10% VN or 90% VN?)
+dat |>
+  mutate(
+    Prop_Bin = cut(prop_vn_authors, 
+                   breaks = seq(0, 1, by = 0.1),
+                   include.lowest = TRUE,
+                   labels = c("0-10%", "10-20%", "20-30%", "30-40%", "40-50%", 
+                              "50-60%", "60-70%", "70-80%", "80-90%", "90-100%"))
+  ) |>
+  count(Prop_Bin) |>
+  mutate(
+    Share = round(100 * n / sum(n), 1),
+    Cumulative = cumsum(Share)
+  ) |>
+  kable(caption = "Frequency Distribution of Vietnamese Authorship Proportions") 
+```
+
+
+
+```{r}
+# Table 13: The Role of Bilateral Funding on Equity
+# Tests if joint funding leads to more balanced teams compared to unilateral funding
+dat |>
+  mutate(Funding_Type = case_when(
+    bilateral_funding == 1 ~ "Bilateral (Joint)",
+    jap == 1 & vn == 0 ~ "Japan Only",
+    vn == 1 & jap == 0 ~ "Vietnam Only",
+    fund == "Not funded" ~ "Unfunded",
+    TRUE ~ "Other/Multilateral"
+  )) |>
+  group_by(Funding_Type) |>
+  summarise(
+    N = n(),
+    Mean_VN_Prop = round(mean(prop_vn_authors, na.rm = TRUE), 2),
+    VN_Led_Pct = round(100 * mean(leadership == "VN-led", na.rm = TRUE), 1),
+    Balanced_Collab_Pct = round(100 * mean(collab_type == "Balanced", na.rm = TRUE), 1)
+  ) |>
+  arrange(desc(Balanced_Collab_Pct)) |>
+  kable(caption = "Funding Source and Collaboration Balance") 
+```
+
+# RQ3
+
+
+```{r}
+# Table 10: The "Sweet Spot" of Collaboration: Impact by Authorship Balance
+# Tests if balanced teams (40-60%) produce higher impact than dominated ones
+dat |>
+  mutate(Balance_Bin = cut(prop_vn_authors, 
+                           breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1),
+                           labels = c("Strongly JP-Dom (<20%)", "JP-Dom (20-40%)", 
+                                      "Balanced (40-60%)", "VN-Dom (60-80%)", 
+                                      "Strongly VN-Dom (>80%)"),
+                           include.lowest = TRUE)) |>
+  group_by(Balance_Bin) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Median_Citations = median(cited, na.rm = TRUE),
+    Q1_Journal_Share = round(100 * mean(quartile == "Q1", na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Citation Impact by Authorship Balance Categories") 
+```
+
+
+```{r}
+# Table 11: Impact Hierarchy by Funding Source Origin
+# Differentiates impact between unilateral (JP or VN) vs. Bilateral funding
+dat |>
+  mutate(Funding_Origin = case_when(
+    bilateral_funding == 1 ~ "Bilateral (Joint)",
+    jap == 1 & vn == 0 ~ "Japan Only",
+    vn == 1 & jap == 0 ~ "Vietnam Only",
+    us == 1 ~ "US Involved",
+    fund == "Not funded" ~ "Unfunded",
+    TRUE ~ "Other/Mixed"
+  )) |>
+  group_by(Funding_Origin) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Median_Citations = median(cited, na.rm = TRUE)
+  ) |>
+  arrange(desc(Mean_Citations)) |>
+  kable(caption = "Citation Impact by Funding Source Origin") 
+```
+
+
+```{r}
+# Table 12: Characteristics of "Super-Elite" Papers (Top 1% Global Outliers)
+# What defines the absolute highest impact work in this partnership?
+cutoff_99 <- quantile(dat$cited, 0.99, na.rm = TRUE)
+
+dat |>
+  mutate(Is_Elite = if_else(cited >= cutoff_99, "Top 1% Elite", "Regular")) |>
+  group_by(Is_Elite) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Multilateral_Pct = round(100 * mean(coop == "multilateral", na.rm = TRUE), 1),
+    VN_Led_Pct = round(100 * mean(leadership == "VN-led", na.rm = TRUE), 1),
+    Q1_Pct = round(100 * mean(quartile == "Q1", na.rm = TRUE), 1),
+    Bilateral_Fund_Pct = round(100 * mean(bilateral_funding == 1, na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Profile of 'Super-Elite' (Top 1%) vs. Regular Publications") 
+```
+
+
+```{r}
+# Table 13: Does Open Access Close the Gap? (OA x Leadership Interaction)
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  group_by(OA, leadership) |>
+  summarise(Mean_Cites = mean(cited, na.rm = TRUE)) |>
+  pivot_wider(names_from = leadership, values_from = Mean_Cites) |>
+  mutate(
+    VN_JP_Ratio = round(`VN-led` / `JP-led`, 2)
+  ) |>
+  kable(caption = "Impact Parity in Open Access vs. Paywalled Articles") 
+```
+
+
+```{r}
+# Table 1: Primary Impact Statistics by Leadership (The "Raw Gap")
+dat |>
+  group_by(leadership) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Median_Citations = median(cited, na.rm = TRUE),
+    SD_Citations = round(sd(cited, na.rm = TRUE), 1),
+    `Top_10%_Highly_Cited_Share` = round(100 * mean(cited >= quantile(dat$cited, 0.9, na.rm=TRUE)), 1),
+    Zero_Citations_Pct = round(100 * mean(cited == 0, na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Overall Citation Impact Statistics by Research Leadership") 
+```
+
+
+```{r}
+# Table 2: Impact by Collaboration Mode & Funding (Resource Drivers)
+dat |>
+  group_by(coop, fund) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Median_Citations = median(cited, na.rm = TRUE),
+    Max_Citations = max(cited, na.rm = TRUE)
+  ) |>
+  arrange(desc(Mean_Citations)) |>
+  kable(caption = "Impact Comparison: Interaction of Collaboration Type and Funding Status") 
+```
+
+
+```{r}
+# Table 3: Impact Gradients by Journal Quality (Quartiles)
+dat |>
+  filter(!is.na(quartile)) |>
+  group_by(quartile) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Median_Citations = median(cited, na.rm = TRUE),
+    IQR_Range = paste0(quantile(cited, 0.25, na.rm=TRUE), "-", quantile(cited, 0.75, na.rm=TRUE))
+  ) |>
+  kable(caption = "Citation Impact Distribution Across Journal Quartiles") 
+```
+
+
+```{r}
+# Table 4: The "Parity Test" Under Optimal Conditions (Q1 + Funded)
+# Tests if the gap persists when VN researchers have equal resources
+dat |>
+  mutate(Condition = case_when(
+    quartile == "Q1" & fund == "Funded" ~ "Optimal (Q1 + Funded)",
+    quartile != "Q1" | fund == "Not funded" ~ "Sub-Optimal"
+  )) |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  group_by(Condition, leadership) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Median_Citations = median(cited, na.rm = TRUE)
+  ) |>
+  pivot_wider(names_from = leadership, values_from = c(N, Mean_Citations, Median_Citations)) |>
+  mutate(
+    Mean_Gap_Ratio = round(`Mean_Citations_VN-led` / `Mean_Citations_JP-led`, 2)
+  ) |>
+  kable(caption = "Impact Parity Check: VN-led vs JP-led Under Optimal vs. Sub-Optimal Conditions") 
+```
+
+
+```{r}
+# Table 5: Annual Evolution of the Citation Gap
+# Tracks the VN/JP citation ratio year-by-year
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  group_by(year, leadership) |>
+  summarise(Mean_Citations = mean(cited, na.rm = TRUE), .groups = 'drop') |>
+  pivot_wider(names_from = leadership, values_from = Mean_Citations) |>
+  mutate(
+    VN_JP_Ratio = round(`VN-led` / `JP-led`, 2),
+    Gap_Percentage = round((`VN-led` - `JP-led`) / `JP-led` * 100, 1)
+  ) |>
+  kable(caption = "Annual Evolution of the VN-JP Citation Gap") 
+```
+
+
+```{r}
+# Table 6: Impact by Discipline (Macro-Area)
+dat |>
+  group_by(macro_area) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Median_Citations = median(cited, na.rm = TRUE),
+    VN_Led_Mean = round(mean(cited[leadership == "VN-led"], na.rm = TRUE), 1),
+    JP_Led_Mean = round(mean(cited[leadership == "JP-led"], na.rm = TRUE), 1)
+  ) |>
+  mutate(Parity_Ratio = round(VN_Led_Mean / JP_Led_Mean, 2)) |>
+  arrange(desc(Mean_Citations)) |>
+  kable(caption = "Citation Impact and Leadership Parity by Discipline") 
+```
+
+
+```{r}
+# Table 7: Detailed Gap Analysis by Subgroups
+# Calculates VN/JP citation ratio across multiple dimensions to pinpoint where the gap exists
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  bind_rows(
+    mutate(dat, Group = "Overall"),
+    mutate(dat, Group = paste("Quartile:", quartile)),
+    mutate(dat, Group = paste("Funding:", fund))
+  ) |>
+  filter(leadership %in% c("VN-led", "JP-led"), !is.na(Group)) |>
+  group_by(Group) |>
+  summarise(
+    VN_Mean = mean(cited[leadership=="VN-led"], na.rm=T),
+    JP_Mean = mean(cited[leadership=="JP-led"], na.rm=T),
+    Ratio = VN_Mean / JP_Mean
+  ) |>
+  mutate(across(where(is.numeric), \(x) round(x, 2))) |>
+  kable(caption = "VN-to-JP Citation Ratios Across Key Subgroups (1.0 = Parity)") 
+
+```
+
+
+```{r}
+# Table 10: Impact by Authorship Balance (The "Sweet Spot")
+# Does balanced authorship lead to higher impact?
+dat |>
+  mutate(Balance_Bin = cut(prop_vn_authors, 
+                           breaks = c(0, 0.2, 0.4, 0.6, 0.8, 1),
+                           labels = c("Strongly JP-Dom (<20%)", "JP-Dom (20-40%)", 
+                                      "Balanced (40-60%)", "VN-Dom (60-80%)", 
+                                      "Strongly VN-Dom (>80%)"),
+                           include.lowest = TRUE)) |>
+  group_by(Balance_Bin) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Median_Citations = median(cited, na.rm = TRUE),
+    Q1_Journal_Share = round(100 * mean(quartile == "Q1", na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Citation Impact by Authorship Balance Categories") 
+```
+
+
+```{r}
+# Table 11: Impact Hierarchy by Detailed Funding Origin
+# Comparing Bilateral vs Unilateral funding impact
+dat |>
+  mutate(Funding_Origin = case_when(
+    bilateral_funding == 1 ~ "Bilateral (Joint)",
+    jap == 1 & vn == 0 ~ "Japan Only",
+    vn == 1 & jap == 0 ~ "Vietnam Only",
+    us == 1 ~ "US Involved",
+    fund == "Not funded" ~ "Unfunded",
+    TRUE ~ "Other/Mixed"
+  )) |>
+  group_by(Funding_Origin) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Median_Citations = median(cited, na.rm = TRUE)
+  ) |>
+  arrange(desc(Mean_Citations)) |>
+  kable(caption = "Citation Impact by Funding Source Origin") 
+```
+
+
+```{r}
+# Table 12: Profile of "Super-Elite" Papers (Top 1%)
+# What characterizes the absolute highest impact work?
+cutoff_99 <- quantile(dat$cited, 0.99, na.rm = TRUE)
+
+dat |>
+  mutate(Is_Elite = if_else(cited >= cutoff_99, "Top 1% Elite", "Regular")) |>
+  group_by(Is_Elite) |>
+  summarise(
+    N = n(),
+    Mean_Citations = round(mean(cited, na.rm = TRUE), 1),
+    Multilateral_Pct = round(100 * mean(coop == "multilateral", na.rm = TRUE), 1),
+    VN_Led_Pct = round(100 * mean(leadership == "VN-led", na.rm = TRUE), 1),
+    Q1_Pct = round(100 * mean(quartile == "Q1", na.rm = TRUE), 1),
+    Bilateral_Fund_Pct = round(100 * mean(bilateral_funding == 1, na.rm = TRUE), 1)
+  ) |>
+  kable(caption = "Profile of 'Super-Elite' (Top 1%) vs. Regular Publications") 
+```
+
+
+```{r}
+# Table 13: Impact Parity in Open Access vs Paywalled
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  group_by(OA, leadership) |>
+  summarise(Mean_Cites = mean(cited, na.rm = TRUE), .groups = 'drop') |>
+  pivot_wider(names_from = leadership, values_from = Mean_Cites) |>
+  mutate(
+    VN_JP_Ratio = round(`VN-led` / `JP-led`, 2)
+  ) |>
+  kable(caption = "Impact Parity in Open Access vs. Paywalled Articles") 
+```
