@@ -1,0 +1,533 @@
+---
+title: "RQ2: Authorship Equity Evolution"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+```{r setup}
+library(tidyverse)
+library(scales)
+
+nature_colors <- c("#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+                  "#CA9161", "#949494", "#ECE133", "#56B4E9")
+
+theme_nature <- function(base_size = 8) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title = element_blank(),
+      axis.title = element_text(size = base_size, face = "bold"),
+      axis.text = element_text(size = base_size - 1),
+      axis.line = element_line(linewidth = 0.5),
+      legend.title = element_text(size = base_size, face = "bold"),
+      legend.text = element_text(size = base_size - 1),
+      legend.position = "bottom",
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+}
+
+theme_set(theme_nature())
+
+dat <- read_csv("data/processed_data.csv") |>
+  filter(year >= 2000) |>
+  mutate(
+    collab_type = factor(collab_type, 
+                        levels = c("JP-dominated", "Balanced", "VN-dominated", "Other"))
+  )
+```
+
+## Authorship Proportion Evolution
+```{r fig-prop-distribution}
+#| fig-width: 7
+#| fig-height: 4
+
+ggplot(dat, aes(x = prop_vn_authors)) +
+  geom_histogram(bins = 25, fill = "#4A90E2", color = "white", alpha = 0.7) +
+  geom_vline(xintercept = 0.5, linetype = "dashed", 
+             color = "#E85D75", linewidth = 1) +
+  labs(x = "Vietnamese author proportion", y = "Frequency")
+```
+```{r fig-prop-over-time}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  group_by(year) |>
+  summarise(
+    mean_prop = mean(prop_vn_authors, na.rm = TRUE),
+    se = sd(prop_vn_authors, na.rm = TRUE) / sqrt(n()),
+    ci_lower = mean_prop - 1.96 * se,
+    ci_upper = mean_prop + 1.96 * se
+  ) |>
+  ggplot(aes(x = year, y = mean_prop)) +
+  geom_ribbon(aes(ymin = ci_lower, ymax = ci_upper), 
+              alpha = 0.2, fill = "#4A90E2") +
+  geom_line(color = "#4A90E2", linewidth = 1) +
+  geom_point(color = "#4A90E2", size = 2) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", 
+             color = "#E85D75", linewidth = 0.8) +
+  scale_y_continuous(limits = c(0.3, 0.6), 
+                    labels = percent_format(accuracy = 1)) +
+  labs(x = "Year", y = "Mean Vietnamese author proportion")
+```
+```{r tbl-prop-summary}
+dat |>
+  summarise(
+    N = n(),
+    `Mean prop` = round(mean(prop_vn_authors, na.rm = TRUE), 3),
+    `Median prop` = round(median(prop_vn_authors, na.rm = TRUE), 3),
+    `SD` = round(sd(prop_vn_authors, na.rm = TRUE), 3),
+    `Min` = round(min(prop_vn_authors, na.rm = TRUE), 3),
+    `Max` = round(max(prop_vn_authors, na.rm = TRUE), 3)
+  ) |>
+  knitr::kable()
+```
+
+## Leadership Transitions
+```{r fig-leadership-trends}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  mutate(leadership = case_when(
+    vn_led == 1 ~ "VN-led",
+    jp_led == 1 ~ "JP-led",
+    TRUE ~ "Other-led"
+  ) |> factor(levels = c("JP-led", "VN-led", "Other-led"))) |>
+  count(year, leadership) |>
+  group_by(year) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = year, y = pct, fill = leadership)) +
+  geom_area(alpha = 0.7) +
+  geom_hline(yintercept = 50, linetype = "dotted", 
+             color = "white", linewidth = 0.5) +
+  scale_fill_manual(
+    values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75", 
+               "Other-led" = "#95B8A8")
+  ) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"), 
+                    expand = c(0, 0)) +
+  labs(x = "Year", y = "Proportion of publications", fill = NULL)
+```
+```{r fig-leadership-absolute}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  mutate(leadership = case_when(
+    vn_led == 1 ~ "VN-led",
+    jp_led == 1 ~ "JP-led",
+    TRUE ~ "Other-led"
+  )) |>
+  count(year, leadership) |>
+  ggplot(aes(x = year, y = n, color = leadership)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(
+    values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75", 
+               "Other-led" = "#95B8A8")
+  ) +
+  labs(x = "Year", y = "Number of publications", color = NULL)
+```
+```{r tbl-leadership-overall}
+dat |>
+  summarise(
+    N = n(),
+    `VN-led` = sum(vn_led == 1),
+    `VN-led (%)` = round(100 * mean(vn_led == 1), 1),
+    `JP-led` = sum(jp_led == 1),
+    `JP-led (%)` = round(100 * mean(jp_led == 1), 1),
+    `Other-led` = sum(vn_led == 0 & jp_led == 0),
+    `Other-led (%)` = round(100 * mean(vn_led == 0 & jp_led == 0), 1)
+  ) |>
+  knitr::kable()
+```
+
+## Collaboration Balance
+```{r fig-collab-type-dist}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  count(collab_type) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = "", y = pct, fill = collab_type)) +
+  geom_col(width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  scale_fill_manual(
+    values = c("JP-dominated" = "#E85D75", "Balanced" = "#95B8A8",
+               "VN-dominated" = "#4A90E2", "Other" = "#E8B861")
+  ) +
+  geom_text(aes(label = paste0(round(pct, 1), "%")),
+            position = position_stack(vjust = 0.5),
+            color = "white", fontface = "bold", size = 3) +
+  theme_void() +
+  theme(legend.position = "bottom",
+        legend.title = element_text(size = 8, face = "bold"),
+        legend.text = element_text(size = 7)) +
+  labs(fill = NULL)
+```
+```{r fig-collab-type-trends}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  count(year, collab_type) |>
+  group_by(year) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = year, y = pct, fill = collab_type)) +
+  geom_area(alpha = 0.7) +
+  scale_fill_manual(
+    values = c("JP-dominated" = "#E85D75", "Balanced" = "#95B8A8",
+               "VN-dominated" = "#4A90E2", "Other" = "#E8B861")
+  ) +
+  scale_y_continuous(labels = function(x) paste0(x, "%"),
+                    expand = c(0, 0)) +
+  labs(x = "Year", y = "Proportion of publications", fill = NULL)
+```
+```{r tbl-collab-balance-overall}
+dat |>
+  count(collab_type) |>
+  mutate(`%` = round(100 * n / sum(n), 1)) |>
+  knitr::kable()
+```
+
+# 2
+```{r fig-prop-by-coop}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(coop), !is.na(prop_vn_authors)) |>
+  ggplot(aes(x = coop, y = prop_vn_authors, fill = coop)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  geom_hline(yintercept = 0.5, linetype = "dashed",
+             color = "#E85D75", linewidth = 0.8) +
+  scale_fill_manual(values = c("bilateral" = "#4A90E2", 
+                               "multilateral" = "#E85D75"),
+                    labels = c("Bilateral", "Multilateral")) +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = NULL, y = "Vietnamese author proportion") +
+  theme(legend.position = "none")
+```
+```{r fig-prop-by-quartile}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(quartile), !is.na(prop_vn_authors)) |>
+  ggplot(aes(x = quartile, y = prop_vn_authors, fill = quartile)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  geom_hline(yintercept = 0.5, linetype = "dashed",
+             color = "#E85D75", linewidth = 0.8) +
+  scale_fill_manual(
+    values = c("Q1" = "#4A90E2", "Q2" = "#95B8A8", 
+               "Q3" = "#E8B861", "Q4" = "#E85D75")
+  ) +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = "Journal quartile", y = "Vietnamese author proportion") +
+  theme(legend.position = "none")
+```
+```{r fig-leadership-by-coop}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(coop)) |>
+  mutate(leadership = case_when(
+    vn_led == 1 ~ "VN-led",
+    jp_led == 1 ~ "JP-led",
+    TRUE ~ "Other-led"
+  )) |>
+  count(coop, leadership) |>
+  group_by(coop) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = coop, y = pct, fill = leadership)) +
+  geom_col(position = "dodge", alpha = 0.7) +
+  geom_text(aes(label = paste0(round(pct, 1), "%")),
+            position = position_dodge(width = 0.9),
+            vjust = -0.5, size = 3) +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75",
+                               "Other-led" = "#95B8A8")) +
+  labs(x = NULL, y = "Percentage", fill = NULL)
+```
+```{r fig-leadership-by-quartile}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(quartile)) |>
+  mutate(leadership = case_when(
+    vn_led == 1 ~ "VN-led",
+    jp_led == 1 ~ "JP-led",
+    TRUE ~ "Other-led"
+  )) |>
+  count(quartile, leadership) |>
+  group_by(quartile) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = quartile, y = pct, fill = leadership)) +
+  geom_col(position = "stack", alpha = 0.7) +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75",
+                               "Other-led" = "#95B8A8")) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(x = "Journal quartile", y = "Proportion of publications", fill = NULL)
+```
+```{r fig-collab-by-quartile}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(quartile), !is.na(collab_type)) |>
+  count(quartile, collab_type) |>
+  group_by(quartile) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = quartile, y = pct, fill = collab_type)) +
+  geom_col(position = "stack", alpha = 0.7) +
+  scale_fill_manual(
+    values = c("JP-dominated" = "#E85D75", "Balanced" = "#95B8A8",
+               "VN-dominated" = "#4A90E2", "Other" = "#E8B861")
+  ) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(x = "Journal quartile", y = "Proportion of publications", fill = NULL)
+```
+```{r fig-prop-density-by-year}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  mutate(year_group = cut(year, breaks = c(2000, 2010, 2015, 2020, 2025), 
+                          include.lowest = TRUE,
+                          labels = c("2000-09", "2010-14", "2015-19", "2020-24"))) |>
+  filter(!is.na(year_group), !is.na(prop_vn_authors)) |>
+  ggplot(aes(x = prop_vn_authors, fill = year_group)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(xintercept = 0.5, linetype = "dashed", color = "#E85D75") +
+  scale_fill_manual(values = c("#264653", "#2A9D8F", "#E76F51", "#F4A261")) +
+  scale_x_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = "Vietnamese author proportion", y = "Density", fill = "Period")
+```
+```{r tbl-prop-by-coop}
+dat |>
+  filter(!is.na(coop)) |>
+  group_by(coop) |>
+  summarise(
+    N = n(),
+    `Mean prop` = round(mean(prop_vn_authors, na.rm = TRUE), 3),
+    `Median prop` = round(median(prop_vn_authors, na.rm = TRUE), 3),
+    `SD` = round(sd(prop_vn_authors, na.rm = TRUE), 3),
+    .groups = "drop"
+  ) |>
+  knitr::kable()
+```
+```{r tbl-leadership-by-coop}
+dat |>
+  filter(!is.na(coop)) |>
+  mutate(leadership = case_when(
+    vn_led == 1 ~ "VN-led",
+    jp_led == 1 ~ "JP-led",
+    TRUE ~ "Other-led"
+  )) |>
+  count(coop, leadership) |>
+  group_by(coop) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |>
+  select(coop, leadership, n, pct) |>
+  pivot_wider(names_from = leadership, 
+              values_from = c(n, pct),
+              names_glue = "{leadership}_{.value}") |>
+  knitr::kable()
+```
+```{r tbl-collab-by-quartile}
+dat |>
+  filter(!is.na(quartile), !is.na(collab_type)) |>
+  count(quartile, collab_type) |>
+  group_by(quartile) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |>
+  select(quartile, collab_type, n, pct) |>
+  pivot_wider(names_from = collab_type,
+              values_from = c(n, pct),
+              names_glue = "{collab_type}_{.value}") |>
+  knitr::kable()
+```
+
+# 3
+
+```{r fig-prop-by-funding}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(fund), !is.na(prop_vn_authors)) |>
+  ggplot(aes(x = fund, y = prop_vn_authors, fill = fund)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  geom_hline(yintercept = 0.5, linetype = "dashed",
+             color = "#E85D75", linewidth = 0.8) +
+  scale_fill_manual(values = c("Funded" = "#95B8A8", 
+                               "Not funded" = "#C2674C")) +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = NULL, y = "Vietnamese author proportion") +
+  theme(legend.position = "none")
+```
+
+
+```{r fig-leadership-by-funding}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(fund)) |>
+  mutate(leadership = case_when(
+    vn_led == 1 ~ "VN-led",
+    jp_led == 1 ~ "JP-led",
+    TRUE ~ "Other-led"
+  )) |>
+  count(fund, leadership) |>
+  group_by(fund) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = fund, y = pct, fill = leadership)) +
+  geom_col(position = "dodge", alpha = 0.7) +
+  geom_text(aes(label = paste0(round(pct, 1), "%")),
+            position = position_dodge(width = 0.9),
+            vjust = -0.5, size = 3) +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75",
+                               "Other-led" = "#95B8A8")) +
+  labs(x = NULL, y = "Percentage", fill = NULL)
+
+```
+
+```{r fig-prop-by-oa}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(prop_vn_authors)) |>
+  ggplot(aes(x = OA, y = prop_vn_authors, fill = OA)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  geom_hline(yintercept = 0.5, linetype = "dashed",
+             color = "#E85D75", linewidth = 0.8) +
+  scale_fill_manual(values = c("OA" = "#4A90E2", "Not OA" = "#E85D75")) +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = NULL, y = "Vietnamese author proportion") +
+  theme(legend.position = "none")
+```
+
+```{r fig-collab-by-funding}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(fund), !is.na(collab_type)) |>
+  count(fund, collab_type) |>
+  group_by(fund) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = fund, y = pct, fill = collab_type)) +
+  geom_col(position = "stack", alpha = 0.7) +
+  scale_fill_manual(
+    values = c("JP-dominated" = "#E85D75", "Balanced" = "#95B8A8",
+               "VN-dominated" = "#4A90E2", "Other" = "#E8B861")
+  ) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(x = NULL, y = "Proportion of publications", fill = NULL)
+```
+
+```{r fig-prop-by-macroarea}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(prop_vn_authors)) |>
+  mutate(macro_area = case_when(
+    HS == 1 ~ "Health Sciences",
+    LS == 1 ~ "Life Sciences",
+    PS == 1 ~ "Physical Sciences",
+    SS == 1 ~ "Social Sciences",
+    TRUE ~ "Other"
+  )) |>
+  filter(macro_area != "Other") |>
+  ggplot(aes(x = macro_area, y = prop_vn_authors, fill = macro_area)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  geom_hline(yintercept = 0.5, linetype = "dashed",
+             color = "#E85D75", linewidth = 0.8) +
+  scale_fill_manual(
+    values = c("Health Sciences" = "#E76F51", "Life Sciences" = "#2A9D8F",
+               "Physical Sciences" = "#264653", "Social Sciences" = "#F4A261")
+  ) +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = NULL, y = "Vietnamese author proportion") +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r fig-leadership-by-macroarea}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  mutate(
+    macro_area = case_when(
+      HS == 1 ~ "Health Sciences",
+      LS == 1 ~ "Life Sciences",
+      PS == 1 ~ "Physical Sciences",
+      SS == 1 ~ "Social Sciences",
+      TRUE ~ "Other"
+    ),
+    leadership = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    )
+  ) |>
+  filter(macro_area != "Other") |>
+  count(macro_area, leadership) |>
+  group_by(macro_area) |>
+  mutate(pct = 100 * n / sum(n)) |>
+  ggplot(aes(x = macro_area, y = pct, fill = leadership)) +
+  geom_col(position = "stack", alpha = 0.7) +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75",
+                               "Other-led" = "#95B8A8")) +
+  scale_y_continuous(labels = function(x) paste0(x, "%")) +
+  labs(x = NULL, y = "Proportion of publications", fill = NULL) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r fig-prop-scatter-time}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(prop_vn_authors)) |>
+  ggplot(aes(x = year, y = prop_vn_authors)) +
+  geom_jitter(alpha = 0.1, color = "#4A90E2", size = 0.5) +
+  geom_smooth(method = "loess", color = "#E85D75", linewidth = 1.5, se = TRUE) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "gray30") +
+  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  labs(x = "Year", y = "Vietnamese author proportion")
+
+```
+
+```{r fig-collab-heatmap-year}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(collab_type)) |>
+  count(year, collab_type) |>
+  ggplot(aes(x = year, y = collab_type, fill = n)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "#E8F4F8", high = "#0173B2", 
+                     name = "Publications") +
+  labs(x = "Year", y = NULL)
+```

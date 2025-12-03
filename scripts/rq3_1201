@@ -1,0 +1,724 @@
+---
+title: "RQ3: Impact Parity Analysis"
+format: html
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+library(tidyverse)
+library(scales)
+library(MASS)
+library(broom)
+
+nature_colors <- c("#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+                  "#CA9161", "#949494", "#ECE133", "#56B4E9")
+
+theme_nature <- function(base_size = 8) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title = element_blank(),
+      axis.title = element_text(size = base_size, face = "bold"),
+      axis.text = element_text(size = base_size - 1),
+      axis.line = element_line(linewidth = 0.5),
+      legend.title = element_text(size = base_size, face = "bold"),
+      legend.text = element_text(size = base_size - 1),
+      legend.position = "bottom",
+      panel.background = element_rect(fill = "white", color = NA)
+    )
+}
+
+theme_set(theme_nature())
+
+dat <- read_csv("data/processed_data.csv") |>
+  filter(year >= 2000) |>
+  mutate(
+    quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1")),
+    leadership = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    ) |> factor(levels = c("Other-led", "JP-led", "VN-led")),
+    age = 2025 - year,
+    macro_area = case_when(
+      HS == 1 ~ "HS",
+      LS == 1 ~ "LS",
+      PS == 1 ~ "PS",
+      SS == 1 ~ "SS",
+      TRUE ~ "Other"
+    ) |> factor()
+  )
+```
+
+## Descriptive Citation Comparisons
+```{r fig-citations-by-leadership}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(leadership != "Other-led") |>
+  ggplot(aes(x = leadership, y = cited, fill = leadership)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)") +
+  theme(legend.position = "none")
+```
+```{r tbl-citations-descriptive}
+dat |>
+  group_by(leadership) |>
+  summarise(
+    N = n(),
+    Mean = round(mean(cited, na.rm = TRUE), 1),
+    Median = median(cited, na.rm = TRUE),
+    Q25 = quantile(cited, 0.25, na.rm = TRUE),
+    Q75 = quantile(cited, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  knitr::kable()
+```
+```{r fig-citations-coop-type}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(coop)) |>
+  ggplot(aes(x = coop, y = cited, fill = coop)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(values = c("bilateral" = "#4A90E2", 
+                               "multilateral" = "#E85D75")) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)") +
+  theme(legend.position = "none")
+```
+```{r fig-citations-funding}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  ggplot(aes(x = fund, y = cited, fill = fund)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(values = c("Funded" = "#95B8A8", 
+                               "Not funded" = "#C2674C")) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)") +
+  theme(legend.position = "none")
+```
+```{r fig-citations-quartile}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(quartile)) |>
+  ggplot(aes(x = quartile, y = cited, fill = quartile)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(
+    values = c("Q1" = "#4A90E2", "Q2" = "#95B8A8", 
+               "Q3" = "#E8B861", "Q4" = "#E85D75")
+  ) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)") +
+  theme(legend.position = "none")
+```
+```{r fig-citations-oa}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  ggplot(aes(x = OA, y = cited, fill = OA)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(values = c("OA" = "#4A90E2", "Not OA" = "#E85D75")) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)") +
+  theme(legend.position = "none")
+```
+```{r tbl-citations-by-conditions}
+dat |>
+  group_by(leadership, coop, fund) |>
+  summarise(
+    N = n(),
+    Mean = round(mean(cited, na.rm = TRUE), 1),
+    Median = median(cited, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  filter(N >= 50) |>
+  arrange(desc(Mean)) |>
+  head(10) |>
+  knitr::kable()
+```
+
+## Model Assumption Checks
+```{r fig-citation-distribution}
+#| fig-width: 7
+#| fig-height: 4
+
+ggplot(dat, aes(x = cited)) +
+  geom_histogram(bins = 50, fill = "#4A90E2", alpha = 0.7) +
+  scale_x_log10(labels = comma) +
+  labs(x = "Citations (log scale)", y = "Frequency")
+```
+```{r tbl-citation-summary-stats}
+dat |>
+  summarise(
+    N = n(),
+    Mean = round(mean(cited, na.rm = TRUE), 2),
+    Median = median(cited, na.rm = TRUE),
+    SD = round(sd(cited, na.rm = TRUE), 2),
+    Variance = round(var(cited, na.rm = TRUE), 2),
+    Min = min(cited, na.rm = TRUE),
+    Max = max(cited, na.rm = TRUE),
+    `Var/Mean ratio` = round(var(cited, na.rm = TRUE) / mean(cited, na.rm = TRUE), 2),
+    `% zeros` = round(100 * mean(cited == 0), 2)
+  ) |>
+  knitr::kable()
+```
+```{r tbl-overdispersion-test}
+model_poisson <- glm(cited ~ leadership + factor(year) + macro_area,
+                     data = dat, family = poisson)
+model_nb <- glm.nb(cited ~ leadership + factor(year) + macro_area,
+                   data = dat)
+
+tibble(
+  Model = c("Poisson", "Negative Binomial"),
+  `Log-likelihood` = c(logLik(model_poisson)[1], logLik(model_nb)[1]),
+  AIC = c(AIC(model_poisson), AIC(model_nb)),
+  BIC = c(BIC(model_poisson), BIC(model_nb)),
+  `Theta (dispersion)` = c(NA, model_nb$theta)
+) |>
+  mutate(across(where(is.numeric), ~round(., 2))) |>
+  knitr::kable()
+```
+```{r tbl-lr-test-overdispersion}
+lr_stat <- 2 * (logLik(model_nb)[1] - logLik(model_poisson)[1])
+lr_pval <- pchisq(lr_stat, df = 1, lower.tail = FALSE)
+
+tibble(
+  Test = "LR test: Poisson vs Negative Binomial",
+  `LR statistic` = round(lr_stat, 2),
+  `df` = 1,
+  `p-value` = format.pval(lr_pval, digits = 3),
+  Interpretation = ifelse(lr_pval < 0.001, "Significant overdispersion detected", "No overdispersion")
+) |>
+  knitr::kable()
+```
+
+## Regression Models: Impact Parity Tests
+```{r models}
+model_data <- dat |>
+  filter(!is.na(cited), !is.na(leadership), !is.na(quartile),
+         !is.na(fund), !is.na(OA), !is.na(coop), !is.na(macro_area)) |>
+  mutate(
+    prop_vn_centered = scale(prop_vn_authors, scale = FALSE)[,1]
+  )
+
+m1 <- glm.nb(cited ~ leadership + factor(year) + macro_area,
+             data = model_data)
+
+m2 <- glm.nb(cited ~ leadership + coop + prop_vn_centered + 
+               factor(year) + macro_area,
+             data = model_data)
+
+m3 <- glm.nb(cited ~ leadership + coop + prop_vn_centered +
+               fund + bilateral_funding + OA + quartile +
+               factor(year) + macro_area,
+             data = model_data)
+
+m4 <- glm.nb(cited ~ leadership * fund + leadership * quartile + 
+               coop + prop_vn_centered + bilateral_funding + OA +
+               factor(year) + macro_area,
+             data = model_data)
+```
+```{r tbl-regression-models}
+list(
+  "Model 1" = m1,
+  "Model 2" = m2,
+  "Model 3" = m3,
+  "Model 4" = m4
+) |>
+  map_dfr(~{
+    tidy(., conf.int = TRUE) |>
+      filter(str_detect(term, "leadership")) |>
+      transmute(
+        term = term,
+        IRR = exp(estimate),
+        CI_lower = exp(conf.low),
+        CI_upper = exp(conf.high),
+        p.value = p.value
+      )
+  }, .id = "Model") |>
+  mutate(
+    across(IRR:p.value, ~round(., 3)),
+    Sig = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01 ~ "**",
+      p.value < 0.05 ~ "*",
+      TRUE ~ ""
+    )
+  ) |>
+  knitr::kable()
+```
+```{r tbl-full-model3}
+tidy(m3, conf.int = TRUE) |>
+  filter(!str_detect(term, "year|macro_area")) |>
+  transmute(
+    Term = term,
+    IRR = exp(estimate),
+    CI_lower = exp(conf.low),
+    CI_upper = exp(conf.high),
+    `p-value` = p.value,
+    Sig = case_when(
+      p.value < 0.001 ~ "***",
+      p.value < 0.01 ~ "**",
+      p.value < 0.05 ~ "*",
+      TRUE ~ ""
+    )
+  ) |>
+  mutate(across(IRR:`p-value`, ~round(., 3))) |>
+  knitr::kable()
+```
+
+## Interaction Effects
+```{r fig-leadership-funding-interaction}
+#| fig-width: 7
+#| fig-height: 4
+
+model_data |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  bind_cols(pred = predict(m4, newdata = filter(model_data, 
+                                                 leadership %in% c("VN-led", "JP-led")),
+                           type = "response")) |>
+  group_by(leadership, fund) |>
+  summarise(
+    mean_pred = mean(pred, na.rm = TRUE),
+    se = sd(pred, na.rm = TRUE) / sqrt(n()),
+    .groups = "drop"
+  ) |>
+  ggplot(aes(x = fund, y = mean_pred, color = leadership, group = leadership)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = mean_pred - 1.96*se, 
+                    ymax = mean_pred + 1.96*se),
+                width = 0.1) +
+  scale_color_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  labs(x = "Funding status", y = "Predicted citations", color = NULL)
+```
+```{r fig-leadership-quartile-interaction}
+#| fig-width: 7
+#| fig-height: 4
+
+model_data |>
+  filter(leadership %in% c("VN-led", "JP-led"), !is.na(quartile)) |>
+  bind_cols(pred = predict(m4, newdata = filter(model_data, 
+                                                 leadership %in% c("VN-led", "JP-led"),
+                                                 !is.na(quartile)),
+                           type = "response")) |>
+  group_by(leadership, quartile) |>
+  summarise(
+    mean_pred = mean(pred, na.rm = TRUE),
+    se = sd(pred, na.rm = TRUE) / sqrt(n()),
+    .groups = "drop"
+  ) |>
+  ggplot(aes(x = quartile, y = mean_pred, 
+             color = leadership, group = leadership)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = mean_pred - 1.96*se,
+                    ymax = mean_pred + 1.96*se),
+                width = 0.1) +
+  scale_color_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  labs(x = "Journal quartile", y = "Predicted citations", color = NULL)
+```
+
+## Impact Parity Under Optimal Conditions
+```{r tbl-parity-conditions}
+model_data |>
+  filter(leadership %in% c("VN-led", "JP-led"),
+         quartile == "Q1", fund == "Funded") |>
+  group_by(leadership) |>
+  summarise(
+    N = n(),
+    `Mean citations` = round(mean(cited, na.rm = TRUE), 1),
+    `Median citations` = median(cited, na.rm = TRUE),
+    `Q1 rate (%)` = round(100 * mean(quartile == "Q1"), 1),
+    .groups = "drop"
+  ) |>
+  knitr::kable()
+```
+```{r fig-parity-q1-funded}
+#| fig-width: 7
+#| fig-height: 4
+
+model_data |>
+  filter(leadership %in% c("VN-led", "JP-led"),
+         quartile == "Q1", fund == "Funded") |>
+  ggplot(aes(x = leadership, y = cited, fill = leadership)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)",
+       caption = "Subset: Q1 journals + Funded papers only") +
+  theme(legend.position = "none")
+```
+
+## Model Diagnostics
+```{r tbl-model-fit}
+tibble(
+  Model = c("Model 1", "Model 2", "Model 3", "Model 4"),
+  N = c(nobs(m1), nobs(m2), nobs(m3), nobs(m4)),
+  `Log-Lik` = c(logLik(m1)[1], logLik(m2)[1], logLik(m3)[1], logLik(m4)[1]),
+  AIC = c(AIC(m1), AIC(m2), AIC(m3), AIC(m4)),
+  BIC = c(BIC(m1), BIC(m2), BIC(m3), BIC(m4)),
+  `Theta` = c(m1$theta, m2$theta, m3$theta, m4$theta)
+) |>
+  mutate(across(where(is.numeric), ~round(., 2))) |>
+  knitr::kable()
+```
+```{r fig-residual-diagnostics}
+#| fig-width: 7
+#| fig-height: 4
+
+model_data |>
+  bind_cols(
+    fitted = predict(m3, type = "response"),
+    residuals = residuals(m3, type = "pearson")
+  ) |>
+  ggplot(aes(x = log(fitted + 1), y = residuals)) +
+  geom_point(alpha = 0.3, color = "#4A90E2") +
+  geom_hline(yintercept = 0, color = "#E85D75", linetype = "dashed") +
+  geom_smooth(se = TRUE, color = "black", linewidth = 0.8) +
+  labs(x = "Log predicted citations", y = "Pearson residuals")
+```
+```{r fig-qq-plot}
+#| fig-width: 7
+#| fig-height: 4
+
+residuals_pearson <- residuals(m3, type = "pearson")
+qqnorm(residuals_pearson, main = "", pch = 20, col = alpha("#4A90E2", 0.3))
+qqline(residuals_pearson, col = "#E85D75", lwd = 2)
+```
+
+## Statistical Tests for Parity
+```{r tbl-wilcox-tests}
+leadership_pairs <- list(
+  "All papers" = dat |> filter(leadership %in% c("VN-led", "JP-led")),
+  "Funded only" = dat |> filter(leadership %in% c("VN-led", "JP-led"), 
+                                fund == "Funded"),
+  "Q1 only" = dat |> filter(leadership %in% c("VN-led", "JP-led"), 
+                            quartile == "Q1"),
+  "Q1 + Funded" = dat |> filter(leadership %in% c("VN-led", "JP-led"),
+                                quartile == "Q1", fund == "Funded")
+)
+
+map_dfr(leadership_pairs, ~{
+  test <- wilcox.test(cited ~ leadership, data = .)
+  vn_mean <- mean(.$cited[.$leadership == "VN-led"], na.rm = TRUE)
+  jp_mean <- mean(.$cited[.$leadership == "JP-led"], na.rm = TRUE)
+  
+  tibble(
+    `VN mean` = round(vn_mean, 1),
+    `JP mean` = round(jp_mean, 1),
+    `Ratio` = round(vn_mean / jp_mean, 2),
+    `p-value` = format.pval(test$p.value, digits = 3)
+  )
+}, .id = "Subset") |>
+  knitr::kable()
+```
+
+# 2
+```{r fig-citations-by-leadership-year}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  group_by(year, leadership) |>
+  summarise(
+    mean_cited = mean(cited, na.rm = TRUE),
+    se = sd(cited, na.rm = TRUE) / sqrt(n()),
+    .groups = "drop"
+  ) |>
+  ggplot(aes(x = year, y = mean_cited, color = leadership)) +
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  geom_ribbon(aes(ymin = mean_cited - 1.96*se, 
+                  ymax = mean_cited + 1.96*se,
+                  fill = leadership),
+              alpha = 0.2, color = NA) +
+  scale_color_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  labs(x = "Year", y = "Mean citations (±95% CI)", color = NULL, fill = NULL)
+```
+
+```{r fig-citations-leadership-macroarea}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led"), macro_area != "Other") |>
+  ggplot(aes(x = macro_area, y = cited, fill = leadership)) +
+  geom_violin(alpha = 0.6, trim = FALSE, position = position_dodge(0.9)) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3,
+               position = position_dodge(0.9)) +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  scale_y_log10(labels = comma) +
+  labs(x = "Macro-area", y = "Citations (log scale)", fill = NULL)
+```
+
+```{r fig-citations-collab-type}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(collab_type), collab_type != "Other") |>
+  ggplot(aes(x = collab_type, y = cited, fill = collab_type)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(
+    values = c("JP-dominated" = "#E85D75", "Balanced" = "#95B8A8",
+               "VN-dominated" = "#4A90E2")
+  ) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)") +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r fig-citations-bilateral-funding}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(fund == "Funded") |>
+  mutate(bilateral = if_else(bilateral_funding == 1, "Bilateral funding", "Unilateral funding")) |>
+  ggplot(aes(x = bilateral, y = cited, fill = bilateral)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 3,
+               fill = "white", color = "black") +
+  scale_fill_manual(values = c("Bilateral funding" = "#4A90E2", 
+                               "Unilateral funding" = "#E85D75")) +
+  scale_y_log10(labels = comma) +
+  labs(x = NULL, y = "Citations (log scale)") +
+  theme(legend.position = "none")
+```
+
+```{r fig-citation-gap-by-quartile}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led"), !is.na(quartile)) |>
+  group_by(quartile, leadership) |>
+  summarise(mean_cited = mean(cited, na.rm = TRUE), .groups = "drop") |>
+  pivot_wider(names_from = leadership, values_from = mean_cited) |>
+  mutate(gap = `JP-led` - `VN-led`,
+         ratio = `VN-led` / `JP-led`) |>
+  ggplot(aes(x = quartile, y = ratio)) +
+  geom_col(fill = "#4A90E2", alpha = 0.7) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "#E85D75", linewidth = 1) +
+  geom_text(aes(label = paste0(round(ratio, 2))), vjust = -0.5) +
+  labs(x = "Journal quartile", y = "VN-led / JP-led citation ratio",
+       caption = "Ratio = 1 indicates parity")
+```
+
+```{r fig-citation-gap-by-year}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  group_by(year, leadership) |>
+  summarise(mean_cited = mean(cited, na.rm = TRUE), .groups = "drop") |>
+  pivot_wider(names_from = leadership, values_from = mean_cited) |>
+  mutate(ratio = `VN-led` / `JP-led`) |>
+  ggplot(aes(x = year, y = ratio)) +
+  geom_line(color = "#4A90E2", linewidth = 1) +
+  geom_point(color = "#4A90E2", size = 2) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "#E85D75", linewidth = 1) +
+  geom_smooth(method = "loess", se = TRUE, color = "gray30", linetype = "dotted") +
+  labs(x = "Year", y = "VN-led / JP-led citation ratio",
+       caption = "Ratio = 1 indicates parity")
+```
+```{r fig-predicted-citations-matrix}
+#| fig-width: 7
+#| fig-height: 4
+
+expand_grid(
+  leadership = factor(c("VN-led", "JP-led"), levels = c("Other-led", "JP-led", "VN-led")),
+  quartile = factor(c("Q1", "Q2", "Q3", "Q4"), levels = c("Q4", "Q3", "Q2", "Q1")),
+  fund = "Funded",
+  coop = "multilateral",
+  prop_vn_centered = 0,
+  bilateral_funding = 0,
+  OA = "OA",
+  year = 2020,
+  macro_area = "PS"
+) |>
+  mutate(pred = predict(m4, newdata = ., type = "response")) |>
+  ggplot(aes(x = quartile, y = leadership, fill = pred)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(pred, 1)), color = "white", fontface = "bold") +
+  scale_fill_gradient(low = "#E8F4F8", high = "#0173B2", 
+                     name = "Predicted\ncitations") +
+  labs(x = "Journal quartile", y = "Leadership")
+```
+
+```{r fig-residuals-by-leadership}
+#| fig-width: 7
+#| fig-height: 4
+
+model_data |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  bind_cols(residuals = residuals(m3, type = "pearson")) |>
+  ggplot(aes(x = leadership, y = residuals, fill = leadership)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#E85D75") +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  labs(x = NULL, y = "Pearson residuals") +
+  theme(legend.position = "none")
+```
+
+
+```{r fig-citations-prop-scatter}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(prop_vn_authors)) |>
+  ggplot(aes(x = prop_vn_authors, y = cited)) +
+  geom_jitter(alpha = 0.1, color = "#4A90E2", size = 0.5) +
+  geom_smooth(method = "loess", color = "#E85D75", linewidth = 1.5, se = TRUE) +
+  scale_x_continuous(labels = percent_format(accuracy = 1)) +
+  scale_y_log10(labels = comma) +
+  labs(x = "Vietnamese author proportion", y = "Citations (log scale)")
+```
+
+```{r fig-parity-conditions-heatmap}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led"), !is.na(quartile)) |>
+  group_by(leadership, fund, quartile) |>
+  summarise(mean_cited = mean(cited, na.rm = TRUE), .groups = "drop") |>
+  pivot_wider(names_from = leadership, values_from = mean_cited) |>
+  mutate(ratio = `VN-led` / `JP-led`) |>
+  ggplot(aes(x = quartile, y = fund, fill = ratio)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(ratio, 2)), color = "white", fontface = "bold") +
+  scale_fill_gradient2(low = "#E85D75", mid = "white", high = "#4A90E2",
+                       midpoint = 1, name = "Citation\nratio") +
+  labs(x = "Journal quartile", y = "Funding status",
+       caption = "Ratio = VN-led / JP-led citations")
+```
+
+# 3
+```{r tbl-leadership-overall-fixed}
+dat |>
+  filter(!is.na(vn_led), !is.na(jp_led)) |>
+  summarise(
+    N = n(),
+    `VN-led` = sum(vn_led == 1, na.rm = TRUE),
+    `VN-led (%)` = round(100 * mean(vn_led == 1, na.rm = TRUE), 1),
+    `JP-led` = sum(jp_led == 1, na.rm = TRUE),
+    `JP-led (%)` = round(100 * mean(jp_led == 1, na.rm = TRUE), 1),
+    `Other-led` = sum(vn_led == 0 & jp_led == 0, na.rm = TRUE),
+    `Other-led (%)` = round(100 * mean(vn_led == 0 & jp_led == 0, na.rm = TRUE), 1)
+  ) |>
+  knitr::kable()
+```
+
+```{r fig-residual-diagnostics-fixed}
+#| fig-width: 7
+#| fig-height: 4
+
+model_data_with_resid <- model_data |>
+  mutate(
+    fitted = predict(m3, type = "response"),
+    residuals = residuals(m3, type = "pearson")
+  )
+
+ggplot(model_data_with_resid, aes(x = log(fitted + 1), y = residuals)) +
+  geom_point(alpha = 0.3, color = "#4A90E2") +
+  geom_hline(yintercept = 0, color = "#E85D75", linetype = "dashed") +
+  geom_smooth(se = TRUE, color = "black", linewidth = 0.8) +
+  labs(x = "Log predicted citations", y = "Pearson residuals")
+```
+
+```{r fig-predicted-citations-matrix-fixed}
+#| fig-width: 7
+#| fig-height: 4
+
+pred_grid <- expand_grid(
+  leadership = factor(c("VN-led", "JP-led"), levels = c("Other-led", "JP-led", "VN-led")),
+  quartile = factor(c("Q1", "Q2", "Q3", "Q4"), levels = c("Q4", "Q3", "Q2", "Q1")),
+  fund = "Funded",
+  coop = "multilateral",
+  prop_vn_centered = 0,
+  bilateral_funding = 0,
+  OA = "OA",
+  year = 2020,
+  macro_area = "PS"
+)
+
+pred_grid |>
+  mutate(pred = predict(m4, newdata = pred_grid, type = "response")) |>
+  ggplot(aes(x = quartile, y = leadership, fill = pred)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(pred, 1)), color = "white", fontface = "bold") +
+  scale_fill_gradient(low = "#E8F4F8", high = "#0173B2", 
+                     name = "Predicted\ncitations") +
+  labs(x = "Journal quartile", y = "Leadership")
+```
+
+```{r fig-residuals-by-leadership-fixed}
+#| fig-width: 7
+#| fig-height: 4
+
+model_data |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  mutate(residuals = residuals(m3, type = "pearson")) |>
+  ggplot(aes(x = leadership, y = residuals, fill = leadership)) +
+  geom_violin(alpha = 0.6, trim = FALSE) +
+  geom_boxplot(width = 0.2, alpha = 0.8, outlier.alpha = 0.3) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "#E85D75") +
+  scale_fill_manual(values = c("VN-led" = "#4A90E2", "JP-led" = "#E85D75")) +
+  labs(x = NULL, y = "Pearson residuals") +
+  theme(legend.position = "none")
+```
+
+```{r fig-citations-scatter-no-log-warning}
+#| fig-width: 7
+#| fig-height: 4
+
+dat |>
+  filter(!is.na(prop_vn_authors), cited > 0) |>
+  ggplot(aes(x = prop_vn_authors, y = cited)) +
+  geom_jitter(alpha = 0.1, color = "#4A90E2", size = 0.5) +
+  geom_smooth(method = "loess", color = "#E85D75", linewidth = 1.5, se = TRUE) +
+  scale_x_continuous(labels = percent_format(accuracy = 1)) +
+  scale_y_log10(labels = comma) +
+  labs(x = "Vietnamese author proportion", y = "Citations (log scale)")
+```
