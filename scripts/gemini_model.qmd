@@ -653,3 +653,4 @@ dat |>
   ) |>
   kable(caption = "Impact Parity in Open Access vs. Paywalled Articles") 
 ```
+
