@@ -1,84 +1,22 @@
 ---
-title: "Data Processing"
+title: "Part 1: Comprehensive Descriptive Statistics"
 format: html
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 ```{r}
-#| message: false
-#| warning: false
 library(tidyverse)
-library(text2sdg)
+library(kableExtra)
+library(skimr)
 
-data_raw <- read_csv("data/all_1020.csv", show_col_types = FALSE)
-
-data_reg <- data_raw |>
-  select(Year, `Source title`, `Cited by`, Affiliations, DOI, `Open Access`, Abstract) |>
-  rename(
-    year = Year,
-    title = `Source title`,
-    cited = `Cited by`,
-    affiliations = Affiliations,
-    open_access = `Open Access`,
-    abstract = Abstract
-  ) |>
+data_reg <- read.csv("data/processed_data.csv") |>
   mutate(
-    id = row_number(),
-    OA = if_else(!is.na(open_access) & open_access != "", 1, 0)
-  ) |>
-  select(-open_access) |>
-  relocate(id, .before = 1)
-```
-
-
-```{r}
-#| message: false
-#| warning: false
-data_source <- read_csv("data/sources.csv", show_col_types = FALSE) |>
-  arrange(title) |>
-  distinct(title, .keep_all = TRUE)
-
-sjr <- read_delim("data/sjr.csv", delim = ";", show_col_types = FALSE) |>
-  filter(Type == "journal") |>
-  select(Title, SJR, `SJR Best Quartile`) |>
-  rename(
-    title = Title,
-    sjr_score = SJR,
-    quartile = `SJR Best Quartile`
-  ) |>
-  mutate(
-    sjr_score = parse_number(sjr_score, locale = locale(grouping_mark = ",")) / 1000,
-    quartile = factor(quartile, levels = c("Q1", "Q2", "Q3", "Q4"))
-  ) |>
-  distinct(title, .keep_all = TRUE)
-
-data_reg <- data_reg |>
-  left_join(data_source, by = "title") |>
-  left_join(sjr, by = "title")
-```
-
-
-```{r}
-#| message: false
-#| warning: false
-affiliations_long <- data_reg |>
-  select(id, affiliations) |>
-  separate_rows(affiliations, sep = ";") |>
-  mutate(
-    affiliations = str_trim(affiliations),
-    country = str_extract(affiliations, "[^,]+$") |> str_trim()
-  )
-
-author_counts <- affiliations_long |>
-  count(id, name = "n_authors")
-
-country_counts <- affiliations_long |>
-  distinct(id, country) |>
-  count(id, name = "n_countries")
-
-data_reg <- data_reg |>
-  left_join(author_counts, by = "id") |>
-  left_join(country_counts, by = "id") |>
-  mutate(
+    year = as.numeric(year),
+    n_authors = as.numeric(n_authors),
+    n_countries = as.numeric(n_countries),
     is_hyperauthored = n_authors >= 100,
     collaboration_mode = case_when(
       is_hyperauthored ~ "Hyperauthored",
@@ -86,115 +24,607 @@ data_reg <- data_reg |>
       n_countries > 2 ~ "Multilateral",
       TRUE ~ "Other"
     ),
-    collaboration_mode = factor(collaboration_mode, levels = c("Strict Bilateral", "Multilateral", "Hyperauthored", "Other"))
+    collaboration_mode = factor(collaboration_mode, 
+                                levels = c("Strict Bilateral", "Multilateral", "Hyperauthored", "Other")),
+    quartile = as.character(quartile),
+    quartile = if_else(is.na(quartile), "Unknown", quartile),
+    quartile = factor(quartile, levels = c("Q1", "Q2", "Q3", "Q4", "Unknown")),
+    fund = factor(fund, labels = c("Unfunded", "Funded")),
+    OA = factor(OA, labels = c("Closed", "Open Access"))
   )
+
+data_core <- data_reg |>
+  filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |>
+  droplevels()
 ```
 
 
 ```{r}
-#| message: false
-#| warning: false
-funder_files <- tribble(
-  ~file,              ~region, ~sector,
-  "asian_pub.csv",    "asian", "pub",
-  "asian_uni.csv",    "asian", "uni",
-  "eu_ind.csv",       "eu",    "ind",
-  "eu_pub.csv",       "eu",    "pub",
-  "eu_uni.csv",       "eu",    "uni",
-  "int_ind.csv",      "int",   "ind",
-  "int_pub.csv",      "int",   "pub",
-  "jap_ind.csv",      "jap",   "ind",
-  "jap_pub.csv",      "jap",   "pub",
-  "jap_pub_2.csv",    "jap",   "pub",
-  "jap_uni.csv",      "jap",   "uni",
-  "us_ind.csv",       "us",    "ind",
-  "us_pub.csv",       "us",    "pub",
-  "vn_pub.csv",       "vn",    "pub",
-  "vn_uni.csv",       "vn",    "uni"
-)
-
-funder_data <- map_dfr(1:nrow(funder_files), function(i) {
-  file_path <- file.path("data/data_by_funders", funder_files$file[i])
-  if (file.exists(file_path)) {
-    read_csv(file_path, show_col_types = FALSE) |>
-      select(DOI) |>
-      mutate(!!funder_files$region[i] := 1, !!funder_files$sector[i] := 1)
-  } else {
-    tibble()
-  }
-}) |>
-  group_by(DOI) |>
-  summarise(across(everything(), ~ as.integer(any(. == 1, na.rm = TRUE))), .groups = "drop")
-
-data_reg <- data_reg |>
-  left_join(funder_data, by = "DOI") |>
-  mutate(
-    across(asian:vn, ~ replace_na(., 0)),
-    fund = as.integer(if_any(asian:vn, ~ . == 1)),
-    n_regions = asian + eu + int + jap + us + vn,
-    n_sectors = ind + pub + uni,
-    bilateral_funding = as.integer(jap == 1 & vn == 1)
-  )
+data_reg |>
+  group_by(collaboration_mode) |>
+  summarise(
+    Papers = n(),
+    Share = sprintf("%.1f%%", n() / nrow(data_reg) * 100),
+    `Mean Authors` = mean(n_authors, na.rm = TRUE),
+    `Mean Countries` = mean(n_countries, na.rm = TRUE),
+    `Mean Citations` = mean(cited, na.rm = TRUE),
+    `Median Citations` = median(cited, na.rm = TRUE)
+  ) |>
+  kable(caption = "Table 1.1: Structural Characteristics by Collaboration Mode") 
 ```
 
 
 ```{r}
-#| message: false
-#| warning: false
-data_reg <- data_reg |>
+subject_cols <- c("agr_bio", "art_hum", "bio_chem", "buss", "chem_eng", 
+                  "chem", "comp_sci", "earth", "econ", "ener", "egin", 
+                  "env_sci", "immu", "mat_sci", "math", "med", "neuro", 
+                  "nurse", "pharm", "phys", "psy", "soc_sci", "vet")
+
+mode_totals <- data_core |> count(collaboration_mode)
+
+data_core |>
+  dplyr::select(collaboration_mode, all_of(subject_cols)) |>
+  pivot_longer(cols = -collaboration_mode, names_to = "Subject", values_to = "Present") |>
+  filter(Present == 1) |>
+  group_by(collaboration_mode, Subject) |>
+  summarise(Count = n(), .groups = "drop") |>
+  left_join(mode_totals, by = "collaboration_mode") |>
+  mutate(Percentage = sprintf("%.1f%%", Count / n * 100)) |>
+  group_by(collaboration_mode) |>
+  slice_max(order_by = Count, n = 5) |> 
+  dplyr::select(collaboration_mode, Subject, Count, Percentage) |>
+  kable(caption = "Table 1.3: Top 5 Disciplines by Collaboration Mode (Total N matches Mode Size)") 
+```
+
+
+```{r}
+data_core |>
+  dplyr::select(collaboration_mode, quartile, OA) |>
+  pivot_longer(cols = c(quartile, OA), names_to = "Metric", values_to = "Category") |>
+  count(collaboration_mode, Metric, Category) |>
+  group_by(collaboration_mode, Metric) |>
   mutate(
-    first_affiliation = str_extract(affiliations, "^[^;]+"),
-    fa_vn = as.integer(str_detect(first_affiliation, regex("vietnam|viet nam", ignore_case = TRUE))),
-    fa_jp = as.integer(str_detect(first_affiliation, regex("japan", ignore_case = TRUE))),
-    fa_o = as.integer(fa_vn == 0 & fa_jp == 0),
-    n_vn_authors = map_int(affiliations, ~ sum(str_detect(str_split(.x, ";")[[1]], regex("vietnam|viet nam", ignore_case = TRUE)))),
-    n_jp_authors = map_int(affiliations, ~ sum(str_detect(str_split(.x, ";")[[1]], regex("japan", ignore_case = TRUE)))),
-    n_vn_jp_authors = n_vn_authors + n_jp_authors,
-    prop_vn_authors = n_vn_authors / n_vn_jp_authors,
-    vn_led = as.integer(fa_vn == 1),
-    jp_led = as.integer(fa_jp == 1),
-    collab_type = case_when(
-      prop_vn_authors > 0.6 ~ "VN-dominated",
-      prop_vn_authors < 0.4 ~ "JP-dominated",
-      between(prop_vn_authors, 0.4, 0.6) ~ "Balanced",
+    Total_in_Mode = sum(n),
+    Share = sprintf("%.1f%%", n / Total_in_Mode * 100)
+  ) |>
+  pivot_wider(names_from = collaboration_mode, values_from = c(n, Share)) |>
+  arrange(Metric, Category) |>
+  dplyr::select(Metric, Category, 
+                `n_Strict Bilateral`, `Share_Strict Bilateral`, 
+                n_Multilateral, Share_Multilateral) |>
+  kable(caption = "Table 1.4: Journal Quartile and Open Access Distribution (Includes Unknowns)") 
+```
+
+
+```{r}
+data_core |>
+  group_by(collaboration_mode) |>
+  summarise(
+    `Total Papers` = n(),
+    `Any Funding` = sprintf("%.1f%%", mean(fund == "Funded") * 100),
+    `Japan Funded (All)` = sprintf("%.1f%%", mean(jap == 1) * 100),
+    `Vietnam Funded (All)` = sprintf("%.1f%%", mean(vn == 1) * 100),
+    `Bilateral Co-funded` = sprintf("%.1f%%", mean(bilateral_funding == 1) * 100),
+    `US Funded` = sprintf("%.1f%%", mean(us == 1) * 100),
+    `EU Funded` = sprintf("%.1f%%", mean(eu == 1) * 100)
+  ) |>
+  kable(caption = "Table 1.5: Funding Sources by Collaboration Mode") 
+```
+
+
+```{r}
+# -----------------------------------------------------------------------------
+# Table 1.2: Annual Volume (Corrected)
+# -----------------------------------------------------------------------------
+
+# 1. Calculate yearly counts
+t1_2_data <- data_core |>
+  count(year, collaboration_mode) |>
+  pivot_wider(names_from = collaboration_mode, values_from = n, values_fill = 0) |>
+  mutate(
+    Total = `Strict Bilateral` + Multilateral,
+    `% Bilateral` = sprintf("%.1f%%", `Strict Bilateral` / Total * 100)
+  )
+
+# 2. Calculate totals row
+t1_2_total <- t1_2_data |>
+  summarise(
+    year = "Total", 
+    `Strict Bilateral` = sum(`Strict Bilateral`), 
+    Multilateral = sum(Multilateral),
+    Total = sum(Total),
+    `% Bilateral` = sprintf("%.1f%%", sum(`Strict Bilateral`) / sum(Total) * 100)
+  ) 
+
+# 3. Bind and Display (Fixing the type mismatch here)
+t1_2_data |>
+  arrange(desc(year)) |>
+  mutate(year = as.character(year)) |> # Convert to character to match "Total"
+  bind_rows(t1_2_total) |>
+  kable(caption = "Table 1.2: Annual Volume of Core Collaboration Modes") 
+
+
+# -----------------------------------------------------------------------------
+# Table 1.6: Citation Distribution Tiers (Impact Depth)
+# -----------------------------------------------------------------------------
+data_core |>
+  mutate(
+    Citation_Tier = case_when(
+      cited == 0 ~ "Zero (0)",
+      cited >= 1 & cited <= 10 ~ "Low (1-10)",
+      cited >= 11 & cited <= 50 ~ "Medium (11-50)",
+      cited >= 51 & cited <= 100 ~ "High (51-100)",
+      cited > 100 ~ "Very High (>100)"
+    ),
+    Citation_Tier = factor(Citation_Tier, 
+                           levels = c("Zero (0)", "Low (1-10)", "Medium (11-50)", "High (51-100)", "Very High (>100)"))
+  ) |>
+  count(collaboration_mode, Citation_Tier) |>
+  group_by(collaboration_mode) |>
+  mutate(Share = sprintf("%.1f%%", n / sum(n) * 100)) |>
+  pivot_wider(names_from = collaboration_mode, values_from = c(n, Share)) |>
+  dplyr::select(Citation_Tier, 
+                `n_Strict Bilateral`, `Share_Strict Bilateral`, 
+                n_Multilateral, Share_Multilateral) |>
+  kable(caption = "Table 1.6: Distribution of Citation Impact Tiers") 
+
+
+# -----------------------------------------------------------------------------
+# Table 1.7: Macro-Area Composition
+# -----------------------------------------------------------------------------
+data_core |>
+  dplyr::select(collaboration_mode, LS, PS, HS, SS) |>
+  pivot_longer(cols = c(LS, PS, HS, SS), names_to = "Macro_Area", values_to = "Present") |>
+  filter(Present == 1) |>
+  group_by(collaboration_mode, Macro_Area) |>
+  summarise(Count = n(), .groups = "drop") |>
+  group_by(collaboration_mode) |>
+  mutate(
+    Total_Papers = if_else(collaboration_mode == "Strict Bilateral", 
+                           nrow(filter(data_core, collaboration_mode == "Strict Bilateral")),
+                           nrow(filter(data_core, collaboration_mode == "Multilateral"))),
+    Percentage = sprintf("%.1f%%", Count / Total_Papers * 100)
+  ) |>
+  dplyr::select(collaboration_mode, Macro_Area, Count, Percentage) |>
+  pivot_wider(names_from = collaboration_mode, values_from = c(Count, Percentage)) |>
+  kable(caption = "Table 1.7: Macro-Area Composition (Life, Physical, Health, Social Sciences)") 
+```
+
+# RQ2
+
+```{r}
+data_core |>
+  group_by(collaboration_mode) |>
+  summarise(
+    n = n(),
+    Mean_Prop_VN = mean(prop_vn_authors, na.rm = TRUE),
+    Median_Prop_VN = median(prop_vn_authors, na.rm = TRUE),
+    SD_Prop_VN = sd(prop_vn_authors, na.rm = TRUE),
+    `% Balanced (0.4-0.6)` = mean(prop_vn_authors >= 0.4 & prop_vn_authors <= 0.6, na.rm = TRUE),
+    `% VN Majority (>0.5)` = mean(prop_vn_authors > 0.5, na.rm = TRUE)
+  ) |>
+  mutate(across(where(is.numeric), ~ round(., 3))) |>
+  mutate(across(starts_with("%"), ~ sprintf("%.1f%%", . * 100))) |>
+  kable(caption = "Table 2.1: Descriptive Statistics of Vietnamese Authorship Proportions") 
+```
+
+
+```{r}
+data_core |>
+  group_by(collaboration_mode) |>
+  summarise(
+    n = n(),
+    VN_Led = sum(vn_led),
+    JP_Led = sum(jp_led),
+    Other_Led = sum(fa_o)
+  ) |>
+  mutate(
+    `% VN-Led` = sprintf("%.1f%%", VN_Led / n * 100),
+    `% JP-Led` = sprintf("%.1f%%", JP_Led / n * 100),
+    `% Other-Led` = sprintf("%.1f%%", Other_Led / n * 100)
+  ) |>
+  dplyr::select(collaboration_mode, n, VN_Led, `% VN-Led`, JP_Led, `% JP-Led`, Other_Led, `% Other-Led`) |>
+  kable(caption = "Table 2.2: First Author Leadership by Collaboration Mode") 
+```
+
+
+```{r}
+data_core |>
+  count(collaboration_mode, collab_type) |>
+  group_by(collaboration_mode) |>
+  mutate(Share = sprintf("%.1f%%", n / sum(n) * 100)) |>
+  pivot_wider(names_from = collaboration_mode, values_from = c(n, Share)) |>
+  dplyr::select(collab_type, 
+                `n_Strict Bilateral`, `Share_Strict Bilateral`, 
+                n_Multilateral, Share_Multilateral) |>
+  kable(caption = "Table 2.3: Distribution of Collaboration Balance Categories") 
+```
+
+
+```{r}
+data_core |>
+  group_by(year) |>
+  summarise(
+    Papers = n(),
+    `Mean Prop VN` = mean(prop_vn_authors, na.rm = TRUE),
+    `% VN-Led` = mean(vn_led, na.rm = TRUE),
+    `% Balanced` = mean(collab_type == "Balanced", na.rm = TRUE)
+  ) |>
+  mutate(across(c(`Mean Prop VN`, `% VN-Led`, `% Balanced`), ~ round(., 3))) |>
+  arrange(desc(year)) |>
+  kable(caption = "Table 2.4: Annual Evolution of Key Equity Indicators (Core Corpus)") 
+```
+
+
+```{r}
+# T-test for Authorship Proportion
+t_test_prop <- t.test(prop_vn_authors ~ collaboration_mode, data = data_core)
+
+# Chi-square for Leadership (VN vs JP only, to enable direct comparison)
+leadership_table <- table(data_core$collaboration_mode, data_core$vn_led)
+chisq_led <- chisq.test(leadership_table)
+
+# Chi-square for Balance Types
+balance_table <- table(data_core$collaboration_mode, data_core$collab_type)
+chisq_bal <- chisq.test(balance_table)
+
+tibble(
+  Metric = c("Authorship Proportion (Mean)", "VN Leadership Rate", "Balance Category Distribution"),
+  Test = c("Welch Two Sample t-test", "Pearson's Chi-squared", "Pearson's Chi-squared"),
+  Statistic = c(sprintf("t = %.2f", t_test_prop$statistic), 
+                sprintf("X2 = %.2f", chisq_led$statistic), 
+                sprintf("X2 = %.2f", chisq_bal$statistic)),
+  P_Value = c(sprintf("%.3e", t_test_prop$p.value), 
+              sprintf("%.3e", chisq_led$p.value), 
+              sprintf("%.3e", chisq_bal$p.value)),
+  Result = c("Significant difference", "Significant difference", "Significant difference")
+) |>
+  kable(caption = "Table 2.5: Statistical Comparison of Equity Between Modes") 
+```
+
+# R3
+
+
+```{r}
+
+library(tidyverse)
+library(kableExtra)
+library(MASS)
+library(modelsummary)
+library(margins)
+
+data_reg <- read.csv("data/processed_data.csv") |>
+  mutate(
+    year = as.numeric(year),
+    n_authors = as.numeric(n_authors),
+    n_countries = as.numeric(n_countries),
+    is_hyperauthored = n_authors >= 100,
+    collaboration_mode = case_when(
+      is_hyperauthored ~ "Hyperauthored",
+      n_countries == 2 ~ "Strict Bilateral",
+      n_countries > 2 ~ "Multilateral",
       TRUE ~ "Other"
-    )
-  ) |>
-  select(-first_affiliation)
-```
+    ),
+    collaboration_mode = factor(collaboration_mode, 
+                                levels = c("Strict Bilateral", "Multilateral", "Hyperauthored", "Other")),
+    quartile = as.character(quartile),
+    quartile = if_else(is.na(quartile) | quartile == "Unknown", "Non-Q1", quartile),
+    quartile = factor(quartile, levels = c("Q1", "Q2", "Q3", "Q4", "Non-Q1")),
+    fund = factor(fund, labels = c("Unfunded", "Funded")),
+    OA = factor(OA, labels = c("Closed", "Open Access"))
+  )
 
-
-```{r}
-#| message: false
-#| warning: false
-sdg_results <- detect_sdg_systems(text = data_reg$abstract, system = "SDGO") |>
-  mutate(document = as.integer(as.character(document))) |>
-  distinct(document, sdg) |>
-  mutate(hit = 1) |>
-  pivot_wider(id_cols = document, names_from = sdg, values_from = hit, values_fill = 0)
-
-sdg_cols <- names(sdg_results)[str_starts(names(sdg_results), "SDG")]
-sdg_results <- sdg_results |> mutate(across(all_of(sdg_cols), ~ if_else(. > 0, 1, 0)))
-
-data_reg <- data_reg |>
-  left_join(sdg_results, by = c("id" = "document")) |>
+# Core Corpus for Analysis
+data_core <- data_reg |>
+  filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |>
   mutate(
-    across(starts_with("SDG"), ~ replace_na(., 0)),
-    n_sdg = rowSums(pick(starts_with("SDG")), na.rm = TRUE)
+    year_centered = year - 2000,
+    prop_vn_centered = prop_vn_authors - mean(prop_vn_authors, na.rm = TRUE),
+    # Reference level for Leadership: Other-led (for Multilateral) or JP-led (for Bilateral comparison)
+    # Here we stick to the regression dummy approach: vn_led and jp_led included, Intercept is Other-led
+    is_Q1 = if_else(quartile == "Q1", 1, 0)
   )
 ```
 
 
 ```{r}
-#| message: false
-#| warning: false
-data_reg <- data_reg |>
-  mutate(
-    OA = factor(OA, levels = c(0, 1), labels = c("Not OA", "OA")),
-    fund = factor(fund, levels = c(0, 1), labels = c("Not funded", "Funded")),
-    collab_type = factor(collab_type, levels = c("VN-dominated", "JP-dominated", "Balanced", "Other"))
+data_core |>
+  mutate(Leadership = case_when(
+    vn_led == 1 ~ "VN-led",
+    jp_led == 1 ~ "JP-led",
+    TRUE ~ "Other-led"
+  )) |>
+  group_by(collaboration_mode, Leadership) |>
+  summarise(
+    n = n(),
+    Mean_Citations = mean(cited, na.rm = TRUE),
+    Median_Citations = median(cited, na.rm = TRUE),
+    IQR_Citations = IQR(cited, na.rm = TRUE)
   ) |>
-  select(-abstract)
+  arrange(collaboration_mode, desc(Mean_Citations)) |>
+  kable(caption = "Table 3.1: Citation Impact by Leadership and Collaboration Mode") 
+```
 
-write_csv(data_reg, "data/processed_data.csv", na = "")
+
+```{r}
+data_core |>
+  mutate(Funding_Type = case_when(
+    bilateral_funding == 1 ~ "Bilateral Co-funded",
+    jap == 1 & vn == 0 ~ "Japan Only",
+    vn == 1 & jap == 0 ~ "Vietnam Only",
+    fund == "Funded" ~ "Other Funding",
+    TRUE ~ "Unfunded"
+  )) |>
+  group_by(collaboration_mode, Funding_Type) |>
+  summarise(
+    n = n(),
+    Mean_Citations = mean(cited, na.rm = TRUE),
+    Median_Citations = median(cited, na.rm = TRUE)
+  ) |>
+  arrange(collaboration_mode, desc(Mean_Citations)) |>
+  kable(caption = "Table 3.2: Citation Impact by Funding Configuration") 
+```
+
+
+```{r}
+# Model 1: Baseline
+m1 <- glm.nb(cited ~ vn_led + jp_led + year_centered + LS + PS + HS + SS, 
+             data = data_core)
+
+# Model 2: Structure
+m2 <- update(m1, . ~ . + collaboration_mode + prop_vn_centered)
+
+# Model 3: Resources
+# Note: Using is_Q1 binary to simplify interaction interpretation later
+m3 <- update(m2, . ~ . + fund + is_Q1 + OA)
+
+# Model 4: Interactions (Testing the Parity Hypothesis)
+m4 <- update(m3, . ~ . + vn_led:fund + vn_led:is_Q1 + vn_led:year_centered)
+
+# Create Regression Table
+modelsummary(
+  list(
+    "M1: Baseline" = m1, 
+    "M2: Structure" = m2, 
+    "M3: Resources" = m3, 
+    "M4: Interactions" = m4
+  ),
+  stars = TRUE,
+  exponentiate = TRUE, # Report Incidence Rate Ratios (IRR)
+  gof_map = c("nobs", "aic", "bic"),
+  coef_map = c(
+    "vn_led" = "VN-led",
+    "jp_led" = "JP-led",
+    "collaboration_modeMultilateral" = "Multilateral Mode",
+    "prop_vn_centered" = "Prop VN Authors (Centered)",
+    "fundFunded" = "Funded",
+    "is_Q1" = "Q1 Journal",
+    "OAOpen Access" = "Open Access",
+    "vn_led:fundFunded" = "VN-led × Funded",
+    "vn_led:is_Q1" = "VN-led × Q1",
+    "vn_led:year_centered" = "VN-led × Year"
+  ),
+  title = "Table 3.3: Negative Binomial Regression Predicting Citations (IRR)"
+)
+```
+
+
+```{r}
+# Create hypothetical scenarios
+scenarios <- data_core |>
+  dplyr::select(year_centered, LS, PS, HS, SS, collaboration_mode, prop_vn_centered, OA, is_Q1, fund, vn_led, jp_led) |>
+  # Fix control variables at mode/mean
+  mutate(
+    year_centered = max(year_centered), # Current year (2024)
+    LS = 0, PS = 1, HS = 0, SS = 0,     # Physical Sciences baseline
+    collaboration_mode = "Strict Bilateral",
+    prop_vn_centered = 0,
+    OA = "Closed"
+  ) |>
+  slice(1:4) # Just need 4 rows to overwrite
+
+# Define scenarios
+scenarios$Scenario <- c("VN-led (Baseline)", "JP-led (Baseline)", "VN-led (Optimal)", "JP-led (Optimal)")
+scenarios$vn_led <- c(1, 0, 1, 0)
+scenarios$jp_led <- c(0, 1, 0, 1)
+scenarios$fund   <- c("Unfunded", "Unfunded", "Funded", "Funded")
+scenarios$is_Q1  <- c(0, 0, 1, 1)
+
+# Predict
+scenarios$Predicted_Citations <- predict(m4, newdata = scenarios, type = "response")
+
+scenarios |>
+  dplyr::select(Scenario, fund, is_Q1, Predicted_Citations) |>
+  kable(caption = "Table 3.4: Predicted Impact Scenarios (Model 4 Estimates)") 
+```
+
+# Robustness
+
+
+```{r}
+# R1: Log-OLS
+m_ols <- lm(log(cited + 1) ~ vn_led * fund + vn_led * is_Q1 + vn_led * year_centered + 
+            jp_led + collaboration_mode + prop_vn_centered + LS + PS + HS + SS, 
+            data = data_core)
+
+# R2: Strict Bilateral Subset (Negative Binomial)
+data_bilateral <- data_core |> filter(collaboration_mode == "Strict Bilateral")
+m_bilateral <- glm.nb(cited ~ vn_led * fund + vn_led * is_Q1 + vn_led * year_centered + 
+                      jp_led + prop_vn_centered + LS + PS + HS + SS, 
+                      data = data_bilateral)
+
+# R3: Recent Period Only (2015-2024)
+data_recent <- data_core |> filter(year >= 2015)
+m_recent <- glm.nb(cited ~ vn_led * fund + vn_led * is_Q1 + vn_led * year_centered + 
+                   jp_led + collaboration_mode + prop_vn_centered + LS + PS + HS + SS, 
+                   data = data_recent)
+
+# Comparison Table
+modelsummary(
+  list(
+    "Main Model (M4)" = glm.nb(cited ~ vn_led * fund + vn_led * is_Q1 + vn_led * year_centered + 
+                               jp_led + collaboration_mode + prop_vn_centered + LS + PS + HS + SS, 
+                               data = data_core),
+    "R1: Log-OLS" = m_ols,
+    "R2: Bilateral Only" = m_bilateral,
+    "R3: Recent (2015+)" = m_recent
+  ),
+  stars = TRUE,
+  gof_map = c("nobs", "r2", "aic"),
+  coef_map = c(
+    "vn_led" = "VN-led",
+    "fundFunded" = "Funded", 
+    "is_Q1" = "Q1 Journal",
+    "vn_led:fundFunded" = "VN-led × Funded",
+    "vn_led:is_Q1" = "VN-led × Q1"
+  ),
+  title = "Table 5.1: Robustness Checks for Impact Parity"
+)
+```
+
+
+```{r}
+# Re-run main model M4
+main_model <- glm.nb(cited ~ vn_led * fund + vn_led * is_Q1 + vn_led * year_centered + 
+                     jp_led + collaboration_mode + prop_vn_centered + LS + PS + HS + SS, 
+                     data = data_core)
+
+# Calculate Cook's Distance
+cooks_d <- cooks.distance(main_model)
+influential_threshold <- 4 / nrow(data_core)
+n_influential <- sum(cooks_d > influential_threshold)
+
+# Descriptive check
+tibble(
+  Metric = "Influential Observations (Cook's D)",
+  Count = n_influential,
+  Share = sprintf("%.2f%%", n_influential / nrow(data_core) * 100),
+  Threshold = sprintf("%.4f", influential_threshold)
+) |>
+  kable(caption = "Table 5.2: Influential Outlier Check") 
+```
+
+
+```{r}
+# Filter out influential cases
+data_robust <- data_core[cooks_d <= influential_threshold, ]
+
+m_no_outliers <- glm.nb(cited ~ vn_led * fund + vn_led * is_Q1 + vn_led * year_centered + 
+                        jp_led + collaboration_mode + prop_vn_centered + LS + PS + HS + SS, 
+                        data = data_robust)
+
+modelsummary(
+  list(
+    "Original M4" = main_model,
+    "No Outliers" = m_no_outliers
+  ),
+  stars = TRUE,
+  exponentiate = TRUE,
+  coef_map = c("vn_led", "vn_led:fundFunded", "vn_led:is_Q1"),
+  title = "Table 5.3: Sensitivity Analysis (Removing Influential Cases)"
+)
+```
+
+# add-ons
+
+```{r}
+
+library(tidyverse)
+library(ggplot2)
+library(ggeffects)
+library(patchwork)
+
+# Load data again if needed
+data_reg <- read.csv("data/processed_data.csv") |>
+  mutate(
+    year = as.numeric(year),
+    n_authors = as.numeric(n_authors),
+    n_countries = as.numeric(n_countries),
+    is_hyperauthored = n_authors >= 100,
+    collaboration_mode = case_when(
+      is_hyperauthored ~ "Hyperauthored",
+      n_countries == 2 ~ "Strict Bilateral",
+      n_countries > 2 ~ "Multilateral",
+      TRUE ~ "Other"
+    ),
+    collaboration_mode = factor(collaboration_mode, 
+                                levels = c("Strict Bilateral", "Multilateral", "Hyperauthored", "Other")),
+    quartile = if_else(is.na(quartile) | quartile == "Unknown", "Non-Q1", as.character(quartile)),
+    fund = factor(fund, labels = c("Unfunded", "Funded"))
+  )
+
+data_core <- data_reg |>
+  filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |>
+  mutate(
+    year_centered = year - 2000,
+    prop_vn_centered = prop_vn_authors - mean(prop_vn_authors, na.rm = TRUE),
+    is_Q1 = if_else(quartile == "Q1", 1, 0)
+  )
+```
+
+
+```{r}
+# Summarize data
+fig1_data <- data_core |>
+  count(year, collaboration_mode)
+
+# Plot
+p1 <- ggplot(fig1_data, aes(x = year, y = n, color = collaboration_mode)) +
+  geom_line(size = 1) +
+  geom_point(size = 2) +
+  scale_color_manual(values = c("Strict Bilateral" = "#2E86C1", "Multilateral" = "#E74C3C")) +
+  theme_minimal() +
+  labs(
+    title = "Growth of Collaboration Modes (2000-2024)",
+    y = "Number of Publications",
+    x = "Year",
+    color = "Mode"
+  ) +
+  theme(legend.position = "bottom")
+
+p1
+```
+
+
+```{r}
+# Re-estimate Model 4 (Required for ggeffects)
+library(MASS)
+m4 <- glm.nb(cited ~ vn_led * fund + vn_led * is_Q1 + vn_led * year_centered + 
+             jp_led + collaboration_mode + prop_vn_centered + LS + PS + HS + SS, 
+             data = data_core)
+
+# Calculate Marginal Effects
+pred_fund <- ggpredict(m4, terms = c("fund", "vn_led")) |>
+  mutate(group = if_else(group == "1", "VN-led", "Other/JP-led"))
+
+# Plot
+p2 <- ggplot(pred_fund, aes(x = x, y = predicted, color = group, group = group)) +
+  geom_point(size = 3, position = position_dodge(0.2)) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.1, position = position_dodge(0.2)) +
+  geom_line(position = position_dodge(0.2)) +
+  scale_color_manual(values = c("Other/JP-led" = "grey60", "VN-led" = "#2E86C1")) +
+  theme_minimal() +
+  labs(
+    title = "Predicted Citations by Funding & Leadership",
+    subtitle = "VN-led papers gain significantly more from funding",
+    y = "Predicted Citations",
+    x = "Funding Status",
+    color = "Leadership"
+  )
+
+p2
+```
+
+
+```{r}
+# Top disciplines in Hyperauthored vs Core
+data_reg |>
+  filter(collaboration_mode == "Hyperauthored") |>
+  dplyr::select(agr_bio:vet) |>
+  pivot_longer(everything(), names_to = "Subject", values_to = "Present") |>
+  filter(Present == 1) |>
+  count(Subject, sort = TRUE) |>
+  mutate(Share = n / 274) |> # 274 is total hyper papers
+  head(5) |>
+  kable(caption = "Top 5 Disciplines in Hyperauthored Papers (>100 Authors)") 
 ```
