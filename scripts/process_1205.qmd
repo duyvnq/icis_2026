@@ -1,0 +1,200 @@
+---
+title: "Data Processing"
+format: html
+---
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(text2sdg)
+
+data_raw <- read_csv("data/all_1020.csv", show_col_types = FALSE)
+
+data_reg <- data_raw |>
+  select(Year, `Source title`, `Cited by`, Affiliations, DOI, `Open Access`, Abstract) |>
+  rename(
+    year = Year,
+    title = `Source title`,
+    cited = `Cited by`,
+    affiliations = Affiliations,
+    open_access = `Open Access`,
+    abstract = Abstract
+  ) |>
+  mutate(
+    id = row_number(),
+    OA = if_else(!is.na(open_access) & open_access != "", 1, 0)
+  ) |>
+  select(-open_access) |>
+  relocate(id, .before = 1)
+```
+
+
+```{r}
+#| message: false
+#| warning: false
+data_source <- read_csv("data/sources.csv", show_col_types = FALSE) |>
+  arrange(title) |>
+  distinct(title, .keep_all = TRUE)
+
+sjr <- read_delim("data/sjr.csv", delim = ";", show_col_types = FALSE) |>
+  filter(Type == "journal") |>
+  select(Title, SJR, `SJR Best Quartile`) |>
+  rename(
+    title = Title,
+    sjr_score = SJR,
+    quartile = `SJR Best Quartile`
+  ) |>
+  mutate(
+    sjr_score = parse_number(sjr_score, locale = locale(grouping_mark = ",")) / 1000,
+    quartile = factor(quartile, levels = c("Q1", "Q2", "Q3", "Q4"))
+  ) |>
+  distinct(title, .keep_all = TRUE)
+
+data_reg <- data_reg |>
+  left_join(data_source, by = "title") |>
+  left_join(sjr, by = "title")
+```
+
+
+```{r}
+#| message: false
+#| warning: false
+affiliations_long <- data_reg |>
+  select(id, affiliations) |>
+  separate_rows(affiliations, sep = ";") |>
+  mutate(
+    affiliations = str_trim(affiliations),
+    country = str_extract(affiliations, "[^,]+$") |> str_trim()
+  )
+
+author_counts <- affiliations_long |>
+  count(id, name = "n_authors")
+
+country_counts <- affiliations_long |>
+  distinct(id, country) |>
+  count(id, name = "n_countries")
+
+data_reg <- data_reg |>
+  left_join(author_counts, by = "id") |>
+  left_join(country_counts, by = "id") |>
+  mutate(
+    is_hyperauthored = n_authors >= 100,
+    collaboration_mode = case_when(
+      is_hyperauthored ~ "Hyperauthored",
+      n_countries == 2 ~ "Strict Bilateral",
+      n_countries > 2 ~ "Multilateral",
+      TRUE ~ "Other"
+    ),
+    collaboration_mode = factor(collaboration_mode, levels = c("Strict Bilateral", "Multilateral", "Hyperauthored", "Other"))
+  )
+```
+
+
+```{r}
+#| message: false
+#| warning: false
+funder_files <- tribble(
+  ~file,              ~region, ~sector,
+  "asian_pub.csv",    "asian", "pub",
+  "asian_uni.csv",    "asian", "uni",
+  "eu_ind.csv",       "eu",    "ind",
+  "eu_pub.csv",       "eu",    "pub",
+  "eu_uni.csv",       "eu",    "uni",
+  "int_ind.csv",      "int",   "ind",
+  "int_pub.csv",      "int",   "pub",
+  "jap_ind.csv",      "jap",   "ind",
+  "jap_pub.csv",      "jap",   "pub",
+  "jap_pub_2.csv",    "jap",   "pub",
+  "jap_uni.csv",      "jap",   "uni",
+  "us_ind.csv",       "us",    "ind",
+  "us_pub.csv",       "us",    "pub",
+  "vn_pub.csv",       "vn",    "pub",
+  "vn_uni.csv",       "vn",    "uni"
+)
+
+funder_data <- map_dfr(1:nrow(funder_files), function(i) {
+  file_path <- file.path("data/data_by_funders", funder_files$file[i])
+  if (file.exists(file_path)) {
+    read_csv(file_path, show_col_types = FALSE) |>
+      select(DOI) |>
+      mutate(!!funder_files$region[i] := 1, !!funder_files$sector[i] := 1)
+  } else {
+    tibble()
+  }
+}) |>
+  group_by(DOI) |>
+  summarise(across(everything(), ~ as.integer(any(. == 1, na.rm = TRUE))), .groups = "drop")
+
+data_reg <- data_reg |>
+  left_join(funder_data, by = "DOI") |>
+  mutate(
+    across(asian:vn, ~ replace_na(., 0)),
+    fund = as.integer(if_any(asian:vn, ~ . == 1)),
+    n_regions = asian + eu + int + jap + us + vn,
+    n_sectors = ind + pub + uni,
+    bilateral_funding = as.integer(jap == 1 & vn == 1)
+  )
+```
+
+
+```{r}
+#| message: false
+#| warning: false
+data_reg <- data_reg |>
+  mutate(
+    first_affiliation = str_extract(affiliations, "^[^;]+"),
+    fa_vn = as.integer(str_detect(first_affiliation, regex("vietnam|viet nam", ignore_case = TRUE))),
+    fa_jp = as.integer(str_detect(first_affiliation, regex("japan", ignore_case = TRUE))),
+    fa_o = as.integer(fa_vn == 0 & fa_jp == 0),
+    n_vn_authors = map_int(affiliations, ~ sum(str_detect(str_split(.x, ";")[[1]], regex("vietnam|viet nam", ignore_case = TRUE)))),
+    n_jp_authors = map_int(affiliations, ~ sum(str_detect(str_split(.x, ";")[[1]], regex("japan", ignore_case = TRUE)))),
+    n_vn_jp_authors = n_vn_authors + n_jp_authors,
+    prop_vn_authors = n_vn_authors / n_vn_jp_authors,
+    vn_led = as.integer(fa_vn == 1),
+    jp_led = as.integer(fa_jp == 1),
+    collab_type = case_when(
+      prop_vn_authors > 0.6 ~ "VN-dominated",
+      prop_vn_authors < 0.4 ~ "JP-dominated",
+      between(prop_vn_authors, 0.4, 0.6) ~ "Balanced",
+      TRUE ~ "Other"
+    )
+  ) |>
+  select(-first_affiliation)
+```
+
+
+```{r}
+#| message: false
+#| warning: false
+sdg_results <- detect_sdg_systems(text = data_reg$abstract, system = "SDGO") |>
+  mutate(document = as.integer(as.character(document))) |>
+  distinct(document, sdg) |>
+  mutate(hit = 1) |>
+  pivot_wider(id_cols = document, names_from = sdg, values_from = hit, values_fill = 0)
+
+sdg_cols <- names(sdg_results)[str_starts(names(sdg_results), "SDG")]
+sdg_results <- sdg_results |> mutate(across(all_of(sdg_cols), ~ if_else(. > 0, 1, 0)))
+
+data_reg <- data_reg |>
+  left_join(sdg_results, by = c("id" = "document")) |>
+  mutate(
+    across(starts_with("SDG"), ~ replace_na(., 0)),
+    n_sdg = rowSums(pick(starts_with("SDG")), na.rm = TRUE)
+  )
+```
+
+
+```{r}
+#| message: false
+#| warning: false
+data_reg <- data_reg |>
+  mutate(
+    OA = factor(OA, levels = c(0, 1), labels = c("Not OA", "OA")),
+    fund = factor(fund, levels = c(0, 1), labels = c("Not funded", "Funded")),
+    collab_type = factor(collab_type, levels = c("VN-dominated", "JP-dominated", "Balanced", "Other"))
+  ) |>
+  select(-abstract)
+
+write_csv(data_reg, "data/processed_data.csv", na = "")
+```
