@@ -1,0 +1,272 @@
+---
+title: "Preliminary Analysis"
+format: html
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+
+```{r}
+library(tidyverse)
+library(MASS)
+library(broom)
+library(knitr)
+
+dat <- read_csv("data/processed_data.csv") |>
+  filter(year >= 2000, !is_hyperauthored) |>
+  mutate(
+    quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1")),
+    leadership = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    ) |> factor(levels = c("Other-led", "JP-led", "VN-led")),
+    collab_type = factor(collab_type, levels = c("JP-dominated", "Balanced", "VN-dominated", "Other")),
+    macro_area = case_when(
+      HS == 1 ~ "HS",
+      LS == 1 ~ "LS",
+      PS == 1 ~ "PS",
+      SS == 1 ~ "SS",
+      TRUE ~ "Other"
+    ) |> factor(),
+    age = 2025 - year
+  )
+
+dat |>
+  summarise(
+    n = n(),
+    years = paste(min(year), "-", max(year)),
+    mean_year = round(mean(year), 1),
+    mean_cited = round(mean(cited, na.rm = TRUE), 1),
+    median_cited = median(cited, na.rm = TRUE),
+    sd_cited = round(sd(cited, na.rm = TRUE), 1),
+    mean_authors = round(mean(n_authors, na.rm = TRUE), 1),
+    mean_countries = round(mean(n_countries, na.rm = TRUE), 1)
+  ) |> kable()
+
+dat |>
+  count(year) |>
+  arrange(desc(n)) |>
+  head(10) |> kable()
+
+dat |>
+  count(collaboration_mode) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |>
+  arrange(desc(n)) |> kable()
+
+dat |>
+  filter(!is.na(quartile)) |>
+  count(quartile) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |> kable()
+
+dat |>
+  summarise(
+    oa_n = sum(OA == "OA"),
+    oa_pct = round(100 * mean(OA == "OA"), 1),
+    funded_n = sum(fund == "Funded"),
+    funded_pct = round(100 * mean(fund == "Funded"), 1)
+  ) |> kable()
+
+dat |>
+  summarise(
+    mean_prop_vn = round(mean(prop_vn_authors, na.rm = TRUE), 3),
+    median_prop_vn = round(median(prop_vn_authors, na.rm = TRUE), 3),
+    sd_prop_vn = round(sd(prop_vn_authors, na.rm = TRUE), 3)
+  ) |> kable()
+
+dat |>
+  count(leadership) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |> kable()
+
+dat |>
+  count(collab_type) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |> kable()
+
+dat |>
+  summarise(
+    jap_funded = sum(jap == 1),
+    jap_pct = round(100 * mean(jap == 1), 1),
+    vn_funded = sum(vn == 1),
+    vn_pct = round(100 * mean(vn == 1), 1),
+    bilateral_funded = sum(bilateral_funding == 1),
+    bilateral_pct = round(100 * mean(bilateral_funding == 1), 1)
+  ) |> kable()
+
+dat |>
+  group_by(year) |>
+  summarise(
+    n = n(),
+    mean_prop_vn = round(mean(prop_vn_authors, na.rm = TRUE), 2),
+    vn_led_pct = round(100 * mean(leadership == "VN-led"), 1),
+    jp_led_pct = round(100 * mean(leadership == "JP-led"), 1)
+  ) |> kable()
+
+dat |>
+  group_by(leadership) |>
+  summarise(
+    n = n(),
+    mean_cited = round(mean(cited, na.rm = TRUE), 1),
+    median_cited = median(cited, na.rm = TRUE),
+    q25 = quantile(cited, 0.25, na.rm = TRUE),
+    q75 = quantile(cited, 0.75, na.rm = TRUE)
+  ) |> kable()
+
+wilcox.test(cited ~ leadership, 
+            data = dat |> filter(leadership %in% c("VN-led", "JP-led")))
+
+dat |>
+  group_by(collaboration_mode, fund) |>
+  summarise(
+    n = n(),
+    mean_cited = round(mean(cited, na.rm = TRUE), 1),
+    median_cited = median(cited, na.rm = TRUE)
+  ) |> kable()
+
+dat |>
+  filter(!is.na(quartile)) |>
+  group_by(quartile) |>
+  summarise(
+    n = n(),
+    mean_cited = round(mean(cited, na.rm = TRUE), 1),
+    median_cited = median(cited, na.rm = TRUE)
+  ) |> kable()
+
+kruskal.test(cited ~ quartile, data = dat)
+
+dat |>
+  group_by(macro_area) |>
+  summarise(
+    n = n(),
+    pct = round(100 * n() / nrow(dat), 1),
+    mean_cited = round(mean(cited, na.rm = TRUE), 1),
+    mean_prop_vn = round(mean(prop_vn_authors, na.rm = TRUE), 2),
+    vn_led_pct = round(100 * mean(leadership == "VN-led"), 1)
+  ) |> kable()
+
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led"), !is.na(quartile)) |>
+  group_by(quartile, leadership) |>
+  summarise(mean_cited = mean(cited, na.rm = TRUE), .groups = "drop") |>
+  pivot_wider(names_from = leadership, values_from = mean_cited) |>
+  mutate(ratio = round(`VN-led` / `JP-led`, 2)) |> kable()
+
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led"), quartile == "Q1", fund == "Funded") |>
+  group_by(leadership) |>
+  summarise(
+    n = n(),
+    mean_cited = round(mean(cited, na.rm = TRUE), 1),
+    median_cited = median(cited, na.rm = TRUE)
+  ) |> kable()
+
+model_dat <- dat |>
+  filter(!is.na(cited), !is.na(leadership), !is.na(quartile),
+         !is.na(fund), !is.na(OA), !is.na(coop), !is.na(macro_area)) |>
+  mutate(prop_vn_centered = scale(prop_vn_authors, scale = FALSE)[,1])
+
+m1 <- glm.nb(cited ~ leadership + factor(year) + macro_area, data = model_dat)
+
+m2 <- glm.nb(cited ~ leadership + coop + prop_vn_centered + 
+               factor(year) + macro_area, data = model_dat)
+
+m3 <- glm.nb(cited ~ leadership + coop + prop_vn_centered +
+               fund + OA + quartile + factor(year) + macro_area, data = model_dat)
+
+m4 <- glm.nb(cited ~ leadership * fund + leadership * quartile + 
+               coop + prop_vn_centered + OA + factor(year) + macro_area, data = model_dat)
+
+list(M1 = m1, M2 = m2, M3 = m3, M4 = m4) |>
+  map_dfr(~{
+    tidy(., conf.int = TRUE) |>
+      filter(str_detect(term, "leadership")) |>
+      transmute(
+        term,
+        IRR = round(exp(estimate), 3),
+        CI = paste0("[", round(exp(conf.low), 3), ", ", round(exp(conf.high), 3), "]"),
+        p = round(p.value, 4)
+      )
+  }, .id = "model") |> kable()
+
+tidy(m3, conf.int = TRUE) |>
+  filter(!str_detect(term, "year")) |>
+  transmute(
+    term,
+    IRR = round(exp(estimate), 3),
+    CI_lower = round(exp(conf.low), 3),
+    CI_upper = round(exp(conf.high), 3),
+    p = round(p.value, 4),
+    sig = case_when(p < 0.001 ~ "***", p < 0.01 ~ "**", p < 0.05 ~ "*", TRUE ~ "")
+  ) |> kable()
+
+tibble(
+  model = c("M1", "M2", "M3", "M4"),
+  n = c(nobs(m1), nobs(m2), nobs(m3), nobs(m4)),
+  loglik = round(c(logLik(m1)[1], logLik(m2)[1], logLik(m3)[1], logLik(m4)[1]), 1),
+  AIC = round(c(AIC(m1), AIC(m2), AIC(m3), AIC(m4)), 1),
+  BIC = round(c(BIC(m1), BIC(m2), BIC(m3), BIC(m4)), 1)
+) |> kable()
+
+dat |>
+  group_by(year) |>
+  summarise(
+    n = n(),
+    q1_pct = round(100 * mean(quartile == "Q1", na.rm = TRUE), 1),
+    mean_sjr = round(mean(sjr_score, na.rm = TRUE), 3),
+    mean_cited = round(mean(cited, na.rm = TRUE), 1),
+    oa_pct = round(100 * mean(OA == "OA"), 1)
+  ) |> kable()
+
+dat |>
+  mutate(bilateral = if_else(bilateral_funding == 1, "Bilateral", "Other/None")) |>
+  group_by(bilateral) |>
+  summarise(
+    n = n(),
+    mean_cited = round(mean(cited, na.rm = TRUE), 1),
+    median_cited = median(cited, na.rm = TRUE),
+    mean_prop_vn = round(mean(prop_vn_authors, na.rm = TRUE), 2)
+  ) |> kable()
+
+dat |>
+  filter(leadership %in% c("VN-led", "JP-led")) |>
+  group_by(year, leadership) |>
+  summarise(mean_cited = mean(cited, na.rm = TRUE), .groups = "drop") |>
+  pivot_wider(names_from = leadership, values_from = mean_cited) |>
+  mutate(ratio = round(`VN-led` / `JP-led`, 2)) |>
+  arrange(year) |> kable()
+
+dat |>
+  count(collab_type) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |>
+  arrange(desc(n)) |> kable()
+
+dat |>
+  filter(!is.na(quartile)) |>
+  group_by(quartile, leadership) |>
+  summarise(n = n(), .groups = "drop") |>
+  group_by(quartile) |>
+  mutate(pct = round(100 * n / sum(n), 1)) |>
+  select(quartile, leadership, pct) |>
+  pivot_wider(names_from = leadership, values_from = pct) |> kable()
+
+dat |>
+  filter(!is.na(collaboration_mode)) |>
+  group_by(collaboration_mode) |>
+  summarise(
+    n = n(),
+    mean_prop_vn = round(mean(prop_vn_authors, na.rm = TRUE), 3),
+    vn_led_pct = round(100 * mean(leadership == "VN-led"), 1),
+    mean_cited = round(mean(cited, na.rm = TRUE), 1)
+  ) |> kable()
+
+subject_cols <- c("med", "agr_bio", "egin", "env_sci", "phys", 
+                 "bio_chem", "mat_sci", "chem", "comp_sci", "immu")
+                 
+dat |>
+  select(all_of(subject_cols)) |>
+  summarise(across(everything(), sum, na.rm = TRUE)) |>
+  pivot_longer(everything(), names_to = "subject", values_to = "n") |>
+  arrange(desc(n)) |>
+  mutate(pct = round(100 * n / nrow(dat), 1)) |> kable()
+```
