@@ -1,55 +1,56 @@
 ---
-title: "ICIS2026"
-format:
-    html:
-        echo: false
-        cache: true
+title: "Bibliometrix"
+format: html
 ---
 
 
 ```{r}
-#| label: setting_up
-
 library(tidyverse)
 library(bibliometrix)
 
-M <- convert2df(file = "data/vie_jap_all.csv", dbsource = "scopus", format = "csv")
-results <- biblioAnalysis(M, sep = ";")
+load("data/bib.RData")
 ```
 
-# Bibliometric Analysis
 
 ```{r}
-options(width=100)
+# Get basic information
+results <- biblioAnalysis(M)
+summary(results, k = 10, pause = FALSE)
+```
+
+
+```{r}
+# Main information about the collection
+results <- biblioAnalysis(M, sep = ";")
+options(width = 100)
 S <- summary(object = results, k = 10, pause = FALSE)
 plot(x = results, k = 10, pause = FALSE)
-```
 
-# Analysis of Cited References
-
-```{r}
+# Most cited papers
 CR <- citations(M, field = "article", sep = ";")
 cbind(CR$Cited[1:10])
-```
+
+# Most cited authors
+CR <- citations(M, field = "author", sep = ";")
+cbind(CR$Cited[1:10])
+
+# Co-citation network
+NetMatrix <- biblioNetwork(M, analysis = "co-citation", 
+                           network = "references", sep = ";")
+
+# Collaboration network
+NetMatrix <- biblioNetwork(M, analysis = "collaboration", 
+                           network = "authors", sep = ";")
+
+# Co-occurrence network (keywords)
+NetMatrix <- biblioNetwork(M, analysis = "co-occurrences", 
+                           network = "keywords", sep = ";")
 
 
-```{r}
-# Create a country collaboration network
+# Three-field plot (relationships between fields)
+threeFieldsPlot(M, fields = c("AU", "DE", "SO"))
 
-M <- metaTagExtraction(M, Field = "AU_CO", sep = ";")
-NetMatrix <- biblioNetwork(M, analysis = "collaboration", network = "countries", sep = ";")
-
-# Plot the network
-net=networkPlot(NetMatrix, n = dim(NetMatrix)[1], Title = "Country Collaboration", type = "circle", size=TRUE, remove.multiple=FALSE,labelsize=0.7,cluster="none")
-```
-
-
-```{r}
-NetMatrix <- biblioNetwork(M, analysis = "co-occurrences", network = "keywords", sep = ";")
-
-# Plot the network
-net=networkPlot(NetMatrix, normalize="association", weighted=T, n = 30, Title = "Keyword Co-occurrences", type = "fruchterman", size=T,edgesize = 5,labelsize=0.7)
-
-CS <- conceptualStructure(M,field="ID", method="CA", minDegree=4, clust=5, stemming=FALSE, labelsize=10, documents=10)
-
+# Thematic map
+Map <- thematicMap(M, field = "ID", n = 250, minfreq = 5)
+plot(Map$map)
 ```
