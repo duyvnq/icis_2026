@@ -1,0 +1,1371 @@
+---
+title: "Japan-Vietnam Research Collaboration: Results"
+format:
+  html:
+    toc: true
+    self-contained: true
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+#| warning: false
+#| message: false
+
+# 1. Load Libraries
+library(tidyverse)
+library(scales)
+library(gt)
+library(patchwork)
+library(systemfonts) 
+
+# 2. Define Nature-Style Theme
+nature_colors <- c(
+  "#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+  "#CA9161", "#949494", "#ECE133", "#56B4E9"
+)
+
+theme_nature <- function(base_size = 10, base_family = "sans") {
+  theme_classic(base_size = base_size, base_family = base_family) +
+    theme(
+      plot.title = element_text(size = base_size + 2, face = "bold", hjust = 0, margin = margin(b = 5)),
+      plot.subtitle = element_text(size = base_size, color = "gray30", hjust = 0, margin = margin(b = 8)),
+      axis.title = element_text(size = base_size, face = "bold", color = "black"),
+      axis.text = element_text(size = base_size - 1, color = "black"),
+      axis.line = element_line(color = "black", linewidth = 0.5),
+      axis.ticks = element_line(color = "black", linewidth = 0.5),
+      legend.title = element_text(size = base_size, face = "bold"),
+      legend.text = element_text(size = base_size - 1),
+      legend.position = "bottom",
+      legend.background = element_blank(),
+      panel.background = element_rect(fill = "white", color = NA),
+      strip.background = element_rect(fill = "gray95", color = "black", linewidth = 0.5),
+      strip.text = element_text(size = base_size, face = "bold", color = "black")
+    )
+}
+
+theme_set(theme_nature())
+
+scale_colour_discrete <- function(...) scale_colour_manual(values = nature_colors, ...)
+scale_fill_discrete <- function(...) scale_fill_manual(values = nature_colors, ...)
+
+# 3. Load Data
+data_reg <- read.csv("data/processed_data.csv") |> 
+  mutate(
+    # Ensure correct factor ordering for visualization
+    quartile = factor(quartile, levels = c("Q1", "Q2", "Q3", "Q4")),
+    
+    OA = factor(OA, levels = c("Not OA", "OA")),
+    
+    fund = factor(fund, levels = c("Not funded", "Funded")),
+    
+    collaboration_mode = factor(collaboration_mode, 
+                               levels = c("Strict Bilateral", "Multilateral", "Hyperauthored", "Other")),
+    
+    collab_type = factor(collab_type, 
+                        levels = c("VN-dominated", "Balanced", "JP-dominated", "Other")),
+    
+    # Create explicit leadership label if not present
+    leadership_label = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    ),
+    leadership_label = factor(leadership_label, levels = c("VN-led", "JP-led", "Other-led"))
+  )
+
+# Create core subset excluding hyperauthored papers for equity/impact analysis
+data_core <- data_reg |> 
+  filter(collaboration_mode != "Hyperauthored")
+```
+
+
+```{r}
+library(tidyverse)
+library(gt)
+
+data_reg <- read.csv("data/processed_data.csv") |>
+  mutate(
+    n_authors = str_count(affiliations, ";") + 1,
+    n_countries = if("n_countries" %in% names(read.csv("data/processed_data.csv"))) n_countries else 2,
+    coop = if("coop" %in% names(read.csv("data/processed_data.csv"))) coop else ifelse(n_countries > 2, "multilateral", "bilateral"),
+    is_hyperauthored = n_authors > 50 | n_countries > 10,
+    collab_mode = case_when(
+      is_hyperauthored ~ "Hyper-authored",
+      coop %in% c("bilateral", "Strict Bilateral") ~ "Bilateral",
+      TRUE ~ "Multilateral"
+    ),
+    collab_mode = factor(collab_mode, levels = c("Bilateral", "Multilateral", "Hyper-authored"))
+  )
+
+table_data <- data_reg |>
+  filter(!is.na(collab_mode)) |>
+  group_by(collab_mode) |>
+  summarise(
+    n = n(),
+    Mean_Authors = mean(n_authors, na.rm = TRUE),
+    Mean_Countries = mean(n_countries, na.rm = TRUE),
+    Mean_Citations = mean(cited, na.rm = TRUE),
+    Median_Citations = median(cited, na.rm = TRUE),
+    Q1 = mean(quartile == "Q1", na.rm = TRUE),
+    Q2 = mean(quartile == "Q2", na.rm = TRUE),
+    Q3 = mean(quartile == "Q3", na.rm = TRUE),
+    Q4 = mean(quartile == "Q4", na.rm = TRUE),
+    OA_Rate = mean(OA == "OA", na.rm = TRUE),
+    JP_Funded = mean(jap == 1, na.rm = TRUE),
+    VN_Funded = mean(vn == 1, na.rm = TRUE),
+    Other_Funded = mean(fund == "Funded" & jap == 0 & vn == 0, na.rm = TRUE),
+    Academia = mean(uni == 1, na.rm = TRUE),
+    Public = mean(pub == 1, na.rm = TRUE),
+    Industry = mean(ind == 1, na.rm = TRUE),
+    Life_Sciences = mean(LS == 1, na.rm = TRUE),
+    Physical_Sciences = mean(PS == 1, na.rm = TRUE),
+    Health_Sciences = mean(HS == 1, na.rm = TRUE),
+    Social_Sciences = mean(SS == 1, na.rm = TRUE)
+  ) |>
+  ungroup() |>
+  mutate(Share_of_Sample = n / sum(n)) |>
+  pivot_longer(cols = -collab_mode, names_to = "Metric", values_to = "Value") |>
+  pivot_wider(names_from = collab_mode, values_from = Value)
+
+row_groups <- tibble(
+  Metric = c("n", "Share_of_Sample", "Mean_Authors", "Mean_Countries", "Mean_Citations", "Median_Citations",
+             "Q1", "Q2", "Q3", "Q4", "OA_Rate",
+             "JP_Funded", "VN_Funded", "Other_Funded",
+             "Academia", "Public", "Industry",
+             "Life_Sciences", "Physical_Sciences", "Health_Sciences", "Social_Sciences"),
+  Section = c(rep("Characteristics", 6), rep("Journal Quality", 4), "Open Access",
+              rep("Funding Sources", 3), rep("Funding Sectors", 3), rep("Disciplinary", 4)),
+  Label = c("N", "Share of sample", "Mean authors", "Mean countries", "Mean citations", "Median citations",
+            "Q1", "Q2", "Q3", "Q4", "OA rate",
+            "JP funded", "VN funded", "Other",
+            "Academia", "Public", "Industry",
+            "Life Sciences", "Physical Sciences", "Health Sciences", "Social Sciences")
+)
+
+final_table <- table_data |>
+  left_join(row_groups, by = "Metric") |>
+  group_by(Section) |>
+  gt(rowname_col = "Label") |>
+  cols_hide(columns = "Metric") |>
+  fmt_integer(columns = -c(Metric, Section, Label), rows = Metric == "n") |>
+  fmt_number(columns = -c(Metric, Section, Label), rows = Metric %in% c("Mean_Authors", "Mean_Countries", "Mean_Citations", "Median_Citations"), decimals = 1) |>
+  fmt_percent(columns = -c(Metric, Section, Label), rows = !Metric %in% c("n", "Mean_Authors", "Mean_Countries", "Mean_Citations", "Median_Citations"), decimals = 1) |>
+  row_group_order(groups = c("Characteristics", "Journal Quality", "Open Access", "Funding Sources", "Funding Sectors", "Disciplinary")) |>
+  tab_header(title = "Characteristics Across Collaboration Modes") |>
+  tab_options(table.font.size = 10, heading.title.font.size = 12, row_group.font.weight = "bold")
+
+final_table
+```
+
+
+```{r}
+#| label: table-top-subjects-sensitivity-clean
+#| echo: true
+#| warning: false
+
+# 1. Prepare Data Subsets
+df_total <- data_reg
+df_clean <- data_reg |> 
+  filter(is_hyperauthored == 0)
+
+# 2. Function to Calculate Subject Counts
+calc_subjects <- function(data, label_suffix) {
+  data |> 
+    select(any_of(names(subject_mapping))) |> 
+    summarise(across(everything(), sum, na.rm = TRUE)) |> 
+    pivot_longer(everything(), names_to = "Abbr", values_to = paste0("n_", label_suffix)) |> 
+    mutate(
+      Subject = subject_mapping[Abbr],
+      !!paste0("share_", label_suffix) := get(paste0("n_", label_suffix)) / nrow(data)
+    ) |> 
+    select(Subject, starts_with("n_"), starts_with("share_"))
+}
+
+# 3. Compute and Join (Prioritizing Clean for Sorting/Selection)
+subjects_clean <- calc_subjects(df_clean, "clean")
+subjects_total <- calc_subjects(df_total, "total")
+
+final_subjects <- subjects_clean |> 
+  arrange(desc(n_clean)) |> 
+  slice_head(n = 10) |> 
+  left_join(subjects_total, by = "Subject") |> 
+  select(Subject, n_clean, share_clean, n_total, share_total)
+
+# 4. Generate GT Table
+table_sensitivity <- final_subjects |> 
+  gt() |> 
+  tab_header(
+    title = "Top 10 Subject Areas (Ordered by Non-Hyperauthored)"
+  ) |> 
+  cols_label(
+    Subject = "Subject Area",
+    n_clean = "N",
+    share_clean = "%",
+    n_total = "N",
+    share_total = "%"
+  ) |> 
+  tab_spanner(
+    label = "Excluding Hyper-authored",
+    columns = c(n_clean, share_clean)
+  ) |> 
+  tab_spanner(
+    label = "All Papers",
+    columns = c(n_total, share_total)
+  ) |> 
+  fmt_integer(columns = c(n_clean, n_total)) |> 
+  fmt_percent(columns = c(share_clean, share_total), decimals = 1) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  )
+
+table_sensitivity
+```
+
+
+```{r}
+#| label: fig-collab-mode-trends
+#| fig.cap: "Publication trends by collaboration mode with annual growth rate (2000-2024)."
+#| warning: false
+
+# 1. Prepare Data
+annual_mode_counts <- data_reg |> 
+  filter(year >= 2000, year <= 2024) |> 
+  filter(collab_mode %in% c("Bilateral", "Multilateral", "Hyper-authored")) |>
+  count(year, collab_mode) |> 
+  group_by(year) |> 
+  mutate(total_n = sum(n)) |> 
+  ungroup()
+
+# Calculate growth rate on the totals
+annual_growth <- annual_mode_counts |> 
+  distinct(year, total_n) |> 
+  arrange(year) |> 
+  mutate(growth = total_n / lag(total_n) - 1) |> 
+  mutate(growth = replace_na(growth, 0)) # Handle first year NA
+
+# Merge back for plotting (though we can plot separate layers)
+# Define scaling factor for secondary axis
+max_n <- max(annual_mode_counts$total_n)
+# Assuming max growth might be around 50-100%, we scale 1 (100%) to max_n
+scale_factor <- max_n 
+
+# 2. Plot
+ggplot() +
+  # Stacked Bar Chart
+  geom_col(
+    data = annual_mode_counts, 
+    aes(x = year, y = n, fill = collab_mode),
+    width = 0.85, alpha = 0.9
+  ) +
+  
+  # Growth Rate Line (Scaled)
+  geom_line(
+    data = annual_growth,
+    aes(x = year, y = growth * scale_factor),
+    color = "#E85D75", linewidth = 1
+  ) +
+  
+  # Total Count Labels
+  geom_text(
+    data = annual_growth,
+    aes(x = year, y = total_n, label = total_n),
+    vjust = -0.5, size = 2.5, color = "gray20"
+  ) +
+  
+  # Policy Annotations (Vertical Lines Only)
+  geom_vline(xintercept = 2009, linetype = "dashed", color = "gray40", linewidth = 0.4) +
+  annotate("text", x = 2009, y = max_n * 0.95, 
+           label = "2009 Strategic\nPartnership", 
+           hjust = 1.1, vjust = 1, size = 2.5, color = "gray30", lineheight = 0.9) +
+  
+  geom_vline(xintercept = 2014, linetype = "dashed", color = "gray40", linewidth = 0.4) +
+  annotate("text", x = 2014, y = max_n * 0.95, 
+           label = "2014 Extensive\nStrategic Partnership", 
+           hjust = -0.1, vjust = 1, size = 2.5, color = "gray30", lineheight = 0.9) +
+  
+  # Scales
+  scale_fill_manual(
+    values = c("Bilateral" = "#0173B2", "Multilateral" = "#DE8F05", "Hyper-authored" = "#029E73"),
+    name = "collaboration_mode"
+  ) +
+  scale_y_continuous(
+    name = "Number of publications",
+    expand = expansion(mult = c(0, 0.1)), # Add space at top for labels
+    sec.axis = sec_axis(~ . / scale_factor, name = "Year-on-year growth (%)", labels = percent)
+  ) +
+  scale_x_continuous(breaks = seq(2000, 2024, 5)) +
+  
+  # Theme
+  labs(
+    x = "Year"
+  ) +
+  theme(
+    legend.position = "bottom",
+    axis.title.y.right = element_text(color = "#E85D75"),
+    axis.text.y.right = element_text(color = "#E85D75"),
+    axis.line.y.right = element_line(color = "#E85D75"),
+    axis.ticks.y.right = element_line(color = "#E85D75")
+  )
+```
+
+
+```{r}
+#| label: fig-journal-quality
+#| fig.cap: "Evolution of journal quality quartiles (2000-2024)."
+#| warning: false
+
+data_reg |> 
+  filter(year >= 2000, year <= 2024) |> 
+  filter(quartile %in% c("Q1", "Q2", "Q3", "Q4")) |> 
+  count(year, quartile) |> 
+  ggplot(aes(x = year, y = n, fill = fct_rev(quartile))) +
+  # Reduced alpha to 0.6 to soften the colors
+  geom_area(position = "fill", alpha = 0.6, color = "white", linewidth = 0.2) +
+  scale_fill_manual(
+    values = c("Q1" = "#0173B2", "Q2" = "#029E73", "Q3" = "#DE8F05", "Q4" = "#949494"),
+    name = "Quartile"
+  ) +
+  scale_y_continuous(labels = percent, expand = c(0, 0), name = "Share of publications") +
+  scale_x_continuous(breaks = seq(2000, 2024, 4), expand = c(0, 0)) +
+  labs(x = "Year") +
+  theme(legend.position = "right")
+```
+
+
+```{r}
+#| label: fig-disciplinary-composition
+#| fig.cap: "Disciplinary composition over time: Absolute volume (A) and Relative share (B)."
+#| warning: false
+
+# 1. Prepare Data
+macro_trends <- data_reg |> 
+  filter(year >= 2000, year <= 2024) |> 
+  select(year, LS, PS, HS, SS) |> 
+  group_by(year) |> 
+  summarise(
+    `Life Sciences` = sum(LS, na.rm = TRUE),
+    `Physical Sciences` = sum(PS, na.rm = TRUE),
+    `Health Sciences` = sum(HS, na.rm = TRUE),
+    `Social Sciences` = sum(SS, na.rm = TRUE)
+  ) |> 
+  pivot_longer(-year, names_to = "Macro_Area", values_to = "n") |> 
+  mutate(
+    Macro_Area = factor(Macro_Area, levels = c("Physical Sciences", "Life Sciences", "Health Sciences", "Social Sciences"))
+  )
+
+# 2. Plot A: Absolute Volume (Stacked) - Softened Alpha
+p1 <- ggplot(macro_trends, aes(x = year, y = n, fill = Macro_Area)) +
+  geom_area(alpha = 0.7, color = "white", linewidth = 0.1) +
+  scale_fill_manual(
+    values = c("Physical Sciences" = "#0173B2", "Life Sciences" = "#029E73", 
+               "Health Sciences" = "#DE8F05", "Social Sciences" = "#CC78BC")
+  ) +
+  scale_y_continuous(labels = label_number(big.mark = ","), expand = c(0, 0)) +
+  scale_x_continuous(breaks = seq(2000, 2024, 5), expand = c(0, 0)) +
+  labs(
+    x = "Year",
+    y = "Number of publications"
+  ) +
+  theme(legend.position = "bottom")
+
+# 3. Plot B: Relative Share (100% Stacked) - Softened Alpha
+p2 <- ggplot(macro_trends, aes(x = year, y = n, fill = Macro_Area)) +
+  geom_area(position = "fill", alpha = 0.7, color = "white", linewidth = 0.1) +
+  scale_fill_manual(
+    values = c("Physical Sciences" = "#0173B2", "Life Sciences" = "#029E73", 
+               "Health Sciences" = "#DE8F05", "Social Sciences" = "#CC78BC")
+  ) +
+  scale_y_continuous(labels = percent, expand = c(0, 0)) +
+  scale_x_continuous(breaks = seq(2000, 2024, 5), expand = c(0, 0)) +
+  labs(
+    title = "B. Relative Disciplinary Share",
+    x = "Year",
+    y = "Share of publications",
+    fill = "Macro-area"
+  ) +
+  theme(legend.position = "bottom")
+
+# 4. Combine
+p1
+p2
+```
+
+
+```{r}
+#| label: table-equity-summary
+#| echo: true
+#| warning: false
+
+# 1. Calculate Statistics by Mode
+stats_by_mode <- data_core |> 
+  group_by(collaboration_mode) |> 
+  summarise(
+    n = n(),
+    Mean_Prop_VN = mean(prop_vn_authors, na.rm = TRUE),
+    Median_Prop_VN = median(prop_vn_authors, na.rm = TRUE),
+    SD = sd(prop_vn_authors, na.rm = TRUE),
+    Balanced = mean(prop_vn_authors >= 0.4 & prop_vn_authors <= 0.6, na.rm = TRUE),
+    VN_Majority = mean(prop_vn_authors > 0.5, na.rm = TRUE)
+  ) |> 
+  rename(Mode = collaboration_mode)
+
+# 2. Calculate Total Statistics
+stats_total <- data_core |> 
+  summarise(
+    n = n(),
+    Mean_Prop_VN = mean(prop_vn_authors, na.rm = TRUE),
+    Median_Prop_VN = median(prop_vn_authors, na.rm = TRUE),
+    SD = sd(prop_vn_authors, na.rm = TRUE),
+    Balanced = mean(prop_vn_authors >= 0.4 & prop_vn_authors <= 0.6, na.rm = TRUE),
+    VN_Majority = mean(prop_vn_authors > 0.5, na.rm = TRUE)
+  ) |> 
+  mutate(Mode = "Total")
+
+# 3. Combine and Format
+table_4_2_1 <- bind_rows(stats_by_mode, stats_total) |> 
+  filter(Mode %in% c("Strict Bilateral", "Multilateral", "Total")) |> 
+  mutate(
+    Mode = case_when(
+      Mode == "Strict Bilateral" ~ "Bilateral",
+      TRUE ~ as.character(Mode)
+    ),
+    Mode = factor(Mode, levels = c("Bilateral", "Multilateral", "Total"))
+  ) |> 
+  arrange(Mode) |> 
+  gt() |> 
+  tab_header(
+    title = "Overall Authorship Equity Summary by Collaboration Mode"
+  ) |> 
+  cols_label(
+    Mode = "Collaboration Mode",
+    n = "N",
+    Mean_Prop_VN = "Mean Prop VN",
+    Median_Prop_VN = "Median Prop VN",
+    SD = "SD",
+    Balanced = "% Balanced (0.4-0.6)",
+    VN_Majority = "% VN Majority (>0.5)"
+  ) |> 
+  fmt_integer(columns = n) |> 
+  fmt_number(
+    columns = c(Mean_Prop_VN, Median_Prop_VN, SD),
+    decimals = 3
+  ) |> 
+  fmt_percent(
+    columns = c(Balanced, VN_Majority),
+    decimals = 1
+  ) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  )
+
+table_4_2_1
+```
+
+
+```{r}
+#| label: fig-vn-prop-trends-with-trend
+#| fig.cap: "Mean Vietnamese author proportion over time (2000-2024) with smoothed trend line."
+#| warning: false
+
+# 1. Prepare Data
+vn_prop_trends <- data_core |> 
+  filter(year >= 2000, year <= 2024) |> 
+  group_by(year) |> 
+  summarise(
+    mean_prop = mean(prop_vn_authors, na.rm = TRUE),
+    se = sd(prop_vn_authors, na.rm = TRUE) / sqrt(n()),
+    ci_lower = mean_prop - 1.96 * se,
+    ci_upper = mean_prop + 1.96 * se
+  )
+
+# 2. Plot
+ggplot(vn_prop_trends, aes(x = year, y = mean_prop)) +
+  # Reference line for parity (0.5)
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "gray40", linewidth = 0.5) +
+  annotate("text", x = 2000, y = 0.51, label = "Parity (0.5)", 
+           hjust = 0, vjust = 0, size = 3, color = "gray40", fontface = "italic") +
+  
+  # Confidence Interval Band
+  geom_ribbon(aes(ymin = ci_lower, ymax = ci_upper), fill = "#0173B2", alpha = 0.15) +
+  
+  # Annual Means (connected line - lighter)
+  geom_line(color = "#0173B2", linewidth = 0.5, alpha = 0.6) +
+  geom_point(color = "#0173B2", size = 1.5, alpha = 0.6) +
+  
+  # Trend Line (Smoothed - stronger)
+  geom_smooth(method = "loess", se = FALSE, color = "#DE8F05", linewidth = 1) +
+  
+  # Scales and Labels
+  scale_y_continuous(labels = percent_format(accuracy = 1), limits = c(0.25, 0.55)) +
+  scale_x_continuous(breaks = seq(2000, 2024, 4)) +
+  labs(
+    x = "Year",
+    y = "Mean Proportion of Vietnamese Authors"
+  )
+```
+
+
+```{r}
+#| label: table-annual-equity
+#| echo: true
+#| warning: false
+
+# 1. Filter and Summarize Data
+table_4_2_2 <- data_core |> 
+  filter(year %in% c(2000, 2005, 2010, 2015, 2020, 2024)) |> 
+  group_by(year) |> 
+  summarise(
+    n = n(),
+    Mean_Prop_VN = mean(prop_vn_authors, na.rm = TRUE),
+    VN_Led = mean(vn_led == 1, na.rm = TRUE),
+    JP_Led = mean(jp_led == 1, na.rm = TRUE),
+    Balanced = mean(collab_type == "Balanced", na.rm = TRUE)
+  ) |> 
+  # 2. Generate GT Table
+  gt() |> 
+  tab_header(
+    title = "Annual Evolution of Equity Indicators (Selected Years)"
+  ) |> 
+  cols_label(
+    year = "Year",
+    n = "N",
+    Mean_Prop_VN = "Mean Prop VN",
+    VN_Led = "% VN-led",
+    JP_Led = "% JP-led",
+    Balanced = "% Balanced"
+  ) |> 
+  fmt_integer(columns = n) |> 
+  fmt_number(
+    columns = Mean_Prop_VN,
+    decimals = 3
+  ) |> 
+  fmt_percent(
+    columns = c(VN_Led, JP_Led, Balanced),
+    decimals = 1
+  ) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  )
+
+table_4_2_2
+```
+
+
+```{r}
+#| label: fig-leadership-transitions
+#| fig.cap: "Temporal evolution of leadership structure (2000-2024)."
+#| warning: false
+
+# 1. Prepare Data
+leadership_trends <- data_core |> 
+  filter(year >= 2000, year <= 2024) |> 
+  count(year, leadership_label)
+
+# 2. Plot
+ggplot(leadership_trends, aes(x = year, y = n, fill = leadership_label)) +
+  # Stacked Area Chart (100% fill) - Softened Alpha
+  geom_area(position = "fill", alpha = 0.7, color = "white", linewidth = 0.1) +
+  
+  # Reference line for parity
+  geom_hline(yintercept = 0.5, linetype = "dotted", color = "white", linewidth = 0.5, alpha = 0.8) +
+  
+  # Scales
+  scale_fill_manual(
+    values = c("VN-led" = "#0173B2", "JP-led" = "#DE8F05", "Other-led" = "#949494"),
+    name = "Leadership"
+  ) +
+  scale_y_continuous(labels = percent, expand = c(0, 0), name = "Share of publications") +
+  scale_x_continuous(breaks = seq(2000, 2024, 4), expand = c(0, 0)) +
+  
+  # Labels and Theme
+  labs(
+    x = "Year"
+  ) +
+  theme(
+    legend.position = "right"
+  )
+```
+
+
+```{r}
+#| label: table-collab-balance-dist-fixed
+#| echo: true
+#| warning: false
+
+# 1. Prepare Data
+# Using data_reg and standardizing 'Strict Bilateral' to 'Bilateral'
+balance_dist <- data_reg |> 
+  filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |> 
+  mutate(
+    Mode = if_else(collaboration_mode == "Strict Bilateral", "Bilateral", "Multilateral"),
+    # Ensure correct factor levels for Balance Categories
+    collab_type = factor(collab_type, levels = c("Balanced", "JP-dominated", "VN-dominated", "Other"))
+  ) |> 
+  group_by(Mode, collab_type) |> 
+  summarise(n = n(), .groups = "drop_last") |> 
+  mutate(pct = n / sum(n)) |> 
+  ungroup()
+
+# 2. Reshape for Table
+balance_wide <- balance_dist |> 
+  pivot_wider(
+    names_from = Mode,
+    values_from = c(n, pct),
+    values_fill = list(n = 0, pct = 0)
+  )
+
+# 3. Calculate Totals
+total_row <- data_reg |> 
+  filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |> 
+  mutate(
+    Mode = if_else(collaboration_mode == "Strict Bilateral", "Bilateral", "Multilateral")
+  ) |> 
+  group_by(Mode) |> 
+  summarise(n = n(), .groups = "drop") |> 
+  mutate(pct = 1.0) |> 
+  pivot_wider(
+    names_from = Mode,
+    values_from = c(n, pct)
+  ) |> 
+  mutate(collab_type = "Total")
+
+# 4. Generate GT Table
+table_4_2_4 <- bind_rows(balance_wide, total_row) |> 
+  mutate(
+    collab_type = factor(collab_type, levels = c("Balanced", "JP-dominated", "VN-dominated", "Other", "Total"))
+  ) |> 
+  arrange(collab_type) |> 
+  gt() |> 
+  tab_header(
+    title = "Distribution of Collaboration Balance Categories"
+  ) |> 
+  tab_spanner(
+    label = "Bilateral",
+    columns = c(n_Bilateral, pct_Bilateral)
+  ) |> 
+  tab_spanner(
+    label = "Multilateral",
+    columns = c(n_Multilateral, pct_Multilateral)
+  ) |> 
+  cols_label(
+    collab_type = "Balance Category",
+    n_Bilateral = "n",
+    pct_Bilateral = "%",
+    n_Multilateral = "n",
+    pct_Multilateral = "%"
+  ) |> 
+  fmt_integer(columns = starts_with("n_")) |> 
+  fmt_percent(columns = starts_with("pct_"), decimals = 1) |> 
+  tab_style(
+    style = list(cell_text(weight = "bold")),
+    locations = cells_body(rows = collab_type == "Total")
+  ) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  )
+
+table_4_2_4
+```
+
+
+```{r}
+#| label: table-equity-context
+#| echo: true
+#| warning: false
+
+# 1. Define Funding Categories
+data_core <- data_core |> 
+  mutate(
+    funding_cat = case_when(
+      fund == "Not funded" ~ "Unfunded",
+      jap == 1 & vn == 1 ~ "Bilateral co-funded",
+      jap == 1 ~ "Japan only",
+      vn == 1 ~ "Vietnam only",
+      fund == "Funded" ~ "Other funding",
+      TRUE ~ "Unfunded"
+    ),
+    funding_cat = factor(funding_cat, levels = c("Bilateral co-funded", "Japan only", "Vietnam only", "Other funding", "Unfunded"))
+  )
+
+# 2. Function to Calculate Equity Stats
+calc_equity_stats <- function(data, group_col, section_name) {
+  data |> 
+    group_by({{ group_col }}) |> 
+    summarise(
+      n = n(),
+      Mean_Prop_VN = mean(prop_vn_authors, na.rm = TRUE),
+      VN_Led = mean(vn_led == 1, na.rm = TRUE),
+      Balanced = mean(collab_type == "Balanced", na.rm = TRUE)
+    ) |> 
+    ungroup() |> 
+    rename(Category = {{ group_col }}) |> 
+    mutate(Category = as.character(Category), Section = section_name)
+}
+
+# 3. Calculate for Each Section
+# Journal Quartile (Exclude NA)
+stats_quartile <- data_core |> 
+  filter(!is.na(quartile)) |> 
+  calc_equity_stats(quartile, "Journal Quality")
+
+# Funding Configuration
+stats_funding <- data_core |> 
+  calc_equity_stats(funding_cat, "Funding Configuration")
+
+# Total Row
+stats_total <- data_core |> 
+  summarise(
+    n = n(),
+    Mean_Prop_VN = mean(prop_vn_authors, na.rm = TRUE),
+    VN_Led = mean(vn_led == 1, na.rm = TRUE),
+    Balanced = mean(collab_type == "Balanced", na.rm = TRUE)
+  ) |> 
+  mutate(Category = "Total", Section = "Total")
+
+# 4. Combine and Generate GT Table
+table_equity_context <- bind_rows(stats_quartile, stats_funding, stats_total) |> 
+  # Set row order (Quartile first, then Funding, then Total)
+  mutate(Section = factor(Section, levels = c("Journal Quality", "Funding Configuration", "Total"))) |> 
+  group_by(Section) |> 
+  gt(rowname_col = "Category") |> 
+  tab_header(
+    title = "Authorship Equity by Journal Quality and Funding Configuration"
+  ) |> 
+  cols_label(
+    n = "N",
+    Mean_Prop_VN = "Mean Prop VN",
+    VN_Led = "% VN-led",
+    Balanced = "% Balanced"
+  ) |> 
+  fmt_integer(columns = n) |> 
+  fmt_number(columns = Mean_Prop_VN, decimals = 3) |> 
+  fmt_percent(columns = c(VN_Led, Balanced), decimals = 1) |> 
+  tab_style(
+    style = list(cell_text(weight = "bold")),
+    locations = cells_body(rows = Category == "Total")
+  ) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    row_group.font.weight = "bold"
+  )
+
+table_equity_context
+```
+
+
+```{r}
+#| label: fig-equity-context
+#| fig.cap: "Distribution of Vietnamese authorship proportion by journal quartile (A) and funding status (B)."
+#| warning: false
+
+# 1. Plot A: By Journal Quartile
+p1 <- data_core |> 
+  filter(!is.na(quartile)) |> 
+  ggplot(aes(x = quartile, y = prop_vn_authors, fill = quartile)) +
+  geom_violin(alpha = 0.6, trim = TRUE, scale = "width") +
+  geom_boxplot(width = 0.15, alpha = 0.8, outlier.shape = NA) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 2, fill = "white") +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "gray40", linewidth = 0.4) +
+  scale_fill_manual(
+    values = c("Q1" = "#0173B2", "Q2" = "#029E73", "Q3" = "#DE8F05", "Q4" = "#949494")
+  ) +
+  scale_y_continuous(labels = percent, limits = c(0, 1)) +
+  labs(
+    title = "A. By Journal Quartile",
+    x = "Journal Quartile",
+    y = "Proportion of Vietnamese Authors"
+  ) +
+  theme(legend.position = "none")
+
+# 2. Plot B: By Funding Status
+p2 <- data_core |> 
+  filter(!is.na(fund)) |> 
+  ggplot(aes(x = fund, y = prop_vn_authors, fill = fund)) +
+  geom_violin(alpha = 0.6, trim = TRUE, scale = "width") +
+  geom_boxplot(width = 0.15, alpha = 0.8, outlier.shape = NA) +
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 2, fill = "white") +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "gray40", linewidth = 0.4) +
+  scale_fill_manual(
+    values = c("Funded" = "#0173B2", "Not funded" = "#C2674C")
+  ) +
+  scale_y_continuous(labels = percent, limits = c(0, 1)) +
+  labs(
+    title = "B. By Funding Status",
+    x = "Funding Status",
+    y = NULL # Remove y label for space
+  ) +
+  theme(legend.position = "none")
+
+# 3. Combine
+p1 + p2 + plot_layout(ncol = 2)
+```
+
+
+```{r}
+#| label: table-citation-impact-leadership-fixed
+#| echo: true
+#| warning: false
+
+# 1. FIX: Ensure data_core has the correct variables
+data_core <- data_reg |> 
+  filter(collaboration_mode != "Hyperauthored") |> # Filter out hyper-authored first
+  mutate(
+    # Create collab_mode from collaboration_mode
+    collab_mode = case_when(
+      collaboration_mode == "Strict Bilateral" ~ "Bilateral",
+      collaboration_mode == "Multilateral" ~ "Multilateral",
+      TRUE ~ "Other"
+    ),
+    collab_mode = factor(collab_mode, levels = c("Bilateral", "Multilateral", "Other")),
+    
+    # Ensure leadership_label exists
+    leadership_label = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    ),
+    leadership_label = factor(leadership_label, levels = c("VN-led", "JP-led", "Other-led"))
+  )
+
+# 2. Prepare Data for Table
+citation_stats <- data_core |> 
+  filter(collab_mode %in% c("Bilateral", "Multilateral")) |> 
+  group_by(leadership_label, collab_mode) |> 
+  summarise(
+    n = n(),
+    Mean = mean(cited, na.rm = TRUE),
+    Median = median(cited, na.rm = TRUE),
+    Q1 = quantile(cited, 0.25, na.rm = TRUE),
+    Q3 = quantile(cited, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  ) |> 
+  mutate(
+    IQR_Display = paste0(round(Q1, 0), "–", round(Q3, 0))
+  ) |> 
+  select(leadership_label, collab_mode, n, Mean, Median, IQR_Display)
+
+# 3. Generate GT Table
+table_4_3_1 <- citation_stats |> 
+  group_by(leadership_label) |> 
+  gt() |> 
+  tab_header(
+    title = "Citation Impact by Leadership and Collaboration Mode"
+  ) |> 
+  cols_label(
+    collab_mode = "Mode",
+    n = "N",
+    Mean = "Mean Citations",
+    Median = "Median",
+    IQR_Display = "IQR (Q1–Q3)"
+  ) |> 
+  fmt_integer(columns = n) |> 
+  fmt_number(columns = Mean, decimals = 1) |> 
+  fmt_number(columns = Median, decimals = 0) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    row_group.font.weight = "bold"
+  )
+
+table_4_3_1
+```
+
+
+```{r}
+#| label: fig-citation-dist-leadership
+#| fig.cap: "Citation distributions by leadership type (log scale). Diamond represents the mean."
+#| warning: false
+
+# 1. Prepare Data & Plot
+data_core |> 
+  filter(!is.na(leadership_label)) |> 
+  ggplot(aes(x = leadership_label, y = cited + 1, fill = leadership_label)) +
+  # Violin plot for distribution shape
+  geom_violin(alpha = 0.6, trim = TRUE, scale = "width", color = NA) +
+  
+  # Box plot for quartiles (inside violin)
+  geom_boxplot(width = 0.15, alpha = 0.8, outlier.shape = NA, color = "gray20") +
+  
+  # Mean marker
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 2.5, 
+               fill = "white", color = "black") +
+  
+  # Scales
+  scale_fill_manual(
+    values = c("VN-led" = "#0173B2", "JP-led" = "#DE8F05", "Other-led" = "#949494"),
+    name = "Leadership"
+  ) +
+  scale_y_log10(
+    breaks = c(1, 10, 100, 1000),
+    labels = c("0", "9", "99", "999"), # Adjust labels to reflect actual citations (y-1) or just count
+    name = "Citations (log scale)"
+  ) +
+  
+  # Theme and Labels
+  labs(
+    x = "Leadership",
+    subtitle = "Distribution includes zero-cited papers (y = citations + 1)"
+  ) +
+  theme(
+    legend.position = "none" # Redundant with x-axis labels
+  )
+```
+
+
+```{r}
+#| label: table-citation-impact-funding
+#| echo: true
+#| warning: false
+
+# 1. Prepare Data with Funding Categories
+# Ensure funding categories are defined (if not already present in data_core from previous steps)
+data_core <- data_core |> 
+  mutate(
+    funding_cat = case_when(
+      fund == "Not funded" ~ "Unfunded",
+      jap == 1 & vn == 1 ~ "Bilateral co-funded",
+      jap == 1 ~ "Japan only",
+      vn == 1 ~ "Vietnam only",
+      fund == "Funded" ~ "Other funding",
+      TRUE ~ "Unfunded"
+    ),
+    funding_cat = factor(funding_cat, levels = c("Bilateral co-funded", "Japan only", "Vietnam only", "Other funding", "Unfunded"))
+  )
+
+# 2. Calculate Statistics
+citation_funding_stats <- data_core |> 
+  filter(collab_mode %in% c("Bilateral", "Multilateral")) |> 
+  group_by(funding_cat, collab_mode) |> 
+  summarise(
+    n = n(),
+    Mean = mean(cited, na.rm = TRUE),
+    Median = median(cited, na.rm = TRUE),
+    Q1 = quantile(cited, 0.25, na.rm = TRUE),
+    Q3 = quantile(cited, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  ) |> 
+  mutate(
+    IQR_Display = paste0(round(Q1, 0), "–", round(Q3, 0))
+  ) |> 
+  select(funding_cat, collab_mode, n, Mean, Median, IQR_Display)
+
+# 3. Generate GT Table
+table_4_3_2 <- citation_funding_stats |> 
+  group_by(funding_cat) |> 
+  gt() |> 
+  tab_header(
+    title = "Citation Impact by Funding Configuration and Mode"
+  ) |> 
+  cols_label(
+    collab_mode = "Mode",
+    n = "N",
+    Mean = "Mean Citations",
+    Median = "Median",
+    IQR_Display = "IQR (Q1–Q3)"
+  ) |> 
+  fmt_integer(columns = n) |> 
+  fmt_number(columns = Mean, decimals = 1) |> 
+  fmt_number(columns = Median, decimals = 0) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    row_group.font.weight = "bold"
+  )
+
+table_4_3_2
+```
+
+
+```{r}
+#| label: fig-citation-trends-leadership
+#| fig.cap: "Mean citations over time by leadership (2000-2024), showing temporal convergence."
+#| warning: false
+
+# 1. Prepare Data
+citation_trends <- data_core |> 
+  filter(year >= 2000, year <= 2024) |> 
+  filter(leadership_label %in% c("VN-led", "JP-led")) |> 
+  group_by(year, leadership_label) |> 
+  summarise(
+    mean_cited = mean(cited, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# 2. Plot
+ggplot(citation_trends, aes(x = year, y = mean_cited, color = leadership_label)) +
+  # Trend lines
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  
+  # Scales
+  scale_color_manual(
+    values = c("VN-led" = "#0173B2", "JP-led" = "#DE8F05"),
+    name = "Leadership"
+  ) +
+  scale_x_continuous(breaks = seq(2000, 2024, 4)) +
+  scale_y_continuous(name = "Mean Citations") +
+  
+  # Styling
+  labs(
+    x = "Year"
+  ) +
+  theme(
+    legend.position = "bottom"
+  )
+
+#| label: fig-citation-trends-leadership-median
+#| fig.cap: "Median citations over time by leadership (2000-2024), showing temporal convergence."
+#| warning: false
+
+# 1. Prepare Data
+citation_trends_median <- data_core |> 
+  filter(year >= 2000, year <= 2024) |> 
+  filter(leadership_label %in% c("VN-led", "JP-led")) |> 
+  group_by(year, leadership_label) |> 
+  summarise(
+    median_cited = median(cited, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# 2. Plot
+ggplot(citation_trends_median, aes(x = year, y = median_cited, color = leadership_label)) +
+  # Trend lines
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  
+  # Scales
+  scale_color_manual(
+    values = c("VN-led" = "#0173B2", "JP-led" = "#DE8F05"),
+    name = "Leadership"
+  ) +
+  scale_x_continuous(breaks = seq(2000, 2024, 4)) +
+  scale_y_continuous(name = "Median Citations") +
+  
+  # Styling
+  labs(
+    x = "Year"
+  ) +
+  theme(
+    legend.position = "bottom"
+  )
+
+
+#| label: fig-citation-parity-gap-median
+#| fig.cap: "Citation Impact Parity Gap (Median): Ratio of VN-led to JP-led median citations (2000-2024)."
+#| warning: false
+
+# 1. Prepare Data: Calculate annual medians and pivot
+parity_trends_median <- data_core |> 
+  filter(year >= 2000, year <= 2024) |> 
+  filter(leadership_label %in% c("VN-led", "JP-led")) |> 
+  group_by(year, leadership_label) |> 
+  summarise(
+    median_cited = median(cited, na.rm = TRUE),
+    .groups = "drop"
+  ) |> 
+  pivot_wider(names_from = leadership_label, values_from = median_cited) |> 
+  # Calculate Ratio (VN / JP)
+  mutate(
+    parity_ratio = `VN-led` / `JP-led`
+  )
+
+# 2. Plot
+ggplot(parity_trends_median, aes(x = year, y = parity_ratio)) +
+  # The "Flat Line" of Equality (Ratio = 1)
+  geom_hline(yintercept = 1, linetype = "dashed", color = "gray40", linewidth = 0.8) +
+  annotate("text", x = 2000, y = 1.05, label = "Parity (Equal Impact)", 
+           hjust = 0, size = 3, color = "gray40", fontface = "italic") +
+  
+  # The Data Line (Distance from Equality)
+  geom_line(color = "#0173B2", linewidth = 1) +
+  geom_point(aes(color = parity_ratio >= 1), size = 2) +
+  
+  # Fill area to show the gap
+  geom_ribbon(aes(ymin = parity_ratio, ymax = 1, fill = parity_ratio >= 1), alpha = 0.2) +
+  
+  # Scales
+  scale_y_continuous(
+    name = "Relative Median Citation Impact (VN / JP)",
+    labels = label_number(accuracy = 0.1),
+    limits = c(0, NA)
+  ) +
+  scale_color_manual(values = c("FALSE" = "#DE8F05", "TRUE" = "#0173B2"), guide = "none") +
+  scale_fill_manual(values = c("FALSE" = "#DE8F05", "TRUE" = "#0173B2"), guide = "none") +
+  scale_x_continuous(breaks = seq(2000, 2024, 4)) +
+  
+  # Labels
+  labs(
+    x = "Year",
+    subtitle = "Values < 1 indicate VN-led papers have lower median citations than JP-led papers"
+  )
+```
+
+
+```{r}
+#| label: table-citation-tiers
+#| echo: true
+#| warning: false
+
+# 1. Define Citation Tiers
+tier_data <- data_core |> 
+  filter(collab_mode %in% c("Bilateral", "Multilateral")) |> 
+  mutate(
+    Citation_Tier = case_when(
+      cited == 0 ~ "Zero (0)",
+      cited >= 1 & cited <= 10 ~ "Low (1–10)",
+      cited >= 11 & cited <= 50 ~ "Medium (11–50)",
+      cited >= 51 & cited <= 100 ~ "High (51–100)",
+      cited > 100 ~ "Very High (>100)"
+    ),
+    # Set factor levels to ensure correct ordering in table
+    Citation_Tier = factor(Citation_Tier, 
+                           levels = c("Zero (0)", "Low (1–10)", "Medium (11–50)", 
+                                      "High (51–100)", "Very High (>100)"))
+  )
+
+# 2. Calculate Counts and Percentages
+tier_summary <- tier_data |> 
+  group_by(collab_mode, Citation_Tier) |> 
+  summarise(n = n(), .groups = "drop_last") |> 
+  mutate(pct = n / sum(n)) |> 
+  ungroup()
+
+# 3. Reshape for Table
+tier_wide <- tier_summary |> 
+  pivot_wider(
+    names_from = collab_mode,
+    values_from = c(n, pct),
+    values_fill = list(n = 0, pct = 0)
+  )
+
+# 4. Calculate Totals
+total_row <- tier_data |> 
+  group_by(collab_mode) |> 
+  summarise(n = n(), .groups = "drop") |> 
+  mutate(pct = 1.0) |> 
+  pivot_wider(
+    names_from = collab_mode,
+    values_from = c(n, pct)
+  ) |> 
+  mutate(Citation_Tier = "Total")
+
+# 5. Generate GT Table
+table_4_3_3 <- bind_rows(tier_wide, total_row) |> 
+  # Ensure Total is last (though it naturally falls there if not a factor level)
+  mutate(Citation_Tier = as.character(Citation_Tier)) |> 
+  mutate(Citation_Tier = factor(Citation_Tier, 
+                                levels = c("Zero (0)", "Low (1–10)", "Medium (11–50)", 
+                                           "High (51–100)", "Very High (>100)", "Total"))) |> 
+  arrange(Citation_Tier) |> 
+  gt() |> 
+  tab_header(
+    title = "Citation Impact Tiers by Collaboration Mode"
+  ) |> 
+  tab_spanner(
+    label = "Bilateral",
+    columns = c(n_Bilateral, pct_Bilateral)
+  ) |> 
+  tab_spanner(
+    label = "Multilateral",
+    columns = c(n_Multilateral, pct_Multilateral)
+  ) |> 
+  cols_label(
+    Citation_Tier = "Impact Tier",
+    n_Bilateral = "n",
+    pct_Bilateral = "%",
+    n_Multilateral = "n",
+    pct_Multilateral = "%"
+  ) |> 
+  fmt_integer(columns = starts_with("n_")) |> 
+  fmt_percent(columns = starts_with("pct_"), decimals = 1) |> 
+  tab_style(
+    style = list(cell_text(weight = "bold")),
+    locations = cells_body(rows = Citation_Tier == "Total")
+  ) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  )
+
+table_4_3_3
+```
+
+
+```{r}
+#| label: fig-citation-histogram
+#| fig.cap: "Citation distribution (log scale) by collaboration mode with overlapping histograms."
+#| warning: false
+
+# 1. Prepare Data & Plot
+data_core |> 
+  filter(collab_mode %in% c("Bilateral", "Multilateral")) |> 
+  ggplot(aes(x = cited + 1, fill = collab_mode)) +
+  
+  # Histogram with identity position (overlap) and opacity
+  geom_histogram(
+    position = "identity", 
+    alpha = 0.5, 
+    bins = 40, 
+    color = "white", 
+    linewidth = 0.2
+  ) +
+  
+  # Log scale for x-axis (handling zeros via cited+1)
+  scale_x_log10(
+    breaks = c(1, 11, 101, 1001),
+    labels = c("0", "10", "100", "1000"),
+    name = "Citations (log scale)"
+  ) +
+  
+  # Colors
+  scale_fill_manual(
+    values = c("Bilateral" = "#0173B2", "Multilateral" = "#DE8F05"),
+    name = "Collaboration Mode"
+  ) +
+  
+  # Labels
+  labs(
+    y = "Number of Publications",
+    title = "Citation Distribution by Collaboration Mode",
+    subtitle = "Overlapping histograms showing the rightward shift (higher impact) for multilateral papers"
+  ) +
+  
+  # Theme adjustment
+  theme(
+    legend.position = "top"
+  )
+```
+
+
+```{r}
+#| label: table-regression-fixed-2
+#| echo: true
+#| warning: false
+
+# 1. Load Libraries
+library(tidyverse)
+library(MASS)
+library(broom)
+library(gt)
+
+# 2. ROBUST DATA PREPARATION
+reg_data <- read.csv("data/processed_data.csv") |> 
+  filter(collaboration_mode != "Hyperauthored") |> 
+  mutate(
+    collab_mode = case_when(
+      collaboration_mode == "Strict Bilateral" ~ "Bilateral",
+      collaboration_mode == "Multilateral" ~ "Multilateral",
+      TRUE ~ "Other"
+    ),
+    leadership_label = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    ),
+    macro_area = case_when(
+      HS == 1 ~ "Health Sciences",
+      LS == 1 ~ "Life Sciences",
+      PS == 1 ~ "Physical Sciences",
+      SS == 1 ~ "Social Sciences",
+      TRUE ~ "Other"
+    ),
+    macro_area = factor(macro_area, levels = c("Health Sciences", "Life Sciences", "Physical Sciences", "Social Sciences", "Other")),
+    is_multilateral = if_else(collab_mode == "Multilateral", 1, 0),
+    is_funded = if_else(fund == "Funded", 1, 0),
+    is_Q1 = if_else(quartile == "Q1", 1, 0),
+    is_OA = if_else(OA == "OA", 1, 0),
+    prop_vn_centered = prop_vn_authors - mean(prop_vn_authors, na.rm = TRUE),
+    year_num = year - 2000
+  ) |> 
+  filter(!is.na(macro_area), !is.na(cited), !is.na(quartile))
+
+# 3. FIT MODELS
+m1 <- glm.nb(cited ~ vn_led + jp_led + year_num + macro_area, data = reg_data)
+m2 <- update(m1, . ~ . + is_multilateral + prop_vn_centered)
+m3 <- update(m2, . ~ . + is_funded + is_Q1 + is_OA)
+m4 <- update(m3, . ~ . + vn_led:is_funded + vn_led:is_Q1 + vn_led:year_num)
+
+# 4. EXTRACT RESULTS (Fixed dplyr conflict)
+extract_model_stats <- function(model, name) {
+  # Extract coefficients
+  coefs <- tidy(model, exponentiate = TRUE, conf.int = FALSE) |> 
+    dplyr::select(term, estimate, p.value) |> 
+    mutate(
+      stars = case_when(
+        p.value < 0.001 ~ "***",
+        p.value < 0.01 ~ "**",
+        p.value < 0.05 ~ "*",
+        p.value < 0.1 ~ ".",
+        TRUE ~ ""
+      ),
+      formatted = paste0(sprintf("%.2f", estimate), stars)
+    ) |> 
+    dplyr::select(term, formatted) |> 
+    rename(!!name := formatted)
+  
+  # Extract fit statistics
+  stats <- tibble(
+    term = c("n", "AIC", "BIC"),
+    formatted = c(
+      format(nobs(model), big.mark = ","),
+      format(round(AIC(model)), big.mark = ","),
+      format(round(BIC(model)), big.mark = ",")
+    )
+  ) |> 
+    rename(!!name := formatted)
+  
+  bind_rows(coefs, stats)
+}
+
+res_m1 <- extract_model_stats(m1, "M1 (Baseline)")
+res_m2 <- extract_model_stats(m2, "M2 (Structure)")
+res_m3 <- extract_model_stats(m3, "M3 (Resources)")
+res_m4 <- extract_model_stats(m4, "M4 (Interactions)")
+
+reg_table_data <- res_m1 |> 
+  full_join(res_m2, by = "term") |> 
+  full_join(res_m3, by = "term") |> 
+  full_join(res_m4, by = "term")
+
+# 5. GENERATE TABLE
+term_mapping <- c(
+  "vn_led" = "VN-led",
+  "jp_led" = "JP-led",
+  "is_multilateral" = "Multilateral",
+  "prop_vn_centered" = "Prop VN (centered)",
+  "is_funded" = "Funded",
+  "is_Q1" = "Q1 Journal",
+  "is_OA" = "OA",
+  "vn_led:is_funded" = "VN-led × Funded",
+  "vn_led:is_Q1" = "VN-led × Q1",
+  "vn_led:year_num" = "VN-led × Year",
+  "n" = "n", "AIC" = "AIC", "BIC" = "BIC"
+)
+
+table_4_3_4 <- reg_table_data |> 
+  filter(term %in% names(term_mapping)) |> 
+  mutate(term = factor(term, levels = names(term_mapping), labels = term_mapping)) |> 
+  arrange(term) |> 
+  gt() |> 
+  tab_header(title = "Negative Binomial Regression Predicting Citations (IRR)") |> 
+  cols_label(term = "Predictor") |> 
+  tab_source_note(source_note = "*** p<0.001, ** p<0.01, * p<0.05. Controls include Year and Macro-area.") |> 
+  tab_style(style = list(cell_text(weight = "bold")), locations = cells_body(rows = term %in% c("n", "AIC", "BIC"))) |> 
+  tab_style(style = cell_borders(sides = "top", color = "black", weight = px(2)), locations = cells_body(rows = term == "n")) |> 
+  tab_options(table.font.size = 10, heading.title.font.size = 12, column_labels.font.weight = "bold") |> 
+  cols_align(align = "center", columns = -term)
+
+table_4_3_4
+```
