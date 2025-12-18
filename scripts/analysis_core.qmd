@@ -80,7 +80,6 @@ data_core <- data_reg |>
   filter(collaboration_mode != "Hyperauthored")
 ```
 
-
 ```{r}
 library(tidyverse)
 library(gt)
@@ -159,7 +158,6 @@ final_table <- table_data |>
 final_table
 ```
 
-
 ```{r}
 #| label: table-top-subjects-sensitivity-clean
 #| echo: true
@@ -224,7 +222,6 @@ table_sensitivity <- final_subjects |>
 
 table_sensitivity
 ```
-
 
 ```{r}
 #| label: fig-collab-mode-trends
@@ -312,7 +309,6 @@ ggplot() +
   )
 ```
 
-
 ```{r}
 #| label: fig-journal-quality
 #| fig.cap: "Evolution of journal quality quartiles (2000-2024)."
@@ -334,7 +330,6 @@ data_reg |>
   labs(x = "Year") +
   theme(legend.position = "right")
 ```
-
 
 ```{r}
 #| label: fig-disciplinary-composition
@@ -393,7 +388,6 @@ p2 <- ggplot(macro_trends, aes(x = year, y = n, fill = Macro_Area)) +
 p1
 p2
 ```
-
 
 ```{r}
 #| label: table-equity-summary
@@ -467,7 +461,6 @@ table_4_2_1 <- bind_rows(stats_by_mode, stats_total) |>
 table_4_2_1
 ```
 
-
 ```{r}
 #| label: fig-vn-prop-trends-with-trend
 #| fig.cap: "Mean Vietnamese author proportion over time (2000-2024) with smoothed trend line."
@@ -509,7 +502,6 @@ ggplot(vn_prop_trends, aes(x = year, y = mean_prop)) +
     y = "Mean Proportion of Vietnamese Authors"
   )
 ```
-
 
 ```{r}
 #| label: table-annual-equity
@@ -558,7 +550,6 @@ table_4_2_2 <- data_core |>
 table_4_2_2
 ```
 
-
 ```{r}
 #| label: fig-leadership-transitions
 #| fig.cap: "Temporal evolution of leadership structure (2000-2024)."
@@ -593,7 +584,6 @@ ggplot(leadership_trends, aes(x = year, y = n, fill = leadership_label)) +
     legend.position = "right"
   )
 ```
-
 
 ```{r}
 #| label: table-collab-balance-dist-fixed
@@ -676,7 +666,6 @@ table_4_2_4 <- bind_rows(balance_wide, total_row) |>
 
 table_4_2_4
 ```
-
 
 ```{r}
 #| label: table-equity-context
@@ -763,7 +752,6 @@ table_equity_context <- bind_rows(stats_quartile, stats_funding, stats_total) |>
 table_equity_context
 ```
 
-
 ```{r}
 #| label: fig-equity-context
 #| fig.cap: "Distribution of Vietnamese authorship proportion by journal quartile (A) and funding status (B)."
@@ -810,7 +798,6 @@ p2 <- data_core |>
 # 3. Combine
 p1 + p2 + plot_layout(ncol = 2)
 ```
-
 
 ```{r}
 #| label: table-citation-impact-leadership-fixed
@@ -881,7 +868,6 @@ table_4_3_1 <- citation_stats |>
 table_4_3_1
 ```
 
-
 ```{r}
 #| label: fig-citation-dist-leadership
 #| fig.cap: "Citation distributions by leadership type (log scale). Diamond represents the mean."
@@ -921,7 +907,6 @@ data_core |>
     legend.position = "none" # Redundant with x-axis labels
   )
 ```
-
 
 ```{r}
 #| label: table-citation-impact-funding
@@ -985,7 +970,6 @@ table_4_3_2 <- citation_funding_stats |>
 
 table_4_3_2
 ```
-
 
 ```{r}
 #| label: fig-citation-trends-leadership
@@ -1111,7 +1095,6 @@ ggplot(parity_trends_median, aes(x = year, y = parity_ratio)) +
   )
 ```
 
-
 ```{r}
 #| label: table-citation-tiers
 #| echo: true
@@ -1202,7 +1185,6 @@ table_4_3_3 <- bind_rows(tier_wide, total_row) |>
 table_4_3_3
 ```
 
-
 ```{r}
 #| label: fig-citation-histogram
 #| fig.cap: "Citation distribution (log scale) by collaboration mode with overlapping histograms."
@@ -1247,7 +1229,6 @@ data_core |>
     legend.position = "top"
   )
 ```
-
 
 ```{r}
 #| label: table-regression-fixed-2
@@ -1368,4 +1349,756 @@ table_4_3_4 <- reg_table_data |>
   cols_align(align = "center", columns = -term)
 
 table_4_3_4
+```
+
+
+```{r}
+#| label: fig-citation-trends-leadership
+#| fig.cap: "Mean Year-Normalized Citation Score (MNCS) by leadership (2000-2024). A value of 1.0 represents the dataset average for that year."
+#| warning: false
+
+# 1. Calculate Annual Baselines & Normalize
+# We calculate the average citations for *all* core papers in each year
+citation_norm_data <- data_core |> 
+  filter(year >= 2000, year <= 2024) |> 
+  group_by(year) |> 
+  mutate(
+    # Calculate average citations for this specific year (the "baseline")
+    year_avg = mean(cited, na.rm = TRUE),
+    
+    # Normalize: Paper Citations / Year Average
+    # 1.0 = Average, 2.0 = Twice the average, etc.
+    cited_norm = cited / year_avg
+  ) |> 
+  ungroup()
+
+# 2. Summarize by Leadership Group
+citation_trends_norm <- citation_norm_data |> 
+  filter(leadership_label %in% c("VN-led", "JP-led")) |> 
+  group_by(year, leadership_label) |> 
+  summarise(
+    mean_norm_score = mean(cited_norm, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# 3. Plot
+ggplot(citation_trends_norm, aes(x = year, y = mean_norm_score, color = leadership_label)) +
+  # Reference line at 1.0 (The "Average" paper)
+  geom_hline(yintercept = 1, linetype = "dashed", color = "gray50", linewidth = 0.5) +
+  annotate("text", x = 2000, y = 1.05, label = "Year Average (1.0)", 
+           hjust = 0, size = 3, color = "gray50") +
+
+  # Trend lines
+  geom_line(linewidth = 1) +
+  geom_point(size = 2) +
+  
+  # Scales
+  scale_color_manual(
+    values = c("VN-led" = "#0173B2", "JP-led" = "#DE8F05"),
+    name = "Leadership"
+  ) +
+  scale_x_continuous(breaks = seq(2000, 2024, 4)) +
+  scale_y_continuous(name = "Mean Normalized Citation Score") +
+  
+  # Styling
+  labs(
+    x = "Year"
+  ) +
+  theme(
+    legend.position = "bottom"
+  )
+```
+
+
+```{r}
+#| label: fig-predicted-citations-interaction
+#| fig.cap: "Predicted citations by Leadership and Funding Status (Interaction Plot). Estimates are based on Model 4, holding other covariates at their means/reference levels."
+#| warning: false
+
+# 1. Create Prediction Grid
+# We want to compare VN-led vs JP-led across Funded vs Unfunded
+# holding other variables constant at "typical" values.
+pred_grid <- expand.grid(
+  leadership = c("VN-led", "JP-led"),
+  is_funded = c(0, 1)
+) |> 
+  mutate(
+    # Set the actual regression variables based on the grid labels
+    vn_led = if_else(leadership == "VN-led", 1, 0),
+    jp_led = if_else(leadership == "JP-led", 1, 0),
+    
+    # Set controls to reference/mean values
+    year_num = median(reg_data$year_num, na.rm = TRUE), # Median year
+    macro_area = "Physical Sciences",                   # Reference discipline
+    is_multilateral = 0,                                # Bilateral (reference)
+    prop_vn_centered = 0,                               # Mean proportion
+    is_Q1 = 0,                                          # Not Q1 (conservative)
+    is_OA = 0                                           # Not OA
+  )
+
+# 2. Predict Values (Link scale -> Response scale)
+preds <- predict(m4, newdata = pred_grid, type = "link", se.fit = TRUE)
+
+# 3. Calculate CIs and Back-transform
+plot_data <- pred_grid |> 
+  mutate(
+    fit_link = preds$fit,
+    se_link = preds$se.fit,
+    # Calculate 95% CI on link scale
+    lower_link = fit_link - 1.96 * se_link,
+    upper_link = fit_link + 1.96 * se_link,
+    # Exponentiate to get counts (Response scale)
+    predicted_citations = exp(fit_link),
+    ci_lower = exp(lower_link),
+    ci_upper = exp(upper_link),
+    
+    # Factorize for plotting
+    Funding_Status = factor(is_funded, levels = c(0, 1), labels = c("Unfunded", "Funded"))
+  )
+
+# 4. Plot
+ggplot(plot_data, aes(x = Funding_Status, y = predicted_citations, group = leadership, color = leadership)) +
+  # Error Bars
+  geom_errorbar(aes(ymin = ci_lower, ymax = ci_upper), width = 0.1, position = position_dodge(0.05)) +
+  
+  # Lines connecting the points (The Interaction)
+  geom_line(linewidth = 1, position = position_dodge(0.05)) +
+  
+  # Points
+  geom_point(size = 3, position = position_dodge(0.05)) +
+  
+  # Annotations (Optional: arrows or text if interaction is significant)
+  # This depends on your specific model results, but often useful to highlight the slope difference
+  
+  # Scales
+  scale_color_manual(
+    values = c("VN-led" = "#0173B2", "JP-led" = "#DE8F05"),
+    name = "Leadership"
+  ) +
+  scale_y_continuous(name = "Predicted Citations (95% CI)") +
+  
+  # Theme & Labels
+  labs(
+    x = "Funding Status"
+  ) +
+  theme(
+    legend.position = "bottom",
+    axis.title = element_text(face = "bold"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+
+```{r}
+#| label: fig-vn-led-irr-time
+#| fig.cap: "Evolution of the VN-led citation gap (IRR) over time (2000-2024). The shading represents the 95% confidence interval."
+#| warning: false
+
+yrs <- 0:24
+beta_vn <- coef(m4)["vn_led"]
+beta_int <- coef(m4)["vn_led:year_num"]
+v <- vcov(m4)
+se_trend <- sqrt(v["vn_led", "vn_led"] + 
+                 (yrs^2) * v["vn_led:year_num", "vn_led:year_num"] + 
+                 2 * yrs * v["vn_led", "vn_led:year_num"])
+
+tibble(
+  year = 2000 + yrs,
+  log_irr = beta_vn + beta_int * yrs,
+  se = se_trend
+) |> 
+  mutate(
+    irr = exp(log_irr),
+    lower = exp(log_irr - 1.96 * se),
+    upper = exp(log_irr + 1.96 * se)
+  ) |> 
+  ggplot(aes(x = year, y = irr)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.15, fill = "#0173B2") +
+  geom_line(color = "#0173B2", linewidth = 1) +
+  scale_y_continuous(name = "Incidence Rate Ratio (IRR)") +
+  scale_x_continuous(breaks = seq(2000, 2024, 4)) +
+  labs(
+    x = "Year"
+  )
+```
+
+
+```{r}
+#| label: table-predicted-citation-scenarios
+#| echo: true
+#| warning: false
+
+# 1. Define Scenarios
+scenarios <- tibble(
+  Scenario = c("VN-led Baseline", "JP-led Baseline", "VN-led Optimal", "JP-led Optimal"),
+  leadership = c("VN-led", "JP-led", "VN-led", "JP-led"),
+  is_funded = c(0, 0, 1, 1),
+  is_Q1 = c(0, 0, 1, 1)
+) |> 
+  mutate(
+    vn_led = if_else(leadership == "VN-led", 1, 0),
+    jp_led = if_else(leadership == "JP-led", 1, 0),
+    
+    # Set controls to reference levels
+    year_num = median(reg_data$year_num, na.rm = TRUE),
+    macro_area = "Physical Sciences",
+    is_multilateral = 0,
+    prop_vn_centered = 0,
+    is_OA = 0
+  )
+
+# 2. Predict Estimates and Confidence Intervals
+preds <- predict(m4, newdata = scenarios, type = "link", se.fit = TRUE)
+
+results <- scenarios |> 
+  mutate(
+    fit_link = preds$fit,
+    se_link = preds$se.fit,
+    pred_count = exp(fit_link),
+    ci_lower = exp(fit_link - 1.96 * se_link),
+    ci_upper = exp(fit_link + 1.96 * se_link),
+    
+    # Formatting
+    Funded = if_else(is_funded == 1, "Yes", "No"),
+    Q1 = if_else(is_Q1 == 1, "Yes", "No"),
+    Predicted = sprintf("%.1f [%.1f–%.1f]", pred_count, ci_lower, ci_upper)
+  ) |> 
+  dplyr::select(Scenario, Funded, Q1, Predicted)
+
+# 3. Generate GT Table
+table_4_3_5 <- results |> 
+  gt() |> 
+  tab_header(
+    title = "Predicted Citation Scenarios (Model 4 Estimates)"
+  ) |> 
+  cols_label(
+    Predicted = "Predicted Citations [95% CI]"
+  ) |> 
+  tab_style(
+    style = list(cell_text(weight = "bold")),
+    locations = cells_body(rows = str_detect(Scenario, "Optimal"))
+  ) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  )
+
+table_4_3_5
+```
+
+
+```{r}
+#| label: table-q1-funded-impact
+#| echo: true
+#| warning: false
+
+q1_funded <- data_core |> 
+  filter(quartile == "Q1", fund == "Funded") |> 
+  filter(leadership_label %in% c("VN-led", "JP-led")) |> 
+  droplevels()
+
+stats <- q1_funded |> 
+  group_by(leadership_label) |> 
+  summarise(
+    n = n(),
+    Mean = mean(cited, na.rm = TRUE),
+    Median = median(cited, na.rm = TRUE),
+    Q1_val = quantile(cited, 0.25, na.rm = TRUE),
+    Q3_val = quantile(cited, 0.75, na.rm = TRUE),
+    .groups = "drop"
+  ) |> 
+  mutate(
+    IQR_Display = paste0(round(Q1_val, 0), "–", round(Q3_val, 0))
+  )
+
+wt <- wilcox.test(cited ~ leadership_label, data = q1_funded)
+p_val_fmt <- if_else(wt$p.value < 0.001, "<0.001", sprintf("%.3f", wt$p.value))
+
+table_4_3_6 <- stats |> 
+  mutate(p_value = p_val_fmt) |> 
+  dplyr::select(leadership_label, n, Mean, Median, IQR_Display, p_value) |> 
+  gt() |> 
+  tab_header(
+    title = "Citation Impact for High-Quality (Q1) & Funded Papers"
+  ) |> 
+  cols_label(
+    leadership_label = "Leadership",
+    n = "N",
+    Mean = "Mean Citations",
+    Median = "Median",
+    IQR_Display = "IQR (Q1–Q3)",
+    p_value = "Mann-Whitney p"
+  ) |> 
+  fmt_integer(columns = n) |> 
+  fmt_number(columns = Mean, decimals = 1) |> 
+  fmt_number(columns = Median, decimals = 0) |> 
+  tab_style(
+    style = list(cell_text(weight = "bold")),
+    locations = cells_body(columns = leadership_label)
+  ) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  )
+
+table_4_3_6
+```
+
+
+```{r}
+#| label: fig-citation-dist-q1-funded
+#| fig.cap: "Subset analysis: Papers in Q1 journals with funding. Distribution of citations (log scale) for VN-led vs. JP-led papers."
+#| warning: false
+
+# 1. Prepare Subset
+subset_q1_funded <- data_core |> 
+  filter(quartile == "Q1", fund == "Funded") |> 
+  filter(leadership_label %in% c("VN-led", "JP-led"))
+
+# 2. Plot
+ggplot(subset_q1_funded, aes(x = leadership_label, y = cited + 1, fill = leadership_label)) +
+  # Violin plot for density
+  geom_violin(alpha = 0.6, trim = TRUE, scale = "width", color = NA) +
+  
+  # Box plot for quartiles
+  geom_boxplot(width = 0.15, alpha = 0.8, outlier.shape = NA, color = "gray20") +
+  
+  # Mean marker
+  stat_summary(fun = mean, geom = "point", shape = 23, size = 2.5, 
+               fill = "white", color = "black") +
+  
+  # Scales
+  scale_fill_manual(
+    values = c("VN-led" = "#0173B2", "JP-led" = "#DE8F05"),
+    name = "Leadership"
+  ) +
+  scale_y_log10(
+    breaks = c(1, 10, 100, 1000),
+    labels = c("0", "9", "99", "999"),
+    name = "Citations (log scale)"
+  ) +
+  
+  # Styling
+  labs(
+    x = "Leadership",
+    subtitle = "High-quality (Q1) & Funded Subset Only"
+  ) +
+  theme(
+    legend.position = "none"
+  )
+```
+
+
+```{r}
+#| label: table-robustness-checks
+#| echo: true
+#| warning: false
+
+# 1. Define Formulas
+f_main <- cited ~ vn_led + jp_led + year_num + macro_area + is_multilateral + prop_vn_centered + is_funded + is_Q1 + is_OA + vn_led:is_funded + vn_led:is_Q1 + vn_led:year_num
+f_bilateral <- cited ~ vn_led + jp_led + year_num + macro_area + prop_vn_centered + is_funded + is_Q1 + is_OA + vn_led:is_funded + vn_led:is_Q1 + vn_led:year_num
+f_ols <- log(cited + 1) ~ vn_led + jp_led + year_num + macro_area + is_multilateral + prop_vn_centered + is_funded + is_Q1 + is_OA + vn_led:is_funded + vn_led:is_Q1 + vn_led:year_num
+
+# 2. Fit Models
+# M4: Main NB Model (Already fitted, refitting for clarity)
+m_main <- glm.nb(f_main, data = reg_data)
+
+# R1: Log-OLS (Linear Model on log citations)
+m_ols <- lm(f_ols, data = reg_data)
+
+# R2: Bilateral Only (Subset, removing is_multilateral)
+data_bilateral <- reg_data |> filter(collab_mode == "Bilateral")
+m_bilateral <- glm.nb(f_bilateral, data = data_bilateral)
+
+# R3: Recent Period (2015-2024)
+data_recent <- reg_data |> filter(year >= 2015)
+m_recent <- glm.nb(f_main, data = data_recent)
+
+# 3. Extraction Function
+extract_robustness <- function(model, name, type = "NB") {
+  # Coefficients
+  coefs <- tidy(model, conf.int = FALSE) |> 
+    filter(term %in% c("vn_led", "is_funded", "is_Q1", "vn_led:is_funded", "vn_led:is_Q1")) |> 
+    mutate(
+      stars = case_when(
+        p.value < 0.001 ~ "***",
+        p.value < 0.01 ~ "**",
+        p.value < 0.05 ~ "*",
+        p.value < 0.1 ~ ".",
+        TRUE ~ ""
+      ),
+      # Format estimate with stars
+      formatted = paste0(sprintf("%.2f", estimate), stars)
+    ) |> 
+    dplyr::select(term, formatted) |> 
+    rename(!!name := formatted)
+  
+  # Fit Stats
+  n_obs <- format(nobs(model), big.mark = ",")
+  fit_stat <- if (type == "OLS") {
+    sprintf("%.3f (R²)", summary(model)$adj.r.squared)
+  } else {
+    format(round(AIC(model)), big.mark = ",")
+  }
+  
+  stats <- tibble(
+    term = c("n", "Fit_Stat"),
+    formatted = c(n_obs, fit_stat)
+  ) |> 
+    rename(!!name := formatted)
+  
+  bind_rows(coefs, stats)
+}
+
+# 4. Combine Results
+res_main <- extract_robustness(m_main, "Main Model (M4-NB)", "NB")
+res_r1 <- extract_robustness(m_ols, "R1 (Log-OLS)", "OLS")
+res_r2 <- extract_robustness(m_bilateral, "R2 (Bilateral Only)", "NB")
+res_r3 <- extract_robustness(m_recent, "R3 (Recent 2015+)", "NB")
+
+rob_table <- res_main |> 
+  full_join(res_r1, by = "term") |> 
+  full_join(res_r2, by = "term") |> 
+  full_join(res_r3, by = "term")
+
+# 5. Generate GT Table
+term_labels <- c(
+  "vn_led" = "VN-led",
+  "is_funded" = "Funded",
+  "is_Q1" = "Q1 Journal",
+  "vn_led:is_funded" = "VN-led × Funded",
+  "vn_led:is_Q1" = "VN-led × Q1",
+  "n" = "Observations",
+  "Fit_Stat" = "AIC / Adj. R²"
+)
+
+table_5_2_1 <- rob_table |> 
+  mutate(term = factor(term, levels = names(term_labels), labels = term_labels)) |> 
+  arrange(term) |> 
+  gt() |> 
+  tab_header(
+    title = "Robustness Checks for Impact Parity Models"
+  ) |> 
+  tab_style(
+    style = list(cell_text(weight = "bold")),
+    locations = cells_body(rows = term %in% c("Observations", "AIC / Adj. R²"))
+  ) |> 
+  tab_style(
+    style = cell_borders(sides = "top", color = "black", weight = px(2)),
+    locations = cells_body(rows = term == "Observations")
+  ) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  ) |> 
+  cols_align(align = "center", columns = -term)
+
+table_5_2_1
+```
+
+
+```{r}
+#| label: table-model-fit-comparison
+#| echo: true
+#| warning: false
+
+extract_fit <- function(model, name) {
+  tibble(
+    Model = name,
+    n = nobs(model),
+    Log_Likelihood = as.numeric(logLik(model)),
+    AIC = AIC(model),
+    BIC = BIC(model),
+    Theta = model$theta
+  )
+}
+
+fit_data <- bind_rows(
+  extract_fit(m1, "M1 (Baseline)"),
+  extract_fit(m2, "M2 (Structure)"),
+  extract_fit(m3, "M3 (Resources)"),
+  extract_fit(m4, "M4 (Interactions)")
+)
+
+table_5_2_2 <- fit_data |> 
+  gt() |> 
+  tab_header(
+    title = "Model Fit Comparison"
+  ) |> 
+  cols_label(
+    Log_Likelihood = "Log-Likelihood",
+    Theta = "Theta (dispersion)"
+  ) |> 
+  fmt_integer(columns = n) |> 
+  fmt_number(columns = c(Log_Likelihood, AIC, BIC), decimals = 1) |> 
+  fmt_number(columns = Theta, decimals = 3) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  ) |> 
+  cols_align(align = "center", columns = -Model)
+
+table_5_2_2
+```
+
+
+```{r}
+#| label: fig-appendix-c-diagnostics
+#| fig.cap: "Diagnostic plots for the main model (M4). Quantile residuals are used in C.1 and C.2 to assess goodness-of-fit for the negative binomial distribution."
+#| fig.width: 10
+#| fig.height: 8
+#| warning: false
+
+library(statmod)
+library(patchwork)
+
+diag_data <- tibble(
+  obs = 1:nobs(m4),
+  fitted = fitted(m4),
+  q_resid = qresiduals(m4),
+  std_resid = rstandard(m4),
+  cooks = cooks.distance(m4)
+)
+
+# C.1: Residuals vs. Fitted (using Quantile Residuals to avoid discreteness artifacts)
+p1 <- ggplot(diag_data, aes(x = fitted, y = q_resid)) +
+  geom_point(alpha = 0.5, size = 1.5, color = "#0173B2") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray30") +
+  geom_smooth(method = "loess", se = FALSE, color = "#DE8F05", linewidth = 0.8) +
+  labs(
+    title = "Figure C.1: Residuals vs. Fitted",
+    x = "Fitted Values",
+    y = "Quantile Residuals"
+  )
+
+# C.2: Q-Q Plot (Quantile Residuals)
+p2 <- ggplot(diag_data, aes(sample = q_resid)) +
+  stat_qq(color = "#0173B2", size = 1.5, alpha = 0.5) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray30") +
+  labs(
+    title = "Figure C.2: Q-Q Plot",
+    x = "Theoretical Quantiles",
+    y = "Sample Quantiles"
+  )
+
+# C.3: Cook's Distance Plot
+p3 <- ggplot(diag_data, aes(x = obs, y = cooks)) +
+  geom_segment(aes(xend = obs, yend = 0), color = "#0173B2", alpha = 0.3) +
+  geom_point(color = "#0173B2", size = 1) +
+  geom_hline(yintercept = 4 / nobs(m4), linetype = "dashed", color = "#DE8F05") +
+  annotate("text", x = 0, y = 4 / nobs(m4), label = "4/n threshold", 
+           vjust = -0.5, hjust = 0, color = "#DE8F05", size = 3) +
+  labs(
+    title = "Figure C.3: Cook's Distance",
+    x = "Observation Index",
+    y = "Cook's Distance"
+  )
+
+# C.4: Scale-Location Plot
+p4 <- ggplot(diag_data, aes(x = fitted, y = sqrt(abs(std_resid)))) +
+  geom_point(alpha = 0.5, size = 1.5, color = "#0173B2") +
+  geom_smooth(method = "loess", se = FALSE, color = "#DE8F05", linewidth = 0.8) +
+  labs(
+    title = "Figure C.4: Scale-Location",
+    x = "Fitted Values",
+    y = "√|Standardized Residuals|"
+  )
+
+(p1 + p2) / (p3 + p4)
+```
+
+
+```{r}
+#| label: table-correlation-matrix
+#| echo: true
+#| warning: false
+
+library(corrr)
+
+# 1. Select Key Variables
+cor_data <- reg_data |> 
+  dplyr::select(
+    cited, year, prop_vn_authors, 
+    vn_led, jp_led, 
+    is_funded, is_Q1, is_multilateral, is_OA
+  ) |> 
+  rename(
+    Citations = cited,
+    Year = year,
+    Prop_VN = prop_vn_authors,
+    VN_Led = vn_led,
+    JP_Led = jp_led,
+    Funded = is_funded,
+    Q1 = is_Q1,
+    Multilateral = is_multilateral,
+    OA = is_OA
+  )
+
+# 2. Calculate Correlations (Pearson)
+cor_matrix <- cor_data |> 
+  correlate(method = "pearson", quiet = TRUE) |> 
+  shave() # Remove upper triangle
+
+# 3. Generate GT Table
+table_f_3 <- cor_matrix |> 
+  gt() |> 
+  tab_header(
+    title = "Correlation Matrix of Key Variables"
+  ) |> 
+  fmt_number(
+    columns = -term,
+    decimals = 2
+  ) |> 
+  cols_label(term = "Variable") |> 
+  # Color code strong correlations
+  data_color(
+    columns = -term,
+    fn = scales::col_numeric(
+      palette = c("#DE8F05", "white", "#0173B2"),
+      domain = c(-1, 1)
+    )
+  ) |> 
+  tab_options(
+    table.font.size = 10,
+    heading.title.font.size = 12,
+    column_labels.font.weight = "bold"
+  )
+
+table_f_3
+```
+
+
+```{r}
+#| label: table-leadership-balance-characteristics
+#| echo: true
+#| warning: false
+
+# 1. Prepare Data with necessary columns
+df_char <- data_reg |>
+  mutate(
+    n_authors = str_count(affiliations, ";") + 1,
+    is_hyperauthored = n_authors > 50 | n_countries > 10,
+    collab_mode_row = case_when(
+      is_hyperauthored ~ "Hyperauthored",
+      coop == "bilateral" ~ "Bilateral",
+      TRUE ~ "Multilateral"
+    ),
+    leadership_label = case_when(
+      vn_led == 1 ~ "VN-led",
+      jp_led == 1 ~ "JP-led",
+      TRUE ~ "Other-led"
+    ),
+    leadership_label = factor(leadership_label, levels = c("VN-led", "JP-led", "Other-led"))
+  )
+
+# 2. Function to Generate Summary Table
+generate_char_table <- function(data, group_var, title_text) {
+  
+  # Calculate Totals for Share of Sample
+  total_n <- nrow(data)
+  
+  table_data <- data |>
+    filter(!is.na({{ group_var }})) |>
+    group_by({{ group_var }}) |>
+    summarise(
+      n = n(),
+      Share_of_sample = n() / total_n,
+      
+      Mean_Authors = mean(n_authors, na.rm = TRUE),
+      Mean_Countries = mean(n_countries, na.rm = TRUE),
+      Mean_Citations = mean(cited, na.rm = TRUE),
+      Median_Citations = median(cited, na.rm = TRUE),
+      
+      Q4 = mean(quartile == "Q4", na.rm = TRUE),
+      Q3 = mean(quartile == "Q3", na.rm = TRUE),
+      Q2 = mean(quartile == "Q2", na.rm = TRUE),
+      Q1 = mean(quartile == "Q1", na.rm = TRUE),
+      
+      OA_Rate = mean(OA == "OA", na.rm = TRUE),
+      
+      JP_Funded = mean(jap == 1, na.rm = TRUE),
+      VN_Funded = mean(vn == 1, na.rm = TRUE),
+      Other_Funded = mean(fund == "Funded" & jap == 0 & vn == 0, na.rm = TRUE),
+      
+      Academia = mean(uni == 1, na.rm = TRUE),
+      Public = mean(pub == 1, na.rm = TRUE),
+      Industry = mean(ind == 1, na.rm = TRUE),
+      
+      Life_Sciences = mean(LS == 1, na.rm = TRUE),
+      Physical_Sciences = mean(PS == 1, na.rm = TRUE),
+      Health_Sciences = mean(HS == 1, na.rm = TRUE),
+      Social_Sciences = mean(SS == 1, na.rm = TRUE),
+      
+      Bilateral = mean(collab_mode_row == "Bilateral", na.rm = TRUE),
+      Multilateral = mean(collab_mode_row == "Multilateral", na.rm = TRUE),
+      Hyperauthored = mean(collab_mode_row == "Hyperauthored", na.rm = TRUE)
+    ) |>
+    ungroup() |>
+    pivot_longer(cols = -{{ group_var }}, names_to = "Metric", values_to = "Value") |>
+    pivot_wider(names_from = {{ group_var }}, values_from = Value)
+  
+  # Define Row Groups
+  row_groups <- tibble(
+    Metric = c("n", "Share_of_sample", "Mean_Authors", "Mean_Countries", "Mean_Citations", "Median_Citations",
+               "Q4", "Q3", "Q2", "Q1", 
+               "OA_Rate",
+               "JP_Funded", "VN_Funded", "Other_Funded",
+               "Academia", "Public", "Industry",
+               "Life_Sciences", "Physical_Sciences", "Health_Sciences", "Social_Sciences",
+               "Bilateral", "Multilateral", "Hyperauthored"),
+    Section = c(rep("Characteristics", 6), 
+                rep("Journal Quality", 4), 
+                "Open Access",
+                rep("Funding Sources", 3), 
+                rep("Funding Sectors", 3), 
+                rep("Disciplinary", 4),
+                rep("Collaboration Mode", 3)),
+    Label = c("n", "Share of sample", "Mean authors", "Mean countries", "Mean citations", "Median citations",
+              "Q4", "Q3", "Q2", "Q1", 
+              "OA rate",
+              "JP funded", "VN funded", "Other",
+              "Academia", "Public", "Industry",
+              "Life Sciences", "Physical Sciences", "Health Sciences", "Social Sciences",
+              "Bilateral", "Multilateral", "Hyperauthored")
+  )
+  
+  # Generate GT
+  table_data |>
+    left_join(row_groups, by = "Metric") |>
+    # Ensure correct row order
+    mutate(Metric = factor(Metric, levels = row_groups$Metric)) |>
+    arrange(Metric) |>
+    group_by(Section) |>
+    gt(rowname_col = "Label") |>
+    cols_hide(columns = "Metric") |>
+    fmt_integer(rows = Metric == "n") |>
+    fmt_number(rows = Metric %in% c("Mean_Authors", "Mean_Countries", "Mean_Citations", "Median_Citations"), decimals = 1) |>
+    fmt_percent(rows = !Metric %in% c("n", "Mean_Authors", "Mean_Countries", "Mean_Citations", "Median_Citations"), decimals = 1) |>
+    tab_header(title = title_text) |>
+    tab_options(
+      table.font.size = 10, 
+      heading.title.font.size = 12, 
+      row_group.font.weight = "bold",
+      column_labels.font.weight = "bold"
+    )
+}
+
+# 3. Create Table 1: Leadership
+table_leadership_char <- generate_char_table(df_char, leadership_label, "Characteristics by Leadership")
+
+# 4. Create Table 2: Collaboration Balance (Filter out NA/Other if needed, or keep all)
+# Assuming 'collab_type' is the variable for VN-dominated, JP-dominated, Balanced
+table_balance_char <- generate_char_table(
+  df_char |> filter(collab_type %in% c("VN-dominated", "JP-dominated", "Balanced")), 
+  collab_type, 
+  "Characteristics by Collaboration Balance"
+)
+
+# Display
+table_leadership_char
+table_balance_char
 ```
