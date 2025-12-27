@@ -54,7 +54,7 @@ colors_domain <- c("PS" = "#264653", "LS" = "#2A9D8F",
 ```{r load-data}
 #| include: false
 # Load processed data
-data_reg <- read.csv("/Users/duyvnq/Library/CloudStorage/OneDrive-Personal/Documents/Projects/icis_2026/data/processed_data.csv") |> 
+dat_reg <- read.csv("/Users/duyvnq/Library/CloudStorage/OneDrive-Personal/Documents/Projects/icis_2026/data/processed_data.csv") |> 
   mutate(
     OA = factor(OA, levels = c("Not OA", "OA")),
     coop = factor(coop, levels = c("bilateral", "multilateral")),
@@ -69,7 +69,7 @@ cutoff_year <- 1950
 
 # Executive Summary
 
-This report analyzes temporal trends in **`r nrow(data_reg)` journal articles** resulting from Japan-Vietnam research collaborations (1973-2024). Key findings include:
+This report analyzes temporal trends in **`r nrow(dat_reg)` journal articles** resulting from Japan-Vietnam research collaborations (1973-2024). Key findings include:
 
 - Publications grew exponentially, particularly after 2010
 - Multilateral collaborations surpassed bilateral in 2019
@@ -86,13 +86,13 @@ This report analyzes temporal trends in **`r nrow(data_reg)` journal articles** 
 #| fig-cap: "Annual publication output showing exponential growth post-2010"
 
 # Calculate annual counts
-annual_output <- data_reg |> 
+annual_output <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   count(year, name = "publications")
 
 # Calculate growth statistics
-total_pubs <- nrow(data_reg)
-recent_5yr <- data_reg |> filter(year >= 2020) |> nrow()
+total_pubs <- nrow(dat_reg)
+recent_5yr <- dat_reg |> filter(year >= 2020) |> nrow()
 pct_recent <- round(100 * recent_5yr / total_pubs, 1)
 
 # Plot
@@ -129,7 +129,7 @@ period_labels <- c("1990-1999", "2000-2009", "2010-2014",
                    "2015-2019", "2020-2024")
 
 # Calculate CAGR for each period
-growth_rates <- data_reg |> 
+growth_rates <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   mutate(period = cut(year, breaks = period_breaks, 
                       labels = period_labels, right = FALSE)) |> 
@@ -285,7 +285,7 @@ p4
 #| fig-cap: "Shift from bilateral to multilateral collaborations over time"
 
 # Calculate proportions
-coop_trends <- data_reg |> 
+coop_trends <- dat_reg |> 
   filter(year >= cutoff_year, !is.na(coop)) |> 
   group_by(year, coop) |> 
   summarise(n = n(), .groups = "drop") |> 
@@ -331,7 +331,7 @@ p5
 #| fig-cap: "Average number of countries involved per publication over time"
 
 # Calculate average countries per year
-country_trends <- data_reg |> 
+country_trends <- dat_reg |> 
   filter(year >= cutoff_year, !is.na(n_countries)) |> 
   group_by(year) |> 
   summarise(
@@ -365,7 +365,7 @@ p6
 #| fig-cap: "Distribution of collaboration sizes over time"
 
 # Create heatmap of country counts
-country_dist <- data_reg |> 
+country_dist <- dat_reg |> 
   filter(year >= cutoff_year, !is.na(n_countries)) |> 
   mutate(
     period = cut(year, 
@@ -409,7 +409,7 @@ p7
 #| tbl-cap: "Logistic regression: Predictors of multilateral (vs bilateral) collaboration"
 
 # Prepare data
-multil_data <- data_reg |> 
+multil_data <- dat_reg |> 
   filter(year >= cutoff_year, !is.na(coop)) |> 
   mutate(
     is_multilateral = as.integer(coop == "multilateral"),
@@ -464,7 +464,7 @@ Recent years, OA status, and funding significantly predict multilateral collabor
 #| fig-cap: "Open Access adoption trajectory showing rapid growth post-2010"
 
 # Calculate OA proportions
-oa_trends <- data_reg |> 
+oa_trends <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   group_by(year, OA) |> 
   summarise(n = n(), .groups = "drop") |> 
@@ -508,7 +508,7 @@ p8
 #| fig-cap: "Open Access adoption rates vary significantly by discipline"
 
 # Calculate OA by discipline
-oa_discipline <- data_reg |> 
+oa_discipline <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   select(year, OA, LS, SS, PS, HS) |> 
   pivot_longer(cols = LS:HS, names_to = "domain", values_to = "value") |> 
@@ -547,7 +547,7 @@ p9
 #| fig-cap: "Absolute counts showing OA overtaking non-OA"
 
 # Count by year and OA
-oa_counts <- data_reg |> 
+oa_counts <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   count(year, OA)
 
@@ -578,7 +578,7 @@ p10
 #| fig-cap: "Evolution of research domains showing PS dominance with LS catching up"
 
 # Calculate domain counts
-domain_trends <- data_reg |> 
+domain_trends <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   select(year, LS, SS, PS, HS) |> 
   pivot_longer(cols = LS:HS, names_to = "domain", values_to = "value") |> 
@@ -612,7 +612,7 @@ p11
 #| fig-cap: "Proportional representation showing PS declining share despite growth"
 
 # Calculate proportions
-domain_share <- data_reg |> 
+domain_share <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   select(year, LS, SS, PS, HS) |> 
   pivot_longer(cols = LS:HS, names_to = "domain", values_to = "value") |> 
@@ -646,7 +646,7 @@ p12
 #| fig-cap: "Growing tendency toward multi-domain research"
 
 # Calculate papers spanning multiple domains
-interdisciplinary <- data_reg |> 
+interdisciplinary <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   mutate(
     n_domains = LS + SS + PS + HS,
@@ -693,8 +693,8 @@ subject_cols <- c("agr_bio", "art_hum", "bio_chem", "buss", "chem_eng",
                   "vet", "den", "heal")
 
 # Only proceed if these columns exist
-if (all(subject_cols %in% names(data_reg))) {
-  diversity_trends <- data_reg |> 
+if (all(subject_cols %in% names(dat_reg))) {
+  diversity_trends <- dat_reg |> 
     filter(year >= cutoff_year) |> 
     select(year, all_of(subject_cols)) |> 
     pivot_longer(cols = -year, names_to = "subject", values_to = "value") |> 
@@ -733,7 +733,7 @@ if (all(subject_cols %in% names(data_reg))) {
 #| fig-cap: "Journal quality distribution showing improvement toward Q1"
 
 # Calculate quartile proportions
-quartile_trends <- data_reg |> 
+quartile_trends <- dat_reg |> 
   filter(year >= cutoff_year, !is.na(quartile)) |> 
   count(year, quartile) |> 
   group_by(year) |> 
@@ -764,7 +764,7 @@ p15
 #| fig-cap: "Average journal prestige (SJR scores) with confidence intervals"
 
 # Calculate mean SJR by year
-sjr_trends <- data_reg |> 
+sjr_trends <- dat_reg |> 
   filter(year >= cutoff_year, !is.na(sjr_score)) |> 
   group_by(year) |> 
   summarise(
@@ -801,7 +801,7 @@ p16
 #| fig-cap: "Citation accumulation by publication year cohort"
 
 # Calculate citation statistics by cohort
-citation_cohorts <- data_reg |> 
+citation_cohorts <- dat_reg |> 
   filter(year >= 2000, year <= 2020) |>  # Focus on cohorts with time to accumulate
   mutate(
     cohort = cut(year, 
@@ -846,7 +846,7 @@ p17
 #| fig-cap: "Citation accumulation curves showing time-to-impact patterns"
 
 # Calculate citations per paper-age
-impact_maturation <- data_reg |> 
+impact_maturation <- dat_reg |> 
   filter(year >= 2000, year <= 2020) |> 
   mutate(age = 2024 - year) |> 
   filter(age >= 4) |>  # At least 4 years old
@@ -888,7 +888,7 @@ p18
 #| tbl-cap: "Key metrics comparison across time periods"
 
 # Define periods for comparison
-period_comparison <- data_reg |> 
+period_comparison <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   mutate(
     period = cut(year,
@@ -978,7 +978,7 @@ period_comparison |>
 #| tbl-cap: "Missingness and data completeness by key variables"
 
 # Calculate missingness
-missing_summary <- data_reg |> 
+missing_summary <- dat_reg |> 
   filter(year >= cutoff_year) |> 
   summarise(
     across(

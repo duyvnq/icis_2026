@@ -10,10 +10,10 @@ execute:
 library(tidyverse)
 library(scales)
 
-nature_colors <- c("#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+base_colors <- c("#0173B2", "#DE8F05", "#029E73", "#CC78BC",
                   "#CA9161", "#949494", "#ECE133", "#56B4E9")
 
-theme_nature <- function(base_size = 8) {
+base_theme <- function(base_size = 8) {
   theme_classic(base_size = base_size) +
     theme(
       plot.title = element_blank(),
@@ -27,7 +27,7 @@ theme_nature <- function(base_size = 8) {
     )
 }
 
-theme_set(theme_nature())
+theme_set(base_theme())
 
 dat <- read_csv("data/processed_data.csv") |>
   filter(year >= 2000) |>

@@ -12,7 +12,7 @@ library(tidyverse)
 library(kableExtra)
 library(skimr)
 
-data_reg <- read.csv("data/processed_data.csv") |>
+dat_reg <- read.csv("data/processed_data.csv") |>
   mutate(
     year = as.numeric(year),
     n_authors = as.numeric(n_authors),
@@ -33,18 +33,18 @@ data_reg <- read.csv("data/processed_data.csv") |>
     OA = factor(OA, labels = c("Closed", "Open Access"))
   )
 
-data_core <- data_reg |>
+data_core <- dat_reg |>
   filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |>
   droplevels()
 ```
 
 
 ```{r}
-data_reg |>
+dat_reg |>
   group_by(collaboration_mode) |>
   summarise(
     Papers = n(),
-    Share = sprintf("%.1f%%", n() / nrow(data_reg) * 100),
+    Share = sprintf("%.1f%%", n() / nrow(dat_reg) * 100),
     `Mean Authors` = mean(n_authors, na.rm = TRUE),
     `Mean Countries` = mean(n_countries, na.rm = TRUE),
     `Mean Citations` = mean(cited, na.rm = TRUE),
@@ -293,7 +293,7 @@ library(MASS)
 library(modelsummary)
 library(margins)
 
-data_reg <- read.csv("data/processed_data.csv") |>
+dat_reg <- read.csv("data/processed_data.csv") |>
   mutate(
     year = as.numeric(year),
     n_authors = as.numeric(n_authors),
@@ -315,7 +315,7 @@ data_reg <- read.csv("data/processed_data.csv") |>
   )
 
 # Core Corpus for Analysis
-data_core <- data_reg |>
+data_core <- dat_reg |>
   filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |>
   mutate(
     year_centered = year - 2000,
@@ -535,7 +535,7 @@ library(ggeffects)
 library(patchwork)
 
 # Load data again if needed
-data_reg <- read.csv("data/processed_data.csv") |>
+dat_reg <- read.csv("data/processed_data.csv") |>
   mutate(
     year = as.numeric(year),
     n_authors = as.numeric(n_authors),
@@ -553,7 +553,7 @@ data_reg <- read.csv("data/processed_data.csv") |>
     fund = factor(fund, labels = c("Unfunded", "Funded"))
   )
 
-data_core <- data_reg |>
+data_core <- dat_reg |>
   filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |>
   mutate(
     year_centered = year - 2000,
@@ -618,7 +618,7 @@ p2
 
 ```{r}
 # Top disciplines in Hyperauthored vs Core
-data_reg |>
+dat_reg |>
   filter(collaboration_mode == "Hyperauthored") |>
   dplyr::select(agr_bio:vet) |>
   pivot_longer(everything(), names_to = "Subject", values_to = "Present") |>

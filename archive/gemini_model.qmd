@@ -13,7 +13,7 @@ library(kableExtra)
 library(scales)
 
 # Define graphical style from rq1_1201
-theme_nature <- function(base_size = 10) {
+base_theme <- function(base_size = 10) {
   theme_classic(base_size = base_size) +
     theme(
       plot.title = element_text(face = "bold", size = 12),
@@ -27,7 +27,7 @@ theme_nature <- function(base_size = 10) {
     )
 }
 
-theme_set(theme_nature())
+theme_set(base_theme())
 
 # Palette consistent with previous files
 mode_colors <- c("Strict Bilateral" = "#4A90E2", 
@@ -35,7 +35,7 @@ mode_colors <- c("Strict Bilateral" = "#4A90E2",
                  "Hyperauthored" = "#E8B861",
                  "Other" = "gray")
 
-data_reg <- read.csv("data/processed_data.csv") |>
+dat_reg <- read.csv("data/processed_data.csv") |>
   mutate(
     year = as.numeric(year),
     n_authors = as.numeric(n_authors),
@@ -55,7 +55,7 @@ data_reg <- read.csv("data/processed_data.csv") |>
 
 ```{r}
 # Table 1: Structural Characteristics
-data_reg |>
+dat_reg |>
   group_by(collaboration_mode) |>
   summarise(
     N = n(),
@@ -65,7 +65,7 @@ data_reg |>
   ) |>
   mutate(Share = sprintf("%.1f%%", N / sum(N) * 100)) |>
   bind_rows(
-    data_reg |>
+    dat_reg |>
       summarise(
         collaboration_mode = "Total",
         N = n(),
@@ -82,7 +82,7 @@ data_reg |>
 
 ```{r}
 # Figure 1: Stacked Area Chart of Growth
-data_reg |>
+dat_reg |>
   filter(collaboration_mode != "Other") |>
   count(year, collaboration_mode) |>
   ggplot(aes(x = year, y = n, fill = collaboration_mode)) +
@@ -106,12 +106,12 @@ subject_cols <- c("agr_bio", "art_hum", "bio_chem", "buss", "chem_eng",
                   "nurse", "pharm", "phys", "psy", "soc_sci", "vet")
 
 # Calculate totals per mode for percentage normalization
-mode_totals <- data_reg |> 
+mode_totals <- dat_reg |> 
   filter(collaboration_mode != "Other") |>
   count(collaboration_mode, name = "total_docs")
 
 # Calculate subject counts
-subject_counts <- data_reg |>
+subject_counts <- dat_reg |>
   filter(collaboration_mode != "Other") |>
   dplyr::select(collaboration_mode, all_of(subject_cols)) |>
   pivot_longer(cols = -collaboration_mode, names_to = "Subject", values_to = "Present") |>
@@ -141,7 +141,7 @@ subject_counts |>
 
 ```{r}
 # Graphical theme consistent with Part 1
-theme_nature <- function(base_size = 10) {
+base_theme <- function(base_size = 10) {
   theme_classic(base_size = base_size) +
     theme(
       plot.title = element_text(face = "bold", size = 12),
@@ -154,13 +154,13 @@ theme_nature <- function(base_size = 10) {
       panel.background = element_rect(fill = "white", color = NA)
     )
 }
-theme_set(theme_nature())
+theme_set(base_theme())
 
 # Palette for Strict vs Multilateral
 equity_colors <- c("Strict Bilateral" = "#4A90E2", 
                    "Multilateral" = "#E74C3C")
 
-data_reg <- read.csv("data/processed_data.csv") |>
+dat_reg <- read.csv("data/processed_data.csv") |>
   mutate(
     year = as.numeric(year),
     collaboration_mode = factor(collaboration_mode, 
@@ -168,7 +168,7 @@ data_reg <- read.csv("data/processed_data.csv") |>
   )
 
 # Core Corpus: Excluding Hyperauthored for Equity Analysis
-data_core <- data_reg |>
+data_core <- dat_reg |>
   filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |>
   droplevels()
 ```
@@ -247,7 +247,7 @@ library(modelsummary)
 library(ggeffects)
 library(scales)
 
-theme_nature <- function(base_size = 10) {
+base_theme <- function(base_size = 10) {
   theme_classic(base_size = base_size) +
     theme(
       plot.title = element_text(face = "bold", size = 12),
@@ -260,9 +260,9 @@ theme_nature <- function(base_size = 10) {
       panel.background = element_rect(fill = "white", color = NA)
     )
 }
-theme_set(theme_nature())
+theme_set(base_theme())
 
-data_reg <- read.csv("data/processed_data.csv") |>
+dat_reg <- read.csv("data/processed_data.csv") |>
   mutate(
     year = as.numeric(year),
     collaboration_mode = factor(collaboration_mode, 
@@ -273,7 +273,7 @@ data_reg <- read.csv("data/processed_data.csv") |>
     fund = factor(fund, labels = c("Unfunded", "Funded"))
   )
 
-data_core <- data_reg |>
+data_core <- dat_reg |>
   filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |>
   mutate(
     year_centered = year - 2000,
@@ -285,7 +285,7 @@ data_core <- data_reg |>
 ```{r}
 # Table 4: Descriptive Impact Matrix
 # Objective: Compare Mean (Median) citations across Leadership and Mode
-impact_summary <- data_reg |>
+impact_summary <- dat_reg |>
   filter(collaboration_mode != "Other") |>
   group_by(collaboration_mode, vn_led) |>
   summarise(
@@ -296,7 +296,7 @@ impact_summary <- data_reg |>
   dplyr::select(-vn_led) |>
   pivot_wider(names_from = Leadership, values_from = Metric)
 
-data_reg |>
+dat_reg |>
   filter(collaboration_mode != "Other") |>
   count(collaboration_mode) |>
   left_join(impact_summary, by = "collaboration_mode") |>
@@ -366,7 +366,7 @@ library(tidyverse)
 library(kableExtra)
 library(scales)
 
-data_reg <- read.csv("data/processed_data.csv") |>
+dat_reg <- read.csv("data/processed_data.csv") |>
   mutate(
     year = as.numeric(year),
     n_authors = as.numeric(n_authors),
@@ -381,7 +381,7 @@ data_reg <- read.csv("data/processed_data.csv") |>
 # Table 6: Funding Landscape by Mode (Mutually Exclusive Categories)
 # Objective: Show who funds the partnership. Row Total = 100%.
 
-funding_data <- data_reg |>
+funding_data <- dat_reg |>
   filter(collaboration_mode != "Other") |>
   mutate(
     Funding_Source = case_when(
@@ -412,7 +412,7 @@ funding_data |>
 # Objective: Since "Japan Unilateral" might hide US/EU co-funding in Multilateral papers, 
 # this table explicitly checks for US/EU presence regardless of JP/VN funding.
 
-data_reg |>
+dat_reg |>
   filter(collaboration_mode != "Other") |>
   group_by(collaboration_mode) |>
   summarise(
@@ -433,17 +433,17 @@ library(kableExtra)
 library(scales)
 
 # Theme
-theme_nature <- function(base_size = 10) {
+base_theme <- function(base_size = 10) {
   theme_classic(base_size = base_size) +
     theme(
       plot.title = element_text(face = "bold", size = 12),
       legend.position = "bottom"
     )
 }
-theme_set(theme_nature())
+theme_set(base_theme())
 
 # Load Data
-data_reg <- read.csv("data/processed_data.csv") |>
+dat_reg <- read.csv("data/processed_data.csv") |>
   mutate(
     year = as.numeric(year),
     collaboration_mode = factor(collaboration_mode, 
@@ -452,7 +452,7 @@ data_reg <- read.csv("data/processed_data.csv") |>
   )
 
 # Core Corpus
-data_core <- data_reg |>
+data_core <- dat_reg |>
   filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral"))
 ```
 
@@ -494,7 +494,7 @@ funding_data |>
 
 subject_cols <- c("agr_bio", "med", "eng", "env_sci", "phys", "chem", "mat_sci")
 
-data_reg |>
+dat_reg |>
   filter(collaboration_mode == "Hyperauthored") |>
   dplyr::select(any_of(subject_cols)) |>
   pivot_longer(everything(), names_to = "Subject", values_to = "Present") |>

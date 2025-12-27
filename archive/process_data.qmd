@@ -24,7 +24,7 @@ Additional data will be incorporated in this document.
 library(tidyverse)
 
 # Loading dataset
-data_reg <- read.csv("data/all_1020.csv") |> 
+dat_reg <- read.csv("data/all_1020.csv") |> 
   select(Year, Source.title, Cited.by, Affiliations, DOI, Open.Access) |> 
   rename(
     year = Year,
@@ -49,7 +49,7 @@ data_source <- read.csv("data/sources.csv") |>
   arrange(title) |> 
   distinct(title, .keep_all = TRUE)
 
-data_reg <- data_reg |> 
+dat_reg <- dat_reg |> 
     left_join(data_source, by = "title")
 
 ```
@@ -58,7 +58,7 @@ data_reg <- data_reg |>
 This part deal with types of cooporation (bilateral vs multilateral).
 
 ```{r}
-affiliations_long <- data_reg |> 
+affiliations_long <- dat_reg |> 
   select(!mult:heal) |> 
   separate_rows(affiliations, sep = ";") |> 
   mutate(affiliations = str_trim(affiliations)) |> 
@@ -90,7 +90,7 @@ coop_type <- affiliations_long |>
   ) |> 
   select(id, coop, n_countries)
 
-data_reg <- data_reg |> 
+dat_reg <- dat_reg |> 
   left_join(coop_type, by = "id")
 ```
 
@@ -224,14 +224,14 @@ merged <- bind_rows(dfs) |>
     .groups = "drop"
   )
 
-data_reg <- data_reg |> 
+dat_reg <- dat_reg |> 
   left_join(merged, by = "DOI")
 
-data_reg <- data_reg |> 
+dat_reg <- dat_reg |> 
   mutate(across(asian:vn, ~ replace_na(., 0))) |> 
   mutate(fund = as.integer(if_any(asian:vn, ~ . != 0)))
 
-data_reg <- data_reg |> 
+dat_reg <- dat_reg |> 
   mutate(
     n_funder = asian + eu + int + jap + us + vn,
     n_ftype = ind + pub + ind
@@ -258,14 +258,14 @@ sjr <- read_delim("data/sjr.csv", delim = ";") |>
   arrange(title) |> 
   distinct(title, .keep_all = TRUE)
 
-data_reg <- data_reg |> 
+dat_reg <- dat_reg |> 
   left_join(sjr, by = "title")
 ```
 
 Category data will be factorized here:
 
 ```{r}
-data_reg <- data_reg |> 
+dat_reg <- dat_reg |> 
   mutate(
     OA = factor(OA, labels = c("Not OA", "OA")),
     coop = factor(coop, labels = c("bilateral", "multilateral")), 
@@ -274,7 +274,7 @@ data_reg <- data_reg |>
     n_ftype = as.factor(n_ftype)
   )
 
-write.csv(data_reg, "data/processed_data.csv", row.names = FALSE, na = "")
+write.csv(dat_reg, "data/processed_data.csv", row.names = FALSE, na = "")
 ```
 
 After processing, data is stored in `processed_data.csv`.
@@ -305,7 +305,7 @@ write.csv(sdg_results, "data/sdg.csv", row.names = FALSE, na = "")
 
 
 ```{r}
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   mutate(
     # Extract first affiliation (before first semicolon)
     first_affiliation = str_extract(affiliations, "^[^;]+"),
@@ -318,15 +318,15 @@ data_reg <- data_reg |>
   select(-first_affiliation)  # Remove temporary column if you don't need it
 
 # Verify - should sum to number of rows
-sum(data_reg$fa_vn + data_reg$fa_jp + data_reg$fa_o) == nrow(data_reg)
+sum(dat_reg$fa_vn + dat_reg$fa_jp + dat_reg$fa_o) == nrow(dat_reg)
 
 # Check distribution
-table(data_reg$fa_vn, data_reg$fa_jp, data_reg$fa_o)
+table(dat_reg$fa_vn, dat_reg$fa_jp, dat_reg$fa_o)
 ```
 
 
 ```{r}
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   mutate(
     # Split affiliations by semicolon, count how many contain Vietnam/Japan
     n_vn_authors = map_int(affiliations, ~{
@@ -340,13 +340,13 @@ data_reg <- data_reg |>
     })
   )
 # Check distribution
-summary(data_reg$n_vn_authors)
-summary(data_reg$n_jp_authors)
+summary(dat_reg$n_vn_authors)
+summary(dat_reg$n_jp_authors)
 
 # Cross-tabulation
-table(data_reg$n_vn_authors, data_reg$n_jp_authors)
+table(dat_reg$n_vn_authors, dat_reg$n_jp_authors)
 
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   mutate(
     # Total VN+JP authors
     n_vn_jp_authors = n_vn_authors + n_jp_authors,
@@ -368,23 +368,23 @@ data_reg <- data_reg |>
   )
 
   # Pick a random row and check manually
-sample_row <- sample(1:nrow(data_reg), 1)
-data_reg[sample_row, c("affiliations", "n_vn_authors", "n_jp_authors")]
+sample_row <- sample(1:nrow(dat_reg), 1)
+dat_reg[sample_row, c("affiliations", "n_vn_authors", "n_jp_authors")]
 ```
 
 export
 
 ```{r}
 sdg_results$document <- as.integer(sdg_results$document)
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   left_join(sdg_results, by = c("id" = "document"))
 
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   mutate(
     across(starts_with("SDG-"), ~ replace_na(., 0)),
     across(starts_with("SDG-"), ~ if_else(. > 0, 1, 0)),
     n_sdg = rowSums(pick(starts_with("SDG-")), na.rm = TRUE)
   )
 
-write.csv(data_reg, "data/processed_data.csv", row.names = FALSE, na = "")
+write.csv(dat_reg, "data/processed_data.csv", row.names = FALSE, na = "")
 ```

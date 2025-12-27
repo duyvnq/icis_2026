@@ -13,20 +13,19 @@ editor: visual
 #| warning: false
 #| message: false
 
-# 1. Load Libraries
 library(tidyverse)
 library(scales)
 library(gt)
 library(patchwork)
 library(systemfonts) 
+library(knitr)
 
-# 2. Define Nature-Style Theme
-nature_colors <- c(
+base_colors <- c(
   "#0173B2", "#DE8F05", "#029E73", "#CC78BC",
   "#CA9161", "#949494", "#ECE133", "#56B4E9"
 )
 
-theme_nature <- function(base_size = 10, base_family = "sans") {
+base_theme <- function(base_size = 10, base_family = "sans") {
   theme_classic(base_size = base_size, base_family = base_family) +
     theme(
       plot.title = element_text(size = base_size + 2, face = "bold", hjust = 0, margin = margin(b = 5)),
@@ -45,46 +44,28 @@ theme_nature <- function(base_size = 10, base_family = "sans") {
     )
 }
 
-theme_set(theme_nature())
+theme_set(base_theme())
 
-scale_colour_discrete <- function(...) scale_colour_manual(values = nature_colors, ...)
-scale_fill_discrete <- function(...) scale_fill_manual(values = nature_colors, ...)
+scale_colour_discrete <- function(...) scale_colour_manual(values = base_colors, ...)
+scale_fill_discrete <- function(...) scale_fill_manual(values = base_colors, ...)
 
 # 3. Load Data
-data_reg <- read.csv("data/processed_data.csv") |> 
+dat_reg <- read.csv("data/processed_data.csv") |> 
   mutate(
-    # Ensure correct factor ordering for visualization
     quartile = factor(quartile, levels = c("Q1", "Q2", "Q3", "Q4")),
-    
     OA = factor(OA, levels = c("Not OA", "OA")),
-    
     fund = factor(fund, levels = c("Not funded", "Funded")),
-    
     collaboration_mode = factor(collaboration_mode, 
                                levels = c("Strict Bilateral", "Multilateral", "Hyperauthored", "Other")),
-    
     collab_type = factor(collab_type, 
                         levels = c("VN-dominated", "Balanced", "JP-dominated", "Other")),
-    
-    # Create explicit leadership label if not present
     leadership_label = case_when(
       vn_led == 1 ~ "VN-led",
       jp_led == 1 ~ "JP-led",
       TRUE ~ "Other-led"
     ),
     leadership_label = factor(leadership_label, levels = c("VN-led", "JP-led", "Other-led"))
-  )
-
-# Create core subset excluding hyperauthored papers for equity/impact analysis
-data_core <- data_reg |> 
-  filter(collaboration_mode != "Hyperauthored")
-```
-
-```{r}
-library(tidyverse)
-library(gt)
-
-data_reg <- read.csv("data/processed_data.csv") |>
+  ) |> 
   mutate(
     n_authors = str_count(affiliations, ";") + 1,
     n_countries = if("n_countries" %in% names(read.csv("data/processed_data.csv"))) n_countries else 2,
@@ -98,7 +79,11 @@ data_reg <- read.csv("data/processed_data.csv") |>
     collab_mode = factor(collab_mode, levels = c("Bilateral", "Multilateral", "Hyper-authored"))
   )
 
-table_data <- data_reg |>
+dat_core <- dat_reg |> filter(collab_mode != "Hyper-authored")
+```
+
+```{r}
+table_data <- dat_reg |>
   filter(!is.na(collab_mode)) |>
   group_by(collab_mode) |>
   summarise(
@@ -126,36 +111,10 @@ table_data <- data_reg |>
   ungroup() |>
   mutate(Share_of_Sample = n / sum(n)) |>
   pivot_longer(cols = -collab_mode, names_to = "Metric", values_to = "Value") |>
-  pivot_wider(names_from = collab_mode, values_from = Value)
+  pivot_wider(names_from = collab_mode, values_from = Value) |> 
+  kable(digit = 4)
 
-row_groups <- tibble(
-  Metric = c("n", "Share_of_Sample", "Mean_Authors", "Mean_Countries", "Mean_Citations", "Median_Citations",
-             "Q1", "Q2", "Q3", "Q4", "OA_Rate",
-             "JP_Funded", "VN_Funded", "Other_Funded",
-             "Academia", "Public", "Industry",
-             "Life_Sciences", "Physical_Sciences", "Health_Sciences", "Social_Sciences"),
-  Section = c(rep("Characteristics", 6), rep("Journal Quality", 4), "Open Access",
-              rep("Funding Sources", 3), rep("Funding Sectors", 3), rep("Disciplinary", 4)),
-  Label = c("N", "Share of sample", "Mean authors", "Mean countries", "Mean citations", "Median citations",
-            "Q1", "Q2", "Q3", "Q4", "OA rate",
-            "JP funded", "VN funded", "Other",
-            "Academia", "Public", "Industry",
-            "Life Sciences", "Physical Sciences", "Health Sciences", "Social Sciences")
-)
-
-final_table <- table_data |>
-  left_join(row_groups, by = "Metric") |>
-  group_by(Section) |>
-  gt(rowname_col = "Label") |>
-  cols_hide(columns = "Metric") |>
-  fmt_integer(columns = -c(Metric, Section, Label), rows = Metric == "n") |>
-  fmt_number(columns = -c(Metric, Section, Label), rows = Metric %in% c("Mean_Authors", "Mean_Countries", "Mean_Citations", "Median_Citations"), decimals = 1) |>
-  fmt_percent(columns = -c(Metric, Section, Label), rows = !Metric %in% c("n", "Mean_Authors", "Mean_Countries", "Mean_Citations", "Median_Citations"), decimals = 1) |>
-  row_group_order(groups = c("Characteristics", "Journal Quality", "Open Access", "Funding Sources", "Funding Sectors", "Disciplinary")) |>
-  tab_header(title = "Characteristics Across Collaboration Modes") |>
-  tab_options(table.font.size = 10, heading.title.font.size = 12, row_group.font.weight = "bold")
-
-final_table
+table_data
 ```
 
 ```{r}
@@ -163,16 +122,39 @@ final_table
 #| echo: true
 #| warning: false
 
-# 1. Prepare Data Subsets
-df_total <- data_reg
-df_clean <- data_reg |> 
-  filter(is_hyperauthored == 0)
+subject_mapping <- c(
+  "agr_bio" = "Agricultural and Biological Sciences",
+  "arts"    = "Arts and Humanities",
+  "bioch"   = "Biochemistry, Genetics and Molecular Biology",
+  "bus"     = "Business, Management and Accounting",
+  "chem"    = "Chemistry",
+  "comp"    = "Computer Science",
+  "deci"    = "Decision Sciences",
+  "dent"    = "Dentistry",
+  "earth"   = "Earth and Planetary Sciences",
+  "econ"    = "Economics, Econometrics and Finance",
+  "ener"    = "Energy",
+  "engi"    = "Engineering",
+  "env"     = "Environmental Science",
+  "heal"    = "Health Professions",
+  "immu"    = "Immunology and Microbiology",
+  "mate"    = "Materials Science",
+  "math"    = "Mathematics",
+  "medi"    = "Medicine",
+  "neur"    = "Neuroscience",
+  "nurs"    = "Nursing",
+  "phar"    = "Pharmacology, Toxicology and Pharmaceutics",
+  "phys"    = "Physics and Astronomy",
+  "psyc"    = "Psychology",
+  "soci"    = "Social Sciences",
+  "vete"    = "Veterinary",
+  "mult"    = "Multidisciplinary"
+)
 
-# 2. Function to Calculate Subject Counts
 calc_subjects <- function(data, label_suffix) {
   data |> 
     select(any_of(names(subject_mapping))) |> 
-    summarise(across(everything(), sum, na.rm = TRUE)) |> 
+    summarise(across(everything(), \(x) mean(x, na.rm = TRUE))) |> 
     pivot_longer(everything(), names_to = "Abbr", values_to = paste0("n_", label_suffix)) |> 
     mutate(
       Subject = subject_mapping[Abbr],
@@ -181,46 +163,17 @@ calc_subjects <- function(data, label_suffix) {
     select(Subject, starts_with("n_"), starts_with("share_"))
 }
 
-# 3. Compute and Join (Prioritizing Clean for Sorting/Selection)
-subjects_clean <- calc_subjects(df_clean, "clean")
-subjects_total <- calc_subjects(df_total, "total")
+subjects_clean <- calc_subjects(dat_core, "clean")
+subjects_total <- calc_subjects(dat_reg, "total")
 
 final_subjects <- subjects_clean |> 
   arrange(desc(n_clean)) |> 
   slice_head(n = 10) |> 
   left_join(subjects_total, by = "Subject") |> 
-  select(Subject, n_clean, share_clean, n_total, share_total)
+  select(Subject, n_clean, share_clean, n_total, share_total) |> 
+  kable()
 
-# 4. Generate GT Table
-table_sensitivity <- final_subjects |> 
-  gt() |> 
-  tab_header(
-    title = "Top 10 Subject Areas (Ordered by Non-Hyperauthored)"
-  ) |> 
-  cols_label(
-    Subject = "Subject Area",
-    n_clean = "N",
-    share_clean = "%",
-    n_total = "N",
-    share_total = "%"
-  ) |> 
-  tab_spanner(
-    label = "Excluding Hyper-authored",
-    columns = c(n_clean, share_clean)
-  ) |> 
-  tab_spanner(
-    label = "All Papers",
-    columns = c(n_total, share_total)
-  ) |> 
-  fmt_integer(columns = c(n_clean, n_total)) |> 
-  fmt_percent(columns = c(share_clean, share_total), decimals = 1) |> 
-  tab_options(
-    table.font.size = 10,
-    heading.title.font.size = 12,
-    column_labels.font.weight = "bold"
-  )
-
-table_sensitivity
+final_subjects
 ```
 
 ```{r}
@@ -228,8 +181,7 @@ table_sensitivity
 #| fig.cap: "Publication trends by collaboration mode with annual growth rate (2000-2024)."
 #| warning: false
 
-# 1. Prepare Data
-annual_mode_counts <- data_reg |> 
+annual_mode_counts <- dat_reg |> 
   filter(year >= 2000, year <= 2024) |> 
   filter(collab_mode %in% c("Bilateral", "Multilateral", "Hyper-authored")) |>
   count(year, collab_mode) |> 
@@ -237,54 +189,39 @@ annual_mode_counts <- data_reg |>
   mutate(total_n = sum(n)) |> 
   ungroup()
 
-# Calculate growth rate on the totals
 annual_growth <- annual_mode_counts |> 
   distinct(year, total_n) |> 
   arrange(year) |> 
   mutate(growth = total_n / lag(total_n) - 1) |> 
   mutate(growth = replace_na(growth, 0)) # Handle first year NA
 
-# Merge back for plotting (though we can plot separate layers)
-# Define scaling factor for secondary axis
 max_n <- max(annual_mode_counts$total_n)
-# Assuming max growth might be around 50-100%, we scale 1 (100%) to max_n
 scale_factor <- max_n 
 
-# 2. Plot
 ggplot() +
-  # Stacked Bar Chart
   geom_col(
     data = annual_mode_counts, 
     aes(x = year, y = n, fill = collab_mode),
     width = 0.85, alpha = 0.9
   ) +
-  
-  # Growth Rate Line (Scaled)
   geom_line(
     data = annual_growth,
     aes(x = year, y = growth * scale_factor),
     color = "#E85D75", linewidth = 1
   ) +
-  
-  # Total Count Labels
   geom_text(
     data = annual_growth,
     aes(x = year, y = total_n, label = total_n),
     vjust = -0.5, size = 2.5, color = "gray20"
   ) +
-  
-  # Policy Annotations (Vertical Lines Only)
   geom_vline(xintercept = 2009, linetype = "dashed", color = "gray40", linewidth = 0.4) +
   annotate("text", x = 2009, y = max_n * 0.95, 
            label = "2009 Strategic\nPartnership", 
            hjust = 1.1, vjust = 1, size = 2.5, color = "gray30", lineheight = 0.9) +
-  
   geom_vline(xintercept = 2014, linetype = "dashed", color = "gray40", linewidth = 0.4) +
   annotate("text", x = 2014, y = max_n * 0.95, 
            label = "2014 Extensive\nStrategic Partnership", 
            hjust = -0.1, vjust = 1, size = 2.5, color = "gray30", lineheight = 0.9) +
-  
-  # Scales
   scale_fill_manual(
     values = c("Bilateral" = "#0173B2", "Multilateral" = "#DE8F05", "Hyper-authored" = "#029E73"),
     name = "collaboration_mode"
@@ -295,8 +232,6 @@ ggplot() +
     sec.axis = sec_axis(~ . / scale_factor, name = "Year-on-year growth (%)", labels = percent)
   ) +
   scale_x_continuous(breaks = seq(2000, 2024, 5)) +
-  
-  # Theme
   labs(
     x = "Year"
   ) +
@@ -314,12 +249,11 @@ ggplot() +
 #| fig.cap: "Evolution of journal quality quartiles (2000-2024)."
 #| warning: false
 
-data_reg |> 
+dat_reg |> 
   filter(year >= 2000, year <= 2024) |> 
   filter(quartile %in% c("Q1", "Q2", "Q3", "Q4")) |> 
   count(year, quartile) |> 
   ggplot(aes(x = year, y = n, fill = fct_rev(quartile))) +
-  # Reduced alpha to 0.6 to soften the colors
   geom_area(position = "fill", alpha = 0.6, color = "white", linewidth = 0.2) +
   scale_fill_manual(
     values = c("Q1" = "#0173B2", "Q2" = "#029E73", "Q3" = "#DE8F05", "Q4" = "#949494"),
@@ -337,7 +271,7 @@ data_reg |>
 #| warning: false
 
 # 1. Prepare Data
-macro_trends <- data_reg |> 
+macro_trends <- dat_reg |> 
   filter(year >= 2000, year <= 2024) |> 
   select(year, LS, PS, HS, SS) |> 
   group_by(year) |> 
@@ -395,7 +329,7 @@ p2
 #| warning: false
 
 # 1. Calculate Statistics by Mode
-stats_by_mode <- data_core |> 
+stats_by_mode <- dat_core |> 
   group_by(collaboration_mode) |> 
   summarise(
     n = n(),
@@ -408,7 +342,7 @@ stats_by_mode <- data_core |>
   rename(Mode = collaboration_mode)
 
 # 2. Calculate Total Statistics
-stats_total <- data_core |> 
+stats_total <- dat_core |> 
   summarise(
     n = n(),
     Mean_Prop_VN = mean(prop_vn_authors, na.rm = TRUE),
@@ -591,8 +525,8 @@ ggplot(leadership_trends, aes(x = year, y = n, fill = leadership_label)) +
 #| warning: false
 
 # 1. Prepare Data
-# Using data_reg and standardizing 'Strict Bilateral' to 'Bilateral'
-balance_dist <- data_reg |> 
+# Using dat_reg and standardizing 'Strict Bilateral' to 'Bilateral'
+balance_dist <- dat_reg |> 
   filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |> 
   mutate(
     Mode = if_else(collaboration_mode == "Strict Bilateral", "Bilateral", "Multilateral"),
@@ -613,7 +547,7 @@ balance_wide <- balance_dist |>
   )
 
 # 3. Calculate Totals
-total_row <- data_reg |> 
+total_row <- dat_reg |> 
   filter(collaboration_mode %in% c("Strict Bilateral", "Multilateral")) |> 
   mutate(
     Mode = if_else(collaboration_mode == "Strict Bilateral", "Bilateral", "Multilateral")
@@ -805,7 +739,7 @@ p1 + p2 + plot_layout(ncol = 2)
 #| warning: false
 
 # 1. FIX: Ensure data_core has the correct variables
-data_core <- data_reg |> 
+data_core <- dat_reg |> 
   filter(collaboration_mode != "Hyperauthored") |> # Filter out hyper-authored first
   mutate(
     # Create collab_mode from collaboration_mode
@@ -1978,7 +1912,7 @@ table_f_3
 #| warning: false
 
 # 1. Prepare Data with necessary columns
-df_char <- data_reg |>
+df_char <- dat_reg |>
   mutate(
     n_authors = str_count(affiliations, ";") + 1,
     is_hyperauthored = n_authors > 50 | n_countries > 10,

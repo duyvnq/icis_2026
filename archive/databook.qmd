@@ -30,7 +30,7 @@ library(knitr)
 library(scales)
 
 # Load processed data
-data_reg <- read_csv("/Users/duyvnq/Library/CloudStorage/OneDrive-Personal/Documents/Projects/icis_2026/data/processed_data.csv", show_col_types = FALSE) |> 
+dat_reg <- read_csv("/Users/duyvnq/Library/CloudStorage/OneDrive-Personal/Documents/Projects/icis_2026/data/processed_data.csv", show_col_types = FALSE) |> 
   rename_with(~ gsub("SDG-", "SDG_", .), starts_with("SDG-"))
 
 # Helper functions
@@ -69,9 +69,9 @@ summarize_categorical <- function(x) {
 **Date extracted**: October 20, 2025 at 17:30 GMT+7  
 **Document type**: Journal articles only  
 **Time period**: 1972–2025  
-**Total records**: `r format(nrow(data_reg), big.mark = ",")` articles
+**Total records**: `r format(nrow(dat_reg), big.mark = ",")` articles
 
-**Total columns**: `r ncol(data_reg)`
+**Total columns**: `r ncol(dat_reg)`
 
 **Variable categories**:
 
@@ -115,22 +115,22 @@ The raw Scopus export was processed through multiple stages:
 
 ### id {-}
 **Type**: Integer  
-**Description**: Unique row identifier (1 to `r nrow(data_reg)`)  
-**Missing**: `r sum(is.na(data_reg$id))`
+**Description**: Unique row identifier (1 to `r nrow(dat_reg)`)  
+**Missing**: `r sum(is.na(dat_reg$id))`
 
 ### DOI {-}
 **Type**: Character  
 **Description**: Digital Object Identifier  
-**Missing**: `r sum(is.na(data_reg$DOI))` (`r round(100*mean(is.na(data_reg$DOI)), 1)`%)
+**Missing**: `r sum(is.na(dat_reg$DOI))` (`r round(100*mean(is.na(dat_reg$DOI)), 1)`%)
 
 ### year {-}
 **Type**: Integer  
 **Description**: Publication year  
-**Range**: `r min(data_reg$year, na.rm=TRUE)` – `r max(data_reg$year, na.rm=TRUE)`  
-**Missing**: `r sum(is.na(data_reg$year))`
+**Range**: `r min(dat_reg$year, na.rm=TRUE)` – `r max(dat_reg$year, na.rm=TRUE)`  
+**Missing**: `r sum(is.na(dat_reg$year))`
 
 ```{r year-summary}
-summarize_numeric(data_reg$year) |> 
+summarize_numeric(dat_reg$year) |> 
   kable(caption = "Summary statistics: year") 
 ```
 
@@ -138,25 +138,25 @@ summarize_numeric(data_reg$year) |>
 ### title {-}
 **Type**: Character  
 **Description**: Journal title (source)  
-**Unique values**: `r n_distinct(data_reg$title, na.rm = TRUE)`  
-**Missing**: `r sum(is.na(data_reg$title))`
+**Unique values**: `r n_distinct(dat_reg$title, na.rm = TRUE)`  
+**Missing**: `r sum(is.na(dat_reg$title))`
 
 ## Impact and Quality Indicators
 
 ### cited {-}
 **Type**: Integer  
 **Description**: Total citation count as of October 2025  
-**Range**: `r min(data_reg$cited, na.rm=TRUE)` – `r max(data_reg$cited, na.rm=TRUE)`
+**Range**: `r min(dat_reg$cited, na.rm=TRUE)` – `r max(dat_reg$cited, na.rm=TRUE)`
 
 ```{r cited-summary}
-summarize_numeric(data_reg$cited) |> 
+summarize_numeric(dat_reg$cited) |> 
   kable(caption = "Summary statistics: cited") 
 ```
 
 ```{r cited-dist}
 #| fig.height: 3.5
 
-data_reg |> 
+dat_reg |> 
   ggplot(aes(x = cited)) +
   geom_histogram(bins = 50, fill = "steelblue", color = "white") +
   scale_x_log10(labels = comma) +
@@ -174,7 +174,7 @@ data_reg |>
 **Levels**: Q1 (highest) to Q4 (lowest)
 
 ```{r quartile-summary}
-summarize_categorical(data_reg$quartile) |> 
+summarize_categorical(dat_reg$quartile) |> 
   kable(caption = "Frequency distribution: quartile") 
 ```
 
@@ -183,7 +183,7 @@ summarize_categorical(data_reg$quartile) |>
 **Description**: SCImago Journal Rank score (continuous measure of journal prestige)
 
 ```{r sjr-summary}
-summarize_numeric(data_reg$sjr_score) |> 
+summarize_numeric(dat_reg$sjr_score) |> 
   kable(caption = "Summary statistics: sjr_score") 
 ```
 
@@ -197,7 +197,7 @@ summarize_numeric(data_reg$sjr_score) |>
 - multilateral: More than 2 countries
 
 ```{r coop-summary}
-summarize_categorical(data_reg$coop) |> 
+summarize_categorical(dat_reg$coop) |> 
   kable(caption = "Frequency distribution: coop") 
 ```
 
@@ -206,7 +206,7 @@ summarize_categorical(data_reg$coop) |>
 **Description**: Number of unique countries involved in collaboration
 
 ```{r ncountries-summary}
-summarize_numeric(data_reg$n_countries) |> 
+summarize_numeric(dat_reg$n_countries) |> 
   kable(caption = "Summary statistics: n_countries") 
 ```
 
@@ -223,7 +223,7 @@ summarize_numeric(data_reg$n_countries) |>
 **Levels**: Not funded, Funded
 
 ```{r fund-summary}
-summarize_categorical(data_reg$fund) |> 
+summarize_categorical(dat_reg$fund) |> 
   kable(caption = "Frequency distribution: fund") 
 ```
 
@@ -239,7 +239,7 @@ Binary indicators (0/1) for funding from each region:
 - **vn**: Vietnam
 
 ```{r funder-regions}
-data_reg |> 
+dat_reg |> 
   summarise(
     across(c(asian, eu, int, jap, us, vn), 
            ~ sum(., na.rm = TRUE))
@@ -247,7 +247,7 @@ data_reg |>
   pivot_longer(everything(), names_to = "Region", values_to = "Articles") |> 
   mutate(
     Region = toupper(Region),
-    Percentage = round(100 * Articles / nrow(data_reg), 1)
+    Percentage = round(100 * Articles / nrow(dat_reg), 1)
   ) |> 
   arrange(desc(Articles)) |> 
   kable(
@@ -265,7 +265,7 @@ Binary indicators (0/1) for funding from each sector:
 - **ind**: Industry/private sector funding
 
 ```{r funder-sectors}
-data_reg |> 
+dat_reg |> 
   summarise(
     across(c(pub, uni, ind), 
            ~ sum(., na.rm = TRUE))
@@ -277,7 +277,7 @@ data_reg |>
       Sector == "uni" ~ "University",
       Sector == "ind" ~ "Industry"
     ),
-    Percentage = round(100 * Articles / nrow(data_reg), 1)
+    Percentage = round(100 * Articles / nrow(dat_reg), 1)
   ) |> 
   arrange(desc(Articles)) |> 
   kable(
@@ -291,7 +291,7 @@ data_reg |>
 **Description**: Number of distinct funder regions (0–6)
 
 ```{r nregions-summary}
-summarize_categorical(data_reg$n_regions) |> 
+summarize_categorical(dat_reg$n_regions) |> 
   kable(caption = "Frequency distribution: n_regions") 
 ```
 
@@ -300,7 +300,7 @@ summarize_categorical(data_reg$n_regions) |>
 **Description**: Number of distinct funder sectors (0–3)
 
 ```{r nsectors-summary}
-summarize_categorical(data_reg$n_sectors) |> 
+summarize_categorical(dat_reg$n_sectors) |> 
   kable(caption = "Frequency distribution: n_sectors") 
 ```
 
@@ -309,7 +309,7 @@ summarize_categorical(data_reg$n_sectors) |>
 **Description**: Japan AND Vietnam co-funding (both jap=1 and vn=1)
 
 ```{r bilateral-funding}
-data_reg |> 
+dat_reg |> 
   count(bilateral_funding) |> 
   mutate(
     bilateral_funding = if_else(bilateral_funding == 1, "Yes", "No"),
@@ -333,7 +333,7 @@ Binary indicators (0/1) identifying first author affiliation:
 - **fa_o**: First author from other country
 
 ```{r first-author}
-data_reg |> 
+dat_reg |> 
   summarise(
     Vietnam = sum(fa_vn, na.rm = TRUE),
     Japan = sum(fa_jp, na.rm = TRUE),
@@ -354,7 +354,7 @@ data_reg |>
 - **n_vn_jp_authors**: Total Vietnam + Japan authors (sum of above)
 
 ```{r author-counts}
-data_reg |> 
+dat_reg |> 
   summarise(
     Variable = c("n_vn_authors", "n_jp_authors", "n_vn_jp_authors"),
     Mean = round(c(
@@ -382,14 +382,14 @@ data_reg |>
 **Interpretation**: 0.5 = perfectly balanced, <0.5 = JP-dominated, >0.5 = VN-dominated
 
 ```{r prop-vn-summary}
-summarize_numeric(data_reg$prop_vn_authors) |> 
+summarize_numeric(dat_reg$prop_vn_authors) |> 
   kable(caption = "Summary statistics: prop_vn_authors") 
 ```
 
 ```{r prop-vn-dist}
 #| fig.height: 3.5
 
-data_reg |> 
+dat_reg |> 
   ggplot(aes(x = prop_vn_authors)) +
   geom_histogram(bins = 30, fill = "steelblue", color = "white") +
   geom_vline(xintercept = 0.5, linetype = "dashed", color = "red", linewidth = 1) +
@@ -410,7 +410,7 @@ Binary indicators (0/1) based on first author location:
 - **jp_led**: Japanese-led article (fa_jp = 1)
 
 ```{r leadership}
-data_reg |> 
+dat_reg |> 
   summarise(
     `VN-led` = sum(vn_led, na.rm = TRUE),
     `JP-led` = sum(jp_led, na.rm = TRUE),
@@ -434,7 +434,7 @@ data_reg |>
 - Other: First author from third country
 
 ```{r collab-type}
-summarize_categorical(data_reg$collab_type) |> 
+summarize_categorical(dat_reg$collab_type) |> 
   kable(caption = "Frequency distribution: collab_type") 
 ```
 
@@ -446,14 +446,14 @@ summarize_categorical(data_reg$collab_type) |>
 **Levels**: Not OA, OA
 
 ```{r oa-summary1}
-summarize_categorical(data_reg$OA) |> 
+summarize_categorical(dat_reg$OA) |> 
   kable(caption = "Frequency distribution: OA") 
 ```
 
 ```{r oa-trend}
 #| fig.height: 3.5
 
-data_reg |> 
+dat_reg |> 
   group_by(year) |> 
   summarise(oa_rate = 100 * mean(OA == "OA", na.rm = TRUE)) |> 
   ggplot(aes(x = year, y = oa_rate)) +
@@ -482,7 +482,7 @@ Binary indicators (0/1) for broad disciplinary categories:
 *Note*: Papers can belong to multiple macro-areas.
 
 ```{r macro-areas}
-data_reg |> 
+dat_reg |> 
   summarise(
     across(c(LS, SS, PS, HS, mult), ~ sum(., na.rm = TRUE))
   ) |> 
@@ -495,7 +495,7 @@ data_reg |>
       Macro_area == "HS" ~ "Health Sciences",
       Macro_area == "mult" ~ "Multidisciplinary"
     ),
-    Percentage = round(100 * Articles / nrow(data_reg), 1)
+    Percentage = round(100 * Articles / nrow(dat_reg), 1)
   ) |> 
   arrange(desc(Articles)) |> 
   kable(
@@ -527,12 +527,12 @@ subject_labels <- c(
   "Veterinary", "Dentistry", "Health Professions"
 )
 
-data_reg |> 
+dat_reg |> 
   summarise(across(all_of(subject_cols), ~ sum(., na.rm = TRUE))) |> 
   pivot_longer(everything(), names_to = "Code", values_to = "Articles") |> 
   mutate(
     Subject = subject_labels,
-    Percentage = round(100 * Articles / nrow(data_reg), 1)
+    Percentage = round(100 * Articles / nrow(dat_reg), 1)
   ) |> 
   arrange(desc(Articles)) |> 
   select(Subject, Articles, Percentage) |> 
@@ -568,13 +568,13 @@ sdg_names <- c(
 )
 
 # Summarize and process the data
-data_reg |> 
+dat_reg |> 
   summarise(across(all_of(sdg_cols), ~ sum(., na.rm = TRUE))) |> 
   pivot_longer(everything(), names_to = "SDG", values_to = "Articles") |> 
   mutate(
     SDG_num = parse_number(SDG),
     SDG_name = sdg_names[SDG_num],
-    Percentage = round(100 * Articles / nrow(data_reg), 1)
+    Percentage = round(100 * Articles / nrow(dat_reg), 1)
   ) |> 
   arrange(desc(Articles)) |> 
   select(SDG = SDG_name, Articles, Percentage) |> 
@@ -590,14 +590,14 @@ data_reg |>
 **Description**: Total number of SDGs addressed per article (0–17)
 
 ```{r nsdg-summary}
-summarize_numeric(data_reg$n_sdg) |> 
+summarize_numeric(dat_reg$n_sdg) |> 
   kable(caption = "Summary statistics: n_sdg") 
 ```
 
 ```{r nsdg-dist}
 #| fig.height: 3.5
 
-data_reg |> 
+dat_reg |> 
   count(n_sdg) |> 
   ggplot(aes(x = n_sdg, y = n)) +
   geom_col(fill = "steelblue", color = "white") +

@@ -8,7 +8,7 @@ format: html
 library(tidyverse)
 library(bibliometrix)
 
-data_reg <- read.csv("data/processed_data.csv") |> 
+dat_reg <- read.csv("data/processed_data.csv") |> 
   mutate(
     OA = as.factor(OA),
     coop = as.factor(coop),
@@ -28,7 +28,7 @@ data_bib <- read.csv("data/all_1020.csv")
 Number of outputs by bilateral cooporation always higher than multilateral cooporation, until 2019.
 
 ```{r}
-data_reg |> 
+dat_reg |> 
   select(year, coop) |>
   na.omit() |> 
   filter(year > 1990) |> 
@@ -42,7 +42,7 @@ data_reg |>
 Number of OA paper increased sharply after 2010, surpassed non-OA paper after 2017.
 
 ```{r}
-data_reg |>
+dat_reg |>
   select(year, OA) |> 
   na.omit() |>
   filter(year > 1990) |>
@@ -59,7 +59,7 @@ Physical sciences domain lead the outputs, has been the one start first and stil
 Social Sciences fields are much more humble.
 
 ```{r}
-data_reg |>
+dat_reg |>
   filter(year > 1990) |>
   select(year, LS, SS, PS, HS) |>
   pivot_longer(cols = LS:HS, names_to = "Category", values_to = "Value") |>
@@ -78,7 +78,7 @@ data_reg |>
 Japan and Vietnam are top funders.
 
 ```{r}
-data_reg |>
+dat_reg |>
   filter(year > 1990) |>
   select(year, asian, eu, int, us, jap, vn) |>
   pivot_longer(cols = asian:vn, names_to = "Funder", values_to = "Value") |>
@@ -94,7 +94,7 @@ data_reg |>
 
 
 ```{r}
-data_reg |>
+dat_reg |>
   filter(year > 1990) |>
   select(year, ind, pub, uni) |>
   pivot_longer(cols = ind:uni, names_to = "Funder", values_to = "Value") |>
@@ -109,7 +109,7 @@ data_reg |>
 ## Number of outputs per year by quartile
 
 ```{r}
-data_reg |>
+dat_reg |>
   filter(year > 1990) |>
   na.omit() |>
   group_by(year, quartile) |>
@@ -123,11 +123,11 @@ data_reg |>
 
 
 ```{r}
-ggplot(data_reg, aes(x = log1p(cited))) +
+ggplot(dat_reg, aes(x = log1p(cited))) +
   geom_histogram(bins = 21, color = "white") +
   theme_bw()
 
-ggplot(data_reg, aes(x = n_funder, y = log1p(cited))) +
+ggplot(dat_reg, aes(x = n_funder, y = log1p(cited))) +
   geom_point(alpha = 0.3) +
   geom_jitter(alpha = 0.3) +
   theme_bw()
@@ -137,29 +137,29 @@ ggplot(data_reg, aes(x = n_funder, y = log1p(cited))) +
 
 ```{r}
 # By OA
-wilcox.test(cited ~ OA, data = data_reg)
+wilcox.test(cited ~ OA, data = dat_reg)
 
 # By coop
-wilcox.test(cited ~ coop, data = data_reg)
+wilcox.test(cited ~ coop, data = dat_reg)
 
 # By fund or not
-wilcox.test(cited ~ fund, data = data_reg)
+wilcox.test(cited ~ fund, data = dat_reg)
 
-wilcox.test(cited ~ vn, data = data_reg)
+wilcox.test(cited ~ vn, data = dat_reg)
 
 # By quartile
-kruskal.test(cited ~ quartile, data = data_reg)
-pairwise.wilcox.test(data_reg$cited, data_reg$quartile,
+kruskal.test(cited ~ quartile, data = dat_reg)
+pairwise.wilcox.test(dat_reg$cited, dat_reg$quartile,
                      p.adjust.method = "bonferroni")
 
 # By number of funders origins
-kruskal.test(cited ~ n_funder, data = data_reg)
-pairwise.wilcox.test(data_reg$cited, data_reg$n_funder,
+kruskal.test(cited ~ n_funder, data = dat_reg)
+pairwise.wilcox.test(dat_reg$cited, dat_reg$n_funder,
                      p.adjust.method = "bonferroni")
 
 # By number of funders types
-kruskal.test(cited ~ n_ftype, data = data_reg)
-pairwise.wilcox.test(data_reg$cited, data_reg$n_ftype,
+kruskal.test(cited ~ n_ftype, data = dat_reg)
+pairwise.wilcox.test(dat_reg$cited, dat_reg$n_ftype,
                      p.adjust.method = "bonferroni")
 ```
 
@@ -168,11 +168,11 @@ Experiment
 
 ```{r}
 # Chi-square for OA rates
-table_oa <- table(data_reg$coop, data_reg$OA)
+table_oa <- table(dat_reg$coop, dat_reg$OA)
 chisq.test(table_oa)
 
 # ANOVA/Kruskal for SJR
-kruskal.test(sjr_score ~ coop, data = data_reg |> filter(year > 1990, !is.na(sjr_score)))
+kruskal.test(sjr_score ~ coop, data = dat_reg |> filter(year > 1990, !is.na(sjr_score)))
 ```
 
 Regression analysis
@@ -181,7 +181,7 @@ Regression analysis
 library(MASS)
 
 # Prepare data
-data_regre <- data_reg |> 
+dat_regre <- dat_reg |> 
   mutate(
     OA = factor(OA, labels = c("Not OA", "OA")),
     coop = factor(coop, labels = c("Bilateral", "Multilateral")),
@@ -195,7 +195,7 @@ data_regre <- data_reg |>
   )
 
 # Fit negative binomial regression model
-nb_model <- glm.nb(cited ~ OA + coop + n_countries + old + quartile + ind + pub + uni + jap + vn, data = data_regre)
+nb_model <- glm.nb(cited ~ OA + coop + n_countries + old + quartile + ind + pub + uni + jap + vn, data = dat_regre)
 
 # Summary of the model
 summary(nb_model)
@@ -206,7 +206,7 @@ Model Diagnostics
 
 
 ```{r}
-# Fit the model (assuming data_regre is prepared)
+# Fit the model (assuming dat_regre is prepared)
 # 1. Residual Diagnostics
 # Residuals vs. Fitted
 plot(nb_model, which = 1, main = "Residuals vs Fitted")
@@ -254,13 +254,13 @@ quartle as iv
 library(MASS)
 
 # Prepare data
-data_regre <- data_regre |>
+dat_regre <- dat_regre |>
   mutate(quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1"), ordered = TRUE)) |>
   na.omit(quartile, OA, coop, n_countries, old, ind, pub, uni, jap, vn)
 
 # Fit ordinal logistic regression
 ord_model <- polr(quartile ~ OA + coop + n_countries + old + ind + pub + uni + jap + vn, 
-                  data = data_regre, Hess = TRUE)
+                  data = dat_regre, Hess = TRUE)
 
 # Summary
 summary(ord_model)
@@ -278,25 +278,25 @@ exp(coef(ord_model))
 
 ```{r}
 # 1. Leadership patterns
-table(data_reg$fa_vn, data_reg$fa_jp, data_reg$fa_o)
-prop.table(table(data_reg$collab_type))
+table(dat_reg$fa_vn, dat_reg$fa_jp, dat_reg$fa_o)
+prop.table(table(dat_reg$collab_type))
 
 # 2. SDG patterns
-top_sdgs <- colSums(select(data_reg, starts_with("SDG_"))) |> 
+top_sdgs <- colSums(select(dat_reg, starts_with("SDG_"))) |> 
   sort(decreasing = TRUE) |> head(5)
 
 # 3. Quality by leadership
-data_reg |> group_by(fa_vn, fa_jp) |> 
+dat_reg |> group_by(fa_vn, fa_jp) |> 
   summarise(mean_cited = mean(cited, na.rm=T),
             pct_q1 = mean(quartile=="Q1", na.rm=T))
 
 # 4. Funding impact
-data_reg |> group_by(fund) |> 
+dat_reg |> group_by(fund) |> 
   summarise(mean_cited = mean(cited, na.rm=T),
             mean_sdg = mean(n_sdg, na.rm=T))
 
 # 5. Bilateral vs multilateral
-data_reg |> group_by(coop) |> 
+dat_reg |> group_by(coop) |> 
   summarise(mean_cited = mean(cited, na.rm=T),
             pct_vn_led = mean(fa_vn==1, na.rm=T),
             mean_sdg = mean(n_sdg, na.rm=T))

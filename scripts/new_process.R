@@ -12,7 +12,7 @@ data_raw <- read_csv(file.path(DATA_DIR, "all_1020.csv"),
 )
 
 # Split into regression data (minimal columns) and full bibliometric data
-data_reg <- data_raw |>
+dat_reg <- data_raw |>
   select(Year, "Source title", "Cited by", Affiliations, DOI, "Open Access", Abstract) |>
   rename(
     year = Year,
@@ -57,14 +57,14 @@ sjr <- read_delim(file.path(DATA_DIR, "sjr.csv"),
   distinct(title, .keep_all = TRUE)
 
 # Merge journal data
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   left_join(data_source, by = "title") |>
   left_join(sjr, by = "title")
 
-message(sprintf("SJR missingness: %.1f%%", 100 * mean(is.na(data_reg$sjr_score))))
+message(sprintf("SJR missingness: %.1f%%", 100 * mean(is.na(dat_reg$sjr_score))))
 
 # 3. EXTRACT COLLABORATION STRUCTURE -------------------------------------------
-affiliations_long <- data_reg |>
+affiliations_long <- dat_reg |>
   select(id, affiliations) |>
   separate_rows(affiliations, sep = ";") |>
   mutate(
@@ -84,13 +84,13 @@ coop_type <- affiliations_long |>
     )
   )
 
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   left_join(coop_type, by = "id")
 
 message(sprintf(
   "Bilateral: %d | Multilateral: %d",
-  sum(data_reg$coop == "bilateral", na.rm = TRUE),
-  sum(data_reg$coop == "multilateral", na.rm = TRUE)
+  sum(dat_reg$coop == "bilateral", na.rm = TRUE),
+  sum(dat_reg$coop == "multilateral", na.rm = TRUE)
 ))
 
 # 4. MERGE FUNDING DATA --------------------------------------------------------
@@ -136,12 +136,12 @@ funder_data <- map_dfr(1:nrow(funder_files), function(i) {
   )
 
 # Merge with main data
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   left_join(funder_data, by = "DOI") |>
   mutate(across(asian:vn, ~ replace_na(., 0)))
 
 # Create funding indicators
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   mutate(
     fund = as.integer(if_any(asian:vn, ~ . == 1)),
     n_regions = asian + eu + int + jap + us + vn,
@@ -151,12 +151,12 @@ data_reg <- data_reg |>
 
 message(sprintf(
   "Funded papers: %d (%.1f%%)",
-  sum(data_reg$fund == 1),
-  100 * mean(data_reg$fund == 1)
+  sum(dat_reg$fund == 1),
+  100 * mean(dat_reg$fund == 1)
 ))
 
 # 5. EXTRACT AUTHORSHIP PATTERNS -----------------------------------------------
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   mutate(
     # First author location
     first_affiliation = str_extract(affiliations, "^[^;]+"),
@@ -194,11 +194,11 @@ data_reg <- data_reg |>
 
 message(sprintf(
   "VN-led: %d | JP-led: %d | Other-led: %d",
-  sum(data_reg$vn_led), sum(data_reg$jp_led), sum(data_reg$fa_o)
+  sum(dat_reg$vn_led), sum(dat_reg$jp_led), sum(dat_reg$fa_o)
 ))
 
 # 7. MAP TO SDGs ---------------------------------------------------------------
-sdg_results <- detect_sdg_systems(text = data_reg$abstract, system = "SDGO")
+sdg_results <- detect_sdg_systems(text = dat_reg$abstract, system = "SDGO")
 
 sdg_results <- sdg_results |>
   mutate(document = as.integer(as.character(document))) |>
@@ -216,17 +216,17 @@ sdg_results <- sdg_results |>
   mutate(across(all_of(sdg_cols), ~ if_else(. > 0, 1, 0)))
 
 # Merge with main data
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   left_join(sdg_results, by = c("id" = "document")) |>
   mutate(
     across(starts_with("SDG"), ~ replace_na(., 0)),
     n_sdg = rowSums(pick(starts_with("SDG")), na.rm = TRUE)
   )
 
-message(sprintf("Mean SDGs per paper: %.2f", mean(data_reg$n_sdg)))
+message(sprintf("Mean SDGs per paper: %.2f", mean(dat_reg$n_sdg)))
 
 # 9. FACTORIZE CATEGORICAL VARIABLES -------------------------------------------
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   mutate(
     OA = factor(OA, levels = c(0, 1), labels = c("Not OA", "OA")),
     coop = factor(coop, levels = c("bilateral", "multilateral")),
@@ -239,10 +239,10 @@ data_reg <- data_reg |>
 
 # 10. FINAL CLEANING AND EXPORT ------------------------------------------------
 # Remove temporary abstract column (large, not needed for regression)
-data_reg <- data_reg |> select(-abstract)
+dat_reg <- dat_reg |> select(-abstract)
 
 # Reorder columns logically
-data_reg <- data_reg |>
+dat_reg <- dat_reg |>
   select(
     # Identifiers
     id, DOI, year,
@@ -275,4 +275,4 @@ data_reg <- data_reg |>
 
 # Write final processed data
 output_file <- file.path(DATA_DIR, "processed_data.csv")
-write_csv(data_reg, output_file, na = "")
+write_csv(dat_reg, output_file, na = "")
