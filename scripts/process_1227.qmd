@@ -26,7 +26,7 @@ library(tidyverse)
 library(text2sdg)
 
 DATA_DIR <- "data"
-FUNDER_DIR <- file.path(DATA_DIR, "data_funders")
+FUNDER_DIR <- file.path(DATA_DIR, "funder_data")
 
 # 1. LOAD RAW DATA
 dat_raw <- read_csv(
@@ -153,41 +153,130 @@ dat_reg <- dat_reg |>
 # Funding
 
 ```{r}
+#| label: process-funding
+
 funder_files <- tribble(
-    ~file, ~region, ~sector,
-    "ja_ind.csv", "ja", "ind",
-    "ja_pub.csv", "ja", "pub",
-    "ja_aca.csv", "ja", "aca",
-    "vn_pub.csv", "vn", "pub",
-    "vn_aca.csv", "vn", "aca",
-    "o_ind.csv", "o", "ind",
-    "o_pub", "o", "pub",
-    "o_aca", "o", "aca"
+    ~file,        ~region, ~sector,
+    "ja_ind.csv", "jp",    "ind",
+    "ja_pub.csv", "jp",    "pub",
+    "ja_aca.csv", "jp",    "aca",
+    "vi_pub.csv", "vi",    "pub",
+    "vi_aca.csv", "vi",    "aca",
+    "o_ind.csv",  "o",     "ind",
+    "o_pub.csv",  "o",     "pub",
+    "o_aca.csv",  "o",     "aca"
 )
 
 funder_data <- map_dfr(seq_len(nrow(funder_files)), function(i) {
     file_path <- file.path(FUNDER_DIR, funder_files$file[i])
-        if (!file.exists(file_path)) return(tibble())
-            read_csv(file_path, show_col_types = FALSE) |>
-            select(DOI) |>
-            mutate(
-                !!funder_files$region[i] := 1L,
-                !!funder_files$sector[i] := 1L
-            )
-        }) |>
-    group_by(DOI) |>
-    summarise(
-    across(everything(), ~ as.integer(any(. == 1, na.rm = TRUE))),
-    .groups = "drop"
-    )
+    if (!file.exists(file_path)) return(tibble())
+    
+    # Read file
+    d <- read_csv(file_path, show_col_types = FALSE)
+    if (nrow(d) == 0) return(tibble()) # Handle empty files
+    
+    d |>
+        select(DOI) |>
+        mutate(
+            !!funder_files$region[i] := 1L,
+            !!funder_files$sector[i] := 1L
+        )
+})
+
+if (nrow(funder_data) > 0) {
+    funder_data <- funder_data |>
+        group_by(DOI) |>
+        summarise(
+            across(c(any_of(c("jp", "vi", "o")), any_of(c("ind", "pub", "aca"))), 
+                   ~ as.integer(any(. == 1, na.rm = TRUE))),
+            .groups = "drop"
+        )
+} else {
+    funder_data <- tibble(DOI = character())
+}
 
 dat_reg <- dat_reg |>
     left_join(funder_data, by = "DOI") |>
-    mutate(across(asian:vn, ~ replace_na(., 0L))) |>
+    mutate(across(all_of(c("jp", "vi", "o", "ind", "pub", "aca")), ~ replace_na(., 0L))) |>
     mutate(
-        fund = as.integer(if_any(asian:vn, ~ . == 1L)),
-        n_regions = asian + eu + int + jap + us + vn,
-        n_sectors = ind + pub + uni,
-        bilateral_funding = as.integer(jap == 1L & vn == 1L)
+        across(c(jp, vi, o, ind, pub, aca), ~ replace_na(., 0L)),
+        fund = as.integer(if_any(c(jp, vi, o), ~ . == 1L)),
+        n_sectors = ind + pub + aca,
+        bilateral_funding = as.integer(jp == 1L & vi == 1L)
     )
+```
+
+
+# Authorship
+
+```{r}
+regex_vn <- regex("vietnam|viet nam", ignore_case = TRUE)
+regex_jp <- regex("japan", ignore_case = TRUE)
+
+dat_reg <- dat_reg |>
+  mutate(
+    first_aff_str = str_extract(affiliations, "^[^;]+"),
+    fa = case_when(
+      str_detect(first_aff_str, regex_vn) ~ "vn",
+      str_detect(first_aff_str, regex_jp) ~ "jp",
+      TRUE ~ "o"
+    ),
+    aff_list = str_split(affiliations, ";"),
+    n_vn_authors = map_int(aff_list, ~ sum(str_detect(., regex_vn))),
+    n_jp_authors = map_int(aff_list, ~ sum(str_detect(., regex_jp))),
+    n_total_authors = map_int(aff_list, length),
+    n_o_authors = pmax(0, n_total_authors - n_vn_authors - n_jp_authors),
+    prop_vn_authors = n_vn_authors / n_total_authors,
+    prop_jp_authors = n_jp_authors / n_total_authors,
+    prop_o_authors  = n_o_authors  / n_total_authors,
+    dominance = case_when(
+      prop_vn_authors > 0.5 ~ "vn",
+      prop_jp_authors > 0.5 ~ "jp",
+      prop_o_authors  > 0.5 ~ "o",
+      TRUE ~ "Balanced"
+    ),
+    corr_has_vn = str_detect(corr, regex_vn),
+    corr_has_jp = str_detect(corr, regex_jp),
+    corr_type = case_when(
+      corr_has_vn & corr_has_jp ~ "Both",
+      corr_has_vn ~ "Vietnam",
+      corr_has_jp ~ "Japan",
+      !is.na(corr) ~ "Other",
+      TRUE ~ NA_character_
+    ),
+    is_corr_same_fa = case_when(
+      fa == "vn" & corr_type == "Vietnam" ~ 1L,
+      fa == "jp" & corr_type == "Japan" ~ 1L,
+      fa == "o"  & corr_type == "Other" ~ 1L,
+      is.na(corr_type) ~ NA_integer_,
+      TRUE ~ 0L
+    )
+  ) |>
+  select(-first_aff_str, -aff_list)
+```
+
+
+# SDG
+
+```{r}
+sdg_hits <- detect_sdg_systems(text = dat_reg$abstract, system = "SDGO", verbose = FALSE)
+
+sdg_wide <- sdg_hits |>
+  mutate(
+    document = as.integer(as.character(document)),
+    sdg_num = as.integer(str_extract(sdg, "\\d+")),
+    sdg_key = sprintf("sdg%02d", sdg_num)
+  ) |>
+  distinct(document, sdg_key) |>
+  mutate(hit = 1L) |>
+  pivot_wider(names_from = sdg_key, values_from = hit, values_fill = 0L)
+
+dat_reg <- dat_reg |>
+  left_join(sdg_wide, by = c("id" = "document")) |>
+  mutate(
+    across(matches("^sdg\\d{2}$"), ~ replace_na(., 0L)),
+    n_sdg = rowSums(pick(matches("^sdg\\d{2}$")), na.rm = TRUE)
+  )
+
+count(dat_reg, n_sdg)
 ```
