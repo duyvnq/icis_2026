@@ -1,0 +1,193 @@
+---
+title: "Data Processing Pipeline"
+format: html
+execute:
+    echo: true
+    warning: true
+    message: true
+---
+
+# Setting Up
+
+Data are loaded into the working environment. 
+Export 1PM, 27th December 2025
+Query: AFFILCOUNTRY(viet* AND jap*) 
+Yielded 14,485 results
+Refined query: AFFILCOUNTRY ( viet* AND jap* ) AND ( EXCLUDE ( PUBYEAR , 2026 ) ) AND ( LIMIT-TO ( DOCTYPE , "ar" ) ) AND ( LIMIT-TO ( PUBSTAGE , "final" ) ) AND ( LIMIT-TO ( SRCTYPE , "j" ) )
+Yielded: 10,872 results
+
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(text2sdg)
+
+DATA_DIR <- "data"
+FUNDER_DIR <- file.path(DATA_DIR, "data_funders")
+
+# 1. LOAD RAW DATA
+dat_raw <- read_csv(
+  file.path(DATA_DIR, "all_1227.csv"),
+  show_col_types = FALSE,
+  col_types = cols(.default = "c")
+)
+
+# 2. SELECT & RENAME COLUMNS
+dat_reg <- dat_raw |>
+  select(Year, "Source title", "Cited by", Affiliations, DOI, "Open Access", Abstract, "Correspondence Address") |>
+  rename(
+    year = Year,
+    title = "Source title",
+    cited = "Cited by",
+    affiliations = Affiliations,
+    open_access = "Open Access",
+    abstract = Abstract,
+    corr = "Correspondence Address"
+  ) |>
+  mutate(
+    id = row_number(),
+    OA = if_else(!is.na(open_access) & open_access != "", 1L, 0L)
+  ) |>
+  select(-open_access) |>
+  relocate(id, .before = 1)
+```
+
+# Journal-level data
+
+
+```{r}
+#| label: process-sources
+
+dat_sources <- read_csv(file.path(DATA_DIR, "sources_1227.csv"), show_col_types = FALSE) |>
+    rename(title = `Source Title`) |>
+    arrange(title) |> 
+    distinct(title, .keep_all = TRUE)
+
+dat_sources <- dat_sources |>
+  transmute(
+    title,
+    LS = `Top level:\n\nLife Sciences`,
+    SS = `Top level:\n\nSocial Sciences`,
+    PS = `Top level:\n\nPhysical Sciences`,
+    HS = `Top level:\n\nHealth Sciences`,
+    mult     = `1000 \nGeneral`,
+    agr_bio  = `1100\nAgricultural and Biological Sciences`,
+    arts     = `1200\nArts and Humanities`,
+    bioch    = `1300\nBiochemistry, Genetics and Molecular Biology`,
+    bus      = `1400\nBusiness, Management and Accounting`,
+    chem_eng = `1500\nChemical Engineering`,
+    chem     = `1600\nChemistry`,
+    comp     = `1700\nComputer Science`,
+    deci     = `1800\nDecision Sciences`,
+    earth    = `1900\nEarth and Planetary Sciences`,
+    econ     = `2000\nEconomics, Econometrics and Finance`,
+    ener     = `2100\nEnergy`,
+    engi     = `2200\nEngineering`,
+    env      = `2300\nEnvironmental Science`,
+    immu     = `2400\nImmunology and Microbiology`,
+    mate     = `2500\nMaterials Science`,
+    math     = `2600\nMathematics`,
+    medi     = `2700\nMedicine`,
+    neur     = `2800\nNeuroscience`,
+    nurs     = `2900\nNursing`,
+    phar     = `3000\nPharmacology, Toxicology and Pharmaceutics`,
+    phys     = `3100\nPhysics and Astronomy`,
+    psyc     = `3200\nPsychology`,
+    soci     = `3300\nSocial Sciences`,
+    vete     = `3400\nVeterinary`,
+    dent     = `3500\nDentistry`,
+    heal     = `3600\nHealth Professions`
+  ) |>
+  mutate(across(-title, ~ if_else(!is.na(.) & . != "", 1L, 0L))) |>
+  distinct(title, .keep_all = TRUE)
+
+sjr <- read_delim(file.path(DATA_DIR, "sjr_1227.csv"),delim = ";", show_col_types = FALSE) |>
+    filter(Type == "journal") |>
+    select(Title, SJR, `SJR Best Quartile`) |>
+    rename(
+        title = Title,
+        sjr_score = SJR,
+        quartile = `SJR Best Quartile`
+    ) |>
+    mutate(
+    sjr_score = parse_number(sjr_score, locale = locale(grouping_mark = ",")) / 1000,
+    quartile = factor(quartile, levels = c("Q1", "Q2", "Q3", "Q4"))
+    ) |>
+    distinct(title, .keep_all = TRUE)
+
+dat_reg <- dat_reg |>
+    left_join(dat_sources, by = "title") |>
+    left_join(sjr, by = "title")
+```
+
+# Collaboration
+
+```{r}
+coop_type <- dat_reg |>
+    transmute(id, affiliations, n_authors = str_count(affiliations, ";") + 1L) |>
+    separate_rows(affiliations, sep = ";") |>
+    mutate(
+        affiliations = str_trim(affiliations),
+        country = str_extract(affiliations, "[^,]+$") |>
+        str_trim()
+    ) |>
+    distinct(id, country, n_authors) |>
+    count(id, n_authors, name = "n_countries") |>
+    mutate(
+        coop = case_when(
+            n_authors >= 100L ~ "hyperauthored",
+            n_countries == 2L ~ "bilateral",
+            n_countries > 2L ~ "multilateral",
+            TRUE ~ NA_character_
+        )
+    ) |>
+    select(id, n_authors, n_countries, coop)
+
+dat_reg <- dat_reg |>
+    left_join(coop_type, by = "id")
+```
+
+# Funding
+
+```{r}
+funder_files <- tribble(
+    ~file, ~region, ~sector,
+    "ja_ind.csv", "ja", "ind",
+    "ja_pub.csv", "ja", "pub",
+    "ja_aca.csv", "ja", "aca",
+    "vn_pub.csv", "vn", "pub",
+    "vn_aca.csv", "vn", "aca",
+    "o_ind.csv", "o", "ind",
+    "o_pub", "o", "pub",
+    "o_aca", "o", "aca"
+)
+
+funder_data <- map_dfr(seq_len(nrow(funder_files)), function(i) {
+    file_path <- file.path(FUNDER_DIR, funder_files$file[i])
+        if (!file.exists(file_path)) return(tibble())
+            read_csv(file_path, show_col_types = FALSE) |>
+            select(DOI) |>
+            mutate(
+                !!funder_files$region[i] := 1L,
+                !!funder_files$sector[i] := 1L
+            )
+        }) |>
+    group_by(DOI) |>
+    summarise(
+    across(everything(), ~ as.integer(any(. == 1, na.rm = TRUE))),
+    .groups = "drop"
+    )
+
+dat_reg <- dat_reg |>
+    left_join(funder_data, by = "DOI") |>
+    mutate(across(asian:vn, ~ replace_na(., 0L))) |>
+    mutate(
+        fund = as.integer(if_any(asian:vn, ~ . == 1L)),
+        n_regions = asian + eu + int + jap + us + vn,
+        n_sectors = ind + pub + uni,
+        bilateral_funding = as.integer(jap == 1L & vn == 1L)
+    )
+```

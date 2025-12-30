@@ -1,0 +1,1906 @@
+﻿id	organization	documents	citations	total link strength
+5	"10-80 division, hanoi medical university, hanoi, viet nam"	11	175	54
+8	"108 military central hospital, hanoi, viet nam"	5	106	25
+16	"2825-7 huis ten bosch, nagasaki international university, sasebo, japan"	8	176	7
+39	"a.n. severtsov institute of ecology and evolution russian academy of sciences, moscow, russian federation"	6	40	23
+44	"abdus salam international centre for theoretical physics, trieste, italy"	6	91	11
+47	"academia sinica, institute of astronomy and astrophysics, taipei, taiwan"	13	354	180
+51	"academia sinica, institute of earth sciences, taipei, taiwan"	5	290	9
+61	"academy of cryptography techniques, hanoi, viet nam"	7	141	11
+64	"academy of finance, hanoi, viet nam"	6	324	8
+90	"adaptive systems laboratory, the university of aizu, aizuwakamatsu, japan"	9	95	11
+113	"advanced institute of science and technology, university of danang, da nang, viet nam"	5	51	12
+118	"advanced materials and structures laboratory, vietnam national university, hanoi, hanoi, viet nam"	10	610	31
+122	"advanced preventive medical sciences research center, kanazawa university, kanazawa, japan"	13	67	115
+126	"advanced science research center, japan atomic energy agency, kashiwa, japan"	12	290	139
+163	"agricultural genetics institute, hanoi, viet nam"	50	1221	143
+164	"agricultural genetics institute, national key laboratory for plant cell biotechnology, hanoi, viet nam"	5	164	19
+165	"agricultural genetics institute, vietnam academy of agricultural sciences, hanoi, viet nam"	9	151	34
+166	"agricultural genetics institute, vietnam academy of social sciences, hanoi, viet nam"	11	358	76
+167	"agricultural genetics institute, vietnamese academy of agricultural science, hanoi, viet nam"	8	909	16
+168	"agricultural genetics institute, vietnamese academy of forest sciences, hanoi, viet nam"	6	1043	19
+195	"aids clinical center, national center for global health and medicine, tokyo, japan"	25	314	67
+206	"aino health research center, aino university, ibaraki, japan"	5	124	16
+207	"aino university, ibaraki, japan"	5	58	16
+222	"akita university, akita, japan"	5	48	15
+230	"alfred i. dupont hospital for children, wilmington, united states"	5	146	6
+261	"american university of the caribbean school of medicine, sint maarten, netherlands"	6	22	36
+266	"amfar - the foundation for aids research, bangkok, thailand"	14	218	273
+317	"animal production and grassland division, japan international research center for agricultural sciences, tsukuba, japan"	7	82	9
+346	"applied physics laboratory, ton-duc-thang university, ho chi minh city, viet nam"	6	59	22
+366	"arena research for sustainable resources, graz, austria"	5	59	20
+369	"arid land research center, tottori university, tottori, japan"	9	705	31
+407	"asian development bank institute, tokyo, japan"	16	200	13
+412	"asian institute of technology thailand, khlong luang, thailand"	9	148	14
+413	"asian natural environmental science center, the university of tokyo, tokyo, japan"	9	221	12
+418	"asian school of the environment, singapore city, singapore"	7	333	23
+420	"aska pharmaceutical co., ltd., tokyo, japan"	6	112	31
+435	"astrazeneca, cambridge, united kingdom"	18	3986	100
+444	"atmosphere and ocean research institute, the university of tokyo, tokyo, japan"	5	90	13
+446	"atomic molecular and optical physics research group, ton-duc-thang university, ho chi minh city, viet nam"	8	51	22
+450	"atrium innovation ltd., wallingford, united kingdom"	8	212	27
+467	"avian influenza research centre, kyoto sangyo university, kyoto, japan"	6	78	27
+468	"avian zoonosis research center, faculty of agriculture, tottori university, tottori, japan"	6	104	28
+481	"bach mai hospital, hanoi, viet nam"	72	1370	668
+489	"badan pengkajian dan penerapan teknologi, central jakarta, indonesia"	5	337	26
+503	"banking academy of vietnam, hanoi, viet nam"	10	125	15
+505	"banking university of ho chi minh city, ho chi minh city, viet nam"	77	579	164
+536	"beijing ditan hospital capital medical university, beijing, china"	27	364	526
+565	"bio-innovation research center, tokushima university, tokushima, japan"	7	28	24
+576	"biodiversity division, national institute for environmental studies of japan, tsukuba, japan"	6	9	26
+583	"biodosimetry group, nuclear research institute, dalat city, viet nam"	5	17	35
+597	"biological resources and post-harvest division, japan international research center for agricultural sciences, tsukuba, japan"	5	257	12
+612	"biomedical and pharmaceutical research center, vietnam military medical university, hanoi, viet nam"	24	661	73
+620	"biomedical research institute, national institute of advanced industrial science and technology, tsukuba, japan"	6	118	15
+628	"bioproduction research institute, national institute of advanced industrial science and technology, tsukuba, japan"	8	105	29
+629	"bioproductivity informatics research team, riken center for sustainable resource science, yokohama, japan"	10	143	74
+652	"biotechnology center of ho chi minh city, ho chi minh city, viet nam"	13	120	29
+658	"biotechnology research and development institute, can tho university, can tho, viet nam"	10	249	12
+716	"bureau of international health cooperation, national center for global health and medicine, tokyo, japan"	24	237	82
+724	"business and economics research group, đại học mở thành phố hồ chí minh, ho chi minh city, viet nam"	8	142	37
+725	"business school of sichuan university, chengdu, china"	6	441	13
+753	"campus ii, can tho university, can tho, viet nam"	5	71	10
+759	"can tho university, can tho, viet nam"	22	402	40
+768	"cancer research laboratory, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	12	179	32
+832	"center for agricultural innovation, vietnam national university of agriculture, hanoi, viet nam"	11	100	36
+834	"center for agricultural research and ecological studies (cares), vietnam national university of agriculture, hanoi, viet nam"	13	658	25
+838	"center for aids research, kumamoto university, kumamoto, japan"	14	135	33
+841	"center for animal disease control, university of miyazaki, miyazaki, japan"	22	203	75
+848	"center for asian conservation ecology, kyushu university, fukuoka, japan"	29	218	82
+852	"center for atomic and molecular technologies, the university of osaka, suita, japan"	11	226	28
+860	"center for biomedical informatics, vingroup big data institute, hanoi, viet nam"	5	16	21
+879	"center for clinical sciences, national center for global health and medicine, tokyo, japan"	5	42	14
+887	"center for computational sciences, university of tsukuba, tsukuba, japan"	11	252	27
+890	"center for critical care medicine, bach mai hospital, hanoi, viet nam"	6	31	20
+904	"center for ecological research, kyoto university, kyoto, japan"	8	209	15
+906	"center for emergency medicine, bach mai hospital, hanoi, viet nam"	5	42	14
+923	"center for environmental science in saitama, kitasaitama district, japan"	5	126	14
+925	"center for environmental technology and sustainable development (cetasd), vietnam national university, hanoi, hanoi, viet nam"	23	1771	61
+932	"center for expert, vietnam national university of agriculture, hanoi, viet nam"	9	237	34
+941	"center for gene and protein research, hanoi medical university, hanoi, viet nam"	9	270	23
+945	"center for geospace studies, sri international, menlo park, united states"	5	145	16
+951	"center for global initiatives, the university of osaka, suita, japan"	7	94	25
+964	"center for infectious disease research in asia and africa, nagasaki university, nagasaki, japan"	18	340	63
+967	"center for informatics and computation in astronomy, national tsing hua university, hsinchu, taiwan"	11	299	193
+972	"center for innovative materials and architectures (inomar), ho chi minh city, viet nam"	10	229	42
+973	"center for innovative materials and architectures (inomar), viet nam national university ho chi minh city, ho chi minh city, viet nam"	13	358	31
+975	"center for innovative materials and architectures, ho chi minh city, viet nam"	14	161	71
+977	"center for integrated science and humanities, fukushima medical university, fukushima, japan"	7	20	36
+982	"center for international collaborative research, nagasaki university, nagasaki, japan"	16	830	59
+999	"center for marine environmental studies, ehime university, matsuyama, japan"	108	6678	289
+1000	"center for material cycles and waste management research, national institute for environmental studies of japan, tsukuba, japan"	42	2455	125
+1016	"center for molecular biomedicine, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	10	116	13
+1020	"center for nanotechnology, kochi university of technology, kami, japan"	5	168	11
+1025	"center for northeast asian studies, tohoku university, sendai, japan"	9	169	29
+1029	"center for nuclear study (cns), the university of tokyo, tokyo, japan"	5	153	39
+1030	"center for nuclear study, the university of tokyo, tokyo, japan"	23	618	265
+1032	"center for nuclear techniques, vietnam atomic energy institute, hanoi, viet nam"	11	152	41
+1041	"center for plant conservation, hanoi, viet nam"	7	179	19
+1043	"center for population health sciences, hanoi school of public health, hanoi, viet nam"	5	121	18
+1049	"center for preventive medicine, ho chi minh city, viet nam"	5	326	25
+1053	"center for public health and ecosystem research, hanoi school of public health, hanoi, viet nam"	6	120	11
+1057	"center for regional environmental research, national institute for environmental studies of japan, tsukuba, japan"	9	272	38
+1066	"center for research and technology transfer, vietnam academy of science and technology, hanoi, viet nam"	18	410	58
+1068	"center for research in isotopes and environmental dynamics, university of tsukuba, tsukuba, japan"	7	318	18
+1070	"center for rubber science and technology, hanoi university of science and technology, hanoi, viet nam"	6	57	10
+1077	"center for southeast asian studies, kyoto university, kyoto, japan"	30	1069	67
+1081	"center for spintronics research network, tokyo, japan"	9	181	32
+1082	"center for spintronics research network, toyonaka, japan"	6	33	23
+1112	"center of advanced technology for the environment, ehime university, matsuyama, japan"	34	1412	114
+1122	"center of excellence for green energy and environmental nanomaterials (ce@green), dại học nguyen tat thanh, ho chi minh city, viet nam"	7	286	24
+1160	"center of water management and climate change, viet nam national university ho chi minh city, ho chi minh city, viet nam"	8	293	20
+1161	"center of water resources planning and investigation, ministry of natural resources and environment, vietnam, hanoi, viet nam"	6	190	6
+1163	"centers for disease control and prevention, atlanta, united states"	7	622	33
+1173	"central institute for natural resources and environmental studies, vietnam national university, hanoi, hanoi, viet nam"	7	78	31
+1180	"central region agricultural research center naro, tsukuba, japan"	7	433	12
+1233	"centre for climate change study in central vietnam, university of agriculture and forestry, hue university, hue, viet nam"	5	105	16
+1255	"centre for environmental technology and sustainable development (cetasd), vietnam national university, hanoi, hanoi, viet nam"	29	1952	85
+1268	"centre for interdisciplinary social research, phenikaa university, hanoi, viet nam"	40	1087	91
+1275	"centre for mathematical modelling of infectious diseases, london school of hygiene & tropical medicine, london, united kingdom"	8	39	30
+1306	"centre for theoretical chemistry and physics, massey university auckland, auckland, new zealand"	16	163	52
+1320	"centre of excellence for advanced research in fluid flow, universiti malaysia pahang al-sultan abdullah, pekan, malaysia"	7	326	29
+1327	"centre of tropical geoengineering (geotropik), faculty of engineering, johor bahru, malaysia"	5	408	23
+1341	"centro internacional de agricultura tropical, cali, colombia"	6	162	20
+1347	"ceramics and biomaterials research group, ton-duc-thang university, ho chi minh city, viet nam"	13	281	45
+1348	"ceramics research laboratory, nagoya institute of technology, nagoya, japan"	5	30	5
+1384	"chengdu institute of biology chinese academy of sciences, chengdu, china"	6	217	21
+1385	"chennai antiviral research and treatment clinical research site (cart crs), vhs medical centre india, chennai, india"	9	113	172
+1390	"chiang mai university, chiang mai, thailand"	6	51	39
+1392	"chiangrai prachanukroh hospital, chiang rai, thailand"	26	327	504
+1397	"chiba university, chiba, japan"	28	383	42
+1399	"children's hospital 1, ho chi minh city, viet nam"	7	108	31
+1400	"children's hospital 2, ho chi minh city, viet nam"	11	245	36
+1401	"children's hospital no. 1, ho chi minh city, viet nam"	12	488	32
+1402	"children's hospital no. 2, ho chi minh city, viet nam"	6	307	27
+1419	"chinese academy of sciences, beijing, china"	7	145	55
+1424	"cho ray hospital, ho chi minh city, viet nam"	20	298	88
+1440	"chulalongkorn university, bangkok, thailand"	8	331	59
+1455	"city university of hong kong, hong kong, hong kong"	6	84	17
+1457	"civil and environmental engineering program, hiroshima university, higashihiroshima, japan"	53	2015	117
+1518	"cnrs centre national de la recherche scientifique, paris, france"	9	271	51
+1537	"collaborative research centre for green materials on environmental technology, kyushu institute of technology, kitakyushu, japan"	6	34	11
+1542	"college of agriculture and applied biology, can tho university, can tho, viet nam"	8	112	15
+1543	"college of agriculture, can tho university, can tho, viet nam"	25	1306	44
+1553	"college of aquaculture and fisheries, can tho university, can tho, viet nam"	77	1168	121
+1559	"college of arts, james cook university, townsville, australia"	7	154	33
+1563	"college of bioresource sciences, nihon university, tokyo, japan"	8	284	27
+1570	"college of coastal agricultural sciences, guangdong ocean university, zhanjiang, china"	9	44	31
+1583	"college of economics, can tho university, can tho, viet nam"	7	515	7
+1594	"college of engineering and computer science, vinuniversity, hanoi, viet nam"	13	90	22
+1596	"college of engineering technology, can tho university, can tho, viet nam"	11	220	24
+1610	"college of engineering, shibaura institute of technology, tokyo, japan"	8	62	7
+1611	"college of environment and natural resources, can tho university, can tho, viet nam"	33	434	62
+1617	"college of environmental technology, muroran institute of technology, muroran, japan"	6	85	8
+1639	"college of health sciences, vinuniversity, hanoi, viet nam"	5	24	26
+1642	"college of humanities and sciences, nihon university, tokyo, japan"	5	42	12
+1644	"college of information and communication technology, can tho university, can tho, viet nam"	6	58	15
+1658	"college of life and health sciences, chubu university, kasugai, japan"	5	653	36
+1694	"college of medicine, 6th october, egypt"	5	61	36
+1711	"college of natural sciences, can tho university, can tho, viet nam"	10	85	20
+1716	"college of nursing, university of the philippines manila, manila, philippines"	5	51	16
+1728	"college of pharmacy, kangwon national university, chuncheon, south korea"	5	209	4
+1740	"college of public health, university of the philippines manila, manila, philippines"	5	22	16
+1743	"college of rural development, can tho university, can tho, viet nam"	5	9	9
+1765	"college of systems engineering and science, shibaura institute of technology, tokyo, japan"	12	94	18
+1769	"college of technology, vietnam national university, hanoi, hanoi, viet nam"	8	221	9
+1771	"college of the environment and ecology, xiamen university, xiamen, china"	5	316	18
+1775	"college of veterinary medicine, seoul national university, seoul, south korea"	10	165	41
+1783	"combustion engines and propulsion systems laboratory, institut teknologi bandung, bandung, indonesia"	6	111	13
+1788	"commissariat a l'energie atomique et aux energies alternatives, gif-sur-yvette, france"	6	154	83
+1792	"commonwealth scientific and industrial research organisation, canberra, australia"	11	505	32
+1796	"community medicine support dentistry, ohu university, koriyama, japan"	13	45	116
+1810	"computational astrophysics laboratory, riken, wako, japan"	11	62	29
+1812	"computational chemistry research group, ton-duc-thang university, ho chi minh city, viet nam"	7	38	19
+1814	"computational engineering applications unit, riken, wako, japan"	5	40	6
+1821	"computer communications laboratory, the university of aizu, aizuwakamatsu, japan"	23	456	23
+1844	"consulting center of technological sciences for natural resources and environment, vietnam national university of agriculture, hanoi, viet nam"	5	119	13
+1845	"convergence research center for development of mineral resources, korea institute of geoscience and mineral resources, daejeon, south korea"	5	72	7
+1864	"corrosion resistant steel group, national institute for materials science, tsukuba, japan"	7	114	15
+1899	"csic - instituto de estructura de la materia (iem), madrid, spain"	8	219	128
+1934	"cuu long delta rice research institute, can tho, viet nam"	15	322	29
+1954	"dai nam university, hanoi, viet nam"	13	102	44
+1965	"dalat nuclear research institute, vietnam atomic energy institute, hanoi, viet nam"	6	288	11
+1971	"dalian university of technology, dalian, china"	10	739	21
+1974	"danang environmental technology center, vietnam academy of science and technology, hanoi, viet nam"	9	165	24
+1993	"david geffen school of medicine at ucla, los angeles, united states"	6	2092	52
+1995	"de la salle university, manila, philippines"	12	2965	29
+2030	"department for management of science and technology development, ton-duc-thang university, ho chi minh city, viet nam"	27	992	81
+2048	"department of advanced functional materials research, takasaki advanced radiation research institute, takasaki, japan"	6	82	21
+2062	"department of advanced science and technology, toyota technological institute, nagoya, japan"	6	31	11
+2073	"department of agricultural and resource economics, kyushu university, fukuoka, japan"	32	486	36
+2101	"department of agriculture, can tho university, can tho, viet nam"	5	88	10
+2115	"department of agro-environmental sciences, kyushu university, fukuoka, japan"	44	409	40
+2122	"department of agroforestry and environment, gazipur agricultural university, gazipur, bangladesh"	9	688	40
+2126	"department of agronomy, khartoum university, khartoum, sudan"	7	223	29
+2169	"department of anatomy and anthropology, tohoku university school of medicine, sendai, japan"	6	227	13
+2194	"department of anatomy, jichi medical university, kawachi district, japan"	7	190	16
+2200	"department of anatomy, sapporo medical university, sapporo, japan"	9	289	19
+2208	"department of anatomy, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	7	190	16
+2211	"department of anatomy, university of otago, dunedin, new zealand"	9	222	45
+2256	"department of animal health, ministry of agriculture and rural development, hanoi, viet nam"	12	168	32
+2257	"department of animal health, national centre for veterinary diagnostics, hanoi, viet nam"	5	285	10
+2290	"department of animal surgery and theriogenology, vietnam national university of agriculture, hanoi, viet nam"	5	18	12
+2321	"department of applied biological science, kagawa university, takamatsu, japan"	21	808	38
+2324	"department of applied biological science, tokyo university of science, tokyo, japan"	5	32	6
+2330	"department of applied biology, kyoto institute of technology, kyoto, japan"	22	295	42
+2348	"department of applied chemistry, kyushu institute of technology, kitakyushu, japan"	6	94	16
+2349	"department of applied chemistry, kyushu university, fukuoka, japan"	6	109	6
+2351	"department of applied chemistry, national chiao tung university, hsinchu, taiwan"	10	218	21
+2353	"department of applied chemistry, osaka metropolitan university, osaka, japan"	20	487	31
+2354	"department of applied chemistry, the university of osaka, suita, japan"	15	301	15
+2360	"department of applied chemistry, university of hyogo, kobe, japan"	6	128	6
+2379	"department of applied physics and chemistry, the university of electro-communications, chofu, japan"	18	721	30
+2386	"department of applied physics, the university of osaka, suita, japan"	12	331	18
+2387	"department of applied physics, the university of tokyo, tokyo, japan"	7	121	19
+2388	"department of applied physics, tohoku university, sendai, japan"	7	38	22
+2394	"department of applied quantum physics and nuclear engineering, kyushu university, fukuoka, japan"	7	238	7
+2421	"department of archaeology and natural history, the australian national university, canberra, australia"	6	410	14
+2427	"department of archaeology, university of aberdeen, aberdeen, united kingdom"	9	73	47
+2433	"department of architecture and civil engineering, toyohashi university of technology, toyohashi, japan"	15	154	21
+2438	"department of architecture, nihon university, tokyo, japan"	13	281	18
+2450	"department of astronomical science, the graduate university for advanced studies, hayama, japan"	5	212	23
+2453	"department of astronomy and space science, university of science and technology (ust), daejeon, south korea"	9	287	159
+2456	"department of astronomy, the university of tokyo, tokyo, japan"	16	336	211
+2457	"department of astronomy, university of illinois urbana-champaign, urbana, united states"	11	299	193
+2461	"department of astrophysics, vietnam academy of science and technology, hanoi, viet nam"	15	336	215
+2465	"department of automation, can tho university, can tho, viet nam"	6	207	6
+2475	"department of bacteriology i, national institute of infectious diseases, tokyo, japan"	16	253	35
+2477	"department of bacteriology ii, national institute of infectious diseases, tokyo, japan"	6	70	15
+2479	"department of bacteriology, graduate school of medicine, nishihara, japan"	5	52	18
+2482	"department of bacteriology, nagasaki university, nagasaki, japan"	6	59	15
+2484	"department of bacteriology, national institute of hygiene and epidemiology hanoi, hanoi, viet nam"	23	383	71
+2485	"department of bacteriology, national institute of hygiene and epidemiology, hanoi, viet nam"	14	125	39
+2486	"department of bacteriology, national institute of infectious diseases, tokyo, japan"	7	98	24
+2507	"department of bio-resources, university of miyazaki, miyazaki, japan"	7	182	16
+2518	"department of biochemistry and microbiology, chulalongkorn university, bangkok, thailand"	5	303	23
+2522	"department of biochemistry and molecular biology, gazipur agricultural university, gazipur, bangladesh"	16	1325	67
+2534	"department of biochemistry and plant physiology, vietnam national university, hanoi, hanoi, viet nam"	5	131	9
+2541	"department of biochemistry, hanoi medical university, hanoi, viet nam"	5	481	7
+2542	"department of biochemistry, hematology and blood transfusion, hanoi lung hospital, hanoi, viet nam"	6	125	35
+2545	"department of biochemistry, king abdulaziz university, jeddah, saudi arabia"	5	656	38
+2558	"department of biochemistry, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	5	226	9
+2559	"department of biochemistry, university of shizuoka, shizuoka, japan"	5	1322	33
+2565	"department of bioengineering, nagaoka university of technology, nagaoka, japan"	9	202	29
+2575	"department of bioinformatics and genomics, kanazawa university, kanazawa, japan"	15	78	128
+2609	"department of biological sciences, national university of singapore, singapore city, singapore"	11	469	64
+2616	"department of biological sciences, the university of tokyo, tokyo, japan"	6	86	23
+2617	"department of biological sciences, tokyo metropolitan university, hachioji, japan"	31	261	64
+2630	"department of biology and environment science, yamaguchi university, yamaguchi, japan"	6	405	18
+2635	"department of biology, adventist university of the philippines, silang, philippines"	5	120	42
+2641	"department of biology, can tho university, can tho, viet nam"	15	203	21
+2644	"department of biology, chiba university, chiba, japan"	11	220	65
+2645	"department of biology, chulalongkorn university, bangkok, thailand"	8	138	38
+2649	"department of biology, dalat university, da lat city, lam dong province, viet nam"	6	38	16
+2659	"department of biology, henan university, kaifeng, china"	9	595	40
+2660	"department of biology, hue university, hue, viet nam"	7	175	8
+2666	"department of biology, kobe university, kobe, japan"	5	106	15
+2673	"department of biology, lorestan university, khorramabad, iran"	9	340	33
+2690	"department of biology, taif university, taif, saudi arabia"	5	1299	20
+2693	"department of biology, toho university, tokyo, japan"	6	71	25
+2727	"department of biomaterials, kyushu university, fukuoka, japan"	6	50	7
+2741	"department of biomedical engineering, singapore university of social sciences, singapore city, singapore"	6	169	63
+2746	"department of biomedical informatics and medical engineering, asia university, taichung, taiwan"	6	169	63
+2747	"department of biomedical molecular sciences, fujita health university school of medicine, toyoake, japan"	5	4	44
+2748	"department of biomedical science and environmental biology, kaohsiung medical university, kaohsiung, taiwan"	5	44	16
+2752	"department of biomedical sciences, chubu university, kasugai, japan"	7	131	11
+2766	"department of biomolecular engineering, kyoto institute of technology, kyoto, japan"	13	188	24
+2774	"department of bioproduction environmental sciences, kyushu university, fukuoka, japan"	6	48	8
+2783	"department of bioresource sciences, kyushu university, fukuoka, japan"	10	46	9
+2791	"department of bioscience and biotechnology, kyushu university, fukuoka, japan"	18	390	17
+2796	"department of bioscience and laboratory medicine, hirosaki university, hirosaki, japan"	5	17	35
+2823	"department of biotechnology and microbiology, karnatak university dharwad, dharwad, india"	5	257	15
+2828	"department of biotechnology, college of food industry, da nang, viet nam"	5	33	11
+2830	"department of biotechnology, dại học nguyen tat thanh, ho chi minh city, viet nam"	7	302	19
+2841	"department of biotechnology, khon kaen university, khon kaen, thailand"	5	300	5
+2843	"department of biotechnology, kyoto institute of technology, kyoto, japan"	5	35	3
+2860	"department of botany and microbiology, college of sciences, riyadh, saudi arabia"	11	810	32
+2868	"department of botany, faculty of science, aswan, egypt"	18	1185	88
+2871	"department of botany, national museum of nature and science, tokyo, japan"	9	107	17
+2877	"department of botany, university of yangon, yangon, myanmar"	7	199	57
+2878	"department of botany, vietnam academy of science and technology, hanoi, viet nam"	5	89	5
+2897	"department of business administration, yokohama national university, yokohama, japan"	5	30	2
+2898	"department of business and it, university of south-eastern norway, kongsberg, norway"	20	2179	88
+2902	"department of business, fpt university, hanoi, viet nam"	5	58	9
+2911	"department of cardiology and vascular medicine, universitas indonesia, depok, indonesia"	5	195	45
+2929	"department of cardiology, national heart centre singapore, singapore city, singapore"	10	171	63
+3006	"department of chemical and environmental engineering, phenikaa university, hanoi, viet nam"	5	29	11
+3019	"department of chemical engineering, can tho university, can tho, viet nam"	8	80	10
+3025	"department of chemical engineering, hanoi university of science and technology, hanoi, viet nam"	22	350	68
+3026	"department of chemical engineering, institut teknologi bandung, bandung, indonesia"	15	289	39
+3027	"department of chemical engineering, institute of science tokyo, tokyo, japan"	8	237	7
+3031	"department of chemical engineering, le quy don technical university, hanoi, viet nam"	7	294	17
+3044	"department of chemical engineering, university of the philippines diliman, quezon city, philippines"	7	294	10
+3057	"department of chemical science and engineering, national institute of technology, tokyo college, hachioji, japan"	5	39	9
+3059	"department of chemical science and technology, tokushima university, tokushima, japan"	6	128	6
+3067	"department of chemical technology, vietnam national university, hanoi, hanoi, viet nam"	6	240	6
+3089	"department of chemistry, can tho university, can tho, viet nam"	17	161	24
+3091	"department of chemistry, chulalongkorn university, bangkok, thailand"	11	120	35
+3119	"department of chemistry, kyoto institute of technology, kyoto, japan"	6	102	8
+3139	"department of chemistry, sungkyunkwan university, seoul, south korea"	5	124	18
+3141	"department of chemistry, thammasat university, pathum thani, thailand"	15	357	55
+3147	"department of chemistry, tohoku university, sendai, japan"	9	52	25
+3148	"department of chemistry, tokyo metropolitan university, hachioji, japan"	6	31	6
+3169	"department of chemistry, university of sciences, hue university, hue, viet nam"	6	84	7
+3171	"department of chemistry, university of yangon, yangon, myanmar"	5	84	10
+3174	"department of chemistry, vietnam national university, hanoi, hanoi, viet nam"	7	255	8
+3192	"department of civil & environmental engineering, hiroshima university, higashihiroshima, japan"	31	861	48
+3193	"department of civil & environmental engineering, institute of science tokyo, tokyo, japan"	134	5551	316
+3201	"department of civil & environmental engineering, nagaoka university of technology, nagaoka, japan"	53	2965	184
+3204	"department of civil & environmental engineering, national institute of technology, kure college, kure, japan"	7	157	31
+3210	"department of civil & environmental engineering, saitama university, saitama, japan"	9	157	5
+3214	"department of civil & environmental engineering, tohoku gakuin university, sendai, japan"	7	93	10
+3215	"department of civil & environmental engineering, tohoku university, sendai, japan"	6	65	7
+3216	"department of civil & environmental engineering, tokyo metropolitan university, hachioji, japan"	14	523	15
+3222	"department of civil & environmental engineering, waseda university, tokyo, japan"	10	178	19
+3240	"department of civil engineering, can tho university, can tho, viet nam"	7	73	19
+3241	"department of civil engineering, chulalongkorn university, bangkok, thailand"	21	404	35
+3246	"department of civil engineering, hanoi architectural university, hanoi, viet nam"	6	82	9
+3250	"department of civil engineering, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam"	6	285	11
+3272	"department of civil engineering, lac hong university, bien hoa, viet nam"	5	197	11
+3301	"department of civil engineering, the university of tokyo, tokyo, japan"	21	695	29
+3302	"department of civil engineering, thuyloi university, hanoi, viet nam"	11	541	22
+3303	"department of civil engineering, tohoku university, sendai, japan"	10	178	10
+3306	"department of civil engineering, trường đại học giao thông vận tải, hanoi, viet nam"	8	79	18
+3311	"department of civil engineering, university of danang, da nang, viet nam"	18	120	30
+3324	"department of civil engineering, yokohama national university, yokohama, japan"	13	386	22
+3325	"department of civil engineering, đại học công nghệ giao thông vận tải, hanoi, viet nam"	6	70	8
+3327	"department of civil, luleå university of technology, lulea, sweden"	8	1039	44
+3361	"department of clinical medicine, nagasaki university, nagasaki, japan"	27	989	104
+3398	"department of clinical product development, nagasaki university, nagasaki, japan"	42	1229	248
+3422	"department of community and global health, graduate school of medicine, tokyo, japan"	12	114	25
+3438	"department of computational biology and medical sciences, the university of tokyo, tokyo, japan"	6	119	22
+3442	"department of computational physics, hanoi university of science and technology, hanoi, viet nam"	7	27	26
+3446	"department of computer and information science, tokyo university of agriculture and technology, fuchu, japan"	7	134	6
+3449	"department of computer and network engineering, the university of electro-communications, chofu, japan"	18	189	21
+3450	"department of computer engineering, ardahan üniversitesi, ardahan, turkey"	6	175	62
+3464	"department of computer engineering, vnuhcm - university of information technology, ho chi minh city, viet nam"	6	74	11
+3471	"department of computer science and engineering, the university of aizu, aizuwakamatsu, japan"	5	40	7
+3478	"department of computer science and information systems, keio university, tokyo, japan"	8	91	18
+3522	"department of construction materials, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam"	6	108	17
+3550	"department of crop sciences, can tho university, can tho, viet nam"	11	207	13
+3565	"department of dental basic sciences, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	8	102	7
+3571	"department of dental public health, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	5	25	4
+3586	"department of dermatology and venereology, hanoi medical university, hanoi, viet nam"	11	175	18
+3601	"department of dermatology, kansai medical university, hirakata, japan"	6	89	0
+3622	"department of design of machinery and robot, hanoi university of science and technology, hanoi, viet nam"	10	171	16
+3627	"department of development technology, hiroshima university, higashihiroshima, japan"	14	313	28
+3632	"department of developmental medical sciences, graduate school of medicine, tokyo, japan"	22	666	55
+3633	"department of developmental medical sciences, the university of tokyo, tokyo, japan"	7	138	15
+3647	"department of diagnostic radiology and nuclear medicine, graduate school of medicine, maebashi, japan"	7	38	5
+3656	"department of digital forensics engineering, firat üniversitesi, elazig, turkey"	9	271	84
+3660	"department of disease control, faculty of veterinary medicine, sapporo, japan"	7	42	23
+3661	"department of disease control, graduate school of veterinary medicine, sapporo, japan"	16	307	68
+3675	"department of earth and environmental sciences, jeonbuk national university, jeonju, south korea"	5	49	18
+3688	"department of earth and planetary systems science, hiroshima university, higashihiroshima, japan"	7	198	25
+3692	"department of earth resources engineering, kyushu university, fukuoka, japan"	8	181	4
+3694	"department of earth science education, seoul national university, seoul, south korea"	11	299	193
+3710	"department of earth sciences, yamaguchi university, yamaguchi, japan"	10	505	27
+3711	"department of earth system sciences, yonsei university, seoul, south korea"	6	186	13
+3721	"department of ecology and evolutionary biology, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	7	48	15
+3727	"department of economic analysis and icae, universidad complutense de madrid, madrid, spain"	8	121	37
+3731	"department of economics and finance, rmit university vietnam, ho chi minh city, viet nam"	5	35	5
+3752	"department of ecosystem studies, graduate school of agricultural and life sciences the university of tokyo, tokyo, japan"	5	23	16
+3753	"department of education and training, posts and telecommunications institute of technology vietnam, hanoi, viet nam"	6	321	22
+3759	"department of electric power systems, hanoi university of science and technology, hanoi, viet nam"	8	81	4
+3764	"department of electrical & computer engineering, ngee ann polytechnic, singapore city, singapore"	6	169	63
+3776	"department of electrical and electronic engineering, institute of science tokyo, tokyo, japan"	18	810	59
+3781	"department of electrical and electronic engineering, national defense academy of japan, yokosuka, japan"	7	46	7
+3786	"department of electrical and electronic engineering, posts and telecommunications institute of technology vietnam, hanoi, viet nam"	7	15	10
+3796	"department of electrical and electronic information engineering, toyohashi university of technology, toyohashi, japan"	10	602	30
+3804	"department of electrical engineering and information systems, the university of tokyo, tokyo, japan"	14	305	40
+3814	"department of electrical engineering, hanoi university of science and technology, hanoi, viet nam"	13	130	14
+3827	"department of electrical engineering, shibaura institute of technology, tokyo, japan"	18	216	24
+3843	"department of electrical, gifu university, gifu, japan"	11	155	14
+3844	"department of electrical, nagaoka university of technology, nagaoka, japan"	6	38	20
+3876	"department of emergency and critical care medicine, hanoi medical university, hanoi, viet nam"	6	37	19
+3899	"department of emergency medicine, national taiwan university hospital, taipei, taiwan"	5	40	13
+3903	"department of emergency medicine, seoul national university college of medicine, seoul, south korea"	5	40	13
+3934	"department of endoscopy, cho ray hospital, ho chi minh city, viet nam"	19	436	67
+3939	"department of endoscopy, hiroshima university hospital, hiroshima, japan"	7	74	16
+3944	"department of endoscopy, university medical center, ho chi minh city, viet nam"	6	142	9
+3950	"department of energy and environmental science, nagaoka university of technology, nagaoka, japan"	6	145	16
+3975	"department of engineering mechanics, hohai university, nanjing, china"	52	2691	163
+3976	"department of engineering mechanics, nha trang university, nha trang, viet nam"	6	101	6
+3977	"department of engineering mechanics, viet nam national university ho chi minh city, ho chi minh city, viet nam"	5	248	18
+3985	"department of engineering science, the university of electro-communications, chofu, japan"	6	67	14
+4018	"department of entomology, national chung hsing university, taichung, taiwan"	5	37	4
+4028	"department of entomology, vietnam national university of agriculture, hanoi, viet nam"	9	62	8
+4029	"department of environment and energy systems, shizuoka university, shizuoka, japan"	10	124	14
+4036	"department of environment conservation, ehime university, matsuyama, japan"	9	340	17
+4053	"department of environmental and preventive medicine, kanazawa university, kanazawa, japan"	5	103	27
+4054	"department of environmental and preventive medicine, oita university faculty of medicine, yufu, japan"	27	771	94
+4068	"department of environmental energy engineering, kyonggi university, suwon, south korea"	5	175	20
+4076	"department of environmental engineering, can tho university, can tho, viet nam"	9	143	24
+4079	"department of environmental engineering, daegu university, gyeongsan, south korea"	11	878	30
+4083	"department of environmental engineering, hanoi university of civil engineering, hanoi, viet nam"	6	51	12
+4090	"department of environmental engineering, kyoto university, kyoto, japan"	10	442	27
+4111	"department of environmental health sciences, kochi medical school, nankoku, japan"	8	244	16
+4126	"department of environmental health, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	12	347	41
+4139	"department of environmental medicine, kochi medical school, nankoku, japan"	6	33	29
+4161	"department of environmental sciences, ateneo de manila university, quezon city, philippines"	6	127	51
+4162	"department of environmental sciences, can tho university, can tho, viet nam"	15	98	21
+4169	"department of environmental sciences, hue university, hue, viet nam"	6	66	8
+4174	"department of environmental sciences, okayama university, okayama, japan"	10	252	14
+4180	"department of environmental sciences, shinshu university, matsumoto, japan"	8	416	25
+4196	"department of environmental technology and management, hanoi university of civil engineering, hanoi, viet nam"	12	274	16
+4199	"department of environmental technology, vietnam national university, hanoi, hanoi, viet nam"	5	31	7
+4210	"department of epidemiology and prevention, national center for global health and medicine, tokyo, japan"	22	442	70
+4212	"department of epidemiology and preventive medicine, kagoshima university graduate school of medical and dental sciences, kagoshima, japan"	7	136	13
+4213	"department of epidemiology and public health, kanazawa medical university, kahoku, japan"	31	541	101
+4219	"department of epidemiology, haiphong university, haiphong, viet nam"	5	18	34
+4220	"department of epidemiology, hanoi medical university, hanoi, viet nam"	6	88	20
+4236	"department of epidemiology, thai nguyen university, thai nguyen, viet nam"	7	347	15
+4270	"department of finance, asia university, taichung, taiwan"	8	124	38
+4301	"department of food and nutrition, japan women's university, tokyo, japan"	15	527	28
+4305	"department of food and post-harvest technology, hanoi university of science and technology, hanoi, viet nam"	11	706	18
+4318	"department of food science and biotechnology, dongguk university, seoul, seoul, south korea"	5	582	13
+4326	"department of food science and nutrition, ochanomizu university, tokyo, japan"	6	133	10
+4339	"department of food science, yamagata university, yamagata, japan"	5	51	12
+4341	"department of food technology, bina nusantara university, jakarta, indonesia"	7	94	16
+4342	"department of food technology, can tho university, can tho, viet nam"	10	44	19
+4343	"department of food technology, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam"	7	24	22
+4346	"department of food technology, tien giang university, my tho city, viet nam"	10	134	21
+4354	"department of forest biology, kasetsart university, bangkok, thailand"	8	210	46
+4377	"department of forest vegetation, forestry and forest products research institute, tsukuba, japan"	11	245	29
+4386	"department of functional chemistry, kyoto institute of technology, kyoto, japan"	14	61	20
+4387	"department of functional diagnosis, vietnam military medical university, hanoi, viet nam"	6	21	20
+4436	"department of gastroenterology, children's hospital no. 1, ho chi minh city, viet nam"	7	148	17
+4440	"department of gastroenterology, gia dinh people's hospital, ho chi minh city, viet nam"	6	95	15
+4441	"department of gastroenterology, graduate school of medicine, chiba, japan"	5	9	17
+4453	"department of gastroenterology, oita university faculty of medicine, yufu, japan"	8	240	41
+4472	"department of gastrointestinal endoscopy, nippon medical school, tokyo, japan"	5	199	22
+4484	"department of general medicine, tan tock seng hospital, singapore city, singapore"	6	209	54
+4490	"department of general surgery, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	6	17	11
+4492	"department of genetic engineering, agricultural genetics institute, hanoi, viet nam"	5	34	13
+4493	"department of genetic engineering, institute of agricultural genetics, hanoi, viet nam"	5	61	13
+4521	"department of genomics and cytogenetics, vietnam military medical university, hanoi, viet nam"	6	127	21
+4554	"department of geography, tokyo metropolitan university, hachioji, japan"	13	519	27
+4576	"department of geology and paleontology, national museum of nature and science, tokyo, japan"	6	155	16
+4579	"department of geology, hanoi university of mining and geology, hanoi, viet nam"	7	216	8
+4587	"department of geology, university of leicester, leicester, united kingdom"	5	199	13
+4594	"department of geomorphology, university of kurdistan, sanandaj, iran"	5	1012	28
+4604	"department of geosciences, national taiwan university, taipei, taiwan"	5	508	7
+4606	"department of geosciences, shizuoka university, shizuoka, japan"	5	84	10
+4608	"department of geosciences, university of sciences, hue university, hue, viet nam"	9	614	15
+4628	"department of global agricultural sciences, graduate school of agricultural and life sciences the university of tokyo, tokyo, japan"	6	40	10
+4636	"department of global health entrepreneurship, institute of science tokyo, tokyo, japan"	8	82	22
+4644	"department of global health, nagasaki university, nagasaki, japan"	6	40	24
+4708	"department of healthcare administration, nagoya university graduate school of medicine, nagoya, japan"	6	63	1
+4750	"department of hepatology, osaka metropolitan university graduate school of medicine, osaka, japan"	7	104	13
+4754	"department of higher plants, lomonosov moscow state university, moscow, russian federation"	8	48	31
+4782	"department of horticulture, vietnam national university of agriculture, hanoi, viet nam"	5	71	7
+4799	"department of human genetics, graduate school of medicine, tokyo, japan"	8	374	28
+4810	"department of human pathology, kanazawa university graduate school of medical sciences, kanazawa, japan"	6	17	12
+4818	"department of hydraulic engineering, can tho university, can tho, viet nam"	8	145	27
+4824	"department of hydrogen energy systems, kyushu university, fukuoka, japan"	7	140	11
+4835	"department of hygiene and molecular epidemiology, nagasaki university, nagasaki, japan"	8	141	17
+4840	"department of hygiene and public health, tokyo metropolitan university, hachioji, japan"	5	104	15
+4850	"department of hypertension, shanghai jiao tong university school of medicine, shanghai, china"	5	193	51
+4856	"department of immunogenetics, graduate school of biomedical sciences, nagasaki, japan"	6	156	31
+4857	"department of immunogenetics, nagasaki university, nagasaki, japan"	56	1904	318
+4876	"department of immunology, graduate school of medicine, tokyo, japan"	6	143	13
+4887	"department of immunology, vietnamese academy of science and technology institute of biotechnology, hanoi, viet nam"	10	554	17
+4905	"department of infection and immunity, jichi medical university, kawachi district, japan"	6	80	4
+4920	"department of infectious disease epidemiology, london school of hygiene & tropical medicine, london, united kingdom"	14	325	51
+4929	"department of infectious diseases, bach mai hospital, hanoi, viet nam"	12	212	75
+4935	"department of infectious diseases, hanoi medical university, hanoi, viet nam"	5	63	8
+4943	"department of infectious diseases, nagasaki university, nagasaki, japan"	35	458	129
+4945	"department of infectious diseases, national center for global health and medicine, tokyo, japan"	12	443	45
+4956	"department of infectious diseases, tan tock seng hospital, singapore city, singapore"	9	163	155
+4960	"department of infectious diseases, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	10	86	49
+4961	"department of infectious diseases, university of miyazaki faculty of medicine, miyazaki, japan"	13	229	38
+4962	"department of infectious diseases, university of miyazaki, miyazaki, japan"	5	60	16
+4973	"department of informatics, the graduate university for advanced studies, hayama, japan"	5	669	9
+5003	"department of information technology and applied mathematics, ton-duc-thang university, ho chi minh city, viet nam"	6	114	7
+5031	"department of intelligent mechanical engineering, fukuoka institute of technology, fukuoka, japan"	6	83	15
+5032	"department of intelligent mechanical systems, tokyo metropolitan university, hachioji, japan"	5	104	15
+5045	"department of internal medicine, aichi medical university school of medicine, nagakute, japan"	5	122	13
+5075	"department of internal medicine, hanoi medical university, hanoi, viet nam"	9	61	45
+5108	"department of internal medicine, nagasaki university, nagasaki, japan"	5	114	16
+5113	"department of internal medicine, national taiwan university hospital, taipei, taiwan"	8	1594	38
+5146	"department of internal medicine, universitas indonesia, rsupn dr. cipto mangunkusumo, central jakarta, indonesia"	9	144	35
+5152	"department of internal medicine, university of fukui school of medical sciences, eiheiji, japan"	9	37	81
+5156	"department of internal medicine, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	33	356	85
+5169	"department of internal medicine, yonsei university college of medicine, seoul, south korea"	30	414	544
+5172	"department of international affairs and tropical medicine, tokyo women's medical university, tokyo, japan"	7	91	36
+5175	"department of international development engineering, institute of science tokyo, tokyo, japan"	7	177	6
+5176	"department of international environmental and agricultural science, tokyo university of agriculture and technology, fuchu, japan"	6	167	11
+5178	"department of international health and medical anthropology, nagasaki university, nagasaki, japan"	7	33	21
+5184	"department of international medical cooperation, national center for global health and medicine, tokyo, japan"	5	157	4
+5232	"department of land resources, can tho university, can tho, viet nam"	6	181	16
+5240	"department of legal medicine, shimane university faculty of medicine, izumo, japan"	9	297	28
+5249	"department of life and health sciences, hyogo university of teacher education, kato, japan"	9	590	16
+5254	"department of life science, hanoi university of science and technology, hanoi, viet nam"	5	29	14
+5275	"department of life science, tunghai university, taichung, taiwan"	8	94	27
+5282	"department of liver tumor, cho ray hospital, ho chi minh city, viet nam"	5	8	28
+5291	"department of machinery and control systems, shibaura institute of technology, tokyo, japan"	10	114	9
+5293	"department of macromolecular science and engineering, kyoto institute of technology, kyoto, japan"	7	42	8
+5330	"department of marine sciences and convergent technology, hanyang university erica campus, ansan, south korea"	10	1166	54
+5331	"department of marine sciences, chulalongkorn university, bangkok, thailand"	7	361	37
+5343	"department of material and life chemistry, kanagawa university, yokohama, japan"	7	62	21
+5347	"department of materials and life sciences, sophia university, tokyo, japan"	5	59	1
+5359	"department of materials science and engineering, chonnam national university, gwangju, south korea"	6	61	13
+5360	"department of materials science and engineering, chungnam national university, daejeon, south korea"	5	147	17
+5362	"department of materials science and engineering, feng chia university, taichung, taiwan"	5	63	8
+5365	"department of materials science and engineering, institute of science tokyo, tokyo, japan"	22	413	31
+5373	"department of materials science and engineering, nagoya institute of technology, nagoya, japan"	20	923	65
+5377	"department of materials science and engineering, national tsing hua university, hsinchu, taiwan"	9	402	26
+5378	"department of materials science and engineering, national yang ming chiao tung university, hsinchu, taiwan"	8	157	23
+5388	"department of materials science and technology, nagaoka university of technology, nagaoka, japan"	35	321	53
+5390	"department of materials science, kyushu institute of technology, kitakyushu, japan"	10	364	11
+5397	"department of materials science, university of tsukuba, tsukuba, japan"	12	538	41
+5422	"department of mathematical sciences, osaka metropolitan university, osaka, japan"	7	40	13
+5423	"department of mathematical sciences, ritsumeikan university biwako-kusatsu campus, kusatsu, japan"	9	115	9
+5476	"department of mathematics, meiji university, tokyo, japan"	21	205	21
+5498	"department of mathematics, thai nguyen university of education, thai nguyen, viet nam"	5	39	11
+5499	"department of mathematics, the university of electro-communications, chofu, japan"	9	267	7
+5503	"department of mathematics, trường đại học sư phạm hà nội, hanoi, viet nam"	7	27	5
+5511	"department of mathematics, vietnam national university, hanoi, hanoi, viet nam"	10	228	7
+5522	"department of mechanical and control engineering, institute of science tokyo, tokyo, japan"	6	569	18
+5523	"department of mechanical and environmental informatics, institute of science tokyo, tokyo, japan"	6	611	14
+5530	"department of mechanical engineering and science, kyoto university, kyoto, japan"	17	307	30
+5537	"department of mechanical engineering, can tho university, can tho, viet nam"	6	66	15
+5554	"department of mechanical engineering, kyushu university, fukuoka, japan"	5	20	15
+5557	"department of mechanical engineering, nagaoka university of technology, nagaoka, japan"	26	323	34
+5569	"department of mechanical engineering, shiraz university, shiraz, iran"	5	346	12
+5574	"department of mechanical engineering, the university of osaka, suita, japan"	25	121	41
+5575	"department of mechanical engineering, the university of sheffield, sheffield, united kingdom"	5	282	14
+5579	"department of mechanical engineering, tokyo university of science, tokyo, japan"	6	612	6
+5585	"department of mechanical engineering, universiti malaya, kuala lumpur, malaysia"	7	218	6
+5592	"department of mechanical systems engineering, doshisha university, kyoto, japan"	6	221	1
+5610	"department of mechanics, le quy don technical university, hanoi, viet nam"	8	896	28
+5613	"department of mechatronics, hanoi university of science and technology, hanoi, viet nam"	8	208	12
+5622	"department of medical entomology and zoology, national institute of hygiene and epidemiology hanoi, hanoi, viet nam"	8	219	21
+5626	"department of medical entomology, national institute of infectious diseases, tokyo, japan"	8	223	18
+5629	"department of medical genetics, metabolism and endocrinology, vietnam national children's hospital, hanoi, viet nam"	5	216	7
+5660	"department of medical microbiology, vietnam military medical university, hanoi, viet nam"	5	16	21
+5663	"department of medical oncology and hematology, princess margaret cancer centre, toronto, canada"	5	2092	46
+5668	"department of medical oncology, hospital de la santa creu i sant pau, barcelona, spain"	5	2092	46
+5690	"department of medical sciences, sunway university, sunway city, malaysia"	6	209	54
+5701	"department of medical statistics, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	8	143	33
+5716	"department of medicine and therapeutics, chinese university of hong kong, hong kong, hong kong"	7	117	13
+5744	"department of medicine, jichi medical university, kawachi district, japan"	7	220	56
+5753	"department of medicine, medical center manila, manila, philippines"	5	193	51
+5758	"department of medicine, national university hospital, singapore city, singapore"	6	259	15
+5759	"department of medicine, national yang-ming university taiwan, taipei, taiwan"	5	217	43
+5778	"department of medicine, siriraj hospital, bangkok, thailand"	11	404	54
+5787	"department of medicine, thammasat university hospital, pathum thani, thailand"	7	181	24
+5792	"department of medicine, the university of hong kong, hong kong, hong kong"	9	252	24
+5798	"department of medicine, universiti malaya, kuala lumpur, malaysia"	11	193	58
+5801	"department of medicine, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	5	88	21
+5808	"department of medicine-gastroenterology, baylor college of medicine, houston, united states"	9	353	26
+5811	"department of mental health, graduate school of medicine, tokyo, japan"	6	175	27
+5822	"department of meteorology and climate change, vietnam national university, hanoi, hanoi, viet nam"	8	475	35
+5831	"department of microbiology & immunology, melbourne, australia"	5	98	19
+5848	"department of microbiology and immunology, nha trang pasteur institute, khanh hoa province, viet nam"	5	19	20
+5850	"department of microbiology and immunology, pasteur institute in ho chi minh city, ho chi minh city, viet nam"	17	267	79
+5857	"department of microbiology and immunology, the university of tokyo, tokyo, japan"	35	2649	158
+5864	"department of microbiology and infectious diseases, graduate school of medicine, kobe, japan"	8	448	40
+5884	"department of microbiology, faculty of medicine, chiang mai university, chiang mai, thailand"	8	228	23
+5885	"department of microbiology, faculty of medicine, chulalongkorn university, bangkok, thailand"	5	52	22
+5891	"department of microbiology, graduate school of medicine, sapporo, japan"	8	283	21
+5893	"department of microbiology, hanoi lung hospital, hanoi, viet nam"	8	121	63
+5894	"department of microbiology, hanoi medical university, hanoi, viet nam"	8	148	23
+5898	"department of microbiology, juntendo university school of medicine, tokyo, japan"	5	101	13
+5901	"department of microbiology, kanagawa prefectural institute of public health, chigasaki, japan"	8	34	38
+5918	"department of microbiology, national lung hospital, hanoi, viet nam"	7	119	54
+5925	"department of microbiology, osaka institute of public health, osaka, japan"	11	111	36
+5941	"department of microbiology, university medicine and pharmacy, hue university, hue, viet nam"	5	104	15
+5947	"department of microbiology, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	6	398	24
+5950	"department of microbiology, vietnam military medical university, hanoi, viet nam"	5	59	15
+5975	"department of molecular and environmental biotechnology, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	12	185	18
+5976	"department of molecular and material sciences, interdisciplinary graduate school of engineering sciences, kasuga, japan"	7	347	24
+5977	"department of molecular and material sciences, kyushu university, fukuoka, japan"	10	407	38
+5978	"department of molecular and medical pharmacology, university of toyama, faculty of medicine, toyama, japan"	5	30	10
+5987	"department of molecular biology, 108 military central hospital, hanoi, viet nam"	5	101	19
+6004	"department of molecular craniofacial embryology, institute of science tokyo, tokyo, japan"	9	139	42
+6027	"department of molecular pathology, oita university faculty of medicine, yufu, japan"	13	354	54
+6038	"department of musculoskeletal functional research and regeneration, hiroshima university graduate school of biomedical and health sciences, hiroshima, japan"	6	27	8
+6042	"department of mycobacterium reference and research, the research institute of tuberculosis, japan anti-tuberculosis association, kiyose, japan"	8	231	48
+6047	"department of nanomechanics, tohoku university, sendai, japan"	5	31	5
+6050	"department of nanotechnology for sustainable energy, kwansei gakuin university, nishinomiya, japan"	18	281	45
+6054	"department of natural history sciences, hokkaido university, sapporo, japan"	5	46	12
+6072	"department of nature conservation, vietnam academy of science and technology, hanoi, viet nam"	8	129	25
+6165	"department of non-communicable disease control and nutrition, nha trang pasteur institute, khanh hoa province, viet nam"	11	46	39
+6179	"department of nuclear physics, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	7	66	37
+6182	"department of nuclear system safety engineering, nagaoka university of technology, nagaoka, japan"	5	41	13
+6183	"department of nuclear technology, nagaoka university of technology, nagaoka, japan"	6	28	16
+6188	"department of nursing, komatsu university, komatsu, japan"	19	86	157
+6212	"department of nutrition, tokushima university faculty of medicine, tokushima, japan"	8	186	14
+6250	"department of obstetrics and gynecology, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	9	99	26
+6264	"department of occupational and environmental health, nagoya university graduate school of medicine, nagoya, japan"	5	131	9
+6273	"department of occupational health and safety, hanoi school of public health, hanoi, viet nam"	5	97	27
+6277	"department of occupational health, hanoi medical university, hanoi, viet nam"	12	100	40
+6314	"department of ophthalmology, juntendo university school of medicine, tokyo, japan"	5	133	5
+6324	"department of optical communications, posts and telecommunications institute of technology vietnam, hanoi, viet nam"	5	98	2
+6349	"department of oral health promotion, graduate school of medical and dental sciences, tokyo, japan"	7	131	2
+6389	"department of orthopaedic surgery, university of toyama, faculty of medicine, toyama, japan"	8	43	13
+6390	"department of orthopaedic surgery, vietnam military medical university, hanoi, viet nam"	6	29	10
+6394	"department of osteoimmunology, graduate school of medicine, tokyo, japan"	5	132	12
+6402	"department of otolaryngology-head and neck surgery, university of occupational and environmental health school of medicine, kitakyushu, japan"	7	52	3
+6406	"department of otorhinolaryngology, hanoi medical university, hanoi, viet nam"	5	48	6
+6423	"department of paediatric infectious diseases, nagasaki university, nagasaki, japan"	7	63	30
+6458	"department of parasitology, central vietnam veterinary institute, nha trang, viet nam"	9	181	11
+6474	"department of parasitology, national institute of infectious diseases, tokyo, japan"	6	66	15
+6489	"department of parasitology, vietnam national university of agriculture, hanoi, viet nam"	10	77	28
+6490	"department of parasitology, vietnamese academy of science and technology institute of ecology and biological resources, hanoi, viet nam"	17	302	26
+6492	"department of pathobiological sciences, university of wisconsin school of veterinary medicine, madison, united states"	28	1738	115
+6493	"department of pathobiological sciences, university of wisconsin-madison, madison, united states"	11	927	55
+6503	"department of pathology and microbiology, nihon university school of medicine, tokyo, japan"	8	103	24
+6509	"department of pathology and thyroid disease center, izumi city general hospital, izumi, japan"	5	109	11
+6524	"department of pathology, cho ray hospital, ho chi minh city, viet nam"	8	248	14
+6525	"department of pathology, chulalongkorn university, bangkok, thailand"	5	190	6
+6558	"department of pathology, national institute of infectious diseases, tokyo, japan"	29	1096	36
+6569	"department of pathology, shiga university of medical science, otsu, japan"	10	164	38
+6583	"department of pathology, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	11	246	12
+6589	"department of pathology, university of yamanashi, kofu, japan"	7	186	15
+6595	"department of pathophysiology and host defense, the research institute of tuberculosis, japan anti-tuberculosis association, kiyose, japan"	15	200	100
+6596	"department of pathophysiology, osaka metropolitan university graduate school of medicine, osaka, japan"	5	41	10
+6597	"department of pathophysiology, vietnam military medical university, hanoi, viet nam"	6	164	7
+6625	"department of pediatrics, gifu university, gifu, japan"	8	398	11
+6626	"department of pediatrics, graduate school of biomedical sciences, nagasaki, japan"	5	23	21
+6628	"department of pediatrics, graduate school of medicine, kobe, japan"	6	122	4
+6632	"department of pediatrics, hanoi medical university, hanoi, viet nam"	12	321	31
+6652	"department of pediatrics, nagasaki university hospital, nagasaki, japan"	10	171	42
+6690	"department of pediatrics, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	18	534	54
+6728	"department of pharmacognosy, nagasaki international university, sasebo, japan"	5	49	3
+6735	"department of pharmacology and biochemistry, national institute of medicinal materials, hanoi, viet nam"	6	37	10
+6746	"department of pharmacology, bangladesh agricultural university, mymensingh, bangladesh"	5	18	10
+6747	"department of pharmacology, chung-ang university, seoul, south korea"	5	150	4
+6751	"department of pharmacology, hanoi medical university, hanoi, viet nam"	5	78	9
+6798	"department of physical chemistry, hanoi university of science and technology, hanoi, viet nam"	5	124	7
+6808	"department of physical sciences, osaka metropolitan university, osaka, japan"	6	48	25
+6828	"department of physics and astronomy, kagoshima university, kagoshima, japan"	11	299	193
+6832	"department of physics and astronomy, mcmaster university, hamilton, canada"	5	108	47
+6833	"department of physics and astronomy, michigan state university, east lansing, united states"	7	356	49
+6836	"department of physics and astronomy, seoul national university, seoul, south korea"	18	423	245
+6854	"department of physics and electronic engineering, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	6	91	11
+6856	"department of physics and electronics, osaka metropolitan university, osaka, japan"	6	32	16
+6863	"department of physics and nanotechnology, srm institute of science and technology, kattankulathur, india"	12	43	57
+6868	"department of physics, ateneo de manila university, quezon city, philippines"	6	362	31
+6869	"department of physics, bankura university, purandarpur, india"	5	16	25
+6870	"department of physics, barasat government college, kolkata, india"	7	84	34
+6873	"department of physics, can tho university, can tho, viet nam"	9	173	24
+6875	"department of physics, chung-ang university, seoul, south korea"	9	182	82
+6877	"department of physics, chuo university, hachioji, japan"	8	221	13
+6884	"department of physics, ewha womans university, seoul, south korea"	10	192	77
+6890	"department of physics, hanoi university of education, hanoi, viet nam"	6	229	10
+6891	"department of physics, hanoi university, hanoi, viet nam"	11	337	19
+6894	"department of physics, ho chi minh city university of education, ho chi minh city, viet nam"	37	1027	119
+6899	"department of physics, institute of science tokyo, tokyo, japan"	5	67	20
+6900	"department of physics, international university - vietnam national university hcm city, ho chi minh city, viet nam"	6	65	28
+6902	"department of physics, istanbul üniversitesi, istanbul, turkey"	5	306	34
+6910	"department of physics, korea advanced institute of science and technology, daejeon, south korea"	11	72	32
+6911	"department of physics, korea university, seoul, south korea"	9	74	92
+6914	"department of physics, kyoto university, kyoto, japan"	25	588	226
+6916	"department of physics, kyushu university, fukuoka, japan"	22	443	121
+6927	"department of physics, national tsing hua university, hsinchu, taiwan"	18	399	214
+6939	"department of physics, pusan national university, busan, south korea"	7	146	42
+6941	"department of physics, quy nhon university, quy nhon, viet nam"	5	44	5
+6942	"department of physics, raniganj girls' college, burdwan, india"	5	105	21
+6943	"department of physics, rikkyo university, tokyo, japan"	9	274	130
+6951	"department of physics, sungkyunkwan university, seoul, south korea"	19	185	135
+6959	"department of physics, the university of hong kong, hong kong, hong kong"	17	472	260
+6960	"department of physics, the university of osaka, suita, japan"	31	709	159
+6961	"department of physics, the university of tokyo, tokyo, japan"	30	632	337
+6962	"department of physics, tohoku university, sendai, japan"	29	713	256
+6969	"department of physics, universitetet i oslo, oslo, norway"	7	226	121
+6983	"department of physics, university of south florida, tampa, tampa, united states"	5	57	15
+6984	"department of physics, university of surrey, guildford, united kingdom"	12	324	186
+6995	"department of physics, viet nam national university ho chi minh city, ho chi minh city, viet nam"	6	105	4
+7012	"department of physiology, hanoi medical university, hanoi, viet nam"	6	118	4
+7022	"department of physiology, vietnam military medical university, hanoi, viet nam"	10	116	22
+7034	"department of plant and soil science, texas tech university, lubbock, united states"	11	153	75
+7041	"department of plant biotechnology, vietnam national university of agriculture, hanoi, viet nam"	8	54	13
+7043	"department of plant cell technology, vietnamese academy of science and technology institute of tropical biology, dalat, viet nam"	5	238	0
+7060	"department of plant protection, can tho university, can tho, viet nam"	11	131	14
+7072	"department of plant protection, university of agriculture and forestry, hue university, hue, viet nam"	5	43	4
+7076	"department of plant resources, kyushu university, fukuoka, japan"	20	137	11
+7084	"department of plastic and aesthetic surgery, pham ngoc thach university of medicine, ho chi minh city, viet nam"	5	76	3
+7105	"department of population and quantitative health sciences, university of massachusetts chan medical school, worcester, united states"	11	154	41
+7118	"department of precision engineering, the university of osaka, suita, japan"	20	302	54
+7119	"department of precision science and technology and applied physics, the university of osaka, suita, japan"	8	90	16
+7124	"department of preventive dentistry and dental public health, aichi gakuin university, nisshin, japan"	7	170	7
+7129	"department of preventive environment and nutrition, tokushima university, tokushima, japan"	10	155	11
+7131	"department of preventive medicine and community health, university of occupational and environmental health school of medicine, kitakyushu, japan"	8	153	9
+7154	"department of primary care medicine, universiti malaya, kuala lumpur, malaysia"	7	220	54
+7170	"department of protozoology, nagasaki university, nagasaki, japan"	14	282	44
+7221	"department of psychosomatic dentistry, graduate school of medical and dental sciences, tokyo, japan"	8	38	7
+7222	"department of public health and applied nutrition, tokushima university, tokushima, japan"	7	110	12
+7225	"department of public health and preventive medicine, universitas airlangga, surabaya, indonesia"	6	96	26
+7236	"department of public health, fukushima medical university, fukushima, japan"	14	226	23
+7242	"department of public health, international university of health and welfare, otawara, japan"	14	89	41
+7246	"department of public health, kanazawa medical university, kahoku, japan"	26	526	96
+7247	"department of public health, kanazawa university graduate school of medical sciences, kanazawa, japan"	5	19	45
+7248	"department of public health, kanazawa university school of medicine, kanazawa, japan"	12	34	109
+7249	"department of public health, kanazawa university, kanazawa, japan"	11	49	102
+7251	"department of public health, kitasato university school of medicine, sagamihara, japan"	7	125	34
+7260	"department of public health, okayama university of science, okayama, japan"	14	58	111
+7262	"department of public health, shiga university of medical science, otsu, japan"	5	48	2
+7266	"department of public health, tokyo women's medical university, tokyo, japan"	5	95	20
+7275	"department of public health, yamagata university faculty of medicine, yamagata, japan"	5	121	8
+7278	"department of pulmonary and critical care medicine, university of ulsan college of medicine, seoul, south korea"	6	485	9
+7296	"department of quantum and radiation engineering, osaka metropolitan university, osaka, japan"	5	53	8
+7301	"department of radiation biology and protection, nagasaki university, nagasaki, japan"	5	17	35
+7315	"department of radiation oncology, graduate school of medicine, maebashi, japan"	7	125	27
+7317	"department of radiation oncology, korea cancer center hospital, seoul, south korea"	5	86	21
+7326	"department of radiation oncology, st. luke's medical center quezon city, quezon city, philippines"	8	110	30
+7368	"department of radiology, national university of singapore, singapore city, singapore"	6	18	36
+7374	"department of radiology, siriraj hospital, bangkok, thailand"	8	110	30
+7400	"department of rangeland and watershed management, university of kurdistan, sanandaj, iran"	7	1375	37
+7443	"department of research of preservation technology of agricultural products, vietnam institution of agricultural engineering and postharvest technology, hanoi, viet nam"	5	59	11
+7462	"department of respiratory diseases, national center for global health and medicine, tokyo, japan"	15	654	57
+7474	"department of respiratory medicine, national center for global health and medicine, tokyo, japan"	6	197	19
+7482	"department of rheumatology and endocrinology, vietnam military medical university, hanoi, viet nam"	5	25	13
+7487	"department of risk analysis and biodosimetry, hirosaki university, hirosaki, japan"	6	18	36
+7496	"department of rural socio-economics, can tho university, can tho, viet nam"	7	96	7
+7510	"department of science and technology, hanoi medical university, hanoi, viet nam"	5	338	6
+7522	"department of science of technology innovation, nagaoka university of technology, nagaoka, japan"	37	525	109
+7547	"department of social and behavioral sciences, harvard t.h. chan school of public health, boston, united states"	5	79	19
+7580	"department of soil ecology, vietnamese academy of science and technology institute of ecology and biological resources, hanoi, viet nam"	5	29	11
+7584	"department of soil sciences, can tho university, can tho, viet nam"	10	132	16
+7590	"department of solid mechanics, vietnamese academy of science and technology institute of mechanics, hanoi, viet nam"	8	211	8
+7595	"department of space and aeronautics, vietnam academy of science and technology, hanoi, viet nam"	6	354	19
+7597	"department of space flight systems, jaxa institute of space and astronautical science, sagamihara, japan"	7	226	8
+7603	"department of special pathogens, the university of tokyo, tokyo, japan"	5	206	23
+7630	"department of surface mining, hanoi university of mining and geology, hanoi, viet nam"	7	609	35
+7640	"department of surgery, graduate school of medicine, kyoto, japan"	10	49	43
+7642	"department of surgery, hanoi medical university, hanoi, viet nam"	11	126	33
+7646	"department of surgery, hino memorial hospital, shiga, japan"	5	9	4
+7661	"department of surgery, rajavithi hospital, bangkok, thailand"	5	125	12
+7662	"department of surgery, shiga university of medical science, otsu, japan"	8	17	10
+7672	"department of surgery, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	5	11	8
+7721	"department of theoretical physics, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	7	35	17
+7728	"department of thoracic oncology, kanagawa cancer center research institute, yokohama, japan"	7	2268	47
+7732	"department of thoracic surgery and oncology, national cancer center hospital east, kashiwa, japan"	5	2092	46
+7745	"department of transdisciplinary science and engineering, institute of science tokyo, tokyo, japan"	8	170	19
+7754	"department of tropical medicine and parasitology, dokkyo medical university, shimotsuga district, japan"	9	155	27
+7767	"department of urban engineering, the university of tokyo, tokyo, japan"	20	513	38
+7770	"department of urban management, kyoto university, kyoto, japan"	12	433	19
+7816	"department of vector ecology and environment, nagasaki university, nagasaki, japan"	24	976	41
+7823	"department of vertebrate zoology, vietnamese academy of science and technology institute of ecology and biological resources, hanoi, viet nam"	21	203	67
+7827	"department of veterinary clinical sciences, university of miyazaki, miyazaki, japan"	10	109	29
+7834	"department of veterinary medical sciences, graduate school of agricultural and life sciences the university of tokyo, tokyo, japan"	5	59	17
+7835	"department of veterinary medicine, can tho university, can tho, viet nam"	24	369	39
+7841	"department of veterinary medicine, kagoshima university, kagoshima, japan"	5	23	3
+7846	"department of veterinary medicine, obihiro university of agriculture and veterinary medicine, obihiro, japan"	8	60	26
+7856	"department of veterinary microbiology and infectious diseases, vietnam national university of agriculture, hanoi, viet nam"	6	206	7
+7860	"department of veterinary microbiology, graduate school of agricultural and life sciences the university of tokyo, tokyo, japan"	8	405	23
+7871	"department of veterinary pathology, university of miyazaki, miyazaki, japan"	20	496	21
+7872	"department of veterinary pathology, vietnam national university of agriculture, hanoi, viet nam"	8	118	7
+7873	"department of veterinary pharmacology, kagoshima university, kagoshima, japan"	15	86	21
+7876	"department of veterinary pharmacology, vietnam national university of agriculture, hanoi, viet nam"	5	26	13
+7883	"department of veterinary public health, vietnam national university of agriculture, hanoi, viet nam"	12	367	13
+7886	"department of veterinary science, national institute of infectious diseases, tokyo, japan"	5	69	13
+7888	"department of veterinary science, university of miyazaki, miyazaki, japan"	11	116	42
+7898	"department of virology 1, national institute of infectious diseases, tokyo, japan"	7	143	23
+7899	"department of virology 2, national institute of infectious diseases, tokyo, japan"	5	59	11
+7902	"department of virology and parasitology, fujita health university school of medicine, toyoake, japan"	10	234	25
+7904	"department of virology ii, national institute of infectious diseases, tokyo, japan"	8	308	23
+7908	"department of virology, nagasaki university, nagasaki, japan"	49	2017	153
+7910	"department of virology, national institute of hygiene and epidemiology hanoi, hanoi, viet nam"	24	691	64
+7911	"department of virology, national institute of hygiene and epidemiology, hanoi, viet nam"	28	1299	66
+7926	"department of water resources, can tho university, can tho, viet nam"	27	359	81
+7933	"department of welding engineering and metals technology, hanoi university of science and technology, hanoi, viet nam"	9	124	17
+7935	"department of wildlife, vietnam national university of forestry, hanoi, viet nam"	6	39	11
+7954	"department of zoology, kyoto university, kyoto, japan"	6	173	19
+7955	"department of zoology, magyar természettudományi múzeum, budapest, hungary"	13	181	54
+7958	"department of zoology, national museum of nature and science, tokyo, japan"	13	124	36
+7959	"department of zoology, patna university, patna, india"	8	836	44
+7998	"dept. of building technologists, institute of technologists, gyoda, japan"	5	27	14
+8028	"dermatology and stds, national center for hiv/aids, phnom penh, cambodia"	19	261	365
+8033	"design engineering lab, toyota technological institute, nagoya, japan"	11	406	19
+8089	"disaster prevention research institute, kyoto university, kyoto, japan"	8	380	20
+8091	"discipline of business analytics, the university of sydney business school, sydney, australia"	10	176	46
+8100	"disease control and prevention center, national center for global health and medicine, tokyo, japan"	15	310	49
+8130	"division of animal life science, tokyo university of agriculture and technology, fuchu, japan"	7	178	10
+8132	"division of animal sciences, institute of agrobiological sciences, naro, tsukuba, japan"	11	137	34
+8158	"division of biomedical food research, national institute of health sciences tokyo, tokyo, japan"	5	75	22
+8209	"division of collaboration and education, hokkaido university, sapporo, japan"	5	96	12
+8213	"division of computational mathematics and engineering, ton-duc-thang university, ho chi minh city, viet nam"	13	943	55
+8215	"division of computational mechanics, ton-duc-thang university, ho chi minh city, viet nam"	7	713	21
+8216	"division of computational physics, ton-duc-thang university, ho chi minh city, viet nam"	16	271	41
+8227	"division of earth sciences, kyushu university, fukuoka, japan"	8	200	20
+8231	"division of electrical, electronic and information engineering, the university of osaka, suita, japan"	5	23	9
+8257	"division of evolution of earth environments, kyushu university, fukuoka, japan"	7	756	20
+8259	"division of field engineering for the environment, hokkaido university, sapporo, japan"	6	136	16
+8261	"division of fish diseases, nippon veterinary and life science university, musashino, japan"	8	182	7
+8264	"division of food science and biotechnology, kyushu university, fukuoka, japan"	6	25	6
+8294	"division of health sciences, kanazawa university graduate school of medical sciences, kanazawa, japan"	6	74	34
+8295	"division of health sciences, kanazawa university, kanazawa, japan"	9	180	39
+8326	"division of invertebrate zoology, american museum of natural history, new york, united states"	5	97	11
+8334	"division of materials and manufacturing science, the university of osaka, suita, japan"	10	98	29
+8336	"division of mechanical and space engineering, hokkaido university, sapporo, japan"	6	111	13
+8338	"division of mechanical engineering, mie university, tsu, japan"	5	57	6
+8341	"division of mechanical science and technology, gunma university, maebashi, japan"	11	17	15
+8352	"division of medicinal pharmacology, university of toyama, toyama, japan"	6	203	6
+8360	"division of microbiology, osaka institute of public health, osaka, japan"	5	14	20
+8382	"division of natural drug discovery, university of toyama, toyama, japan"	13	299	27
+8396	"division of neurobiology and bioinformatics, national institutes of natural sciences - national institute for physiological sciences, okazaki, japan"	5	137	13
+8404	"division of nuclear physics, ton-duc-thang university, ho chi minh city, viet nam"	5	161	13
+8408	"division of oral biology, university of leeds, leeds, united kingdom"	5	147	4
+8456	"division of research and treatment for oral and maxillofacial congenital anomalies, aichi gakuin university, nisshin, japan"	11	164	18
+8457	"division of research, asian growth research institute, fukuoka, japan"	5	43	10
+8474	"division of sustainable and environmental engineering, muroran institute of technology, muroran, japan"	6	162	7
+8484	"division of thoracic oncology, istituto europeo di oncologia, milan, italy"	5	2092	46
+8488	"division of transboundary animal disease, national institute of animal health, naro, tsukuba, japan"	6	54	5
+8513	"doctor's program of materials chemistry, kyoto institute of technology, kyoto, japan"	5	114	17
+8529	"dong da general hospital, hanoi, viet nam"	5	52	10
+8533	"dong nai university, bien hoa, viet nam"	5	105	44
+8552	"duke-nus medical school, singapore city, singapore"	12	177	67
+8556	"duy tan university, da nang, viet nam"	27	457	73
+8559	"dynamique de l'évolution humaine cnrs upr 2147, paris, france"	5	201	9
+8566	"dại học nguyen tat thanh, ho chi minh city, viet nam"	16	619	40
+8579	"earth observation research center, japan aerospace exploration agency, chofu, japan"	6	150	20
+8590	"east asia university of technology, hanoi, viet nam"	5	12	11
+8615	"edinburgh medical school, edinburgh, united kingdom"	9	37	49
+8629	"ehime university, matsuyama, japan"	44	1254	102
+8631	"eiken chemical co, ltd, taito-ku, japan"	7	639	17
+8636	"electric power university, hanoi, viet nam"	6	98	22
+8642	"electro-mechanical research, hanoi university of mining and geology, hanoi, viet nam"	5	308	28
+8652	"electronic navigation research institute, chofu, japan"	5	38	13
+8659	"elements strategy initiative for catalysts and batteries (esicb), kyoto university, kyoto, japan"	7	102	14
+8723	"environment administration, ministry of natural resources and environment, vietnam, hanoi, viet nam"	12	205	65
+8725	"environment and climate change canada, gatineau, canada"	6	1248	20
+8737	"environmental and renewable energy systems division, gifu university, gifu, japan"	10	214	20
+8742	"environmental chemistry research group, universidad de cartagena, cartagena, colombia"	5	656	38
+8761	"environmental management program, kuwait institute for scientific research, shuwaikh, kuwait"	5	656	38
+8762	"environmental management research institute, national institute of advanced industrial science and technology, tsukuba, japan"	5	99	5
+8796	"erasmus school of economics, econometric institute, rotterdam, netherlands"	11	191	49
+8808	"estuary research center, shimane university, matsue, japan"	12	278	28
+8818	"european southern observatory santiago, santiago, chile"	12	323	200
+8822	"evidence based medicine research group & faculty of applied sciences, ton-duc-thang university, ho chi minh city, viet nam"	9	164	58
+8824	"evidence based medicine research group, ton-duc-thang university, ho chi minh city, viet nam"	23	697	138
+8871	"faculty of advanced science and technology, kumamoto university, kumamoto, japan"	19	206	35
+8885	"faculty of agriculture and life science, hirosaki university, hirosaki, japan"	6	80	16
+8886	"faculty of agriculture and marine science, kochi university, kochi, japan"	12	135	27
+8888	"faculty of agriculture and veterinary sciences, vietnam national university of agriculture, hanoi, viet nam"	5	61	12
+8894	"faculty of agriculture, ehime university, matsuyama, japan"	16	351	34
+8899	"faculty of agriculture, kagawa university, takamatsu, japan"	14	256	15
+8900	"faculty of agriculture, kagoshima university, kagoshima, japan"	8	75	20
+8904	"faculty of agriculture, kochi university, kochi, japan"	13	256	20
+8905	"faculty of agriculture, kyushu university, fukuoka, japan"	34	575	58
+8912	"faculty of agriculture, saga university, saga, japan"	20	369	41
+8920	"faculty of agriculture, tottori university, tottori, japan"	8	95	17
+8924	"faculty of agriculture, university of miyazaki, miyazaki, japan"	18	457	28
+8926	"faculty of agriculture, university of the ryukyus, nishihara, japan"	13	207	27
+8927	"faculty of agriculture, yamagata university, yamagata, japan"	10	209	17
+8935	"faculty of agronomy, university of agriculture and forestry, hue university, hue, viet nam"	13	152	31
+8936	"faculty of agronomy, vietnam national university of agriculture, hanoi, viet nam"	29	357	66
+8949	"faculty of animal science, vietnam national university of agriculture, hanoi, viet nam"	5	34	13
+8952	"faculty of animal sciences and veterinary medicine, university of agriculture and forestry, hue university, hue, viet nam"	8	24	11
+8954	"faculty of animal sciences, university of agriculture and forestry, hue university, hue, viet nam"	7	92	3
+8956	"faculty of applied biological sciences, gifu university, gifu, japan"	7	70	14
+8957	"faculty of applied biological sciences, gifu, japan"	6	50	18
+8962	"faculty of applied sciences, ton-duc-thang university, ho chi minh city, viet nam"	74	1164	248
+8964	"faculty of applied technology, van lang university, ho chi minh city, viet nam"	11	32	25
+8980	"faculty of biology and biotechnology, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	8	213	30
+8994	"faculty of biology, trường đại học sư phạm hà nội, hanoi, viet nam"	13	237	32
+9000	"faculty of biology, vietnam national university, hanoi, hanoi, viet nam"	15	234	49
+9008	"faculty of bioscience and bioindustry, tokushima university, tokushima, japan"	15	218	53
+9012	"faculty of biotechnology and food technology, thai nguyen university, thai nguyen, viet nam"	5	57	11
+9014	"faculty of biotechnology, dại học nguyen tat thanh, ho chi minh city, viet nam"	13	257	40
+9020	"faculty of bridges and roads, hanoi university of civil engineering, hanoi, viet nam"	5	49	7
+9021	"faculty of building and industrial construction, hanoi university of civil engineering, hanoi, viet nam"	9	116	18
+9022	"faculty of building materials, hanoi university of civil engineering, hanoi, viet nam"	7	129	17
+9028	"faculty of business administration, ton-duc-thang university, ho chi minh city, viet nam"	5	124	3
+9029	"faculty of business administration, van lang university, ho chi minh city, viet nam"	9	186	11
+9036	"faculty of chemical and natural resources engineering, universiti malaysia pahang al-sultan abdullah, pekan, malaysia"	8	378	31
+9040	"faculty of chemical engineering, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam"	9	168	20
+9041	"faculty of chemical engineering, industrial university of ho chi minh city, ho chi minh city, viet nam"	16	390	63
+9051	"faculty of chemical technology, viet tri university of industry, viet tri, phu tho, viet nam"	6	188	10
+9058	"faculty of chemistry, hanoi university of education, hanoi, viet nam"	17	608	27
+9065	"faculty of chemistry, thai nguyen university of sciences, thai nguyen, viet nam"	6	165	17
+9068	"faculty of chemistry, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	38	842	95
+9070	"faculty of chemistry, vietnam national university, hanoi, hanoi, viet nam"	131	3475	311
+9079	"faculty of civil engineering, duy tan university, da nang, viet nam"	10	642	35
+9083	"faculty of civil engineering, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam"	17	378	38
+9084	"faculty of civil engineering, ho chi minh city university of technology - hutech, ho chi minh city, viet nam"	9	366	14
+9088	"faculty of civil engineering, thuyloi university, hanoi, viet nam"	19	184	28
+9089	"faculty of civil engineering, ton-duc-thang university, ho chi minh city, viet nam"	25	1895	97
+9096	"faculty of civil engineering, đại học công nghệ giao thông vận tải, hanoi, viet nam"	18	243	30
+9097	"faculty of civil engineering, đại học mở thành phố hồ chí minh, ho chi minh city, viet nam"	11	560	24
+9107	"faculty of computer science and engineering, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam"	8	37	15
+9109	"faculty of computer science, phenikaa university, hanoi, viet nam"	5	28	15
+9115	"faculty of construction management, trường đại học giao thông vận tải, hanoi, viet nam"	8	44	14
+9116	"faculty of contemporary human life science, tezukayama university, nara, japan"	10	47	44
+9119	"faculty of crop science, thai nguyen university, thai nguyen, viet nam"	6	320	5
+9141	"faculty of economics and business, phenikaa university, hanoi, viet nam"	9	171	32
+9142	"faculty of economics and development studies, hue university, hue, viet nam"	5	131	7
+9143	"faculty of economics and development studies, university of economics, hue university, hue, viet nam"	7	69	16
+9149	"faculty of economics and rural development, vietnam national university of agriculture, hanoi, viet nam"	14	173	21
+9167	"faculty of education and human studies, akita university, akita, japan"	5	168	13
+9185	"faculty of electrical and electronic engineering, phenikaa university, hanoi, viet nam"	5	60	11
+9188	"faculty of electrical and electronics engineering, ton-duc-thang university, ho chi minh city, viet nam"	15	148	36
+9196	"faculty of electronics and telecommunications, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	6	25	7
+9197	"faculty of electronics and telecommunications, vietnam national university, hanoi, hanoi, viet nam"	10	134	15
+9209	"faculty of engineering and information technology, university of technology sydney, sydney, australia"	9	271	84
+9213	"faculty of engineering physics and nanotechnology, vietnam national university, hanoi, hanoi, viet nam"	14	236	34
+9214	"faculty of engineering sciences, kyushu university, fukuoka, japan"	5	118	7
+9217	"faculty of engineering, hokkaido university, sapporo, japan"	7	85	6
+9233	"faculty of engineering, osaka electro-communication university, neyagawa, japan"	5	207	11
+9252	"faculty of engineering, vietnam national university of agriculture, hanoi, viet nam"	8	294	17
+9259	"faculty of environment and labour safety, ton-duc-thang university, ho chi minh city, viet nam"	29	2598	98
+9264	"faculty of environment and natural resources, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam"	25	744	114
+9265	"faculty of environment and natural resources, nong lam university, ho chi minh city, ho chi minh city, viet nam"	8	514	11
+9276	"faculty of environment, hanoi university of natural resources and environment, hanoi, viet nam"	9	208	28
+9277	"faculty of environment, ho chi minh city university of natural resources and environment, ho chi minh city, viet nam"	5	118	8
+9283	"faculty of environment, university of natural resources and environment, ho chi minh city, viet nam"	5	62	10
+9284	"faculty of environment, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	24	433	41
+9285	"faculty of environment, van lang university, ho chi minh city, viet nam"	5	32	11
+9287	"faculty of environment, vietnam national university of agriculture, hanoi, viet nam"	10	230	32
+9289	"faculty of environmental and chemical engineering, duy tan university, da nang, viet nam"	14	477	52
+9290	"faculty of environmental and food engineering, dại học nguyen tat thanh, ho chi minh city, viet nam"	10	215	30
+9295	"faculty of environmental earth science, hokkaido university, sapporo, japan"	25	1055	79
+9296	"faculty of environmental engineering, hanoi university of civil engineering, hanoi, viet nam"	18	279	52
+9297	"faculty of environmental engineering, the university of kitakyushu, kitakyushu, japan"	21	242	34
+9301	"faculty of environmental science, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	18	515	22
+9302	"faculty of environmental science, university of sciences, hue university, hue, viet nam"	11	119	23
+9304	"faculty of environmental sciences, national university of laos, vientiane, laos"	6	10	22
+9306	"faculty of environmental sciences, vietnam national university, hanoi, hanoi, viet nam"	18	358	68
+9308	"faculty of environmental studies, universiti putra malaysia, serdang, malaysia"	5	1070	18
+9310	"faculty of finance and banking, ton-duc-thang university, ho chi minh city, viet nam"	5	202	9
+9324	"faculty of fisheries sciences, hokkaido university, sapporo, japan"	14	81	31
+9327	"faculty of fisheries, kagoshima university, kagoshima, japan"	12	150	21
+9332	"faculty of fisheries, university of agriculture and forestry, hue university, hue, viet nam"	16	684	39
+9333	"faculty of fisheries, vietnam national university of agriculture, hanoi, viet nam"	8	227	12
+9336	"faculty of food science and technology, ho chi minh city university of industry and trade, ho chi minh city, viet nam"	6	110	12
+9340	"faculty of forest resources and environmental management, vietnam national university of forestry, hanoi, viet nam"	7	234	13
+9341	"faculty of forestry, national university of laos, vientiane, laos"	8	22	25
+9343	"faculty of forestry, thai nguyen university, thai nguyen, viet nam"	6	77	11
+9345	"faculty of forestry, university of agriculture and forestry, hue university, hue, viet nam"	8	46	5
+9349	"faculty of fundamental science, hanoi university of industry, hanoi, viet nam"	7	59	26
+9362	"faculty of geography, vietnam national university, hanoi, hanoi, viet nam"	5	805	20
+9367	"faculty of geology, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	6	66	21
+9368	"faculty of geology, vietnam national university, hanoi, hanoi, viet nam"	25	913	43
+9370	"faculty of geosciences and civil engineering, kanazawa university, kanazawa, japan"	15	148	14
+9371	"faculty of geosciences and geoengineering, hanoi university of mining and geology, hanoi, viet nam"	6	97	15
+9373	"faculty of geosciences, universität bremen, bremen, germany"	5	54	21
+9377	"faculty of health and sport sciences, university of tsukuba, tsukuba, japan"	6	344	19
+9382	"faculty of health sciences, kanazawa university, kanazawa, japan"	25	501	104
+9428	"faculty of information technology, hanoi university of mining and geology, hanoi, viet nam"	5	790	19
+9430	"faculty of information technology, hanoi university, hanoi, viet nam"	7	58	10
+9433	"faculty of information technology, ho chi minh city university of technology - hutech, ho chi minh city, viet nam"	95	4650	277
+9443	"faculty of information technology, ton-duc-thang university, ho chi minh city, viet nam"	5	140	6
+9446	"faculty of information technology, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	7	182	11
+9449	"faculty of information technology, vietnam national university, hanoi, hanoi, viet nam"	5	13	9
+9453	"faculty of international economics, foreign trade university, hanoi, viet nam"	6	134	6
+9460	"faculty of international training, thai nguyen university of technology, thai nguyen, viet nam"	7	150	18
+9461	"faculty of it, hanoi university of civil engineering, hanoi, viet nam"	5	16	21
+9466	"faculty of land resources and agricultural environment, university of agriculture and forestry, hue university, hue, viet nam"	6	120	18
+9474	"faculty of liberal arts, tohoku gakuin university, sendai, japan"	6	14	9
+9478	"faculty of life and environmental sciences, university of tsukuba, tsukuba, japan"	19	455	53
+9482	"faculty of life sciences, toyo university, tokyo, japan"	7	87	28
+9501	"faculty of materials science and engineering, kyoto institute of technology, kyoto, japan"	13	214	29
+9502	"faculty of materials science and engineering, phenikaa university, hanoi, viet nam"	13	212	32
+9503	"faculty of materials science, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	11	221	28
+9504	"faculty of materials technology, ho chi minh city university of technology - hcmut, ho chi minh city, viet nam"	8	124	17
+9505	"faculty of materials technology, viet nam national university ho chi minh city, ho chi minh city, viet nam"	10	349	22
+9510	"faculty of mathematics and computer science, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	8	97	19
+9515	"faculty of mathematics and statistics, ton-duc-thang university, ho chi minh city, viet nam"	12	271	14
+9519	"faculty of mathematics, mechanics and informatics, vietnam national university, hanoi, hanoi, viet nam"	15	411	12
+9523	"faculty of mechanical engineering and mechatronics, phenikaa university, hanoi, viet nam"	6	63	5
+9526	"faculty of mechanical engineering, hanoi university of industry, hanoi, viet nam"	5	47	6
+9528	"faculty of mechanical engineering, hcmc university of technology and education, ho chi minh city, viet nam"	11	92	26
+9535	"faculty of mechanical engineering, thuyloi university, hanoi, viet nam"	7	57	6
+9544	"faculty of medical technology, hanoi medical university, hanoi, viet nam"	6	58	17
+9547	"faculty of medicine - ain shams university, cairo, egypt"	20	273	120
+9553	"faculty of medicine ramathibodi hospital, mahidol university, bangkok, thailand"	21	225	411
+9554	"faculty of medicine, 6th october, egypt"	18	247	126
+9556	"faculty of medicine, alexandria, egypt"	12	168	85
+9561	"faculty of medicine, cairo, egypt"	34	917	220
+9564	"faculty of medicine, damascus university, damascus, syrian arab republic"	5	198	35
+9566	"faculty of medicine, duy tan university, da nang, viet nam"	7	35	28
+9570	"faculty of medicine, hanoi medical university, hanoi, viet nam"	8	24	25
+9579	"faculty of medicine, mansoura, egypt"	7	101	49
+9580	"faculty of medicine, minya, egypt"	21	331	141
+9584	"faculty of medicine, pham ngoc thach university of medicine, ho chi minh city, viet nam"	10	252	59
+9596	"faculty of medicine, tanta, egypt"	11	214	75
+9599	"faculty of medicine, universitas indonesia, rsupn dr. cipto mangunkusumo, central jakarta, indonesia"	6	104	111
+9602	"faculty of medicine, universitas udayana, bali, indonesia"	19	292	371
+9603	"faculty of medicine, universiti malaya, kuala lumpur, malaysia"	6	1321	14
+9606	"faculty of medicine, university of gezira, wad medani, sudan"	5	73	33
+9608	"faculty of medicine, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	23	566	95
+9613	"faculty of medicine, university of tsukuba, tsukuba, japan"	9	57	35
+9626	"faculty of natural resources and environment, vietnam national university of agriculture, hanoi, viet nam"	9	37	14
+9631	"faculty of natural sciences, duy tan university, da nang, viet nam"	47	407	196
+9662	"faculty of pharmaceutical sciences, hokkaido university of science, sapporo, japan"	8	48	58
+9668	"faculty of pharmaceutical sciences, tokushima bunri university, tokushima, japan"	28	861	40
+9673	"faculty of pharmacy, cairo, egypt"	5	59	28
+9675	"faculty of pharmacy, duy tan university, da nang, viet nam"	7	35	36
+9680	"faculty of pharmacy, lac hong university, bien hoa, viet nam"	12	144	57
+9689	"faculty of pharmacy, tanta, egypt"	5	69	27
+9690	"faculty of pharmacy, ton-duc-thang university, ho chi minh city, viet nam"	14	114	35
+9691	"faculty of pharmacy, university medicine and pharmacy, hue university, hue, viet nam"	19	403	46
+9695	"faculty of pharmacy, yasuda women’s university, hiroshima, japan"	7	54	18
+9700	"faculty of physics and engineering physics, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	25	327	103
+9708	"faculty of physics, hanoi university of science and technology, hanoi, viet nam"	5	28	9
+9714	"faculty of physics, trường đại học sư phạm hà nội, hanoi, viet nam"	12	240	30
+9719	"faculty of physics, vietnam national university, hanoi, hanoi, viet nam"	57	838	141
+9732	"faculty of public health, haiphong university, haiphong, viet nam"	14	133	116
+9738	"faculty of public health, university medicine and pharmacy, hue university, hue, viet nam"	11	155	23
+9739	"faculty of public health, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	15	280	60
+9744	"faculty of radio-electronic engineering, le quy don technical university, hanoi, viet nam"	16	221	17
+9754	"faculty of road and bridge engineering, university of danang, da nang, viet nam"	6	60	9
+9781	"faculty of science, fukuoka university, fukuoka, japan"	5	135	19
+9786	"faculty of science, ibaraki university, mito, japan"	5	105	9
+9787	"faculty of science, institute of biological sciences, kuala lumpur, malaysia"	7	215	24
+9800	"faculty of science, qena, egypt"	5	1299	20
+9807	"faculty of science, univerzita hradec králové, hradec kralove, czech republic"	6	99	19
+9811	"faculty of social and behavioral sciences, hanoi school of public health, hanoi, viet nam"	7	109	30
+9815	"faculty of social sciences and humanities, ton-duc-thang university, ho chi minh city, viet nam"	6	127	12
+9819	"faculty of software and information science, iwate prefectural university, iwate district, japan"	55	3280	112
+9836	"faculty of technology, van lang university, ho chi minh city, viet nam"	5	59	15
+9848	"faculty of transportation mechanical engineering, university of danang, da nang, viet nam"	14	144	16
+9850	"faculty of tropical medicine, mahidol university, bangkok, thailand"	8	50	25
+9853	"faculty of urban environmental and infrastructural engineering, hanoi architectural university, hanoi, viet nam"	5	144	6
+9857	"faculty of vehicle and energy engineering, phenikaa university, hanoi, viet nam"	6	48	9
+9858	"faculty of veterinary medicine benha university, benha, egypt"	6	55	30
+9859	"faculty of veterinary medicine, can tho university, can tho, viet nam"	6	34	20
+9864	"faculty of veterinary medicine, okayama university of science, okayama, japan"	5	44	13
+9868	"faculty of veterinary medicine, universitas airlangga, surabaya, indonesia"	5	250	25
+9871	"faculty of veterinary medicine, vietnam national university of agriculture, hanoi, viet nam"	29	401	87
+9874	"faculty of veterinary science, mahidol university, nakhon pathom, thailand"	5	97	16
+9875	"faculty of veterinary science, prince of songkla university, hatyai, thailand"	10	48	31
+9876	"faculty of veterinary science, vietnam national university of agriculture, hanoi, viet nam"	5	99	11
+9877	"faculty of water resource engineering, can tho university, can tho, viet nam"	7	49	20
+9879	"faculty of water resources engineering, thuyloi university, hanoi, viet nam"	21	1040	73
+9880	"faculty of water resources engineering, university of danang, da nang, viet nam"	5	92	9
+9897	"far eastern branch, russian academy of sciences, vladivostok, russian federation"	8	121	27
+9927	"field science center, tohoku university, sendai, japan"	6	80	23
+9929	"field solution division, jeol ltd., japan, tokyo, japan"	6	762	13
+9984	"food research institute, naro, tsukuba, japan"	5	128	12
+9991	"foreign trade university, hanoi, viet nam"	9	143	10
+10021	"forestry and forest products research institute, tsukuba, japan"	13	152	28
+10034	"fpt corporation, hanoi, viet nam"	5	29	5
+10036	"fpt university, hanoi, viet nam"	21	91	52
+10092	"fukuoka institute of health and environmental sciences, dazaifu, japan"	10	161	14
+10109	"future materials & devices lab., duy tan university, da nang, viet nam"	6	86	24
+10154	"general department of geology and minerals of vietnam, hanoi, viet nam"	6	93	16
+10158	"general department of preventive medicine, ministry of health vitenam, hanoi, viet nam"	6	57	19
+10186	"geographic information science research group, ton-duc-thang university, ho chi minh city, viet nam"	11	1610	64
+10190	"geoinformatics unit, riken center for advanced intelligence project, tokyo, japan"	8	1286	32
+10195	"geological survey of india, kolkata, india"	9	200	32
+10196	"geological survey of japan, tsukuba, japan"	12	143	30
+10231	"gifu university, gifu, japan"	31	956	105
+10235	"glasgow cardiovascular research centre, glasgow, united kingdom"	7	441	18
+10244	"global center for science and engineering, waseda university, tokyo, japan"	5	35	4
+10249	"global coe program, nagasaki university, nagasaki, japan"	11	814	47
+10250	"global collaboration center, the university of osaka, suita, japan"	12	578	30
+10272	"global station for zoonosis control, hokkaido university, sapporo, japan"	9	190	26
+10278	"goal-oriented technology research group, riken center for advanced intelligence project, tokyo, japan"	11	544	48
+10286	"government of gujarat, gandhinagar, india"	6	943	40
+10296	"graduate faculty of interdisciplinary research, university of yamanashi, kofu, japan"	7	23	28
+10308	"graduate program in sustainability science-global leadership initiative (gpss-gli), the university of tokyo, tokyo, japan"	7	230	19
+10312	"graduate school for international development and cooperation, hiroshima university, higashihiroshima, japan"	39	1869	50
+10315	"graduate school of advanced science and engineering, hiroshima university, higashihiroshima, japan"	34	422	70
+10316	"graduate school of advanced science and engineering, waseda university, tokyo, japan"	5	26	15
+10317	"graduate school of advanced science and technology, japan advanced institute of science and technology, nomi, japan"	5	73	1
+10320	"graduate school of agricultural and life sciences the university of tokyo, tokyo, japan"	30	696	104
+10321	"graduate school of agricultural and life sciences, graduate school of agricultural and life sciences the university of tokyo, tokyo, japan"	11	358	21
+10322	"graduate school of agricultural and life sciences, the university of tokyo, tokyo, japan"	16	157	77
+10323	"graduate school of agricultural science, kobe university, kobe, japan"	8	99	12
+10325	"graduate school of agricultural sciences, yamagata university, yamagata, japan"	5	58	11
+10326	"graduate school of agriculture, ehime university, matsuyama, japan"	18	322	51
+10327	"graduate school of agriculture, hokkaido university, sapporo, japan"	9	177	13
+10329	"graduate school of agriculture, kyoto university, kyoto, japan"	14	235	25
+10330	"graduate school of agriculture, kyoto, japan"	5	58	20
+10333	"graduate school of agriculture, tokyo university of agriculture and technology, fuchu, japan"	8	99	16
+10337	"graduate school of asia pacific studies, ritsumeikan asia pacific university, beppu, japan"	13	316	32
+10338	"graduate school of asia-pacific studies, waseda university, tokyo, japan"	6	69	4
+10339	"graduate school of asian and african area studies, kyoto university, kyoto, japan"	7	217	20
+10340	"graduate school of bio-applications and systems engineering, tokyo university of agriculture and technology, fuchu, japan"	8	69	13
+10342	"graduate school of bioagricultural sciences, nagoya university, nagoya, japan"	22	535	53
+10345	"graduate school of biomedical sciences, nagasaki university, nagasaki, japan"	18	268	77
+10346	"graduate school of biomedical sciences, nagasaki, japan"	20	282	79
+10347	"graduate school of bioresource and bioenvironmental sciences, kyushu university, fukuoka, japan"	16	241	35
+10349	"graduate school of bioresources, mie university, tsu, japan"	7	403	9
+10353	"graduate school of biosphere science, hiroshima university, higashihiroshima, japan"	18	466	31
+10358	"graduate school of commerce and management, hitotsubashi university, kunitachi, japan"	5	184	4
+10359	"graduate school of comprehensive human sciences, university of tsukuba, tsukuba, japan"	9	112	35
+10360	"graduate school of creative science and engineering, waseda university, tokyo, japan"	5	19	12
+10380	"graduate school of engineering science, the university of osaka, suita, japan"	13	128	20
+10384	"graduate school of engineering, hiroshima university, higashihiroshima, japan"	16	1097	46
+10385	"graduate school of engineering, hokkaido university, sapporo, japan"	6	134	9
+10392	"graduate school of engineering, nagasaki university, nagasaki, japan"	6	136	17
+10394	"graduate school of engineering, osaka metropolitan university, osaka, japan"	9	136	15
+10395	"graduate school of engineering, the university of osaka, suita, japan"	10	245	12
+10402	"graduate school of environment and information sciences, yokohama national university, yokohama, japan"	8	74	6
+10403	"graduate school of environmental and life science, okayama university, okayama, japan"	26	383	30
+10404	"graduate school of environmental and symbiotic sciences, prefectural university of kumamoto, kumamoto, japan"	5	70	8
+10406	"graduate school of environmental engineering, the university of kitakyushu, kitakyushu, japan"	11	241	10
+10407	"graduate school of environmental science, hokkaido university, sapporo, japan"	14	186	40
+10410	"graduate school of environmental studies, nagoya university, nagoya, japan"	16	383	32
+10413	"graduate school of fisheries and environmental sciences, nagasaki, japan"	26	343	69
+10414	"graduate school of fisheries sciences, hokkaido university, sapporo, japan"	12	2467	27
+10417	"graduate school of frontier sciences, the university of tokyo, tokyo, japan"	28	1342	77
+10419	"graduate school of global environmental studies, kyoto university, kyoto, japan"	27	465	47
+10420	"graduate school of global environmental studies, kyoto, japan"	28	299	56
+10429	"graduate school of horticulture, chiba university, chiba, japan"	11	164	19
+10430	"graduate school of human and environmental studies, kyoto university, kyoto, japan"	12	830	29
+10431	"graduate school of human and environmental studies, kyoto, japan"	15	202	44
+10437	"graduate school of humanities and sciences, ochanomizu university, tokyo, japan"	10	158	23
+10438	"graduate school of humanities and social sciences, hiroshima university, higashihiroshima, japan"	6	45	7
+10440	"graduate school of humanities and sustainable system sciences, osaka metropolitan university, osaka, japan"	10	132	21
+10442	"graduate school of informatics and engineering, the university of electro-communications, chofu, japan"	9	99	10
+10449	"graduate school of information science, nara institute of science and technology, ikoma, japan"	5	73	7
+10450	"graduate school of information science, teikyo heisei university, ichihara, japan"	9	70	27
+10461	"graduate school of integrated sciences for global society, kyushu university, fukuoka, japan"	10	271	25
+10462	"graduate school of integrated sciences for life, hiroshima university, higashihiroshima, japan"	12	95	26
+10464	"graduate school of international cooperation studies, kobe university, kobe, japan"	5	43	4
+10469	"graduate school of international social sciences, yokohama, japan"	11	142	7
+10478	"graduate school of life and environmental sciences, university of tsukuba, tsukuba, japan"	40	946	110
+10483	"graduate school of life sciences, tohoku university, sendai, japan"	10	344	40
+10488	"graduate school of materials science, nara institute of science and technology, ikoma, japan"	6	144	15
+10489	"graduate school of mathematical sciences, the university of tokyo, tokyo, japan"	10	98	17
+10492	"graduate school of medical and dental sciences, tokyo, japan"	8	125	11
+10493	"graduate school of medical science, kanazawa university, kanazawa, japan"	20	393	34
+10500	"graduate school of medicine and veterinary medicine, miyazaki, japan"	9	78	40
+10504	"graduate school of medicine, graduate school of medicine and pharmaceutical sciences, toyama, japan"	6	300	19
+10507	"graduate school of medicine, graduate school of medicine, tokyo, japan"	5	222	5
+10512	"graduate school of medicine, kyoto, japan"	8	231	32
+10517	"graduate school of medicine, sendai, japan"	5	107	23
+10524	"graduate school of natural science and technology, kanazawa university, kanazawa, japan"	13	279	14
+10531	"graduate school of pharmaceutical sciences, daiichi university of pharmacy, fukuoka, japan"	5	30	7
+10535	"graduate school of pharmaceutical sciences, the university of osaka, suita, japan"	10	385	30
+10537	"graduate school of public health, international university of health and welfare, otawara, japan"	5	34	23
+10539	"graduate school of public health, st. luke’s international university, tokyo, japan"	20	248	60
+10540	"graduate school of public health, teikyo university, tokyo, japan"	6	123	17
+10545	"graduate school of science and engineering, ehime university, matsuyama, japan"	12	587	27
+10550	"graduate school of science and engineering, institute of science tokyo, tokyo, japan"	5	174	12
+10555	"graduate school of science and engineering, ritsumeikan university biwako-kusatsu campus, kusatsu, japan"	15	307	39
+10558	"graduate school of science and engineering, saitama university, saitama, japan"	20	594	32
+10567	"graduate school of science and technology, gunma university, maebashi, japan"	15	69	31
+10572	"graduate school of science and technology, kumamoto university, kumamoto, japan"	38	2943	120
+10577	"graduate school of science and technology, niigata university, niigata, japan"	8	454	22
+10582	"graduate school of science and technology, university of tsukuba, tsukuba, japan"	6	149	26
+10583	"graduate school of science and technology, vietnam academy of science and technology, hanoi, viet nam"	7	40	7
+10590	"graduate school of science, kyoto university, kyoto, japan"	6	98	19
+10593	"graduate school of science, osaka metropolitan university, osaka, japan"	5	50	9
+10598	"graduate school of sciences and technology for innovation, yamaguchi university, yamaguchi, japan"	14	74	7
+10605	"graduate school of systems and information engineering, university of tsukuba, tsukuba, japan"	7	334	16
+10606	"graduate school of systems life sciences, kyushu university, fukuoka, japan"	5	61	13
+10610	"graduate school of urban innovation, yokohama national university, yokohama, japan"	7	65	9
+10627	"graduate university of science and technology, hanoi, viet nam"	6	48	14
+10640	"green processing, ton-duc-thang university, ho chi minh city, viet nam"	5	281	15
+10645	"griffith university, brisbane, australia"	5	55	12
+10652	"gsi helmholtz centre for heavy ion research gmbh, darmstadt, germany"	17	430	231
+10653	"guangdong hust industrial technology research institute, dongguan, china"	5	135	19
+10656	"guangdong provincial people’s hospital of southern medical university, guangzhou, china"	5	602	43
+10670	"gujarat pollution control board, gandhinagar, india"	5	185	29
+10674	"gunma museum of natural history, tomioka, japan"	6	67	12
+10675	"gunma university heavy ion medical center, maebashi, japan"	5	116	19
+10676	"gunma university, maebashi, japan"	10	35	23
+10704	"hai phong medical university, haiphong, viet nam"	8	136	18
+10711	"haiphong university, haiphong, viet nam"	7	154	8
+10725	"hanoi center for disease control, hanoi, viet nam"	6	62	24
+10728	"hanoi college of pharmacy, hanoi, viet nam"	11	187	27
+10731	"hanoi department of health, hanoi, viet nam"	15	264	91
+10733	"hanoi french hospital, hanoi, viet nam"	8	459	40
+10736	"hanoi institute of mathematics, hanoi, viet nam"	53	530	55
+10741	"hanoi lung hospital, hanoi, viet nam"	21	414	121
+10743	"hanoi medical university, hanoi, viet nam"	71	1015	208
+10744	"hanoi metropolitan university, hanoi, viet nam"	15	185	42
+10745	"hanoi national pedagogic university, hanoi university of education, hanoi, viet nam"	6	127	6
+10751	"hanoi school of public health, hanoi, viet nam"	15	227	51
+10752	"hanoi tuberculosis and lung disease hospital, hanoi, viet nam"	6	199	20
+10753	"hanoi university of civil engineering, hanoi, viet nam"	35	452	52
+10754	"hanoi university of education, hanoi, viet nam"	9	131	9
+10755	"hanoi university of industry, hanoi, viet nam"	15	263	51
+10756	"hanoi university of mining and geology, hanoi, viet nam"	12	328	29
+10757	"hanoi university of natural resources and environment, hanoi, viet nam"	5	67	14
+10758	"hanoi university of science and technology, hanoi, viet nam"	138	2242	213
+10773	"harvard medical school, boston, united states"	7	281	19
+10774	"harvard t.h. chan school of public health, boston, united states"	8	210	26
+10783	"hcmc institute of resources geography, vast, ho chi minh city, viet nam"	12	449	26
+10792	"health administration center, shiga university of medical science, otsu, japan"	5	101	4
+10808	"health innovation and transformation centre, federation university australia, ballarat, australia"	9	120	37
+10817	"health service center, hiroshima university, higashihiroshima, japan"	20	215	32
+10830	"heavy-ion nuclear physics laboratory, riken nishina center for accelerator-based science, wako, japan"	7	128	9
+10867	"high energy accelerator research organization, institute of particle and nuclear physics, tsukuba, japan"	6	47	43
+10868	"high energy accelerator research organization, tsukuba, tsukuba, japan"	13	188	41
+10887	"hiroshima university graduate school of biomedical and health sciences, hiroshima, japan"	32	486	40
+10889	"hiroshima university, higashihiroshima, japan"	51	610	127
+10904	"ho chi minh city institute of resources geography, vietnam academy of science and technology, hanoi, viet nam"	5	872	22
+10906	"ho chi minh city oncology hospital, ho chi minh city, viet nam"	6	484	36
+10910	"ho chi minh city university of industry and trade, ho chi minh city, viet nam"	10	373	6
+10911	"ho chi minh city university of natural resources and environment, ho chi minh city, viet nam"	5	10	9
+10912	"ho chi minh city university of technology - hcmut, ho chi minh city, viet nam"	35	652	81
+10913	"ho chi minh city university of technology - hutech, ho chi minh city, viet nam"	42	1078	150
+10920	"hoa binh university, hanoi, viet nam"	7	67	22
+10930	"hokkaido university of science, sapporo, japan"	5	50	31
+10931	"hokkaido university, sapporo, japan"	23	265	51
+10948	"horia hulubei national institute for r&d in physics and nuclear engineering, magurele, romania"	13	257	175
+10958	"hospital raja perempuan zainab ii, kota bharu, malaysia"	5	143	100
+10960	"hospital sungai buloh, sungai buloh, malaysia"	25	305	492
+10973	"house of councilors, tokyo, japan"	5	92	11
+10975	"house wellness foods corporation, itami, japan"	5	104	4
+10978	"hpc systems inc., tokyo, japan"	5	43	15
+10985	"huazhong university of science and technology, wuhan, china"	9	170	35
+11004	"hun-ren institute for nuclear research, debrecen, hungary"	16	443	209
+11027	"hydraulic construction institute, vietnam academy for water resources, hanoi, viet nam"	10	142	25
+11041	"hydromantis environmental software solutions, inc., hamilton, canada"	6	111	14
+11054	"i-somet incorporated association, morioka, japan"	9	299	26
+11108	"in2p3 - institut national de physique nucléaire et de physique des particules, paris, france"	17	646	219
+11155	"infectious disease surveillance center, national institute of infectious diseases, tokyo, japan"	16	179	67
+11164	"influenza and prion disease research center, national institute of animal health, naro, tsukuba, japan"	5	65	13
+11166	"influenza virus research center, national institute of infectious diseases, tokyo, japan"	7	86	18
+11167	"infn - laboratori nazionali del sud, catania, italy"	7	202	63
+11179	"information storage materials laboratory, toyota technological institute, nagoya, japan"	6	138	9
+11203	"innovative clinical research center, kanazawa university, kanazawa, japan"	17	75	148
+11205	"innovative global program, shibaura institute of technology, tokyo, japan"	14	78	16
+11211	"inrae, paris, france"	5	393	6
+11212	"insect biomedical research center, kyoto institute of technology, kyoto, japan"	5	75	9
+11214	"insect ecology department, vietnamese academy of science and technology institute of ecology and biological resources, hanoi, viet nam"	10	132	12
+11218	"inst. for clin. res. in trop. med., bach mai hospital, hanoi, viet nam"	7	569	17
+11269	"institute for advanced academic research, chiba university, chiba, japan"	6	33	12
+11279	"institute for agro-environmental sciences, naro, tsukuba, japan"	16	846	36
+11285	"institute for basic science, daejeon, daejeon, south korea"	13	223	110
+11288	"institute for biomedical research, national institute of advanced industrial science and technology, tsukuba, japan"	5	47	21
+11300	"institute for community health research, university medicine and pharmacy, hue university, hue, viet nam"	9	151	20
+11307	"institute for drug delivery systems, tokyo university of science, tokyo, japan"	5	209	15
+11309	"institute for east china sea research, nagasaki university, nagasaki, japan"	5	71	18
+11315	"institute for environment and resources, viet nam national university ho chi minh city, ho chi minh city, viet nam"	13	247	46
+11317	"institute for environmental science and technology, hanoi university of science and technology, hanoi, viet nam"	8	183	9
+11324	"institute for global change adaptation science, ibaraki university, mito, japan"	5	116	1
+11325	"institute for global environmental strategies, hayama, japan"	35	487	82
+11326	"institute for global health innovations, duy tan university, da nang, viet nam"	5	79	27
+11331	"institute for health sciences, tokushima bunri university, tokushima, japan"	9	307	15
+11340	"institute for integrated cell-material sciences, kyoto, japan"	9	341	26
+11350	"institute for materials chemistry and engineering, kyushu university, fukuoka, japan"	6	152	12
+11352	"institute for materials research, tohoku university, sendai, japan"	7	74	28
+11358	"institute for nanoscience design, the university of osaka, suita, japan"	7	73	15
+11361	"institute for nanotechnology, viet nam national university ho chi minh city, ho chi minh city, viet nam"	9	158	25
+11365	"institute for nuclear research vietnam, dalat, viet nam"	8	192	17
+11367	"institute for nuclear science and technique, vietnam atomic energy institute, hanoi, viet nam"	13	216	12
+11372	"institute for preventive medicine and public health, hanoi medical university, hanoi, viet nam"	20	303	71
+11373	"institute for process and particle engineering, technische universitat graz, graz, austria"	5	59	20
+11388	"institute for space-earth environmental research, nagoya university, nagoya, japan"	10	342	27
+11398	"institute for tropical biology and conservation, universiti malaysia sabah, kota kinabalu, malaysia"	8	171	52
+11399	"institute for tropical technology, vietnam academy of science and technology, hanoi, viet nam"	13	470	31
+11403	"institute for water and environment research, thuyloi university, hanoi, viet nam"	5	219	27
+11409	"institute of advanced sciences, yokohama national university, yokohama, japan"	13	201	51
+11414	"institute of agricultural genetics, hanoi, viet nam"	11	340	8
+11419	"institute of agriculture, tokyo university of agriculture and technology, fuchu, japan"	8	156	15
+11421	"institute of agrobiological sciences, naro, tsukuba, japan"	34	723	75
+11429	"institute of applied materials science, vietnam academy of science and technology, hanoi, viet nam"	6	34	22
+11440	"institute of applied technology, thu dau mot university, thu dau mot, viet nam"	8	98	19
+11444	"institute of archaeology, hanoi, viet nam"	13	575	45
+11447	"institute of archaeology, vietnam academy of social sciences, hanoi, viet nam"	10	190	39
+11453	"institute of astronomy, national tsing hua university, hsinchu, taiwan"	12	299	198
+11468	"institute of biological and food technology, hanoi university of science and technology, hanoi, viet nam"	8	444	7
+11469	"institute of biological control, kyushu university, fukuoka, japan"	7	54	4
+11480	"institute of biomedicine and pharmacy, vietnam military medical university, hanoi, viet nam"	10	60	29
+11490	"institute of biotechnology, vietnamese academy of science and technology institute of biotechnology, hanoi, viet nam"	19	776	36
+11495	"institute of business research, university of economics ho chi minh city, ho chi minh city, viet nam"	7	234	9
+11501	"institute of chemical technology, vietnam academy of science and technology, hanoi, viet nam"	7	390	31
+11503	"institute of chemistry, vietnamese academy of science and technology institute of chemistry, hanoi, viet nam"	5	681	7
+11504	"institute of chromosome life science, fujimino-shi, japan"	5	17	35
+11535	"institute of ecology and biological resources, vietnam academy of science and technology, hanoi, viet nam"	8	99	18
+11537	"institute of ecology and evolutionary biology, national taiwan university, taipei, taiwan"	6	41	25
+11549	"institute of engineering innovation, the university of tokyo, tokyo, japan"	12	203	41
+11550	"institute of engineering physics, hanoi university of science and technology, hanoi, viet nam"	14	449	40
+11568	"institute of environmental science and engineering, hanoi university of civil engineering, hanoi, viet nam"	9	288	22
+11569	"institute of environmental science and technology, the university of kitakyushu, kitakyushu, japan"	7	99	15
+11571	"institute of environmental science for human life, ochanomizu university, tokyo, japan"	5	93	10
+11576	"institute of environmental technology, vietnam academy of science and technology, hanoi, viet nam"	28	913	66
+11586	"institute of forest and wildlife research and development, forestry administration, phnom penh, cambodia"	6	35	21
+11588	"institute of fundamental and applied sciences, duy tan university, da nang, viet nam"	41	539	171
+11591	"institute of gastroenterology and hepatology, hanoi, viet nam"	6	13	22
+11597	"institute of genome research, vietnam academy of science and technology, hanoi, viet nam"	19	135	51
+11604	"institute of geography, vietnam academy of science and technology, hanoi, viet nam"	14	552	25
+11610	"institute of geological sciences, vietnam academy of science and technology, hanoi, viet nam"	27	825	81
+11616	"institute of geophysics, vietnam academy of science and technology, hanoi, viet nam"	21	548	50
+11626	"institute of global innovation research, tokyo university of agriculture and technology, fuchu, japan"	5	118	11
+11642	"institute of industrial science, tokyo, japan"	26	2634	39
+11644	"institute of infectious diseases, pune, india"	28	368	544
+11653	"institute of innovative research, institute of science tokyo, tokyo, japan"	5	39	9
+11658	"institute of laser engineering, the university of osaka, suita, japan"	11	143	36
+11660	"institute of liberal arts and sciences, tohoku university, sendai, japan"	5	10	10
+11666	"institute of livestock and grassland science, naro, tsukuba, japan"	15	165	33
+11667	"institute of livestock and grassland science, national agriculture and food research organization, naro, tsukuba, japan"	7	65	20
+11668	"institute of low temperature science, hokkaido university, sapporo, japan"	6	222	16
+11672	"institute of marine biochemistry, vietnam academy of science and technology, hanoi, viet nam"	6	81	20
+11676	"institute of marine environment and resources, da nang, viet nam"	6	684	10
+11679	"institute of marine environment and resources, vietnam academy of science and technology, hanoi, viet nam"	20	262	28
+11681	"institute of marine geology and geophysics, vietnam academy of science and technology, hanoi, viet nam"	9	225	18
+11694	"institute of materials science, vietnam academy of science and technology, hanoi, viet nam"	6	92	11
+11695	"institute of materials science, vietnamese academy of science and technology institute of materials science, hanoi, viet nam"	10	378	11
+11700	"institute of mathematics, hanoi institute of mathematics, hanoi, viet nam"	23	444	3
+11702	"institute of mathematics, tohoku university, sendai, japan"	6	10	7
+11706	"institute of mechanics, vietnam academy of science and technology, hanoi, viet nam"	6	210	2
+11709	"institute of medical science, the university of tokyo, tokyo, japan"	25	2653	116
+11716	"institute of medical, pharmaceutical and health sciences, kanazawa university, kanazawa, japan"	5	120	26
+11720	"institute of microbiology and biotechnology, vietnam national university, hanoi, hanoi, viet nam"	12	151	7
+11726	"institute of modern physics chinese academy of sciences, lanzhou, china"	18	322	181
+11734	"institute of multidisciplinary research for advanced materials, tohoku university, sendai, japan"	29	1525	69
+11738	"institute of natural medicine, toyama medical and pharmaceutical university, university of toyama, toyama, japan"	5	311	4
+11739	"institute of natural medicine, university of toyama, toyama, japan"	53	1530	91
+11743	"institute of nature and environmental technology, kanazawa university, kanazawa, japan"	6	120	15
+11750	"institute of nuclear physics, technische universität darmstadt, darmstadt, germany"	5	161	55
+11757	"institute of oceanography vietnam, nha trang, viet nam"	7	88	17
+11763	"institute of oceanography, vietnam academy of science and technology, hanoi, viet nam"	9	379	14
+11773	"institute of pharmaceutical sciences, hiroshima university school of medicine, hiroshima, japan"	9	552	6
+11777	"institute of pharmacy, tartu ülikool, tartu, estonia"	7	92	22
+11781	"institute of philosophy, vietnam academy of social sciences, hanoi, viet nam"	12	391	33
+11792	"institute of physics, uniwersytet śląski w katowicach, katowice, poland"	5	96	15
+11794	"institute of physics, vietnamese academy of science and technology institute of physics and electronics, hanoi, viet nam"	23	641	48
+11803	"institute of plant science and resources, okayama university, okayama, japan"	17	319	36
+11811	"institute of public health in ho chi minh city, ho chi minh city, viet nam"	5	28	25
+11812	"institute of public health, ho chi minh city, viet nam"	11	216	37
+11823	"institute of regional innovation, hirosaki university, hirosaki, japan"	9	135	36
+11825	"institute of research and development, duy tan university, da nang, viet nam"	344	17291	1088
+11833	"institute of science and engineering, kanazawa university, kanazawa, japan"	6	160	6
+11840	"institute of science tokyo, tokyo, japan"	42	1034	65
+11843	"institute of scientific and industrial research, the university of osaka, suita, japan"	6	135	22
+11859	"institute of sustainability science, vietnam national university, hanoi, hanoi, viet nam"	6	93	14
+11861	"institute of system integration, le quy don technical university, hanoi, viet nam"	6	121	9
+11873	"institute of theoretical and applied research, duy tan university, da nang, viet nam"	13	199	45
+11880	"institute of transport science and technology, hanoi, viet nam"	10	195	31
+11885	"institute of tropical agriculture, kyushu university, fukuoka, japan"	28	291	45
+11891	"institute of tropical medicine, nagasaki university, nagasaki, japan"	36	1163	114
+11897	"institute of vegetable and floriculture science, naro, tsukuba, japan"	5	55	14
+11922	"instituto andaluz interuniversitario en data science and computational intelligence, granada, spain"	23	841	97
+11937	"instituto nacional de pesquisas espaciais, sao jose dos campos, brazil"	5	367	15
+11955	"intensive care unit, bach mai hospital, hanoi, viet nam"	6	483	10
+11964	"interdisciplinary center for river basin environment, university of yamanashi, kofu, japan"	5	34	9
+11966	"interdisciplinary centre for river basin environment, university of yamanashi, kofu, japan"	5	84	7
+11968	"interdisciplinary graduate school of engineering sciences, kyushu university, fukuoka, japan"	15	352	21
+11969	"interdisciplinary graduate school of medicine and engineering, university of yamanashi, kofu, japan"	8	370	8
+11974	"interdisciplinary program in microbiology, chulalongkorn university, bangkok, thailand"	5	52	22
+11987	"international center for materials nanoarchitectonics (mana), national institute for materials science, tsukuba, japan"	5	135	11
+11988	"international center for materials nanoarchitectonics (wpi-mana), national institute for materials science, tsukuba, japan"	6	159	12
+12002	"international collaboration unit, hokkaido university, sapporo, japan"	11	49	32
+12005	"international consortium on landslides, kyoto, japan"	9	282	26
+12007	"international cooperation center for agricultural education, nagoya university, nagoya, japan"	7	187	17
+12037	"international livestock research institute nairobi, nairobi, kenya"	5	116	9
+12054	"international research center for hydrogen energy, kyushu university, fukuoka, japan"	8	138	15
+12064	"international rice research institute, makati, philippines"	10	323	31
+12066	"international school, hue university, hue, viet nam"	11	168	30
+12068	"international school, vietnam national university, hanoi, hanoi, viet nam"	5	22	8
+12073	"international training institute for materials science, hanoi, viet nam"	34	684	67
+12074	"international university - vietnam national university hcm city, ho chi minh city, viet nam"	7	46	20
+12075	"international university of health and welfare, otawara, japan"	6	48	15
+12076	"international university of japan, minamiuonuma, japan"	66	465	136
+12078	"international vaccine institute, seoul, seoul, south korea"	9	521	33
+12090	"ipb university, bogor, indonesia"	6	87	15
+12099	"iriomote station, university of the ryukyus, nishihara, japan"	23	178	90
+12113	"istituto di calcolo e reti ad alte prestazioni, rende, rende, italy"	10	382	27
+12122	"istituto nazionale di fisica nucleare, sezione di trieste, trieste, italy"	5	225	9
+12124	"istituto oncologico veneto iov - irccs, padua, italy"	5	1645	44
+12132	"iwate prefectural university, iwate district, japan"	12	724	31
+12133	"iwate university, morioka, japan"	15	176	33
+12147	"james cook university, townsville, australia"	11	176	47
+12151	"japan advanced institute of science and technology, nomi, japan"	87	1562	123
+12153	"japan agency for marine-earth science and technology, yokosuka, japan"	6	62	17
+12157	"japan atomic energy agency, kashiwa, japan"	17	268	78
+12174	"japan international cooperation agency, tokyo, japan"	18	498	42
+12175	"japan international research center for agricultural sciences, tsukuba, japan"	37	1928	50
+12187	"japan science and technology agency, kawaguchi, japan"	83	4532	265
+12188	"japan society for the promotion of science, tokyo, japan"	13	346	28
+12189	"japan synchrotron radiation research institute, sayo district, japan"	17	171	75
+12217	"jfe steel corporation, tokyo, japan"	6	76	15
+12219	"jiangsu province wind power structural engineering research center, nanjing, china"	11	283	38
+12228	"jichi medical university, kawachi district, japan"	5	705	18
+12234	"jockey club college of veterinary medicine and life sciences, city university of hong kong, hong kong, hong kong"	7	102	37
+12238	"john von neumann institute, viet nam national university ho chi minh city, ho chi minh city, viet nam"	6	40	14
+12243	"joining and welding research institute, ibaraki, japan"	28	354	59
+12247	"joint institute for nuclear research, dubna, dubna, russian federation"	8	416	48
+12250	"joint research center for human retrovirus infection, kumamoto university, kumamoto, japan"	6	23	14
+12257	"joint russian-vietnamese tropical scientific and technological center, hanoi, viet nam"	7	88	27
+12285	"kagoshima university, kagoshima, japan"	60	363	152
+12301	"kanagawa prefectural museum of natural history, odawara, japan"	6	7	7
+12308	"kanazawa university, kanazawa, japan"	22	274	58
+12334	"kathmandu university, dhulikhel, nepal"	5	193	51
+12346	"kazusa dna research institute, kisarazu, japan"	9	76	18
+12352	"keio university, tokyo, japan"	17	175	32
+12367	"key laboratory of advanced waste treatment technology, viet nam national university ho chi minh city, ho chi minh city, viet nam"	10	305	46
+12371	"key laboratory of animal cell technology, national institute of animal sciences, hanoi, viet nam"	5	53	10
+12385	"key laboratory of enzyme and protein technology, vietnam national university, hanoi, hanoi, viet nam"	6	44	6
+12394	"key laboratory of mollisols agroecology, northeast institute of geography and agroecology, changchun, china"	14	435	76
+12428	"khanh hoa health service, nha trang, viet nam"	18	372	73
+12429	"khanh hoa health service, viet nam"	6	420	17
+12448	"kihara institute for biological research, yokohama city university, yokohama, japan"	5	294	20
+12488	"kobe steel, ltd., kobe, japan"	7	58	16
+12490	"kobe university, kobe, japan"	14	198	25
+12492	"kochi university of technology, kami, japan"	5	50	20
+12493	"kochi university, kochi, japan"	5	55	9
+12502	"komarov botanical institute, russian academy of sciences, saint petersburg, russian federation"	23	353	50
+12508	"korea astronomy and space science institute, daejeon, south korea"	14	335	213
+12525	"korea research institute of standards and science, yusong, south korea"	6	41	23
+12538	"ku leuven, leuven, belgium"	5	157	9
+12546	"kumamoto university, kumamoto, japan"	8	229	32
+12563	"kyoto institute of technology, kyoto, japan"	12	121	29
+12572	"kyoto university, kyoto, japan"	40	1627	103
+12577	"kyushu institute of technology, kitakyushu, japan"	7	43	9
+12579	"kyushu okinawa agricultural research center naro, koshi, japan"	10	419	28
+12580	"kyushu open university, fukuoka, japan"	8	21	29
+12585	"kyushu university, fukuoka, japan"	88	1002	148
+12618	"laboratori nazionali di legnaro, legnaro, italy"	6	90	72
+12660	"laboratory for nanotechnology, viet nam national university ho chi minh city, ho chi minh city, viet nam"	18	641	63
+12674	"laboratory of advanced materials, university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	14	318	66
+12698	"laboratory of arbovirus, pasteur institute in ho chi minh city, ho chi minh city, viet nam"	5	285	23
+12753	"laboratory of food chemistry, osaka metropolitan university, osaka, japan"	9	656	16
+12778	"laboratory of insect natural enemies, kyushu university, fukuoka, japan"	5	36	5
+12815	"laboratory of molecular virology and epidemiology, national institute of infectious diseases, tokyo, japan"	5	164	7
+12824	"laboratory of organic geochemistry, tokyo university of agriculture and technology, fuchu, japan"	10	4219	29
+12842	"laboratory of postharvest science, kyushu university, fukuoka, japan"	6	83	10
+12858	"laboratory of solid structures, university of luxembourg, esch-sur-alzette, luxembourg"	7	294	25
+12863	"laboratory of sustainable environmental biology, tohoku university, sendai, japan"	8	147	11
+12869	"laboratory of veterinary anatomy, obihiro university of agriculture and veterinary medicine, obihiro, japan"	8	58	42
+12876	"laboratory of veterinary parasitic diseases, university of miyazaki, miyazaki, japan"	5	29	7
+12877	"laboratory of veterinary parasitology, iwate university, morioka, japan"	5	63	4
+12890	"laboratory of wildlife biology, obihiro university of agriculture and veterinary medicine, obihiro, japan"	15	137	64
+12891	"laboratory of wildlife ecology, obihiro university of agriculture and veterinary medicine, obihiro, japan"	9	95	43
+12892	"laboratory of wood science, kyushu university, fukuoka, japan"	6	77	11
+12920	"le quy don technical university, hanoi, viet nam"	40	676	63
+12926	"leading program, nagasaki university, nagasaki, japan"	5	105	30
+12932	"leibniz institute for astrophysics potsdam, potsdam, germany"	5	209	18
+12937	"lembaga ilmu pengetahuan indonesia, central jakarta, indonesia"	15	420	80
+12946	"life science research center, gifu university, gifu, japan"	9	174	20
+12973	"livestock and environment division, japan international research center for agricultural sciences, tsukuba, japan"	19	222	28
+12981	"london school of hygiene & tropical medicine, london, united kingdom"	23	596	109
+13015	"ltd., shizuoka, japan"	5	16	12
+13018	"ltd., tokyo, japan"	7	87	16
+13040	"madras institute of orthopaedics and traumatology hospitals, chennai, india"	5	193	51
+13046	"magyar tudomanyos akademia, budapest, hungary"	8	133	32
+13050	"mahidol oxford tropical medicine research unit, bangkok, thailand"	5	100	18
+13070	"malaysian rubber board, kuala lumpur, malaysia"	7	62	15
+13077	"mangrove ecosystem research centre, trường đại học sư phạm hà nội, hanoi, viet nam"	7	199	57
+13121	"master's program in environmental engineering, vietnam national university, hanoi, hanoi, viet nam"	11	148	16
+13123	"master's program of innovative materials, kyoto institute of technology, kyoto, japan"	5	87	12
+13125	"master's school of medical sciences, university of tsukuba, tsukuba, japan"	9	471	31
+13131	"material cycles division, national institute for environmental studies of japan, tsukuba, japan"	6	196	22
+13162	"max planck institute for radio astronomy, bonn, germany"	5	94	26
+13174	"mcmaster university, hamilton, canada"	6	82	35
+13212	"medical mycology research center, chiba university, chiba, japan"	8	170	20
+13245	"melbourne school of population and global health, melbourne, australia"	8	153	37
+13250	"menoufia university faculty of medicine, shibin el kom, egypt"	6	285	40
+13304	"mientrung institute for scientific research, vietnam academy of science and technology, hanoi, viet nam"	9	37	13
+13331	"ministry of agriculture and rural development, hanoi, viet nam"	5	92	18
+13345	"ministry of health vitenam, hanoi, viet nam"	27	344	78
+13358	"ministry of natural resources and environment, vietnam, hanoi, viet nam"	7	161	19
+13363	"ministry of planning and investment, hanoi, viet nam"	5	67	1
+13366	"ministry of science and technology, hanoi, viet nam"	6	122	17
+13390	"miyagi university of education, sendai, japan"	5	274	6
+13428	"monash university, melbourne, australia"	11	219	31
+13494	"nagaoka university of technology, nagaoka, japan"	30	571	51
+13499	"nagasaki university, nagasaki, japan"	64	1382	225
+13503	"nagoya city university, nagoya, japan"	5	59	10
+13504	"nagoya institute of technology, nagoya, japan"	11	188	28
+13505	"nagoya university graduate school of medicine, nagoya, japan"	6	161	17
+13506	"nagoya university, nagoya, japan"	51	881	115
+13524	"nano and energy center, vietnam national university, hanoi, hanoi, viet nam"	5	28	16
+13545	"nanotechnology program, vietnam national university, hanoi, hanoi, viet nam"	43	540	86
+13551	"nara institute of science and technology, ikoma, japan"	13	74	23
+13559	"nasa goddard space flight center, greenbelt, united states"	5	878	17
+13572	"national agriculture and food research organization, naro, tsukuba, japan"	7	140	17
+13602	"national center for global health and medicine, tokyo, japan"	72	1523	716
+13610	"national center for technological progress, hanoi, viet nam"	5	11	5
+13626	"national cerebral and cardiovascular center, suita, japan"	6	78	22
+13635	"national economics university hanoi, hanoi, viet nam"	28	370	58
+13648	"national graduate institute for policy studies, minato, japan"	17	378	12
+13654	"national heart centre singapore, singapore city, singapore"	12	153	58
+13656	"national hospital for tropical diseases, hanoi, viet nam"	34	357	485
+13658	"national hospital of dermatology and venereology, hanoi, viet nam"	7	62	12
+13665	"national hospital of tropical diseases, hanoi, viet nam"	20	265	107
+13688	"national institute for environmental studies of japan, tsukuba, japan"	19	1065	45
+13695	"national institute for materials science, tsukuba, japan"	32	965	79
+13700	"national institute of advanced industrial science and technology, tsukuba, japan"	67	2529	142
+13704	"national institute of animal health, naro, tsukuba, japan"	12	569	26
+13719	"national institute of education, singapore city, singapore"	7	308	21
+13729	"national institute of hygiene and epidemiology hanoi, hanoi, viet nam"	113	3989	365
+13730	"national institute of hygiene and epidemiology, hanoi, viet nam"	95	3799	270
+13733	"national institute of infectious diseases, tokyo, japan"	33	1220	98
+13735	"national institute of information and communications technology, koganei, japan"	32	773	88
+13737	"national institute of malariology, parasitology and entomology hanoi, hanoi, viet nam"	10	146	18
+13738	"national institute of medicinal materials, hanoi, viet nam"	10	252	19
+13743	"national institute of metrology (thailand), klong luang, thailand"	8	41	28
+13744	"national institute of metrology china, beijing, china"	5	23	20
+13747	"national institute of nutrition vietnam, hanoi, viet nam"	50	1325	67
+13751	"national institute of ophthalmology, hanoi, viet nam"	6	157	5
+13764	"national institute of technology and evaluation, tokyo, japan"	11	457	31
+13775	"national institute of veterinary research hanoi, hanoi, viet nam"	29	660	74
+13776	"national institute of water and atmospheric research, auckland, new zealand"	5	1235	1
+13780	"national institutes for the humanities, research institute for humanity and nature, kyoto, japan"	13	358	32
+13784	"national institutes of natural sciences - national astronomical observatory of japan, mitaka, japan"	15	372	76
+13795	"national key laboratory of polymer and composite materials, viet nam national university ho chi minh city, ho chi minh city, viet nam"	5	35	15
+13803	"national measurement institute, australia, sydney, australia"	5	37	18
+13806	"national metrology institute of japan, tsukuba, japan"	8	41	28
+13821	"national radio astronomy observatory, charlottesville, united states"	12	336	197
+13826	"national research center for protozoan diseases, obihiro university of agriculture and veterinary medicine, obihiro, japan"	8	182	10
+13834	"national research institute of fisheries science, fra, yokohama, japan"	5	83	13
+13845	"national synchrotron radiation research center, hsinchu, taiwan"	7	94	50
+13849	"national taiwan university hospital, taipei, taiwan"	9	1721	42
+13851	"national taiwan university, taipei, taiwan"	5	69	10
+13865	"national university of singapore, singapore city, singapore"	17	598	62
+13881	"natl. institute of labour protection, hanoi, viet nam"	7	64	0
+13895	"natural resources and ecosystem services, institute for global environmental strategies, hayama, japan"	7	219	17
+13898	"natural science and technology, okayama university, okayama, japan"	6	15	10
+13903	"naturalis biodiversity center, leiden, netherlands"	6	67	15
+13914	"ncgm-bmh medical collaboration center, hanoi, viet nam"	27	640	135
+13943	"new industry creation hatchery center, tohoku university, sendai, japan"	28	482	65
+13963	"nguyen dinh chieu hospital, ben tre city, viet nam"	5	82	33
+13968	"nha trang pasteur institute, khanh hoa province, viet nam"	29	509	96
+13969	"nha trang university, nha trang, viet nam"	6	197	7
+13971	"nhatrang institute of technology research and application, nha trang, viet nam"	8	180	11
+13972	"nhatrang institute of technology research and application, vietnam academy of science and technology, hanoi, viet nam"	9	300	18
+13979	"niels bohr institutet, copenhagen, denmark"	11	299	193
+13991	"niigata university, niigata, japan"	11	690	50
+13999	"nippon institute for biological science, ome, japan"	6	105	17
+14003	"nippon medical school, tokyo, japan"	6	109	16
+14005	"nippon steel corporation, tokyo, japan"	6	76	20
+14026	"nong lam university, ho chi minh city, ho chi minh city, viet nam"	27	2510	53
+14064	"ntt hi-tech institute, dại học nguyen tat thanh, ho chi minh city, viet nam"	11	1945	25
+14085	"nuffield department of medicine, oxford, united kingdom"	25	474	94
+14090	"nursing office, bach mai hospital, hanoi, viet nam"	6	122	32
+14092	"nus yong loo lin school of medicine, singapore city, singapore"	8	320	24
+14094	"nutrition center, ho chi minh city, viet nam"	5	222	11
+14098	"obihiro university of agriculture and veterinary medicine, obihiro, japan"	13	102	22
+14102	"ocean research institute, the university of tokyo, tokyo, japan"	11	321	7
+14113	"office for academic and industrial innovation, kobe university, kobe, japan"	5	38	17
+14138	"oita university, oita, japan"	5	34	20
+14145	"okayama university, okayama, japan"	61	941	121
+14148	"okinawa institute of science and technology graduate university, okinawa, japan"	5	70	21
+14155	"okuyama boring co. ltd., akita, japan"	5	21	14
+14168	"one health research center, hokkaido university, sapporo, japan"	6	31	24
+14174	"online research club (http://www.onlineresearchclub.org), nagasaki, japan"	19	200	119
+14177	"online research club, nagasaki, japan"	32	339	192
+14195	"organisation mondiale de la santé, geneva, switzerland"	22	445	54
+14199	"organization for marine science and technology, nagasaki university, nagasaki, japan"	6	21	13
+14210	"osaka city institute of public health and environmental sciences, osaka, japan"	7	174	9
+14213	"osaka institute of public health, osaka, japan"	21	761	54
+14218	"osaka metropolitan university, osaka, japan"	69	1598	150
+14219	"osaka museum of natural history, osaka, japan"	10	54	17
+14245	"oxford university clinical research unit, ho chi minh city, viet nam"	30	695	128
+14297	"pasteur institute in ho chi minh city, ho chi minh city, viet nam"	20	763	51
+14306	"pathogenic microbe laboratory, national center for global health and medicine, tokyo, japan"	8	181	21
+14322	"peking university first hospital, beijing, china"	5	55	35
+14325	"peking university, beijing, china"	12	276	158
+14356	"pham ngoc thach university of medicine, ho chi minh city, viet nam"	14	384	75
+14361	"pharmaceutical and health sciences, kanazawa university, kanazawa, japan"	10	74	68
+14376	"phenikaa institute for advanced study, phenikaa university, hanoi, viet nam"	7	67	18
+14379	"phenikaa university, hanoi, viet nam"	6	42	23
+14387	"philippine rice research institute, nueva ecija, philippines"	7	156	17
+14408	"physical research laboratory india, ahmedabad, india"	6	166	21
+14433	"plant abiotic stress research group, ton-duc-thang university, ho chi minh city, viet nam"	9	1443	32
+14436	"plant breeding laboratory, kyushu university, fukuoka, japan"	7	84	20
+14437	"plant epigenome regulation laboratory, riken cluster for pioneering research, wako, japan"	9	158	65
+14442	"plant genomic network research team, riken center for sustainable resource science, yokohama, japan"	13	1075	78
+14448	"plant production department, king saud university, riyadh, saudi arabia"	5	723	23
+14454	"plant protection research institute, hanoi, viet nam"	11	230	19
+14459	"plant resources center, hanoi, viet nam"	5	127	12
+14464	"plant stress research group & faculty of applied sciences, ton-duc-thang university, ho chi minh city, viet nam"	18	1487	54
+14500	"posts and telecommunications institute of technology vietnam, hanoi, viet nam"	34	1015	78
+14518	"primate research institute, kyoto university, kyoto, japan"	6	72	21
+14540	"program for nurturing global leaders in tropical and emerging communicable diseases, nagasaki university, nagasaki, japan"	5	60	22
+14577	"public health england, london, united kingdom"	5	363	19
+14597	"qst hospital, chiba, japan"	8	128	29
+14617	"quantum beam science directorate, japan atomic energy agency, kashiwa, japan"	7	270	5
+14619	"quantum hadron physics laboratory, riken nishina center for accelerator-based science, wako, japan"	13	195	46
+14625	"queen elizabeth hospital hong kong, hong kong, china"	28	367	523
+14628	"queen mary hospital hong kong, hong kong, hong kong"	5	62	35
+14634	"queensland university of technology, brisbane, australia"	5	123	17
+14636	"quy nhon university, quy nhon, viet nam"	7	230	21
+14657	"radiology center, bach mai hospital, hanoi, viet nam"	6	35	7
+14663	"raja isteri pengiran anak saleha hospital, bandar seri begawan, brunei darussalam"	5	72	20
+14670	"ramathibodi hospital, bangkok, thailand"	10	285	126
+14671	"ramkhamhaeng university, bangkok, thailand"	6	270	32
+14674	"rare isotope science project, institute for basic science, daejeon, daejeon, south korea"	7	316	53
+14690	"regional climate systems laboratory, ateneo de manila university, quezon city, philippines"	6	317	31
+14697	"regional research center, iwate prefectural university, iwate district, japan"	27	812	138
+14708	"remosat laboratory, vietnam academy of science and technology, hanoi, viet nam"	5	240	13
+14742	"research and development center for precision medicine, university of tsukuba, tsukuba, japan"	10	94	44
+14756	"research and education center for prevention of global infectious diseases of animals, tokyo university of agriculture and technology, fuchu, japan"	11	120	45
+14767	"research center for animal hygiene and food safety, obihiro university of agriculture and veterinary medicine, obihiro, japan"	9	186	18
+14768	"research center for animal life science, shiga university of medical science, otsu, japan"	5	87	26
+14779	"research center for climate change, nong lam university, ho chi minh city, ho chi minh city, viet nam"	8	139	14
+14784	"research center for electron photon science, tohoku university, sendai, japan"	8	241	74
+14789	"research center for environmental quality management, otsu, japan"	8	340	18
+14797	"research center for global agromedicine, obihiro university of agriculture and veterinary medicine, obihiro, japan"	9	57	33
+14812	"research center for nuclear physics (rcnp), the university of osaka, suita, japan"	11	157	102
+14813	"research center for nuclear physics, the university of osaka, suita, japan"	24	639	176
+14822	"research center for solar energy chemistry, the university of osaka, suita, japan"	5	228	5
+14824	"research center for structural materials, national institute for materials science, tsukuba, japan"	8	44	14
+14832	"research center for water environment technology, the university of tokyo, tokyo, japan"	11	498	21
+14834	"research center for zoonosis control, hokkaido university, sapporo, japan"	12	237	49
+14854	"research faculty of agriculture, hokkaido university, sapporo, japan"	16	104	32
+14856	"research group (environmental health), sumitomo chemical company, limited, tokyo, japan"	17	324	58
+14867	"research institute for aquaculture no. 1 bac ninh, bac ninh, viet nam"	7	320	7
+14874	"research institute for biotechnology and environment, nong lam university, ho chi minh city, ho chi minh city, viet nam"	13	248	23
+14881	"research institute for health sciences, chaing mai, thailand"	14	158	280
+14882	"research institute for health sciences, chiang mai university, chiang mai, thailand"	10	193	194
+14888	"research institute for marine fisheries, haiphong, viet nam"	7	90	18
+14890	"research institute for mathematical sciences, kyoto, japan"	5	12	6
+14891	"research institute for microbial diseases, suita, japan"	8	84	20
+14892	"research institute for nanodevice and bio systems, hiroshima university, higashihiroshima, japan"	9	83	15
+14901	"research institute for sustainable humanosphere, uji, japan"	13	178	30
+14904	"research institute for tropical medicine, manila, philippines"	27	439	494
+14921	"research institute of geology and mineral resources, hanoi, viet nam"	7	387	18
+14924	"research institute of green science and technology, shizuoka university, shizuoka, japan"	5	79	8
+14931	"research institute of natural sciences, okayama university of science, okayama, japan"	11	453	18
+14936	"research institute, national center for global health and medicine, tokyo, japan"	12	485	44
+14950	"research organization of information and systems national institute of informatics, tokyo, japan"	56	1826	104
+14978	"respiratory care center, university medical center, ho chi minh city, viet nam"	7	97	7
+14979	"respiratory center, bach mai hospital, hanoi, viet nam"	5	64	19
+14985	"reuse and management, vietnamese-german university, thu dau mot, viet nam"	10	277	23
+14988	"ri-beam factory project office, riken, wako, japan"	8	135	12
+14995	"riken (the institute of physical and chemical research), wako, japan"	10	222	39
+14998	"riken brc microbe division (jcm), tsukuba, japan"	7	337	4
+15002	"riken center for sustainable resource science, yokohama, japan"	60	2653	195
+15003	"riken cluster for pioneering research, wako, japan"	5	75	13
+15004	"riken nishina center for accelerator-based science, wako, japan"	10	84	35
+15005	"riken spring-8 center, sayo, japan"	5	72	42
+15007	"riken, wako, japan"	54	1080	532
+15014	"ritsumeikan asia pacific university, beppu, japan"	27	686	53
+15016	"ritsumeikan university biwako-kusatsu campus, kusatsu, japan"	34	548	56
+15054	"rwe ag, essen, germany"	5	275	38
+15068	"saga university, saga, japan"	6	312	25
+15088	"saitama university, saitama, japan"	42	421	76
+15111	"sarawak general hospital, kuching, malaysia"	5	53	36
+15153	"school of archaeology and anthropology, the australian national university, canberra, australia"	11	908	22
+15179	"school of biomedical engineering, international university - vietnam national university hcm city, ho chi minh city, viet nam"	9	270	36
+15186	"school of biosciences, university of nottingham, nottingham, united kingdom"	5	86	11
+15188	"school of biotechnology and food technology, hanoi university of science and technology, hanoi, viet nam"	21	236	43
+15189	"school of biotechnology, international university - vietnam national university hcm city, ho chi minh city, viet nam"	13	617	23
+15194	"school of business (information system), university of southern queensland, toowoomba, australia"	9	271	84
+15205	"school of chemical engineering, hanoi university of science and technology, hanoi, viet nam"	58	776	113
+15217	"school of chemistry and life sciences, hanoi university of science and technology, hanoi, viet nam"	11	59	20
+15247	"school of computer engineering and science, shanghai university, shanghai, china"	5	374	13
+15265	"school of computing, engineering and mathematics, university of brighton, brighton, united kingdom"	12	350	198
+15301	"school of economics and management, shanghai maritime university, shanghai, china"	5	415	13
+15302	"school of economics and management, southwest jiaotong university, chengdu, china"	5	235	14
+15303	"school of economics and management, university of hyogo, kobe, japan"	5	46	0
+15305	"school of economics, can tho university, can tho, viet nam"	5	42	12
+15312	"school of education, can tho university, can tho, viet nam"	12	70	41
+15316	"school of electrical and electronic engineering, hanoi university of science and technology, hanoi, viet nam"	31	238	43
+15323	"school of electrical engineering, hanoi university of science and technology, hanoi, viet nam"	9	124	9
+15333	"school of electronics and telecommunications, hanoi university of science and technology, hanoi, viet nam"	33	773	31
+15343	"school of engineering and technology, van lang university, ho chi minh city, viet nam"	6	119	11
+15345	"school of engineering physics, hanoi university of science and technology, hanoi, viet nam"	18	300	37
+15370	"school of environment and society, institute of science tokyo, tokyo, japan"	7	219	13
+15380	"school of environmental science and engineering, kochi university of technology, kami, japan"	5	87	18
+15381	"school of environmental science and engineering, shanghai jiao tong university, shanghai, china"	5	236	15
+15387	"school of environmental science and technology, hanoi university of science and technology, hanoi, viet nam"	29	828	70
+15396	"school of fisheries sciences, kitasato university, tokyo, japan"	5	192	4
+15416	"school of global humanities and social sciences, nagasaki university, nagasaki, japan"	6	28	24
+15421	"school of health science, sapporo medical university, sapporo, japan"	6	411	19
+15426	"school of health sciences, sapporo medical university, sapporo, japan"	12	235	53
+15433	"school of human nursing, the university of shiga prefecture, hikone, japan"	6	9	59
+15435	"school of humanities and social sciences, harbin institute of technology, harbin, china"	6	183	15
+15437	"school of information and communication technology, hanoi university of science and technology, hanoi, viet nam"	55	727	76
+15438	"school of information and data sciences, nagasaki university, nagasaki, japan"	9	80	72
+15442	"school of information science, japan advanced institute of science and technology, nomi, japan"	7	75	5
+15455	"school of knowledge science, japan advanced institute of science and technology, nomi, japan"	19	345	22
+15460	"school of life science and technology, institute of science tokyo, tokyo, japan"	5	122	20
+15468	"school of life sciences, henan university, kaifeng, china"	5	74	40
+15485	"school of marine biosciences, kitasato university, tokyo, japan"	7	64	10
+15486	"school of marine science and technology, tokai university, tokyo, japan"	5	77	14
+15493	"school of materials science and engineering, hanoi university of science and technology, hanoi, viet nam"	56	956	111
+15502	"school of materials science, japan advanced institute of science and technology, nomi, japan"	59	1919	80
+15518	"school of mechanical and electrical engineering, university of southern queensland, toowoomba, australia"	13	224	44
+15526	"school of mechanical engineering, hanoi university of science and technology, hanoi, viet nam"	70	740	94
+15533	"school of mechanical engineering, xiangtan university, xiangtan, china"	6	488	23
+15543	"school of medicine and pharmacy, duy tan university, da nang, viet nam"	13	28	60
+15544	"school of medicine and pharmacy, university of danang, da nang, viet nam"	10	68	60
+15545	"school of medicine and pharmacy, vietnam national university, hanoi, hanoi, viet nam"	16	303	36
+15559	"school of medicine, international university of health and welfare, otawara, japan"	5	42	25
+15578	"school of medicine, viet nam national university ho chi minh city, ho chi minh city, viet nam"	16	372	94
+15591	"school of nuclear science and technology, university of chinese academy of sciences, beijing, china"	6	68	59
+15593	"school of nursing, kanazawa medical university, kahoku, japan"	7	301	25
+15599	"school of odonto stomatology, hanoi medical university, hanoi, viet nam"	9	178	20
+15619	"school of physics and nuclear energy engineering, beihang university, beijing, china"	7	99	42
+15622	"school of physics, beihang university, beijing, china"	5	37	31
+15624	"school of physics, suranaree university of technology, nakhon ratchasima, thailand"	7	29	36
+15642	"school of public health, imperial college london, london, united kingdom"	14	44	87
+15649	"school of public health, the university of queensland, brisbane, australia"	7	67	33
+15655	"school of resources and safety engineering, central south university, changsha, china"	6	823	34
+15664	"school of science and engineering, ritsumeikan university biwako-kusatsu campus, kusatsu, japan"	6	52	10
+15670	"school of science and technology, kwansei gakuin university, nishinomiya, japan"	7	151	15
+15695	"school of systems engineering, kochi university of technology, kami, japan"	25	460	31
+15698	"school of textile-leather and fashion, hanoi university of science and technology, hanoi, viet nam"	10	320	10
+15703	"school of transportation engineering, hanoi university of science and technology, hanoi, viet nam"	12	243	15
+15706	"school of tropical medicine and global health, nagasaki university, nagasaki, japan"	98	1098	428
+15732	"science education department, de la salle university, manila, philippines"	9	1168	28
+15743	"sciences po paris, paris, france"	13	446	42
+15776	"section of gastroenterology and hepatology, baylor college of medicine, houston, united states"	7	135	31
+15808	"senior research fellow center, ehime university, matsuyama, japan"	5	391	13
+15814	"seoul national university hospital, seoul, south korea"	7	78	45
+15815	"seoul national university, seoul, south korea"	14	447	186
+15856	"shanghai jiao tong university, shanghai, china"	7	1744	50
+15874	"shibaura institute of technology, tokyo, japan"	31	479	31
+15880	"shimadzu techno-research inc., kyoto, japan"	7	206	33
+15882	"shimane university, matsue, japan"	5	124	18
+15885	"shinshu university, matsumoto, japan"	9	194	13
+15894	"shizuoka university, shizuoka, japan"	18	517	34
+15915	"signaling pathway research unit, riken center for sustainable resource science, yokohama, japan"	37	4304	97
+15922	"silviculture research institute, vietnamese academy of forest sciences, hanoi, viet nam"	22	301	59
+15928	"simulation in materials science research group, ton-duc-thang university, ho chi minh city, viet nam"	7	27	26
+15941	"sirindhorn international institute of technology thammasat university, khlong luang, thailand"	5	54	15
+15942	"siriraj hospital, bangkok, thailand"	20	1303	222
+15966	"social science research institute, tokai university, tokyo, japan"	6	419	8
+15973	"soete laboratory, universiteit gent, ghent, belgium"	11	878	32
+15993	"sorbonne université, paris, france"	13	223	59
+16017	"southern institute of ecology, vietnam academy of science and technology, hanoi, viet nam"	12	124	26
+16020	"southern institute of water resources research, ho chi minh city, viet nam"	5	108	5
+16028	"southern regional plant protection center, tien giang, viet nam"	7	150	17
+16041	"space weather services, bureau of meteorology australia, melbourne, australia"	5	56	17
+16061	"st. luke's medical center quezon city, quezon city, philippines"	5	231	15
+16100	"state key laboratory of geohazard prevention and geoenvironment protection, chengdu university of technology, chengdu, china"	6	1607	19
+16102	"state key laboratory of high performance ceramics and superfine microstructure, shanghai institute of ceramics, chinese academy of sciences, shanghai, china"	8	291	35
+16116	"state key laboratory of urban water resource and environment, harbin institute of technology, harbin, china"	6	1540	18
+16118	"state university of new york albany, albany, united states"	7	872	42
+16146	"structural section dicea, università politecnica delle marche, ancona, italy"	5	128	10
+16175	"sun yat-sen university, guangzhou, china"	6	68	34
+16186	"surgical intensive care unit, vietnam national children's hospital, hanoi, viet nam"	5	51	10
+16193	"sustainable management of natural resources and environment research group, ton-duc-thang university, ho chi minh city, viet nam"	5	323	10
+16197	"suwa university of science, chino, japan"	6	17	13
+16211	"synchrotron light research institute (slri), nakhon ratchasima, thailand"	5	45	18
+16218	"system emotional science, graduate school of medicine and pharmaceutical sciences, toyama, japan"	12	256	30
+16219	"system emotional science, university of toyama, faculty of medicine, toyama, japan"	6	22	13
+16220	"system emotional science, university of toyama, toyama, japan"	10	155	20
+16239	"taipei veterans general hospital, taipei, taiwan"	25	272	485
+16268	"tan tock seng hospital, singapore city, singapore"	20	232	389
+16269	"tan trao university, tuyen quang, viet nam"	8	26	23
+16301	"technische universität darmstadt, darmstadt, germany"	14	442	213
+16304	"technische universität münchen, munich, germany"	5	408	13
+16349	"thai nguyen university of education, thai nguyen, viet nam"	5	28	10
+16350	"thai nguyen university of information and communication technology (ictu), thai nguyen, viet nam"	12	29	39
+16354	"thai nguyen university of sciences, thai nguyen, viet nam"	6	134	18
+16355	"thai nguyen university, thai nguyen, viet nam"	33	341	87
+16357	"thai red cross agency, bangkok, thailand"	17	316	312
+16366	"thailand national center for genetic engineering and biotechnology, pathum thani, thailand"	7	337	30
+16367	"thailand national electronics and computer technology center, pathum thani, thailand"	7	67	24
+16375	"thammasat university, pathum thani, thailand"	8	106	32
+16377	"thang long university, hanoi, viet nam"	8	37	20
+16389	"the australian national university, canberra, australia"	19	222	77
+16396	"the center for entomology & parasitology research, duy tan university, da nang, viet nam"	7	11	9
+16417	"the foundation for aids research, bangkok, thailand"	14	128	270
+16423	"the graduate university for advanced studies, hayama, japan"	23	226	52
+16425	"the hiv netherlands australia thailand research collaboration, bangkok, thailand"	7	63	144
+16444	"the kirby institute, kensington, australia"	29	381	549
+16447	"the kyoto university museum, kyoto, japan"	47	409	190
+16464	"the research institute of tuberculosis, japan anti-tuberculosis association, kiyose, japan"	10	216	54
+16466	"the science-production centre of vietnamese ginseng, university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	5	354	4
+16471	"the tokyo metropolitan research institute for environmental protection, tokyo, japan"	5	437	22
+16472	"the united graduate school of agricultural sciences, kagoshima university, kagoshima, japan"	7	133	18
+16473	"the united graduate school of veterinary science, yamaguchi university, yamaguchi, japan"	13	222	36
+16477	"the university of aizu, aizuwakamatsu, japan"	27	212	34
+16479	"the university of edinburgh, edinburgh, united kingdom"	12	120	122
+16481	"the university of electro-communications, chofu, japan"	28	411	42
+16485	"the university of kitakyushu, kitakyushu, japan"	10	175	19
+16489	"the university of osaka, suita, japan"	77	979	161
+16490	"the university of queensland, brisbane, australia"	13	193	34
+16498	"the university of sydney, sydney, australia"	14	708	68
+16504	"the university of tokyo, tokyo, japan"	112	2733	389
+16506	"the university of western australia, perth, australia"	6	194	15
+16508	"the vnm herbarium, vietnamese academy of science and technology institute of tropical biology, dalat, viet nam"	9	59	27
+16509	"the voluntary health services, chennai, chennai, india"	5	22	97
+16514	"theoretical nuclear physics laboratory, riken nishina center for accelerator-based science, wako, japan"	14	207	19
+16517	"theoretical physics research group, ton-duc-thang university, ho chi minh city, viet nam"	5	42	19
+16519	"theory and modeling department, culham centre for fusion energy, abingdon, united kingdom"	7	180	17
+16534	"thu dau mot university, thu dau mot, viet nam"	5	4	14
+16539	"thuongmai university, hanoi, viet nam"	24	329	59
+16540	"thuyloi university, hanoi, viet nam"	36	1069	82
+16549	"timas, thang long university, hanoi, viet nam"	5	52	14
+16571	"tohoku university, sendai, japan"	118	2598	514
+16575	"tokai university, tokyo, japan"	8	215	6
+16581	"tokushima university, tokushima, japan"	6	71	14
+16584	"tokyo city university, tokyo, japan"	6	115	17
+16590	"tokyo kasei university, sayama, japan"	5	38	14
+16596	"tokyo metropolitan university, hachioji, japan"	6	29	9
+16600	"tokyo university of agriculture and technology, fuchu, japan"	66	750	108
+16603	"tokyo university of marine science and technology, tokyo, japan"	15	136	15
+16605	"tokyo university of science, tokyo, japan"	14	98	54
+16612	"ton-duc-thang university, ho chi minh city, viet nam"	9	256	29
+16620	"tottori university, tottori, japan"	8	215	18
+16621	"toxicological center, universiteit antwerpen, antwerpen, belgium"	5	656	38
+16631	"toyohashi university of technology, toyohashi, japan"	5	36	9
+16634	"toyota central r&d labs., inc., nagakute, japan"	5	98	9
+16637	"toyota physical and chemical research institute, nagakute, japan"	15	366	47
+16638	"toyota technological institute, nagoya, japan"	17	282	33
+16657	"transdisciplinary science and engineering program, hiroshima university, higashihiroshima, japan"	11	116	30
+16673	"tropical biosphere research center, university of the ryukyus, nishihara, japan"	16	499	65
+16690	"trường đại học giao thông vận tải, hanoi, viet nam"	44	588	87
+16691	"trường đại học sư phạm hà nội, hanoi, viet nam"	39	425	69
+16706	"tu du hospital, ho chi minh city, viet nam"	8	108	17
+16770	"united graduate school of agricultural sciences, kagoshima university, kagoshima, japan"	7	133	20
+16786	"universidad autónoma de madrid, madrid, spain"	5	176	83
+16796	"universidad de granada, granada, spain"	39	2197	126
+16806	"universidad nacional de córdoba, cordoba, argentina"	5	430	14
+16824	"universitas airlangga, surabaya, indonesia"	8	74	31
+16828	"universitas indonesia, depok, indonesia"	10	532	52
+16829	"universitas indonesia, rsupn dr. cipto mangunkusumo, central jakarta, indonesia"	17	615	293
+16839	"universitas udayana, bali, indonesia"	7	62	133
+16842	"universitat de valència, valencia, spain"	7	477	50
+16858	"universiti malaya, kuala lumpur, malaysia"	11	242	24
+16861	"universiti malaysia sarawak, kota samarahan, malaysia"	5	71	7
+16863	"universiti putra malaysia, serdang, malaysia"	5	484	12
+16865	"universiti teknologi malaysia kuala lumpur, kuala lumpur, malaysia"	11	170	31
+16870	"university college dublin, dublin, ireland"	6	169	13
+16871	"university college london hospitals nhs foundation trust, london, united kingdom"	15	363	60
+16872	"university college london, london, united kingdom"	7	391	26
+16875	"university hawaii institute for astronomy, honolulu, united states"	10	296	177
+16879	"university medicine and pharmacy, hue university, hue, viet nam"	21	510	89
+16881	"university of agriculture and forestry, hue university, hue, viet nam"	32	650	51
+16882	"university of al-fateh faculty of medicine, tripoli, libya"	5	97	38
+16892	"university of california, los angeles, los angeles, united states"	5	102	27
+16900	"university of chinese academy of sciences, beijing, china"	17	588	61
+16908	"university of danang, da nang, viet nam"	58	964	115
+16919	"university of economics ho chi minh city, ho chi minh city, viet nam"	11	213	17
+16920	"university of economics, hue university, hue, viet nam"	9	165	17
+16926	"university of finance - marketing, ho chi minh city, viet nam"	10	21	22
+16930	"university of fukui, fukui, japan"	5	33	12
+16936	"university of hyogo, kobe, japan"	8	106	23
+16949	"university of khanh hoa, nha trang, viet nam"	9	244	39
+16954	"university of malaya medical centre, kuala lumpur, malaysia"	28	845	517
+16959	"university of medicine and pharmacy at hcmc, ho chi minh city, viet nam"	71	1756	290
+16961	"university of melbourne, melbourne, australia"	7	266	26
+16964	"university of michigan, ann arbor, ann arbor, united states"	7	232	112
+16972	"university of miyazaki, miyazaki, japan"	11	153	31
+16973	"university of münster, munster, germany"	7	301	54
+16982	"university of oklahoma college of medicine, oklahoma city, united states"	5	81	15
+16988	"university of oxford, oxford, united kingdom"	8	718	31
+16999	"university of science and technology (ust), daejeon, south korea"	7	61	71
+17002	"university of science and technology, university of danang, da nang, viet nam"	33	552	59
+17004	"university of science, viet nam national university ho chi minh city, ho chi minh city, viet nam"	94	1984	268
+17006	"university of sciences, hue university, hue, viet nam"	13	125	22
+17010	"university of south australia, adelaide, australia"	5	198	18
+17015	"university of surrey, guildford, united kingdom"	6	159	88
+17019	"university of technology sydney, sydney, australia"	12	297	50
+17028	"university of the ryukyus, nishihara, japan"	10	409	21
+17032	"university of toyama, faculty of medicine, toyama, japan"	5	86	11
+17033	"university of toyama, toyama, japan"	6	25	13
+17036	"university of tsukuba, tsukuba, japan"	81	2503	228
+17042	"university of virginia, charlottesville, united states"	11	298	177
+17067	"universität basel, basel, switzerland"	5	206	18
+17070	"universität bremen, bremen, germany"	5	72	17
+17074	"universität zu köln, koln, germany"	10	266	119
+17084	"université de bordeaux, bordeaux, france"	6	395	30
+17089	"université de lorraine, nancy, france"	5	61	12
+17090	"université de montpellier, montpellier, france"	9	157	25
+17092	"université de strasbourg, strasbourg, france"	13	518	166
+17103	"université grenoble alpes, saint martin d'heres, france"	6	754	13
+17105	"université libre de bruxelles, brussels, belgium"	6	177	34
+17109	"université paris-saclay, gif-sur-yvette, france"	16	360	203
+17121	"unsw sydney, sydney, australia"	8	479	32
+17146	"utsunomiya university, utsunomiya, japan"	7	65	15
+17157	"van der waals-zeeman institute, amsterdam, netherlands"	8	86	24
+17159	"van lang university, ho chi minh city, viet nam"	6	139	15
+17166	"variable energy cyclotron centre india, kolkata, india"	8	113	38
+17193	"vhs medical centre india, chennai, india"	11	128	213
+17200	"viet duc hospital, hanoi, viet nam"	8	83	26
+17204	"viet nam national university ho chi minh city, ho chi minh city, viet nam"	256	4483	689
+17209	"viet tiep hospital, haiphong, viet nam"	5	68	25
+17213	"vietnam academy for water resources, hanoi, viet nam"	7	175	25
+17219	"vietnam academy of science and technology, hanoi, viet nam"	309	4743	904
+17225	"vietnam agricultural science institute, hanoi, viet nam"	7	306	13
+17227	"vietnam atomic energy institute, hanoi, viet nam"	93	2361	384
+17254	"vietnam institute of geosciences and mineral resources (vigmr), hanoi, viet nam"	5	78	16
+17258	"vietnam institute of geosciences and mineral resources, hanoi, viet nam"	9	136	21
+17269	"vietnam military medical university, hanoi, viet nam"	14	172	30
+17272	"vietnam national children's hospital, hanoi, viet nam"	20	426	31
+17281	"vietnam national museum of nature, hanoi, viet nam"	15	194	27
+17283	"vietnam national museum of nature, vietnam academy of science and technology, hanoi, viet nam"	31	958	74
+17288	"vietnam national university institute of physics, ho chi minh city, viet nam"	19	198	28
+17289	"vietnam national university of agriculture, hanoi, viet nam"	54	838	127
+17290	"vietnam national university of forestry, hanoi, viet nam"	22	150	56
+17293	"vietnam national university, hanoi, hanoi, viet nam"	310	8898	734
+17295	"vietnam national university, vietnam national university, hanoi, hanoi, viet nam"	7	23	5
+17312	"vietnam research station, nagasaki university, nagasaki, japan"	27	345	105
+17318	"vietnam veterinary association, hanoi, viet nam"	6	338	22
+17330	"vietnamese academy of agricultural science, hanoi, viet nam"	5	74	11
+17331	"vietnamese academy of forest sciences, hanoi, viet nam"	11	499	21
+17334	"vietnamese academy of science and technology institute of biotechnology, hanoi, viet nam"	41	931	52
+17335	"vietnamese academy of science and technology institute of chemistry, hanoi, viet nam"	28	1225	72
+17336	"vietnamese academy of science and technology institute of ecology and biological resources, hanoi, viet nam"	163	2121	427
+17337	"vietnamese academy of science and technology institute of information technology, hanoi, viet nam"	14	186	12
+17338	"vietnamese academy of science and technology institute of materials science, hanoi, viet nam"	71	1354	138
+17339	"vietnamese academy of science and technology institute of mechanics, hanoi, viet nam"	12	381	22
+17340	"vietnamese academy of science and technology institute of physics and electronics, hanoi, viet nam"	93	2030	317
+17341	"vietnamese academy of science and technology institute of tropical biology, dalat, viet nam"	55	756	170
+17346	"vietnamese-german university, thu dau mot, viet nam"	6	168	12
+17357	"vinh university, vinh, viet nam"	5	75	5
+17363	"vinuniversity, hanoi, viet nam"	17	148	31
+17378	"viện khoa học và công nghệ tính toán, ho chi minh city, viet nam"	12	409	29
+17386	"vnu university of economics and business, hanoi, viet nam"	9	302	18
+17387	"vnu-university of medicine and pharmacy, hanoi, viet nam"	11	154	23
+17388	"vnuhcm - university of information technology, ho chi minh city, viet nam"	22	164	56
+17414	"waseda university, tokyo, japan"	30	948	64
+17420	"water and environmental engineering, nagasaki university, nagasaki, japan"	6	113	22
+17423	"water engineering and management, asian institute of technology thailand, khlong luang, thailand"	7	300	28
+17432	"water resources research center, disaster prevention research institute, uji, japan"	6	233	18
+17433	"water resources research center, kyoto university, kyoto, japan"	14	636	26
+17507	"wuhan university, wuhan, china"	5	66	20
+17530	"yale school of medicine, new haven, united states"	9	562	28
+17536	"yamagata university, yamagata, japan"	7	90	6
+17538	"yamaguchi university, yamaguchi, japan"	22	113	43
+17554	"yokohama city university, yokohama, japan"	21	240	119
+17555	"yokohama national university faculty of business administration, yokohama, japan"	7	314	6
+17556	"yokohama national university, yokohama, japan"	19	324	25
+17577	"yurin hospital, tokyo, japan"	5	52	17
+17578	"zagazig university, faculty of medicine, zagazig, egypt"	7	267	45
+17586	"zhejiang university, hangzhou, china"	6	227	17
+17592	"zoological institute of the russian academy of sciences, saint petersburg, russian federation"	9	197	31
+17615	"đại học công nghệ giao thông vận tải, hanoi, viet nam"	49	2952	143
+17616	"đại học mở thành phố hồ chí minh, ho chi minh city, viet nam"	12	289	29
