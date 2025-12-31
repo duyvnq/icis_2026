@@ -64,81 +64,76 @@ dat_core <- dat_reg |> filter(coop != "Hyper-authored")
 
 
 ```{r}
-#| label: table1
-#| echo: true
-#| warning: false
-#| message: false
+# Citation distribution
+summary(dat_reg$cited)
 
-fmt_msd <- function(x) sprintf("%.3f (%.3f)", mean(x, na.rm = TRUE), sd(x, na.rm = TRUE))
-fmt_npc <- function(x) sprintf("%d (%.1f%%)", sum(x, na.rm = TRUE), 100 * mean(x, na.rm = TRUE))
-fmt_fac <- function(x, l) sprintf("%d (%.1f%%)", sum(x == l, na.rm = TRUE), 100 * mean(x == l, na.rm = TRUE))
+# Zero inflation
+table(dat_reg$cited == 0)
+mean(dat_reg$cited == 0)
 
-total_n <- nrow(dat_reg)
+# Dispersion
+mean_citations <- mean(dat_reg$cited, na.rm = TRUE)
+var_citations <- var(dat_reg$cited, na.rm = TRUE)
+dispersion_ratio <- var_citations / mean_citations
 
-tab_desc <- dat_reg |>
-  group_by(coop) |>
-  summarise(
-    n = as.character(n()),
-    Share = sprintf("%.1f%%", 100 * n() / total_n),
-    `Mean (SD) Authors` = fmt_msd(n_authors),
-    `Mean (SD) Countries` = fmt_msd(n_countries),
-    `Mean (SD) Citations` = fmt_msd(cited),
-    `Median Citations` = sprintf("%.3f", median(cited, na.rm = TRUE)),
-    
-    # Journal Metrics
-    `Q1` = fmt_fac(quartile, "Q1"),
-    `Q2` = fmt_fac(quartile, "Q2"),
-    `Q3` = fmt_fac(quartile, "Q3"),
-    `Q4` = fmt_fac(quartile, "Q4"),
-    `Life Sciences` = fmt_npc(LS),
-    `Social Sciences` = fmt_npc(SS),
-    `Physical Sciences` = fmt_npc(PS),
-    `Health Sciences` = fmt_npc(HS),
-    
-    # Collaboration (Redundant but requested)
-    `Bilateral` = fmt_fac(coop, "Bilateral"),
-    `Multilateral` = fmt_fac(coop, "Multilateral"),
-    `Hyper-authored` = fmt_fac(coop, "Hyper-authored"),
-    
-    # Funding
-    `Funded` = fmt_fac(fund, "Funded"),
-    `Unfunded` = fmt_fac(fund, "Not funded"),
-    `Bilateral Funding` = fmt_npc(bilateral_funding),
-    `JP Funding` = fmt_npc(jp),
-    `VN Funding` = fmt_npc(vi),
-    `Other Funding` = fmt_npc(o),
-    `Industry` = fmt_npc(ind),
-    `Public` = fmt_npc(pub),
-    `Academia` = fmt_npc(aca),
-    `1 Sector` = fmt_fac(n_sectors, 1),
-    `2 Sectors` = fmt_fac(n_sectors, 2),
-    `3 Sectors` = fmt_fac(n_sectors, 3),
-    
-    # Authorship & Leadership
-    `VN-led` = fmt_fac(fa, "VN-led"),
-    `JP-led` = fmt_fac(fa, "JP-led"),
-    `Other-led` = fmt_fac(fa, "Other-led"),
-    `VN-dominated` = fmt_fac(dominance, "VN-dominated"),
-    `JP-dominated` = fmt_fac(dominance, "JP-dominated"),
-    `Balanced` = fmt_fac(dominance, "Balanced"),
-    `Other Dominance` = fmt_fac(dominance, "Other"),
-    
-    `Mean (SD) Prop VN` = fmt_msd(prop_vn_authors),
-    `Mean (SD) Prop JP` = fmt_msd(prop_jp_authors),
-    `Mean (SD) Prop Other` = fmt_msd(prop_o_authors),
-    
-    `Mean (SD) N VN` = fmt_msd(n_vn_authors),
-    `Mean (SD) N JP` = fmt_msd(n_jp_authors),
-    `Mean (SD) N Other` = fmt_msd(n_o_authors),
-    
-    # Correspondence
-    `Corr: Vietnam` = fmt_fac(corr_type, "Vietnam"),
-    `Corr: Japan` = fmt_fac(corr_type, "Japan"),
-    `Corr: Both` = fmt_fac(corr_type, "Both"),
-    `Corr: Other` = fmt_fac(corr_type, "Other")
-  ) |>
-  pivot_longer(-coop, names_to = "Metric", values_to = "Value") |>
-  pivot_wider(names_from = coop, values_from = Value)
+mean_citations
+var_citations
+dispersion_ratio
+```
 
-kable(tab_desc, digits = 3)
+
+```{r}
+library(pscl)
+library(MASS)
+
+# Fit candidate models
+m_poisson <- glm(cited ~ year + fa + fund, 
+                 data = dat_reg, family = poisson)
+
+m_nb <- glm.nb(cited ~ year + fa + fund, 
+               data = dat_reg)
+
+m_zip <- zeroinfl(cited ~ year + fa + fund | year + fa, 
+                  data = dat_reg, dist = "poisson")
+
+m_zinb <- zeroinfl(cited ~ year + fa + fund | year + fa, 
+                   data = dat_reg, dist = "negbin")
+
+# Compare models
+AIC(m_poisson, m_nb, m_zip, m_zinb)
+BIC(m_poisson, m_nb, m_zip, m_zinb)
+
+# Vuong test (ZIP vs Poisson, ZINB vs NB)
+vuong(m_zip, m_poisson)
+vuong(m_zinb, m_nb)
+
+# Overdispersion test
+library(AER)
+dispersiontest(m_poisson)
+```
+
+
+```{r}
+dat_analysis <- dat_reg %>% filter(coop != "hyperauthored")
+
+m1 <- glm.nb(cited ~ year + I(year^2), data = dat_analysis)
+m2 <- glm.nb(cited ~ year + I(year^2) + coop, data = dat_analysis)
+m3 <- glm.nb(cited ~ year + I(year^2) + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa, data = dat_analysis)
+m4 <- glm.nb(cited ~ year + I(year^2) + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors, data = dat_analysis)
+m5 <- glm.nb(cited ~ year + I(year^2) + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA, data = dat_analysis)
+m6 <- glm.nb(cited ~ year + I(year^2) + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_analysis)
+m7 <- glm.nb(cited ~ year + I(year^2) + coop + fa * year + dominance * year + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_analysis)
+
+data.frame(
+  Model = paste0("M", 1:7),
+  AIC = c(AIC(m1), AIC(m2), AIC(m3), AIC(m4), AIC(m5), AIC(m6), AIC(m7)),
+  BIC = c(BIC(m1), BIC(m2), BIC(m3), BIC(m4), BIC(m5), BIC(m6), BIC(m7))
+)
+
+lrtest(m1, m2)
+lrtest(m2, m3)
+lrtest(m3, m4)
+lrtest(m4, m5)
+lrtest(m5, m6)
+lrtest(m6, m7)
 ```

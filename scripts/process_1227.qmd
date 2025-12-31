@@ -352,7 +352,7 @@ Post-processing quality checks identified specific areas of missing data:
 ```{r}
 dat_reg <- dat_reg |> 
   drop_na(title, LS, affiliations) |> 
-  select(-abstract)
+  select(-c(abstract, corr, affiliations, DOI, title))
 
 output_file <- file.path(DATA_DIR, "updated_data.csv")
 write_csv(dat_reg, output_file, na = "")
