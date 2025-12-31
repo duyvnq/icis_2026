@@ -1285,7 +1285,6 @@ table_4_3_4 <- reg_table_data |>
 table_4_3_4
 ```
 
-
 ```{r}
 #| label: fig-citation-trends-leadership
 #| fig.cap: "Mean Year-Normalized Citation Score (MNCS) by leadership (2000-2024). A value of 1.0 represents the dataset average for that year."
@@ -1342,7 +1341,6 @@ ggplot(citation_trends_norm, aes(x = year, y = mean_norm_score, color = leadersh
     legend.position = "bottom"
   )
 ```
-
 
 ```{r}
 #| label: fig-predicted-citations-interaction
@@ -1422,7 +1420,6 @@ ggplot(plot_data, aes(x = Funding_Status, y = predicted_citations, group = leade
   )
 ```
 
-
 ```{r}
 #| label: fig-vn-led-irr-time
 #| fig.cap: "Evolution of the VN-led citation gap (IRR) over time (2000-2024). The shading represents the 95% confidence interval."
@@ -1455,7 +1452,6 @@ tibble(
     x = "Year"
   )
 ```
-
 
 ```{r}
 #| label: table-predicted-citation-scenarios
@@ -1521,7 +1517,6 @@ table_4_3_5 <- results |>
 table_4_3_5
 ```
 
-
 ```{r}
 #| label: table-q1-funded-impact
 #| echo: true
@@ -1580,7 +1575,6 @@ table_4_3_6 <- stats |>
 table_4_3_6
 ```
 
-
 ```{r}
 #| label: fig-citation-dist-q1-funded
 #| fig.cap: "Subset analysis: Papers in Q1 journals with funding. Distribution of citations (log scale) for VN-led vs. JP-led papers."
@@ -1623,7 +1617,6 @@ ggplot(subset_q1_funded, aes(x = leadership_label, y = cited + 1, fill = leaders
     legend.position = "none"
   )
 ```
-
 
 ```{r}
 #| label: table-robustness-checks
@@ -1733,7 +1726,6 @@ table_5_2_1 <- rob_table |>
 table_5_2_1
 ```
 
-
 ```{r}
 #| label: table-model-fit-comparison
 #| echo: true
@@ -1778,7 +1770,6 @@ table_5_2_2 <- fit_data |>
 
 table_5_2_2
 ```
-
 
 ```{r}
 #| label: fig-appendix-c-diagnostics
@@ -1845,7 +1836,6 @@ p4 <- ggplot(diag_data, aes(x = fitted, y = sqrt(abs(std_resid)))) +
 (p1 + p2) / (p3 + p4)
 ```
 
-
 ```{r}
 #| label: table-correlation-matrix
 #| echo: true
@@ -1904,7 +1894,6 @@ table_f_3 <- cor_matrix |>
 
 table_f_3
 ```
-
 
 ```{r}
 #| label: table-leadership-balance-characteristics

@@ -1,0 +1,144 @@
+---
+title: "Analysis"
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(scales)
+library(gt)
+library(patchwork)
+library(systemfonts) 
+library(knitr)
+
+base_colors <- c(
+  "#0173B2", "#DE8F05", "#029E73", "#CC78BC",
+  "#CA9161", "#949494", "#ECE133", "#56B4E9"
+)
+
+base_theme <- function(base_size = 10, base_family = "sans") {
+  theme_classic(base_size = base_size, base_family = base_family) +
+    theme(
+      plot.title = element_text(size = base_size + 2, face = "bold", hjust = 0, margin = margin(b = 5)),
+      plot.subtitle = element_text(size = base_size, color = "gray30", hjust = 0, margin = margin(b = 8)),
+      axis.title = element_text(size = base_size, face = "bold", color = "black"),
+      axis.text = element_text(size = base_size - 1, color = "black"),
+      axis.line = element_line(color = "black", linewidth = 0.5),
+      axis.ticks = element_line(color = "black", linewidth = 0.5),
+      legend.title = element_text(size = base_size, face = "bold"),
+      legend.text = element_text(size = base_size - 1),
+      legend.position = "bottom",
+      legend.background = element_blank(),
+      panel.background = element_rect(fill = "white", color = NA),
+      strip.background = element_rect(fill = "gray95", color = "black", linewidth = 0.5),
+      strip.text = element_text(size = base_size, face = "bold", color = "black")
+    )
+}
+
+theme_set(base_theme())
+
+scale_colour_discrete <- function(...) scale_colour_manual(values = base_colors, ...)
+scale_fill_discrete <- function(...) scale_fill_manual(values = base_colors, ...)
+
+dat_reg <- read_csv("data/updated_data.csv", show_col_types = FALSE) |> 
+  mutate(
+    quartile = factor(quartile, levels = c("Q1", "Q2", "Q3", "Q4")),
+    OA = factor(OA, levels = c(0, 1), labels = c("Not OA", "OA")),
+    fund = factor(fund, levels = c(0, 1), labels = c("Not funded", "Funded")),
+    coop = factor(coop, levels = c("bilateral", "multilateral", "hyperauthored"), 
+                  labels = c("Bilateral", "Multilateral", "Hyper-authored")),
+    dominance = factor(dominance, levels = c("vn", "Balanced", "jp", "o"),
+                       labels = c("VN-dominated", "Balanced", "JP-dominated", "Other")),
+    fa = factor(fa, levels = c("vn", "jp", "o"), 
+                labels = c("VN-led", "JP-led", "Other-led")),
+    corr_type = factor(corr_type, levels = c("Vietnam", "Japan", "Both", "Other"))
+  )
+
+dat_core <- dat_reg |> filter(coop != "Hyper-authored")
+```
+
+
+```{r}
+#| label: table1
+#| echo: true
+#| warning: false
+#| message: false
+
+fmt_msd <- function(x) sprintf("%.3f (%.3f)", mean(x, na.rm = TRUE), sd(x, na.rm = TRUE))
+fmt_npc <- function(x) sprintf("%d (%.1f%%)", sum(x, na.rm = TRUE), 100 * mean(x, na.rm = TRUE))
+fmt_fac <- function(x, l) sprintf("%d (%.1f%%)", sum(x == l, na.rm = TRUE), 100 * mean(x == l, na.rm = TRUE))
+
+total_n <- nrow(dat_reg)
+
+tab_desc <- dat_reg |>
+  group_by(coop) |>
+  summarise(
+    n = as.character(n()),
+    Share = sprintf("%.1f%%", 100 * n() / total_n),
+    `Mean (SD) Authors` = fmt_msd(n_authors),
+    `Mean (SD) Countries` = fmt_msd(n_countries),
+    `Mean (SD) Citations` = fmt_msd(cited),
+    `Median Citations` = sprintf("%.3f", median(cited, na.rm = TRUE)),
+    
+    # Journal Metrics
+    `Q1` = fmt_fac(quartile, "Q1"),
+    `Q2` = fmt_fac(quartile, "Q2"),
+    `Q3` = fmt_fac(quartile, "Q3"),
+    `Q4` = fmt_fac(quartile, "Q4"),
+    `Life Sciences` = fmt_npc(LS),
+    `Social Sciences` = fmt_npc(SS),
+    `Physical Sciences` = fmt_npc(PS),
+    `Health Sciences` = fmt_npc(HS),
+    
+    # Collaboration (Redundant but requested)
+    `Bilateral` = fmt_fac(coop, "Bilateral"),
+    `Multilateral` = fmt_fac(coop, "Multilateral"),
+    `Hyper-authored` = fmt_fac(coop, "Hyper-authored"),
+    
+    # Funding
+    `Funded` = fmt_fac(fund, "Funded"),
+    `Unfunded` = fmt_fac(fund, "Not funded"),
+    `Bilateral Funding` = fmt_npc(bilateral_funding),
+    `JP Funding` = fmt_npc(jp),
+    `VN Funding` = fmt_npc(vi),
+    `Other Funding` = fmt_npc(o),
+    `Industry` = fmt_npc(ind),
+    `Public` = fmt_npc(pub),
+    `Academia` = fmt_npc(aca),
+    `1 Sector` = fmt_fac(n_sectors, 1),
+    `2 Sectors` = fmt_fac(n_sectors, 2),
+    `3 Sectors` = fmt_fac(n_sectors, 3),
+    
+    # Authorship & Leadership
+    `VN-led` = fmt_fac(fa, "VN-led"),
+    `JP-led` = fmt_fac(fa, "JP-led"),
+    `Other-led` = fmt_fac(fa, "Other-led"),
+    `VN-dominated` = fmt_fac(dominance, "VN-dominated"),
+    `JP-dominated` = fmt_fac(dominance, "JP-dominated"),
+    `Balanced` = fmt_fac(dominance, "Balanced"),
+    `Other Dominance` = fmt_fac(dominance, "Other"),
+    
+    `Mean (SD) Prop VN` = fmt_msd(prop_vn_authors),
+    `Mean (SD) Prop JP` = fmt_msd(prop_jp_authors),
+    `Mean (SD) Prop Other` = fmt_msd(prop_o_authors),
+    
+    `Mean (SD) N VN` = fmt_msd(n_vn_authors),
+    `Mean (SD) N JP` = fmt_msd(n_jp_authors),
+    `Mean (SD) N Other` = fmt_msd(n_o_authors),
+    
+    # Correspondence
+    `Corr: Vietnam` = fmt_fac(corr_type, "Vietnam"),
+    `Corr: Japan` = fmt_fac(corr_type, "Japan"),
+    `Corr: Both` = fmt_fac(corr_type, "Both"),
+    `Corr: Other` = fmt_fac(corr_type, "Other")
+  ) |>
+  pivot_longer(-coop, names_to = "Metric", values_to = "Value") |>
+  pivot_wider(names_from = coop, values_from = Value)
+
+kable(tab_desc, digits = 3)
+```

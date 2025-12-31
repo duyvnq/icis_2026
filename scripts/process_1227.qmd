@@ -316,7 +316,7 @@ The `text2sdg` package (System: `SDGO`) was applied to article abstracts to iden
 - Breadth (`n_sdg`): The total count of unique SDGs identified per paper
 
 ```{r}
-sdg_hits <- detect_sdg_systems(text = dat_reg$abstract, system = "SDGO", verbose = FALSE)
+sdg_hits <- detect_sdg_systems(text = dat_reg$abstract, system = c("Aurora", "Elsevier", "SIRIS", "SDSN", "SDGO"), verbose = FALSE)
 
 sdg_wide <- sdg_hits |>
   mutate(
@@ -350,6 +350,10 @@ Post-processing quality checks identified specific areas of missing data:
 
 
 ```{r}
+dat_reg <- dat_reg |> 
+  drop_na(title, LS, affiliations) |> 
+  select(-abstract)
+
 output_file <- file.path(DATA_DIR, "updated_data.csv")
 write_csv(dat_reg, output_file, na = "")
 ```
