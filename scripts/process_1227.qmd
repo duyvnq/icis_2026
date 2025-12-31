@@ -9,13 +9,13 @@ execute:
 
 # Setting Up
 
-Data are loaded into the working environment. 
-Export 1PM, 27th December 2025
-Query: AFFILCOUNTRY(viet* AND jap*) 
-Yielded 14,485 results
-Refined query: AFFILCOUNTRY ( viet* AND jap* ) AND ( EXCLUDE ( PUBYEAR , 2026 ) ) AND ( LIMIT-TO ( DOCTYPE , "ar" ) ) AND ( LIMIT-TO ( PUBSTAGE , "final" ) ) AND ( LIMIT-TO ( SRCTYPE , "j" ) )
-Yielded: 10,872 results
+The analysis is based on bibliometric data exported from Scopus on December 27, 2025. The raw dataset comprises 10,872 research articles published between 2000 and 2025 involving collaboration between Vietnam and Japan.
 
+- Source: Scopus (CSV export).
+
+- Libraries: `tidyverse` for data manipulation and `text2sdg` for thematic analysis.
+
+- Preprocessing: The raw data was loaded, and key columns were renamed for consistency. A unique identifier (`id`) was generated for each record.
 
 ```{r}
 #| label: setup
@@ -57,6 +57,15 @@ dat_reg <- dat_raw |>
 
 # Journal-level data
 
+To assess publication quality and disciplinary scope, the dataset was merged with external journal metrics:
+
+1. Subject Areas: 27 binary variables were created representing Scopus ASJC codes. Additionally, four "Macro Area" flags were created: Life Sciences (LS), Social Sciences (SS), Physical Sciences (PS), and Health Sciences (HS).
+
+2. Impact Metrics: Scimago Journal Rank (SJR) data was integrated to provide:
+
+- `sjr_score`: A numeric measure of journal prestige.
+
+- `quartile`: A categorical variable ranking journals from Q1 to Q4.
 
 ```{r}
 #| label: process-sources
@@ -125,6 +134,20 @@ dat_reg <- dat_reg |>
 
 # Collaboration
 
+Collaboration patterns were derived by parsing the semicolon-separated affiliations string:
+
+1. Author Count (`n_authors`): Calculated based on the number of distinct affiliations listed.
+
+2. Country Count (`n_countries`): The number of unique countries present in the affiliations.
+
+3. Cooperation Mode (`coop`): Papers were classified into three types:
+
+- Bilateral: Involving exactly two countries (Vietnam and Japan).
+
+- Multilateral: Involving more than two countries.
+
+- Hyperauthored: Papers with ≥ 100 authors (treated separately to avoid skewing statistics).
+
 ```{r}
 coop_type <- dat_reg |>
     transmute(id, affiliations, n_authors = str_count(affiliations, ";") + 1L) |>
@@ -151,6 +174,18 @@ dat_reg <- dat_reg |>
 ```
 
 # Funding
+
+Funding data was aggregated from multiple source files mapping DOIs to specific funding bodies.
+1. Origin Indicators: Binary flags for funding from Japan (`jp`), Vietnam (`vi`), or Other nations (`o`).
+
+2. Sector Indicators: Binary flags for funding from Industry (`ind`), Public/Government (`pub`), or Academia (`aca`).
+
+Aggregates:
+- `fund`: Binary indicator (1 if the paper received any funding).
+
+- `n_sectors`: Count of distinct funding sectors involved (1–3).
+
+- `bilateral_funding`: Binary indicator identifying papers funded by both Vietnamese and Japanese institutions.
 
 ```{r}
 #| label: process-funding
@@ -209,6 +244,22 @@ dat_reg <- dat_reg |>
 
 # Authorship
 
+Authorship roles were analyzed using regex matching on affiliation strings to determine the balance of power:
+
+1. First Author (`fa`): The country of the first-listed affiliation was extracted and classified as Vietnam (`vn`), Japan (`jp`), or Other (`o`).
+
+2. Author Proportions: The proportion of authors from each region was calculated (e.g., `prop_vn_authors`).
+
+3. Dominance (`dominance`): A typology based on author proportions:
+
+- `vn` or `jp`: If the respective country's authors constitute >50% of the total.
+
+- `Balanced`: If no single group exceeds 50%.
+
+4. Correspondence (`corr_type`): The corresponding author's address was parsed to identify the managing country (Vietnam, Japan, Both, or Other).
+
+5. Leadership Consistency (`is_corr_same_fa`): A flag indicating if the First Author and Corresponding Author represent the same country.
+
 ```{r}
 regex_vn <- regex("vietnam|viet nam", ignore_case = TRUE)
 regex_jp <- regex("japan", ignore_case = TRUE)
@@ -258,6 +309,12 @@ dat_reg <- dat_reg |>
 
 # SDG
 
+The `text2sdg` package (System: `SDGO`) was applied to article abstracts to identify contributions to the United Nations Sustainable Development Goals.
+
+- SDG Flags: 17 binary variables (`sdg01–sdg17`) indicating the presence of specific goals.
+
+- Breadth (`n_sdg`): The total count of unique SDGs identified per paper
+
 ```{r}
 sdg_hits <- detect_sdg_systems(text = dat_reg$abstract, system = "SDGO", verbose = FALSE)
 
@@ -277,6 +334,14 @@ dat_reg <- dat_reg |>
     across(matches("^sdg\\d{2}$"), ~ replace_na(., 0L)),
     n_sdg = rowSums(pick(matches("^sdg\\d{2}$")), na.rm = TRUE)
   )
-
-count(dat_reg, n_sdg)
 ```
+
+# Cleaning data
+
+Post-processing quality checks identified specific areas of missing data:
+
+- Journal Metadata: Minor gaps in field classification (2 missing) and SJR metrics (689 missing).
+
+- Cooperation Mode: 42 entries required manual verification due to complex affiliation strings preventing automated country counting.
+
+- Correspondence: 1,326 papers lacked correspondence address data, consistent with raw Scopus exports.
