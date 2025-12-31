@@ -345,3 +345,11 @@ Post-processing quality checks identified specific areas of missing data:
 - Cooperation Mode: 42 entries required manual verification due to complex affiliation strings preventing automated country counting.
 
 - Correspondence: 1,326 papers lacked correspondence address data, consistent with raw Scopus exports.
+
+# Export data
+
+
+```{r}
+output_file <- file.path(DATA_DIR, "updated_data.csv")
+write_csv(dat_reg, output_file, na = "")
+```
