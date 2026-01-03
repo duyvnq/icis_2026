@@ -114,15 +114,26 @@ dispersiontest(m_poisson)
 
 
 ```{r}
-dat_analysis <- dat_reg %>% filter(coop != "hyperauthored")
+dat_analysis <- dat_core
 
-m1 <- glm.nb(cited ~ year + I(year^2), data = dat_analysis)
-m2 <- glm.nb(cited ~ year + I(year^2) + coop, data = dat_analysis)
-m3 <- glm.nb(cited ~ year + I(year^2) + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa, data = dat_analysis)
-m4 <- glm.nb(cited ~ year + I(year^2) + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors, data = dat_analysis)
-m5 <- glm.nb(cited ~ year + I(year^2) + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA, data = dat_analysis)
-m6 <- glm.nb(cited ~ year + I(year^2) + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_analysis)
-m7 <- glm.nb(cited ~ year + I(year^2) + coop + fa * year + dominance * year + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_analysis)
+nrow(dat_analysis)
+sum(complete.cases(dat_analysis[, c("cited", "year", "coop")]))
+sum(complete.cases(dat_analysis[, c("cited", "year", "coop", "fa", "dominance", "corr_type", "prop_vn_authors", "is_corr_same_fa")]))
+sum(complete.cases(dat_analysis[, c("cited", "year", "coop", "fa", "dominance", "corr_type", "prop_vn_authors", "is_corr_same_fa", "fund", "bilateral_funding", "n_sectors")]))
+sum(complete.cases(dat_analysis[, c("cited", "year", "coop", "fa", "dominance", "corr_type", "prop_vn_authors", "is_corr_same_fa", "fund", "bilateral_funding", "n_sectors", "sjr_score", "quartile", "OA")]))
+
+dat_complete <- dat_analysis %>%
+  filter(complete.cases(cited, year, coop, fa, dominance, corr_type, prop_vn_authors, is_corr_same_fa, fund, bilateral_funding, n_sectors, sjr_score, quartile, OA, LS, SS, PS, HS, engi, medi, comp, env))
+
+nrow(dat_complete)
+
+m1 <- glm.nb(cited ~ year, data = dat_complete)
+m2 <- glm.nb(cited ~ year + coop, data = dat_complete)
+m3 <- glm.nb(cited ~ year + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa, data = dat_complete)
+m4 <- glm.nb(cited ~ year + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors, data = dat_complete)
+m5 <- glm.nb(cited ~ year + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA, data = dat_complete)
+m6 <- glm.nb(cited ~ year + coop + fa + dominance + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_complete)
+m7 <- glm.nb(cited ~ year + coop + fa * year + dominance * year + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_complete)
 
 data.frame(
   Model = paste0("M", 1:7),
@@ -136,4 +147,599 @@ lrtest(m3, m4)
 lrtest(m4, m5)
 lrtest(m5, m6)
 lrtest(m6, m7)
+```
+
+
+```{r}
+summary(m7)
+exp(coef(m7))
+library(broom)
+tidy(m7, conf.int = TRUE, exponentiate = TRUE) %>% print(n = 34)
+```
+
+
+```{r}
+table(dat_complete$fa)
+table(dat_complete$dominance)
+
+contrasts(dat_complete$fa)
+contrasts(dat_complete$dominance)
+
+range(dat_complete$year)
+mean(dat_complete$year)
+
+dat_complete <- dat_complete %>%
+  mutate(
+    year_c = year - mean(year),
+    fa = relevel(factor(fa), ref = "VN-led"),
+    dominance = relevel(factor(dominance), ref = "VN-dominated")
+  )
+
+m7_refit <- glm.nb(cited ~ year_c + coop + fa * year_c + dominance * year_c + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_complete)
+
+summary(m7_refit)
+tidy(m7_refit, conf.int = TRUE, exponentiate = TRUE) %>% print(n = 34)
+```
+
+
+```{r}
+dat_complete %>%
+  group_by(fa) %>%
+  summarise(
+    n = n(),
+    mean_year = mean(year),
+    mean_cited = mean(cited),
+    median_cited = median(cited)
+  )
+
+dat_complete %>%
+  group_by(dominance) %>%
+  summarise(
+    n = n(),
+    mean_year = mean(year),
+    mean_cited = mean(cited),
+    median_cited = median(cited)
+  )
+
+pred_years <- seq(2000, 2025, by = 5)
+pred_data <- expand.grid(
+  year_c = pred_years - mean(dat_complete$year),
+  fa = c("VN-led", "JP-led", "Other-led"),
+  coop = "Bilateral",
+  dominance = "Balanced",
+  corr_type = "Vietnam",
+  prop_vn_authors = 0.5,
+  is_corr_same_fa = 1,
+  fund = "Funded",
+  bilateral_funding = 1,
+  n_sectors = 2,
+  sjr_score = median(dat_complete$sjr_score, na.rm = TRUE),
+  quartile = "Q1",
+  OA = "OA",
+  LS = 1, SS = 0, PS = 0, HS = 0,
+  engi = 1, medi = 0, comp = 0, env = 0
+)
+
+pred_data$predicted <- predict(m7_refit, newdata = pred_data, type = "response")
+pred_data$year <- pred_data$year_c + mean(dat_complete$year)
+
+pred_data %>%
+  dplyr::select(year, fa, predicted) %>%
+  pivot_wider(names_from = fa, values_from = predicted)
+```
+
+
+```{r}
+pred_data_dom <- expand.grid(
+  year_c = pred_years - mean(dat_complete$year),
+  dominance = c("VN-dominated", "Balanced", "JP-dominated", "Other"),
+  fa = "VN-led",
+  coop = "Bilateral",
+  corr_type = "Vietnam",
+  prop_vn_authors = 0.5,
+  is_corr_same_fa = 1,
+  fund = "Funded",
+  bilateral_funding = 1,
+  n_sectors = 2,
+  sjr_score = median(dat_complete$sjr_score, na.rm = TRUE),
+  quartile = "Q1",
+  OA = "OA",
+  LS = 1, SS = 0, PS = 0, HS = 0,
+  engi = 1, medi = 0, comp = 0, env = 0
+)
+
+pred_data_dom$predicted <- predict(m7_refit, newdata = pred_data_dom, type = "response")
+pred_data_dom$year <- pred_data_dom$year_c + mean(dat_complete$year)
+
+pred_data_dom %>%
+  dplyr::select(year, dominance, predicted) %>%
+  pivot_wider(names_from = dominance, values_from = predicted)
+
+dat_complete %>%
+  filter(year >= 2000, year <= 2025) %>%
+  group_by(year) %>%
+  summarise(
+    pct_vn_fa = mean(fa == "VN-led") * 100,
+    pct_jp_fa = mean(fa == "JP-led") * 100,
+    pct_vn_dom = mean(dominance == "VN-dominated") * 100,
+    pct_balanced = mean(dominance == "Balanced") * 100,
+    pct_jp_dom = mean(dominance == "JP-dominated") * 100
+  ) %>%
+  print(n = Inf)
+
+
+```
+
+
+```{r}
+fig_fa_trends <- dat_complete %>%
+  filter(year >= 2000, year <= 2025) %>%
+  group_by(year) %>%
+  summarise(
+    VN_led = mean(fa == "VN-led") * 100,
+    JP_led = mean(fa == "JP-led") * 100,
+    Other_led = mean(fa == "Other-led") * 100
+  ) %>%
+  pivot_longer(-year, names_to = "First_Author", values_to = "Percentage") %>%
+  ggplot(aes(x = year, y = Percentage, color = First_Author)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, size = 1) +
+  labs(title = "First Authorship Trends", y = "Percentage (%)", x = "Year") +
+  theme_minimal()
+
+print(fig_fa_trends)
+
+fig_dom_trends <- dat_complete %>%
+  filter(year >= 2000, year <= 2025) %>%
+  group_by(year) %>%
+  summarise(
+    VN_dominated = mean(dominance == "VN-dominated") * 100,
+    Balanced = mean(dominance == "Balanced") * 100,
+    JP_dominated = mean(dominance == "JP-dominated") * 100
+  ) %>%
+  pivot_longer(-year, names_to = "Dominance", values_to = "Percentage") %>%
+  ggplot(aes(x = year, y = Percentage, color = Dominance)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, size = 1) +
+  labs(title = "Authorship Dominance Trends", y = "Percentage (%)", x = "Year") +
+  theme_minimal()
+
+print(fig_dom_trends)
+```
+
+
+```{r}
+library(texreg)
+
+screenreg(list(m1, m2, m3, m4, m5, m6, m7_refit),
+          custom.model.names = c("M1", "M2", "M3", "M4", "M5", "M6", "M7"),
+          stars = c(0.001, 0.01, 0.05))
+
+htmlreg(list(m1, m2, m3, m4, m5, m6, m7_refit),
+        file = "regression_table.html",
+        custom.model.names = c("M1: Baseline", "M2: +Collaboration", 
+                               "M3: +Leadership", "M4: +Funding", 
+                               "M5: +Quality", "M6: +Fields", 
+                               "M7: +Interactions"),
+        stars = c(0.001, 0.01, 0.05))
+
+```
+
+
+```{r}
+library(DescTools)
+
+PseudoR2(m7_refit, which = "all")
+
+data.frame(
+  Model = paste0("M", 1:7),
+  AIC = c(AIC(m1), AIC(m2), AIC(m3), AIC(m4), AIC(m5), AIC(m6), AIC(m7_refit)),
+  BIC = c(BIC(m1), BIC(m2), BIC(m3), BIC(m4), BIC(m5), BIC(m6), BIC(m7_refit)),
+  LogLik = c(logLik(m1), logLik(m2), logLik(m3), logLik(m4), logLik(m5), logLik(m6), logLik(m7_refit)),
+  Deviance = c(deviance(m1), deviance(m2), deviance(m3), deviance(m4), deviance(m5), deviance(m6), deviance(m7_refit)),
+  Df_residual = c(df.residual(m1), df.residual(m2), df.residual(m3), df.residual(m4), df.residual(m5), df.residual(m6), df.residual(m7_refit))
+)
+
+res_pearson <- residuals(m7_refit, type = "pearson")
+res_deviance <- residuals(m7_refit, type = "deviance")
+
+par(mfrow = c(2, 2))
+plot(fitted(m7_refit), res_pearson, main = "Pearson Residuals vs Fitted", xlab = "Fitted", ylab = "Pearson Residuals")
+abline(h = 0, lty = 2, col = "red")
+plot(fitted(m7_refit), res_deviance, main = "Deviance Residuals vs Fitted", xlab = "Fitted", ylab = "Deviance Residuals")
+abline(h = 0, lty = 2, col = "red")
+hist(res_pearson, breaks = 50, main = "Histogram of Pearson Residuals")
+qqnorm(res_pearson)
+qqline(res_pearson, col = "red")
+par(mfrow = c(1, 1))
+
+m7_ols <- lm(log(cited + 1) ~ year_c + coop + fa * year_c + dominance * year_c + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_complete)
+
+summary(m7_ols)$r.squared
+summary(m7_ols)$adj.r.squared
+AIC(m7_ols)
+```
+
+
+```{r}
+dat_funded <- dat_complete %>% filter(fund == "Funded")
+dat_bilateral_fund <- dat_complete %>% filter(bilateral_funding == 1)
+
+dat_q1q2 <- dat_complete %>% filter(quartile %in% c("Q1", "Q2"))
+
+dat_bilateral_coop <- dat_complete %>% filter(coop == "Bilateral")
+dat_multilateral_coop <- dat_complete %>% filter(coop == "Multilateral")
+
+dat_recent <- dat_complete %>% filter(year >= 2015)
+dat_early <- dat_complete %>% filter(year <= 2010)
+
+nrow(dat_funded)
+nrow(dat_bilateral_fund)
+nrow(dat_q1q2)
+nrow(dat_bilateral_coop)
+nrow(dat_multilateral_coop)
+nrow(dat_recent)
+nrow(dat_early)
+
+m7_funded <- glm.nb(cited ~ year_c + coop + fa * year_c + dominance * year_c + corr_type + prop_vn_authors + is_corr_same_fa + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_funded)
+
+m7_q1q2 <- glm.nb(cited ~ year_c + coop + fa * year_c + dominance * year_c + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_q1q2)
+
+m7_bilateral <- glm.nb(cited ~ year_c + fa * year_c + dominance * year_c + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_bilateral_coop)
+
+m7_multilateral <- glm.nb(cited ~ year_c + fa * year_c + dominance * year_c + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_multilateral_coop)
+
+m7_recent <- glm.nb(cited ~ year_c + coop + fa * year_c + dominance * year_c + corr_type + prop_vn_authors + is_corr_same_fa + fund + bilateral_funding + n_sectors + sjr_score + quartile + OA + LS + SS + PS + HS + engi + medi + comp + env, data = dat_recent)
+
+data.frame(
+  Subsample = c("Full", "Funded", "Q1/Q2", "Bilateral", "Multilateral", "Recent"),
+  N = c(nrow(dat_complete), nrow(dat_funded), nrow(dat_q1q2), nrow(dat_bilateral_coop), nrow(dat_multilateral_coop), nrow(dat_recent)),
+  AIC = c(AIC(m7_refit), AIC(m7_funded), AIC(m7_q1q2), AIC(m7_bilateral), AIC(m7_multilateral), AIC(m7_recent))
+)
+```
+
+
+```{r}
+tidy_m7 <- tidy(m7_refit, conf.int = TRUE, exponentiate = TRUE)
+
+hypothesis_tests <- tribble(
+  ~Hypothesis, ~Coefficient, ~IRR, ~CI_lower, ~CI_upper, ~p_value, ~Interpretation,
+  
+  "H3a: VN first authorship (vs VN at mean year 2019)", "faJP-led", 
+  tidy_m7$estimate[tidy_m7$term == "faJP-led"],
+  tidy_m7$conf.low[tidy_m7$term == "faJP-led"],
+  tidy_m7$conf.high[tidy_m7$term == "faJP-led"],
+  tidy_m7$p.value[tidy_m7$term == "faJP-led"],
+  ifelse(tidy_m7$p.value[tidy_m7$term == "faJP-led"] > 0.05, "No significant difference",
+         ifelse(tidy_m7$estimate[tidy_m7$term == "faJP-led"] < 0.95, "JP disadvantage", "JP advantage")),
+  
+  "H3a: Other first authorship (vs VN at mean year)", "faOther-led",
+  tidy_m7$estimate[tidy_m7$term == "faOther-led"],
+  tidy_m7$conf.low[tidy_m7$term == "faOther-led"],
+  tidy_m7$conf.high[tidy_m7$term == "faOther-led"],
+  tidy_m7$p.value[tidy_m7$term == "faOther-led"],
+  "Other advantage persists",
+  
+  "H3b: JP correspondence (vs VN)", "corr_typeJapan",
+  tidy_m7$estimate[tidy_m7$term == "corr_typeJapan"],
+  tidy_m7$conf.low[tidy_m7$term == "corr_typeJapan"],
+  tidy_m7$conf.high[tidy_m7$term == "corr_typeJapan"],
+  tidy_m7$p.value[tidy_m7$term == "corr_typeJapan"],
+  "Equity achieved - no difference",
+  
+  "H3c: Balanced dominance (vs VN-dominated)", "dominanceBalanced",
+  tidy_m7$estimate[tidy_m7$term == "dominanceBalanced"],
+  tidy_m7$conf.low[tidy_m7$term == "dominanceBalanced"],
+  tidy_m7$conf.high[tidy_m7$term == "dominanceBalanced"],
+  tidy_m7$p.value[tidy_m7$term == "dominanceBalanced"],
+  "VN-dominated performs better",
+  
+  "H3c: JP-dominated (vs VN-dominated)", "dominanceJP-dominated",
+  tidy_m7$estimate[tidy_m7$term == "dominanceJP-dominated"],
+  tidy_m7$conf.low[tidy_m7$term == "dominanceJP-dominated"],
+  tidy_m7$conf.high[tidy_m7$term == "dominanceJP-dominated"],
+  tidy_m7$p.value[tidy_m7$term == "dominanceJP-dominated"],
+  "VN-dominated performs better",
+  
+  "H3d: JP first authorship convergence", "year_c:faJP-led",
+  tidy_m7$estimate[tidy_m7$term == "year_c:faJP-led"],
+  tidy_m7$conf.low[tidy_m7$term == "year_c:faJP-led"],
+  tidy_m7$conf.high[tidy_m7$term == "year_c:faJP-led"],
+  tidy_m7$p.value[tidy_m7$term == "year_c:faJP-led"],
+  "Gap widening 1.2% per year",
+  
+  "H3d: Balanced dominance convergence", "year_c:dominanceBalanced",
+  tidy_m7$estimate[tidy_m7$term == "year_c:dominanceBalanced"],
+  tidy_m7$conf.low[tidy_m7$term == "year_c:dominanceBalanced"],
+  tidy_m7$conf.high[tidy_m7$term == "year_c:dominanceBalanced"],
+  tidy_m7$p.value[tidy_m7$term == "year_c:dominanceBalanced"],
+  "Balanced advantage growing 6.4% per year"
+)
+
+print(hypothesis_tests)
+
+tidy_m7_funded <- tidy(m7_funded, conf.int = TRUE, exponentiate = TRUE)
+tidy_m7_q1q2 <- tidy(m7_q1q2, conf.int = TRUE, exponentiate = TRUE)
+tidy_m7_bilateral <- tidy(m7_bilateral, conf.int = TRUE, exponentiate = TRUE)
+tidy_m7_multilateral <- tidy(m7_multilateral, conf.int = TRUE, exponentiate = TRUE)
+tidy_m7_recent <- tidy(m7_recent, conf.int = TRUE, exponentiate = TRUE)
+
+subsample_comparison <- tribble(
+  ~Coefficient, ~Full, ~Funded, ~Q1Q2, ~Bilateral, ~Multilateral, ~Recent,
+  
+  "faJP-led",
+  tidy_m7$estimate[tidy_m7$term == "faJP-led"],
+  tidy_m7_funded$estimate[tidy_m7_funded$term == "faJP-led"],
+  tidy_m7_q1q2$estimate[tidy_m7_q1q2$term == "faJP-led"],
+  tidy_m7_bilateral$estimate[tidy_m7_bilateral$term == "faJP-led"],
+  tidy_m7_multilateral$estimate[tidy_m7_multilateral$term == "faJP-led"],
+  tidy_m7_recent$estimate[tidy_m7_recent$term == "faJP-led"],
+  
+  "faOther-led",
+  tidy_m7$estimate[tidy_m7$term == "faOther-led"],
+  tidy_m7_funded$estimate[tidy_m7_funded$term == "faOther-led"],
+  tidy_m7_q1q2$estimate[tidy_m7_q1q2$term == "faOther-led"],
+  tidy_m7_bilateral$estimate[tidy_m7_bilateral$term == "faOther-led"],
+  tidy_m7_multilateral$estimate[tidy_m7_multilateral$term == "faOther-led"],
+  tidy_m7_recent$estimate[tidy_m7_recent$term == "faOther-led"],
+  
+  "dominanceBalanced",
+  tidy_m7$estimate[tidy_m7$term == "dominanceBalanced"],
+  tidy_m7_funded$estimate[tidy_m7_funded$term == "dominanceBalanced"],
+  tidy_m7_q1q2$estimate[tidy_m7_q1q2$term == "dominanceBalanced"],
+  tidy_m7_bilateral$estimate[tidy_m7_bilateral$term == "dominanceBalanced"],
+  tidy_m7_multilateral$estimate[tidy_m7_multilateral$term == "dominanceBalanced"],
+  tidy_m7_recent$estimate[tidy_m7_recent$term == "dominanceBalanced"],
+  
+  "dominanceJP-dominated",
+  tidy_m7$estimate[tidy_m7$term == "dominanceJP-dominated"],
+  tidy_m7_funded$estimate[tidy_m7_funded$term == "dominanceJP-dominated"],
+  tidy_m7_q1q2$estimate[tidy_m7_q1q2$term == "dominanceJP-dominated"],
+  tidy_m7_bilateral$estimate[tidy_m7_bilateral$term == "dominanceJP-dominated"],
+  tidy_m7_multilateral$estimate[tidy_m7_multilateral$term == "dominanceJP-dominated"],
+  tidy_m7_recent$estimate[tidy_m7_recent$term == "dominanceJP-dominated"],
+  
+  "year_c:faJP-led",
+  tidy_m7$estimate[tidy_m7$term == "year_c:faJP-led"],
+  tidy_m7_funded$estimate[tidy_m7_funded$term == "year_c:faJP-led"],
+  tidy_m7_q1q2$estimate[tidy_m7_q1q2$term == "year_c:faJP-led"],
+  tidy_m7_bilateral$estimate[tidy_m7_bilateral$term == "year_c:faJP-led"],
+  tidy_m7_multilateral$estimate[tidy_m7_multilateral$term == "year_c:faJP-led"],
+  tidy_m7_recent$estimate[tidy_m7_recent$term == "year_c:faJP-led"],
+  
+  "year_c:dominanceBalanced",
+  tidy_m7$estimate[tidy_m7$term == "year_c:dominanceBalanced"],
+  tidy_m7_funded$estimate[tidy_m7_funded$term == "year_c:dominanceBalanced"],
+  tidy_m7_q1q2$estimate[tidy_m7_q1q2$term == "year_c:dominanceBalanced"],
+  tidy_m7_bilateral$estimate[tidy_m7_bilateral$term == "year_c:dominanceBalanced"],
+  tidy_m7_multilateral$estimate[tidy_m7_multilateral$term == "year_c:dominanceBalanced"],
+  tidy_m7_recent$estimate[tidy_m7_recent$term == "year_c:dominanceBalanced"]
+)
+
+print(subsample_comparison)
+
+pred_summary_fa <- pred_data %>%
+  dplyr::select(year, fa, predicted) %>%
+  pivot_wider(names_from = fa, values_from = predicted)
+
+pred_summary_dom <- pred_data_dom %>%
+  dplyr::select(year, dominance, predicted) %>%
+  pivot_wider(names_from = dominance, values_from = predicted)
+
+print(pred_summary_fa)
+print(pred_summary_dom)
+```
+
+
+```{r}
+library(gt)
+
+table6 <- hypothesis_tests %>%
+  mutate(
+    IRR_formatted = sprintf("%.3f", IRR),
+    CI_formatted = sprintf("[%.3f, %.3f]", CI_lower, CI_upper),
+    p_formatted = case_when(
+      p_value < 0.001 ~ "< 0.001***",
+      p_value < 0.01 ~ sprintf("%.3f**", p_value),
+      p_value < 0.05 ~ sprintf("%.3f*", p_value),
+      TRUE ~ sprintf("%.3f", p_value)
+    )
+  ) %>%
+  dplyr::select(Hypothesis, IRR_formatted, CI_formatted, p_formatted, Interpretation) %>%
+  gt() %>%
+  tab_header(
+    title = "Table 6: Key Hypothesis Tests - Leadership and Citation Impact"
+  ) %>%
+  cols_label(
+    Hypothesis = "Hypothesis",
+    IRR_formatted = "IRR",
+    CI_formatted = "95% CI",
+    p_formatted = "p-value",
+    Interpretation = "Finding"
+  ) %>%
+  tab_footnote(
+    footnote = "Reference categories: VN-led first authorship, VN-dominated authorship, Vietnam correspondence. IRR > 1 indicates more citations. Year centered at 2019 (mean).",
+    locations = cells_title()
+  ) %>%
+  tab_footnote(
+    footnote = "*** p < 0.001; ** p < 0.01; * p < 0.05",
+    locations = cells_column_labels(columns = p_formatted)
+  )
+
+print(table6)
+
+table7 <- subsample_comparison %>%
+  mutate(across(where(is.numeric), ~sprintf("%.3f", .))) %>%
+  gt() %>%
+  tab_header(
+    title = "Table 7: Robustness Checks - Key Coefficients Across Subsamples (IRR)"
+  ) %>%
+  cols_label(
+    Coefficient = "Variable",
+    Full = md("**Full**<br>(N=8,834)"),
+    Funded = md("**Funded**<br>(N=5,130)"),
+    Q1Q2 = md("**Q1/Q2**<br>(N=7,533)"),
+    Bilateral = md("**Bilateral**<br>(N=4,746)"),
+    Multilateral = md("**Multilateral**<br>(N=4,088)"),
+    Recent = md("**Recent**<br>(N=7,151)")
+  ) %>%
+  tab_footnote(
+    footnote = "All models control for year, collaboration type, funding, quality, and fields. IRR = Incidence Rate Ratio (exponentiated coefficients).",
+    locations = cells_title()
+  ) %>%
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_body(columns = Full)
+  )
+
+print(table7)
+
+summary_narrative <- tribble(
+  ~RQ, ~Finding, ~Evidence,
+  
+  "RQ1: Trajectory",
+  "Publication volume increased 5-fold (2000-2025). Quality improved (mean SJR increased). Disciplinary breadth expanded across Life/Physical/Health sciences.",
+  "Figure 1, Table 1-2",
+  
+  "RQ2: Compositional Equity",
+  "ACHIEVED. VN first authorship: 20% → 37.5%. VN-dominated authorship emerged: 0% → 22%. JP dominance declined: 75% → 36% (first auth), 45% → 21% (dominance).",
+  "Figure 2, Table 3",
+  
+  "RQ3a: First Authorship Impact",
+  "PARTIAL. At mean year (2019): JP-led shows 8% advantage (IRR=1.08, p=0.076, marginally significant). Interaction shows gap widening 1.2%/year (p=0.023), NOT converging.",
+  "Table 5-6, Figure 3A",
+  
+  "RQ3b: Correspondence Impact",
+  "EQUITY ACHIEVED. No significant difference between VN vs JP correspondence (IRR=0.93, p=0.10).",
+  "Table 5-6",
+  
+  "RQ3c: Dominance Patterns",
+  "UNEXPECTED. VN-dominated papers outperform balanced (IRR=0.88, p=0.013) and JP-dominated (IRR=0.77, p<0.001) at mean year. However, balanced authorship advantage growing 6.4%/year (p<0.001).",
+  "Table 5-6, Figure 3B",
+  
+  "Robustness",
+  "Patterns stable across funded-only, high-quality journals, bilateral/multilateral subsamples. Some variation in recent period (N=7,151) shows weakened JP advantage (IRR=0.96).",
+  "Table 7"
+)
+
+print(summary_narrative)
+
+fig3_data_fa <- pred_summary_fa %>%
+  pivot_longer(-year, names_to = "First_Author", values_to = "Predicted_Citations")
+
+fig3_data_dom <- pred_summary_dom %>%
+  dplyr::select(year, `VN-dominated`, Balanced, `JP-dominated`) %>%
+  pivot_longer(-year, names_to = "Dominance", values_to = "Predicted_Citations")
+
+fig3a <- ggplot(fig3_data_fa, aes(x = year, y = Predicted_Citations, color = First_Author, shape = First_Author)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("VN-led" = "#0173B2", "JP-led" = "#DE8F05", "Other-led" = "#029E73")) +
+  labs(title = "A. Predicted Citations by First Authorship",
+       subtitle = "Controlling for quality, funding, and fields",
+       y = "Expected Citations", x = "Year",
+       color = "First Author", shape = "First Author") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+fig3b <- ggplot(fig3_data_dom, aes(x = year, y = Predicted_Citations, color = Dominance, shape = Dominance)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("VN-dominated" = "#0173B2", "Balanced" = "#DE8F05", "JP-dominated" = "#029E73")) +
+  labs(title = "B. Predicted Citations by Dominance Pattern",
+       subtitle = "Controlling for quality, funding, and fields",
+       y = "Expected Citations", x = "Year",
+       color = "Dominance", shape = "Dominance") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+fig3 <- fig3a / fig3b
+print(fig3)
+
+fig3_data_fa_norm <- pred_summary_fa %>%
+  mutate(across(-year, ~. / .[year == 2000])) %>%
+  pivot_longer(-year, names_to = "First_Author", values_to = "Normalized_Citations")
+
+fig3_data_dom_norm <- pred_summary_dom %>%
+  dplyr::select(year, `VN-dominated`, Balanced, `JP-dominated`) %>%
+  mutate(across(-year, ~. / .[year == 2000])) %>%
+  pivot_longer(-year, names_to = "Dominance", values_to = "Normalized_Citations")
+
+fig3a_norm <- ggplot(fig3_data_fa_norm, aes(x = year, y = Normalized_Citations, color = First_Author, shape = First_Author)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "gray50") +
+  scale_color_manual(values = c("VN-led" = "#0173B2", "JP-led" = "#DE8F05", "Other-led" = "#029E73")) +
+  labs(title = "A. Citation Trajectories by First Authorship (Normalized to 2000)",
+       y = "Relative Citations (2000 = 1.0)", x = "Year",
+       color = "First Author", shape = "First Author") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+fig3b_norm <- ggplot(fig3_data_dom_norm, aes(x = year, y = Normalized_Citations, color = Dominance, shape = Dominance)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "gray50") +
+  scale_color_manual(values = c("VN-dominated" = "#0173B2", "Balanced" = "#DE8F05", "JP-dominated" = "#029E73")) +
+  labs(title = "B. Citation Trajectories by Dominance (Normalized to 2000)",
+       y = "Relative Citations (2000 = 1.0)", x = "Year",
+       color = "Dominance", shape = "Dominance") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+fig3_norm <- fig3a_norm / fig3b_norm
+print(fig3_norm)
+
+print(fig3_data_fa_norm)
+print(fig3_data_dom_norm)
+
+print(fig3_data_fa_norm %>% filter(year %in% c(2000, 2010, 2020, 2025)))
+print(fig3_data_dom_norm %>% filter(year %in% c(2000, 2010, 2020, 2025)))
+```
+
+
+```{r}
+#| label: viz-macro-evolution
+#| fig-cap: "Evolution of Macro Disciplines in Japan-Vietnam Collaboration (2000-2025)"
+
+# 1. Data Transformation
+macro_trend <- dat_reg |>
+    filter(year > 2000) |> 
+  dplyr::select(year, LS, SS, PS, HS) |>
+  mutate(year = as.numeric(year)) |>
+  # Convert to long format to separate multiple classifications per paper
+  pivot_longer(
+    cols = c(LS, SS, PS, HS), 
+    names_to = "Macro_Area", 
+    values_to = "presence"
+  ) |>
+  # Filter to keep only active classifications
+  filter(presence == 1) |>
+  # Count occurrences per year and area
+  count(year, Macro_Area) |>
+  # Re-label for cleaner legend names
+  mutate(Macro_Area = dplyr::recode(Macro_Area,
+    "LS" = "Life Sciences",
+    "SS" = "Social Sciences",
+    "PS" = "Physical Sciences",
+    "HS" = "Health Sciences"
+  ))
+
+# 2. Plotting
+ggplot(macro_trend, aes(x = year, y = n, fill = Macro_Area)) +
+  # geom_area defaults to position = "stack", showing absolute volume
+  geom_area(alpha = 0.85, color = "white", linewidth = 0.2) +
+  scale_fill_brewer(palette = "Set2", name = "Macro Discipline") +
+  scale_x_continuous(breaks = seq(2000, 2025, 5), expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(
+    x = NULL,
+    y = "Number of Classifications"
+  ) +
+  theme(
+    legend.position = "top",
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold"),
+    axis.text = element_text(color = "gray30")
+  )
 ```
