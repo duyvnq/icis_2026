@@ -327,7 +327,8 @@ dat_reg <- dat_reg |>
     ca_vn, ca_jp, ca_o,
     fund_vn, fund_jp, fund_o, aca, pub, ind, fund,
     matches("sdg\\d+"), n_sdg
-  )
+  ) |> 
+  drop_na(LS)
 
 write_csv(dat_reg, file.path(DATA_DIR, "updated_data.csv"))
 ```
