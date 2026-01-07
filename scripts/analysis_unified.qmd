@@ -1,0 +1,702 @@
+---
+title: "Japan–Vietnam Scientific Collaboration"
+format: html
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(scales)
+library(moments)
+
+set.seed(20260105)
+options(dplyr.summarise.inform = FALSE, readr.show_col_types = FALSE)
+
+DATA_DIR <- "data"
+OUT_DIR  <- "outputs"
+FIG_DIR  <- file.path(OUT_DIR, "figures")
+TAB_DIR  <- file.path(OUT_DIR, "tables")
+
+dir.create(OUT_DIR, showWarnings = FALSE, recursive = TRUE)
+dir.create(FIG_DIR, showWarnings = FALSE, recursive = TRUE)
+dir.create(TAB_DIR, showWarnings = FALSE, recursive = TRUE)
+
+theme_set(
+  theme_minimal(base_size = 12) +
+    theme(
+      plot.title.position = "plot",
+      legend.position = "bottom",
+      panel.grid.minor = element_blank()
+    )
+)
+
+dat <- read_csv(file.path(DATA_DIR, "updated_data.csv")) |>
+  mutate(
+    year = as.integer(year),
+    coop = factor(coop, levels = c("Bilateral", "Multilateral", "Hyperauthored")),
+    quartile = factor(quartile, levels = c("Q1", "Q2", "Q3", "Q4"), ordered = TRUE),
+    across(c(oa, fund, LS, SS, PS, HS), as.integer)
+  ) |>
+  filter(!is.na(coop))
+
+dat_core <- dat |> filter(coop != "Hyperauthored")
+dat_fig <- dat_core |> filter(year >= 2000)
+```
+
+```{r}
+#| label: tbl-profile
+
+
+fmt_iqr <- function(x) {
+  qs <- quantile(x, probs = c(0.25, 0.50, 0.75), na.rm = TRUE)
+  paste0(comma(qs[[2]]), " (", comma(qs[[1]]), "–", comma(qs[[3]]), ")")
+}
+
+fmt_n_pct <- function(n, d) {
+  paste0(comma(n), " (", sprintf("%.1f", 100 * n / d), "%)")
+}
+
+mode_stats <- bind_rows(
+  dat |> mutate(mode = as.character(coop)),
+  dat |> mutate(mode = "Total")
+) |>
+  group_by(mode) |>
+  summarise(
+    n = n(),
+    n_auth_iqr = fmt_iqr(n_authors),
+    n_ctry_iqr = fmt_iqr(n_countries),
+    oa_n = sum(oa == 1, na.rm = TRUE),
+    fund_n = sum(fund == 1, na.rm = TRUE),
+    q1_n = sum(quartile == "Q1", na.rm = TRUE),
+    q2_n = sum(quartile == "Q2", na.rm = TRUE),
+    q3_n = sum(quartile == "Q3", na.rm = TRUE),
+    q4_n = sum(quartile == "Q4", na.rm = TRUE),
+    LS_n = sum(LS == 1, na.rm = TRUE),
+    SS_n = sum(SS == 1, na.rm = TRUE),
+    PS_n = sum(PS == 1, na.rm = TRUE),
+    HS_n = sum(HS == 1, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+tbl1 <- tibble(
+  metric = c("N papers", "Median authors (IQR)", "Median countries (IQR)", "OA n (%)", 
+             "Funded n (%)", "Q1 n (%)", "Q2 n (%)", "Q3 n (%)", "Q4 n (%)", 
+             "LS n (%)", "SS n (%)", "PS n (%)", "HS n (%)"),
+  Bilateral = c(
+    comma(mode_stats$n[mode_stats$mode == "Bilateral"]),
+    mode_stats$n_auth_iqr[mode_stats$mode == "Bilateral"],
+    mode_stats$n_ctry_iqr[mode_stats$mode == "Bilateral"],
+    fmt_n_pct(mode_stats$oa_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"]),
+    fmt_n_pct(mode_stats$fund_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"]),
+    fmt_n_pct(mode_stats$q1_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"]),
+    fmt_n_pct(mode_stats$q2_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"]),
+    fmt_n_pct(mode_stats$q3_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"]),
+    fmt_n_pct(mode_stats$q4_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"]),
+    fmt_n_pct(mode_stats$LS_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"]),
+    fmt_n_pct(mode_stats$SS_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"]),
+    fmt_n_pct(mode_stats$PS_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"]),
+    fmt_n_pct(mode_stats$HS_n[mode_stats$mode == "Bilateral"], mode_stats$n[mode_stats$mode == "Bilateral"])
+  ),
+  Multilateral = c(
+    comma(mode_stats$n[mode_stats$mode == "Multilateral"]),
+    mode_stats$n_auth_iqr[mode_stats$mode == "Multilateral"],
+    mode_stats$n_ctry_iqr[mode_stats$mode == "Multilateral"],
+    fmt_n_pct(mode_stats$oa_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"]),
+    fmt_n_pct(mode_stats$fund_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"]),
+    fmt_n_pct(mode_stats$q1_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"]),
+    fmt_n_pct(mode_stats$q2_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"]),
+    fmt_n_pct(mode_stats$q3_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"]),
+    fmt_n_pct(mode_stats$q4_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"]),
+    fmt_n_pct(mode_stats$LS_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"]),
+    fmt_n_pct(mode_stats$SS_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"]),
+    fmt_n_pct(mode_stats$PS_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"]),
+    fmt_n_pct(mode_stats$HS_n[mode_stats$mode == "Multilateral"], mode_stats$n[mode_stats$mode == "Multilateral"])
+  ),
+  Hyperauthored = c(
+    comma(mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    mode_stats$n_auth_iqr[mode_stats$mode == "Hyperauthored"],
+    mode_stats$n_ctry_iqr[mode_stats$mode == "Hyperauthored"],
+    fmt_n_pct(mode_stats$oa_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    fmt_n_pct(mode_stats$fund_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    fmt_n_pct(mode_stats$q1_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    fmt_n_pct(mode_stats$q2_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    fmt_n_pct(mode_stats$q3_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    fmt_n_pct(mode_stats$q4_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    fmt_n_pct(mode_stats$LS_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    fmt_n_pct(mode_stats$SS_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    fmt_n_pct(mode_stats$PS_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"]),
+    fmt_n_pct(mode_stats$HS_n[mode_stats$mode == "Hyperauthored"], mode_stats$n[mode_stats$mode == "Hyperauthored"])
+  ),
+  Total = c(
+    comma(mode_stats$n[mode_stats$mode == "Total"]),
+    mode_stats$n_auth_iqr[mode_stats$mode == "Total"],
+    mode_stats$n_ctry_iqr[mode_stats$mode == "Total"],
+    fmt_n_pct(mode_stats$oa_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"]),
+    fmt_n_pct(mode_stats$fund_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"]),
+    fmt_n_pct(mode_stats$q1_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"]),
+    fmt_n_pct(mode_stats$q2_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"]),
+    fmt_n_pct(mode_stats$q3_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"]),
+    fmt_n_pct(mode_stats$q4_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"]),
+    fmt_n_pct(mode_stats$LS_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"]),
+    fmt_n_pct(mode_stats$SS_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"]),
+    fmt_n_pct(mode_stats$PS_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"]),
+    fmt_n_pct(mode_stats$HS_n[mode_stats$mode == "Total"], mode_stats$n[mode_stats$mode == "Total"])
+  )
+)
+
+knitr::kable(tbl1, align = c("l", "r", "r", "r", "r"))
+```
+
+```{r}
+#| label: fig-volume-fields
+
+d <- dat |> filter(year >= 2000)
+
+mode_year <- d |> count(year, coop, name = "n_mode")
+
+field_year <- d |>
+  group_by(year) |>
+  summarise(
+    LS = sum(LS == 1, na.rm = TRUE),
+    SS = sum(SS == 1, na.rm = TRUE),
+    PS = sum(PS == 1, na.rm = TRUE),
+    HS = sum(HS == 1, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_longer(c(LS, SS, PS, HS), names_to = "field", values_to = "count") |>
+  mutate(
+    field = case_when(
+      field == "LS" ~ "Life Sciences",
+      field == "SS" ~ "Social Sciences",
+      field == "PS" ~ "Physical Sciences",
+      field == "HS" ~ "Health Sciences"
+    )
+  )
+
+ggplot() +
+  geom_col(data = mode_year, aes(x = year, y = n_mode, fill = coop), alpha = 0.7) +
+  geom_line(data = field_year, aes(x = year, y = count, color = field), linewidth = 1.4) +
+  geom_vline(xintercept = c(2014, 2023), linetype = "dashed", color = "gray30", linewidth = 0.7) +
+  annotate("text", x = 2014, y = Inf, label = "VJU\n2014", hjust = -0.1, vjust = 1.5, size = 3.5) +
+  annotate("text", x = 2023, y = Inf, label = "Strategic\nPartnership\n2023", hjust = 1.1, vjust = 1.5, size = 3.5) +
+  scale_fill_manual(name = "Collaboration mode", 
+                    values = c("Bilateral" = "#2166ac", "Multilateral" = "#67a9cf", "Hyperauthored" = "#f4a582")) +
+  scale_color_brewer(name = "Research field", palette = "Set2") +
+  scale_y_continuous(name = "Publications (count)", expand = expansion(mult = c(0, 0.05))) +
+  scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
+  labs(x = NULL) +
+  guides(fill = guide_legend(order = 1), color = guide_legend(order = 2)) +
+  theme(legend.position = "bottom", legend.box = "vertical")
+```
+
+```{r}
+#| label: fig-quality
+
+dat_fig |>
+  filter(!is.na(quartile)) |>
+  count(year, quartile) |>
+  group_by(year) |>
+  mutate(
+    share = n / sum(n),
+    quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1"))
+  ) |>
+  ungroup() |>
+  {
+    \(d) {
+      q1_2000 <- d |> filter(year == 2000, quartile == "Q1") |> pull(share)
+      q1_2023 <- d |> filter(year == 2023, quartile == "Q1") |> pull(share)
+      
+      ggplot(d, aes(x = year, y = share, fill = quartile)) +
+        geom_area(alpha = 0.8) +
+        annotate("text", x = 2000, y = q1_2000/2, label = sprintf("Q1: %.0f%%", q1_2000*100),
+                 hjust = -0.1, size = 3.5, color = "white", fontface = "bold") +
+        annotate("text", x = 2023, y = 1 - q1_2023/2, label = sprintf("Q1: %.0f%%", q1_2023*100),
+                 hjust = 1.1, size = 3.5, color = "gray20", fontface = "bold") +
+        scale_fill_manual(
+          values = c("Q1" = "#1a9850", "Q2" = "#91cf60", "Q3" = "#fee08b", "Q4" = "#fc8d59"),
+          breaks = c("Q1", "Q2", "Q3", "Q4")
+        ) +
+        scale_y_continuous(labels = percent, breaks = seq(0, 1, 0.2), expand = c(0, 0), limits = c(0, 1)) +
+        scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
+        coord_cartesian(ylim = c(0, 1), xlim = c(2000, 2023)) +
+        labs(x = NULL, y = "Share", fill = NULL)
+    }
+  }()
+```
+
+```{r}
+#| label: fig-oa
+
+dat_fig |>
+  count(year, oa) |>
+  group_by(year) |>
+  mutate(
+    share = n / sum(n),
+    oa_status = factor(if_else(oa == 1, "OA", "Non-OA"), levels = c("Non-OA", "OA"))
+  ) |>
+  ungroup() |>
+  {
+    \(d) {
+      oa_2000 <- d |> filter(year == 2000, oa == 1) |> pull(share)
+      oa_2023 <- d |> filter(year == 2023, oa == 1) |> pull(share)
+      
+      ggplot(d, aes(x = year, y = share, fill = oa_status)) +
+        geom_area(alpha = 0.85) +
+        geom_hline(yintercept = 0.5, linetype = "solid", color = "black", linewidth = 0.8) +
+        annotate("text", x = 2001, y = 0.52, label = "50% parity", hjust = 0, size = 3.5, fontface = "bold") +
+        annotate("text", x = 2000, y = oa_2000/2, label = sprintf("OA: %.0f%%", oa_2000*100),
+                 hjust = -0.1, size = 3.5, color = "white", fontface = "bold") +
+        annotate("text", x = 2023, y = 1 - oa_2023/2, label = sprintf("OA: %.0f%%", oa_2023*100),
+                 hjust = 1.1, size = 3.5, color = "gray20", fontface = "bold") +
+        scale_fill_manual(values = c("OA" = "#1b9e77", "Non-OA" = "#7f7f7f")) +
+        scale_y_continuous(labels = percent, breaks = seq(0, 1, 0.2), expand = c(0, 0)) +
+        scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
+        labs(x = NULL, y = "Share", fill = NULL)
+    }
+  }()
+```
+
+```{r}
+#| label: fig-equity
+
+dat_fig |>
+  group_by(year) |>
+  summarise(
+    `Vietnam (fractional)` = mean(fc_vn, na.rm = TRUE),
+    `Japan (fractional)` = mean(fc_jp, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_longer(-year, names_to = "series", values_to = "value") |>
+  mutate(series = factor(series, levels = c("Vietnam (fractional)", "Japan (fractional)"))) |>
+  {
+    \(d) {
+      vn_2000 <- d |> filter(year == 2000, series == "Vietnam (fractional)") |> pull(value)
+      vn_2023 <- d |> filter(year == 2023, series == "Vietnam (fractional)") |> pull(value)
+      
+      ggplot(d, aes(x = year, y = value, color = series)) +
+        geom_line(linewidth = 1.3) +
+        annotate("text", x = 2000, y = vn_2000, label = sprintf("%.0f%%", vn_2000*100),
+                 hjust = 1.2, vjust = -0.5, size = 3.5, color = "#1B9E77", fontface = "bold") +
+        annotate("text", x = 2023, y = vn_2023, label = sprintf("%.0f%%", vn_2023*100),
+                 hjust = -0.2, vjust = -0.5, size = 3.5, color = "#1B9E77", fontface = "bold") +
+        scale_color_manual(values = c("Vietnam (fractional)" = "#1B9E77", "Japan (fractional)" = "#D95F02")) +
+        scale_y_continuous(labels = percent) +
+        scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
+        labs(x = NULL, y = "Mean fractional share", color = NULL) +
+        theme(legend.position = c(0.70, 0.98), legend.justification = c(0, 1),
+              legend.background = element_rect(fill = "white", color = "gray80"))
+    }
+  }()
+```
+
+```{r}
+#| label: fig-leadership
+
+dat_fig |>
+  summarise(
+    .by = year,
+    `Vietnam — First author` = mean(fa_vn, na.rm = TRUE),
+    `Japan — First author` = mean(fa_jp, na.rm = TRUE),
+    `Vietnam — Corresponding author` = mean(ca_vn, na.rm = TRUE),
+    `Japan — Corresponding author` = mean(ca_jp, na.rm = TRUE)
+  ) |>
+  pivot_longer(-year, names_to = "series", values_to = "value") |>
+  mutate(series = factor(series, levels = c(
+    "Vietnam — First author", "Vietnam — Corresponding author",
+    "Japan — First author", "Japan — Corresponding author"
+  ))) |>
+  ggplot(aes(x = year, y = value, color = series, linetype = series)) +
+  geom_line(linewidth = 1.3) +
+  scale_color_manual(values = c(
+    "Vietnam — First author" = "#66c2a5", "Vietnam — Corresponding author" = "#1B9E77",
+    "Japan — First author" = "#fc8d62", "Japan — Corresponding author" = "#D95F02"
+  )) +
+  scale_linetype_manual(values = c("dashed", "solid", "dashed", "solid")) +
+  scale_y_continuous(labels = percent) +
+  scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
+  labs(x = NULL, y = "Leadership share", color = NULL, linetype = NULL) +
+  theme(legend.position = c(0.70, 0.98), legend.justification = c(0, 1),
+        legend.background = element_rect(fill = "white", color = "gray80"))
+```
+
+```{r}
+#| label: impact-norm
+
+macro_fields <- c("HS", "LS", "SS", "PS")
+
+field_year_mu <- dat_core |>
+  pivot_longer(all_of(macro_fields), names_to = "field", values_to = "flag") |>
+  filter(flag == 1) |>
+  summarise(
+    .by = c(year, field),
+    mu_cited = mean(cited, na.rm = TRUE),
+    mu_log1p = mean(log1p(cited), na.rm = TRUE)
+  )
+
+dat_core <- dat_core |>
+  mutate(k_field = rowSums(across(all_of(macro_fields)), na.rm = TRUE)) |>
+  pivot_longer(all_of(macro_fields), names_to = "field", values_to = "flag") |>
+  filter(flag == 1, k_field > 0) |>
+  left_join(field_year_mu, by = c("year", "field")) |>
+  mutate(w = 1 / k_field) |>
+  summarise(
+    .by = id,
+    impact_mu = sum(w * mu_cited, na.rm = TRUE),
+    impact_mu_log = sum(w * mu_log1p, na.rm = TRUE)
+  ) |>
+  right_join(dat_core, by = "id") |>
+  mutate(
+    impact_norm_log = log1p(cited) - impact_mu_log
+  )
+
+dat_fig <- dat_core |> filter(year >= 2000)
+```
+
+```{r}
+#| label: tbl-descriptive
+
+cite_stats <- function(x) {
+  tibble(
+    median = median(x, na.rm = TRUE),
+    IQR = IQR(x, na.rm = TRUE),
+    P99 = quantile(x, 0.99, na.rm = TRUE),
+    min = min(x, na.rm = TRUE),
+    max = max(x, na.rm = TRUE),
+    pct_zero = 100 * mean(x == 0, na.rm = TRUE)
+  )
+}
+
+impact_stats <- function(x) {
+  tibble(
+    mean = mean(x, na.rm = TRUE),
+    SD = sd(x, na.rm = TRUE),
+    skewness = skewness(x, na.rm = TRUE),
+    kurtosis = kurtosis(x, na.rm = TRUE)
+  )
+}
+
+bind_rows(
+  dat_core |> summarise(Variable = "Overall", Category = "All", N = n(), 
+                       bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+  dat_core |> filter(LS == 1) |> summarise(Variable = "Field", Category = "Life Sciences", N = n(),
+                                           bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+  dat_core |> filter(SS == 1) |> summarise(Variable = "", Category = "Social Sciences", N = n(),
+                                           bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+  dat_core |> filter(PS == 1) |> summarise(Variable = "", Category = "Physical Sciences", N = n(),
+                                           bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+  dat_core |> filter(HS == 1) |> summarise(Variable = "", Category = "Health Sciences", N = n(),
+                                           bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+  dat_core |> filter(!is.na(quartile)) |> summarise(.by = quartile, N = n(),
+                                                     bind_cols(cite_stats(cited), impact_stats(impact_norm_log))) |>
+    mutate(Variable = c("Quartile", rep("", n()-1)), Category = as.character(quartile)) |> select(-quartile),
+  dat_core |> summarise(.by = oa, N = n(), bind_cols(cite_stats(cited), impact_stats(impact_norm_log))) |>
+    mutate(Variable = c("OA", ""), Category = if_else(oa == 1, "Yes", "No")) |> select(-oa),
+  dat_core |> summarise(.by = fund, N = n(), bind_cols(cite_stats(cited), impact_stats(impact_norm_log))) |>
+    mutate(Variable = c("Fund", ""), Category = if_else(fund == 1, "Yes", "No")) |> select(-fund),
+  dat_core |> summarise(.by = coop, N = n(), bind_cols(cite_stats(cited), impact_stats(impact_norm_log))) |>
+    mutate(Variable = c("Coop", ""), Category = as.character(coop)) |> select(-coop)
+) |>
+  mutate(
+    N = comma(N),
+    across(c(median, IQR, P99, min, max), ~comma(., accuracy = 1)),
+    pct_zero = sprintf("%.1f%%", pct_zero),
+    across(c(mean, SD, skewness, kurtosis), ~sprintf("%.3f", .))
+  ) |>
+  knitr::kable(
+    col.names = c("Variable", "Category", "N", "Median", "IQR", "P99", "Min", "Max", "% Zero",
+                  "Mean", "SD", "Skewness", "Kurtosis"),
+    align = c("l", "l", "r", rep("r", 10))
+  )
+```
+
+
+```{r}
+dat_fig |>
+  filter(!is.na(ca_vn), !is.na(ca_jp), !is.na(impact_norm_log)) |>
+  mutate(
+    lead = case_when(
+      ca_vn > 0 & ca_jp == 0 ~ "Vietnam-led (CA)",
+      ca_jp > 0 & ca_vn == 0 ~ "Japan-led (CA)",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  filter(!is.na(lead)) |>
+  mutate(lead = factor(lead, levels = c("Vietnam-led (CA)", "Japan-led (CA)"))) |>
+  group_by(year, lead) |>
+  summarise(
+    impact = mean(impact_norm_log, na.rm = TRUE),
+    se = sd(impact_norm_log, na.rm = TRUE) / sqrt(n()),
+    .groups = "drop"
+  ) |>
+  mutate(
+    ci_lo = impact - 1.96 * se,
+    ci_hi = impact + 1.96 * se
+  ) |>
+  ggplot(aes(year, impact, color = lead, fill = lead)) +
+  geom_ribbon(aes(ymin = ci_lo, ymax = ci_hi), alpha = 0.2, color = NA) +
+  geom_line(linewidth = 1.2) +
+  geom_smooth(method = "loess", se = FALSE, linewidth = 0.6, linetype = "dotted", alpha = 0.5) +
+  geom_hline(yintercept = 0, linetype = "solid", color = "black", linewidth = 0.8) +
+  annotate("text", x = 2023, y = 0.05, label = "Field average", hjust = 0, size = 3, color = "black") +
+  scale_color_manual(values = c("Vietnam-led (CA)" = "#1B9E77", "Japan-led (CA)" = "#D95F02")) +
+  scale_fill_manual(values = c("Vietnam-led (CA)" = "#1B9E77", "Japan-led (CA)" = "#D95F02")) +
+  scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
+  labs(x = NULL, y = "Mean normalized impact (log-centered, 0 = field average)", color = NULL, fill = NULL) +
+  theme(
+    legend.position = c(0.70, 0.98),
+    legend.justification = c(0, 1),
+    legend.background = element_rect(fill = "white", color = "gray80"),
+    legend.key.size = unit(0.8, "lines"),
+    panel.grid.major.y = element_line(color = "gray90")
+  )
+```
+
+
+```{r}
+#| label: model-impact
+
+d_reg <- dat_core |>
+  filter(year >= 2000, !is.na(ca_vn), !is.na(ca_jp), !is.na(impact_norm_log)) |>
+  mutate(
+    lead_vn = as.integer(ca_vn > 0 & ca_jp == 0),
+    lead_jp = as.integer(ca_jp > 0 & ca_vn == 0)
+  ) |>
+  filter(lead_vn == 1 | lead_jp == 1)
+
+m0 <- lm(impact_norm_log ~ lead_vn * factor(year), data = d_reg)
+
+m1 <- lm(impact_norm_log ~ lead_vn * factor(year) + LS + SS + PS + HS, data = d_reg)
+
+m2 <- lm(
+  impact_norm_log ~ lead_vn * factor(year) + LS + SS + PS + HS +
+    quartile + oa + fund + log1p(n_authors) + n_countries,
+  data = d_reg
+)
+```
+
+
+```{r}
+#| label: robust-inference
+
+library(sandwich)
+library(lmtest)
+
+# Apply robust covariance matrix (HC1)
+# Extract interaction terms to observe year-specific gaps
+coeftest(m2, vcov = vcovHC(m2, type = "HC1"))[grep(":", names(coef(m2))), ]
+```
+
+
+```{r}
+#| label: marginal-analysis
+
+# Extract robust covariance matrix and coefficients
+V_robust <- vcovHC(m2, type = "HC1")
+coefs <- coef(m2)
+
+# Define years
+years <- sort(unique(d_reg$year))
+
+# Calculate gap and SE for each year
+gap_trend <- map_dfr(years, function(y) {
+  # Create contrast vector
+  # Gap = coef(lead_vn) + coef(lead_vn:factor(year)y)
+  # For reference year (first year), interaction term is 0
+  
+  # Initialize vector of zeros matching coef length
+  vec <- setNames(numeric(length(coefs)), names(coefs))
+  
+  # Always include main effect
+  vec["lead_vn"] <- 1
+  
+  # Include interaction term if not reference year
+  interaction_term <- paste0("lead_vn:factor(year)", y)
+  if (interaction_term %in% names(coefs)) {
+    vec[interaction_term] <- 1
+  }
+  
+  # Calculate point estimate and standard error
+  est <- sum(vec * coefs)
+  se <- sqrt(t(vec) %*% V_robust %*% vec)
+  
+  tibble(
+    year = y,
+    gap = est,
+    se = as.numeric(se),
+    ci_lo = est - 1.96 * se,
+    ci_hi = est + 1.96 * se
+  )
+})
+```
+
+
+```{r}
+#| label: fig-parity-plot
+
+ggplot(gap_trend, aes(x = year, y = gap)) +
+  geom_ribbon(aes(ymin = ci_lo, ymax = ci_hi), alpha = 0.2) +
+  geom_line(linewidth = 1.1) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray30") +
+  scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
+  labs(
+    x = NULL,
+    y = "Estimated VN − JP difference (normalized impact)"
+  )
+```
+
+
+```{r}
+#| label: robustness-fa
+
+d_fa <- dat_core |>
+  filter(year >= 2000, !is.na(fa_vn), !is.na(fa_jp), !is.na(impact_norm_log)) |>
+  mutate(
+    lead_vn = as.integer(fa_vn > 0 & fa_jp == 0),
+    lead_jp = as.integer(fa_jp > 0 & fa_vn == 0)
+  ) |>
+  filter(lead_vn == 1 | lead_jp == 1)
+
+m_fa <- lm(
+  impact_norm_log ~ lead_vn * factor(year) + LS + SS + PS + HS +
+    quartile + oa + fund + log1p(n_authors) + n_countries,
+  data = d_fa
+)
+```
+
+
+```{r}
+#| label: robustness-bi
+
+d_bi <- dat_core |>
+  filter(coop == "Bilateral") |>
+  filter(year >= 2000, !is.na(ca_vn), !is.na(ca_jp), !is.na(impact_norm_log)) |>
+  mutate(
+    lead_vn = as.integer(ca_vn > 0 & ca_jp == 0),
+    lead_jp = as.integer(ca_jp > 0 & ca_vn == 0)
+  ) |>
+  filter(lead_vn == 1 | lead_jp == 1)
+
+m_bi <- lm(
+  impact_norm_log ~ lead_vn * factor(year) + LS + SS + PS + HS +
+    quartile + oa + fund + log1p(n_authors) + n_countries,
+  data = d_bi
+)
+```
+
+
+```{r}
+#| label: robustness-ppml
+
+m_ppml <- glm(
+  cited ~ lead_vn * factor(year) + LS + SS + PS + HS +
+    quartile + oa + fund + log1p(n_authors) + n_countries,
+  family = poisson,
+  data = d_reg
+)
+```
+
+
+```{r}
+#| label: results-summary
+
+library(sandwich)
+library(lmtest)
+library(broom)
+
+# Helper function to safely format and print robust model results
+print_robust_results <- function(model, title) {
+  cat(paste0("\n=== ", title, " ===\n"))
+  
+  tryCatch({
+    # Calculate robust covariance matrix (HC1)
+    # Using try/catch to handle potential singularity in subsets (e.g. Bilateral)
+    vcov_mat <- vcovHC(model, type = "HC1")
+    
+    # Generate tidy results for leadership terms
+    res <- tidy(coeftest(model, vcov = vcov_mat)) |>
+      filter(str_detect(term, "lead_vn")) |>
+      mutate(
+        p_label = scales::pvalue(p.value, accuracy = 0.001),
+        sig = case_when(
+          p.value < 0.001 ~ "***",
+          p.value < 0.01  ~ "**",
+          p.value < 0.05  ~ "*",
+          p.value < 0.1   ~ ".",
+          TRUE            ~ ""
+        )
+      ) |>
+      select(Term = term, Est = estimate, SE = std.error, t_val = statistic, p_val = p_label, Sig = sig)
+    
+    print(knitr::kable(res, digits = 3, format = "simple"))
+    
+  }, error = function(e) {
+    cat("Note: Could not calculate robust estimates (likely singularity or sample size issues).\nError:", e$message, "\n")
+  })
+}
+
+# 1. Main Model Results
+print_robust_results(m2, "MAIN MODEL (M2): LEADERSHIP & INTERACTIONS")
+
+# 2. Marginal Effects Trajectory (The "Gap")
+cat("\n=== ESTIMATED IMPACT GAP TRAJECTORY (MARGINAL EFFECTS) ===\n")
+gap_trend |>
+  mutate(
+    Status = if_else(ci_lo <= 0 & ci_hi >= 0, "Parity (ns)", 
+                     if_else(gap > 0, "VN Lead", "JP Lead"))
+  ) |>
+  knitr::kable(digits = 3, format = "simple") |>
+  print()
+
+# 3. Robustness Checks
+print_robust_results(m_fa, "ROBUSTNESS 1: FIRST AUTHOR")
+print_robust_results(m_bi, "ROBUSTNESS 2: BILATERAL ONLY")
+print_robust_results(m_ppml, "ROBUSTNESS 3: PPML (RAW COUNTS)")
+```
+
+
+```{r}
+#| label: fig-ppml-gap
+
+# Extract robust covariance matrix and coefficients for PPML
+V_ppml <- vcovHC(m_ppml, type = "HC1")
+coefs_ppml <- coef(m_ppml)
+years <- sort(unique(d_reg$year))
+
+# Calculate gap (log-relative risk) and SE for each year
+gap_trend_ppml <- map_dfr(years, function(y) {
+  vec <- setNames(numeric(length(coefs_ppml)), names(coefs_ppml))
+  vec["lead_vn"] <- 1
+  
+  interaction_term <- paste0("lead_vn:factor(year)", y)
+  if (interaction_term %in% names(coefs_ppml)) {
+    vec[interaction_term] <- 1
+  }
+  
+  est <- sum(vec * coefs_ppml)
+  se <- sqrt(t(vec) %*% V_ppml %*% vec)
+  
+  tibble(
+    year = y,
+    gap = est,
+    se = as.numeric(se),
+    ci_lo = est - 1.96 * se,
+    ci_hi = est + 1.96 * se
+  )
+})
+
+# Visualize the PPML-estimated trajectory
+ggplot(gap_trend_ppml, aes(x = year, y = gap)) +
+  geom_ribbon(aes(ymin = ci_lo, ymax = ci_hi), alpha = 0.2) +
+  geom_line(linewidth = 1.1) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray30") +
+  scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
+  labs(
+    x = NULL,
+    y = "Estimated VN − JP difference (PPML log-relative risk)"
+  )
+```

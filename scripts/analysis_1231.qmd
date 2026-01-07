@@ -21,16 +21,6 @@ execute:
 
 # Setup
 
-This section initializes the analysis environment:
-
-- Loads required packages for data handling and graphics.
-
-- Sets global options for reproducible, consistent outputs.
-
-- Defines project paths and creates output directories if missing.
-
-- Establishes a unified ggplot theme (fonts, sizes, spacing) to keep figures visually consistent.
-
 
 ```{r}
 #| label: setup
