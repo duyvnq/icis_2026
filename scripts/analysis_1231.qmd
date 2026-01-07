@@ -377,7 +377,11 @@ dat |>
         geom_line() +
         coord_cartesian(ylim = c(lim[1] - pad, lim[2] + pad)) +
         scale_y_continuous(labels = percent_format(accuracy = 1)) +
-        scale_color_brewer(palette = "Set2") +
+        # MODIFIED: Use manual colors to match Figure 2
+        scale_color_manual(values = c(
+          "Vietnam (fractional)" = "#1B9E77", # Green
+          "Japan (fractional)" = "#D95F02"    # Orange
+        )) +
         labs(
           x = NULL, 
           y = "Mean fractional share", 
@@ -435,8 +439,15 @@ lead_year |>
         geom_line() +
         coord_cartesian(ylim = c(lim[1] - pad, lim[2] + pad)) +
         scale_y_continuous(labels = percent_format(accuracy = 1)) +
-        scale_color_brewer(palette = "Dark2") +
-        scale_linetype_manual(values = c("solid", "solid", "dashed", "dashed")) +
+        # MODIFIED: Assign same color to same country, regardless of author type
+        scale_color_manual(values = c(
+          "Vietnam — First author" = "#1B9E77",         # Green
+          "Vietnam — Corresponding author" = "#1B9E77", # Green
+          "Japan — First author" = "#D95F02",           # Orange
+          "Japan — Corresponding author" = "#D95F02"    # Orange
+        )) +
+        # Keep linetypes to distinguish author role
+        scale_linetype_manual(values = c("dashed", "dashed", "solid", "solid")) +
         labs(
           x = NULL, 
           y = "Leadership share", 
@@ -498,6 +509,8 @@ These are exactly the quantities computed in the chunk: the paper’s expected b
 
 
 ```{r}
+#| label: impact-norm-func
+
 macro_fields <- c("HS", "LS", "SS", "PS")
 
 make_impact_norm <- function(df) {
@@ -530,10 +543,15 @@ make_impact_norm <- function(df) {
       impact_norm_log = log1p(cited) - impact_mu_log
     )
 }
+```
 
-dat      <- make_impact_norm(dat)
+
+```{r}
+#| label: apply-norm
+
+dat <- make_impact_norm(dat)
 dat_core <- make_impact_norm(dat_core)
-dat_bi   <- make_impact_norm(dat_bi)
+dat_bi <- make_impact_norm(dat_bi)
 ```
 
 
@@ -541,42 +559,42 @@ dat_bi   <- make_impact_norm(dat_bi)
 #| label: fig-impact-parity
 
 d <- dat_core |>
-filter(year >= 2000, !is.na(ca_vn), !is.na(ca_jp)) |>
-mutate(
-lead = case_when(
-ca_vn > 0 & ca_jp == 0 ~ "Vietnam-led (CA)",
-ca_jp > 0 & ca_vn == 0 ~ "Japan-led (CA)",
-TRUE ~ NA_character_
-)
-) |>
-filter(!is.na(lead)) |>
-mutate(lead = factor(lead, levels = c("Vietnam-led (CA)", "Japan-led (CA)")))
+  filter(year >= 2000, !is.na(ca_vn), !is.na(ca_jp)) |>
+  mutate(
+    lead = case_when(
+      ca_vn > 0 & ca_jp == 0 ~ "Vietnam-led (CA)",
+      ca_jp > 0 & ca_vn == 0 ~ "Japan-led (CA)",
+      TRUE ~ NA_character_
+    )
+  ) |>
+  filter(!is.na(lead)) |>
+  mutate(lead = factor(lead, levels = c("Vietnam-led (CA)", "Japan-led (CA)")))
 
 parity_year <- d |>
-group_by(year, lead) |>
-summarise(impact = mean(impact_norm_log, na.rm = TRUE), .groups = "drop") |>
-arrange(year)
+  group_by(year, lead) |>
+  summarise(impact = mean(impact_norm_log, na.rm = TRUE), .groups = "drop") |>
+  arrange(year)
 
 gap_year <- parity_year |>
-select(year, lead, impact) |>
-pivot_wider(names_from = lead, values_from = impact) |>
-transmute(year, gap = `Vietnam-led (CA)` - `Japan-led (CA)`)
+  select(year, lead, impact) |>
+  pivot_wider(names_from = lead, values_from = impact) |>
+  transmute(year, gap = `Vietnam-led (CA)` - `Japan-led (CA)`)
 
 p <- ggplot(parity_year, aes(year, impact, color = lead)) +
-geom_line(linewidth = 0.9) +
-scale_color_brewer(palette = "Dark2") +
-labs(x = NULL, y = "Mean normalized impact (log-centered)", color = NULL)
+  geom_line(linewidth = 0.9) +
+  scale_color_brewer(palette = "Dark2") +
+  labs(x = NULL, y = "Mean normalized impact (log-centered)", color = NULL)
 
 p +
-geom_line(
-data = gap_year,
-aes(year, gap),
-inherit.aes = FALSE,
-linewidth = 0.8,
-linetype = "dashed",
-color = "grey30"
-) +
-labs(y = "Mean normalized impact (log-centered); dashed = VN − JP gap")
+  geom_line(
+    data = gap_year,
+    aes(year, gap),
+    inherit.aes = FALSE,
+    linewidth = 0.8,
+    linetype = "dashed",
+    color = "grey30"
+  ) +
+  labs(y = "Mean normalized impact (log-centered); dashed = VN − JP gap")
 ```
 
 
@@ -584,38 +602,36 @@ labs(y = "Mean normalized impact (log-centered); dashed = VN − JP gap")
 #| label: model-impact
 
 d <- dat_core |>
-filter(year >= 2000, !is.na(ca_vn), !is.na(ca_jp), !is.na(impact_norm_log)) |>
-mutate(
-lead_vn = as.integer(ca_vn > 0 & ca_jp == 0),
-lead_jp = as.integer(ca_jp > 0 & ca_vn == 0),
-lead = case_when(lead_vn == 1 ~ "VN", lead_jp == 1 ~ "JP", TRUE ~ NA_character_)
-) |>
-filter(!is.na(lead)) |>
-mutate(
-lead = factor(lead, levels = c("JP", "VN")),
-quartile = fct_drop(quartile)
-)
+  filter(year >= 2000, !is.na(ca_vn), !is.na(ca_jp), !is.na(impact_norm_log)) |>
+  mutate(
+    lead_vn = as.integer(ca_vn > 0 & ca_jp == 0),
+    lead_jp = as.integer(ca_jp > 0 & ca_vn == 0),
+    lead = case_when(lead_vn == 1 ~ "VN", lead_jp == 1 ~ "JP", TRUE ~ NA_character_)
+  ) |>
+  filter(!is.na(lead)) |>
+  mutate(
+    lead = factor(lead, levels = c("JP", "VN")),
+    quartile = fct_drop(quartile)
+  )
 
 m0 <- lm(impact_norm_log ~ lead * year, data = d)
 
 m1 <- lm(impact_norm_log ~ lead * year + HS + LS + SS + PS, data = d)
 
 m2 <- lm(
-impact_norm_log ~ lead * year + HS + LS + SS + PS +
-quartile + oa + fund + log1p(n_authors) + n_countries,
-data = d
+  impact_norm_log ~ lead * year + HS + LS + SS + PS +
+    quartile + oa + fund + log1p(n_authors) + n_countries,
+  data = d
 )
 
 broom::tidy(m2) |>
-filter(term %in% c("leadVN", "year", "leadVN:year")) |>
-knitr::kable(digits = 3)
-
+  filter(term %in% c("leadVN", "year", "leadVN:year")) |>
+  knitr::kable(digits = 3)
 ```
 
 
 ```{r}
-# --- Predicted VN − JP difference over time (with 95% CI) ---
-# Requires: d (model data), m2 (lm fit), tidyr/dplyr/ggplot2 already loaded
+#| label: predict-impact-gap
 
 yrs <- sort(unique(d$year))
 
@@ -632,7 +648,8 @@ pred <- tidyr::expand_grid(
   ) |>
   mutate(
     lead = factor(lead, levels = levels(d$lead)),
-    quartile = factor(quartile, levels = levels(d$quartile), ordered = is.ordered(d$quartile))
+    quartile = factor(quartile, levels = levels(d$quartile), 
+                      ordered = is.ordered(d$quartile))
   )
 
 pp <- predict(m2, newdata = pred, se.fit = TRUE)
@@ -656,7 +673,394 @@ ggplot(diff_year, aes(year, diff)) +
   geom_line() +
   geom_hline(yintercept = 0, linetype = "dashed") +
   labs(x = NULL, y = "Estimated VN − JP difference (normalized impact, log-centered)")
+```
 
+
+```{r}
+#| label: robustness-fa
+
+d_fa <- dat_core |>
+  filter(year >= 2000, !is.na(impact_norm_log)) |>
+  mutate(
+    lead_vn = as.integer(fa_vn > 0 & fa_jp == 0),
+    lead_jp = as.integer(fa_jp > 0 & fa_vn == 0),
+    lead = case_when(lead_vn == 1 ~ "VN", lead_jp == 1 ~ "JP", TRUE ~ NA_character_)
+  ) |>
+  filter(!is.na(lead)) |>
+  mutate(lead = factor(lead, levels = c("JP", "VN")))
+
+m2_fa <- lm(
+  impact_norm_log ~ lead * year + HS + LS + SS + PS +
+    quartile + oa + fund + log1p(n_authors) + n_countries,
+  data = d_fa
+)
+
+broom::tidy(m2_fa) |>
+  filter(term %in% c("leadVN", "year", "leadVN:year")) |>
+  knitr::kable(digits = 3)
+```
+
+
+```{r}
+#| label: robustness-bi
+
+d_bi <- dat_bi |>
+  filter(year >= 2000, !is.na(ca_vn), !is.na(ca_jp), !is.na(impact_norm_log)) |>
+  mutate(
+    lead_vn = as.integer(ca_vn > 0 & ca_jp == 0),
+    lead_jp = as.integer(ca_jp > 0 & ca_vn == 0),
+    lead = case_when(lead_vn == 1 ~ "VN", lead_jp == 1 ~ "JP", TRUE ~ NA_character_)
+  ) |>
+  filter(!is.na(lead)) |>
+  mutate(lead = factor(lead, levels = c("JP", "VN")))
+
+m2_bi <- lm(
+  impact_norm_log ~ lead * year + HS + LS + SS + PS +
+    quartile + oa + fund + log1p(n_authors) + n_countries,
+  data = d_bi
+)
+
+broom::tidy(m2_bi) |>
+  filter(term %in% c("leadVN", "year", "leadVN:year")) |>
+  knitr::kable(digits = 3)
+```
+
+
+```{r}
+#| label: predict-impact-gap-bi
+
+# Get all unique years in bilateral data (using d_bi, not dat_bi)
+yrs_bi <- sort(unique(d_bi$year))
+
+# Create prediction grid for bilateral subset
+pred_bi <- tidyr::expand_grid(
+  year = yrs_bi,
+  lead = levels(d_bi$lead)
+) |>
+  mutate(
+    HS = 0L, LS = 0L, SS = 0L, PS = 0L,
+    quartile = levels(d_bi$quartile)[1],
+    oa = 0L, fund = 0L,
+    n_authors = median(d_bi$n_authors, na.rm = TRUE),
+    n_countries = median(d_bi$n_countries, na.rm = TRUE)
+  ) |>
+  mutate(
+    lead = factor(lead, levels = levels(d_bi$lead)),
+    # Corrected the typo here: levels(d_bi$quartile) instead of dat_bi(...)
+    quartile = factor(quartile, levels = levels(d_bi$quartile), 
+                      ordered = is.ordered(d_bi$quartile))
+  )
+
+# Generate predictions
+pp_bi <- predict(m2_bi, newdata = pred_bi, se.fit = TRUE)
+
+pred_bi <- pred_bi |>
+  mutate(fit = as.numeric(pp_bi$fit), se = as.numeric(pp_bi$se.fit))
+
+# Calculate differences
+diff_year_bi <- pred_bi |>
+  select(year, lead, fit, se) |>
+  tidyr::pivot_wider(names_from = lead, values_from = c(fit, se)) |>
+  transmute(
+    year,
+    diff = .data$fit_VN - .data$fit_JP,
+    se   = sqrt(.data$se_VN^2 + .data$se_JP^2),
+    lo   = diff - 1.96 * se,
+    hi   = diff + 1.96 * se
+  )
+
+# Plot bilateral-only predictions
+ggplot(diff_year_bi, aes(year, diff)) +
+  geom_ribbon(aes(ymin = lo, ymax = hi), alpha = 0.2) +
+  geom_line() +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(x = NULL, y = "Bilateral-only: Estimated VN − JP difference (normalized impact, log-centered)")
+```
+
+
+```{r}
+library(tidyverse)
+library(broom)
+
+tidy(m0) |>
+  filter(term %in% c("leadVN", "year", "leadVN:year")) |>
+  select(term, estimate, std.error, statistic, p.value) |>
+  print()
+
+tidy(m1) |>
+  filter(term %in% c("leadVN", "year", "leadVN:year")) |>
+  select(term, estimate, std.error, statistic, p.value) |>
+  print()
+
+tidy(m2) |>
+  filter(term %in% c("leadVN", "year", "leadVN:year")) |>
+  select(term, estimate, std.error, statistic, p.value) |>
+  print()
+
+model_comparison <- tibble(
+  Model = c("M0: Baseline", "M1: + Fields", "M2: Full"),
+  R_squared = c(
+    summary(m0)$r.squared,
+    summary(m1)$r.squared,
+    summary(m2)$r.squared
+  ),
+  Adj_R_squared = c(
+    summary(m0)$adj.r.squared,
+    summary(m1)$adj.r.squared,
+    summary(m2)$adj.r.squared
+  ),
+  N_obs = c(
+    nobs(m0),
+    nobs(m1),
+    nobs(m2)
+  )
+)
+
+print(model_comparison)
+
+tidy(m2_fa) |>
+  filter(term %in% c("leadVN", "year", "leadVN:year")) |>
+  select(term, estimate, std.error, statistic, p.value) |>
+  print()
+
+tidy(m2_bi) |>
+  filter(term %in% c("leadVN", "year", "leadVN:year")) |>
+  select(term, estimate, std.error, statistic, p.value) |>
+  print()
+
+gap_summary <- diff_year |>
+  summarise(
+    Min_gap = min(diff),
+    Max_gap = max(diff),
+    Mean_gap = mean(diff),
+    Gap_2000 = diff[year == 2000],
+    Gap_2023 = diff[year == max(year)],
+    Change = Gap_2023 - Gap_2000
+  )
+
+print(gap_summary)
+
+zero_crossing <- diff_year |>
+  mutate(sign_change = sign(diff) != sign(lag(diff))) |>
+  filter(sign_change == TRUE) |>
+  select(year, diff, lo, hi)
+
+if (nrow(zero_crossing) > 0) {
+  print(zero_crossing)
+}
+
+parity_stats <- d |>
+  group_by(lead) |>
+  summarise(
+    N = n(),
+    Mean_impact = mean(impact_norm_log, na.rm = TRUE),
+    Median_impact = median(impact_norm_log, na.rm = TRUE),
+    SD_impact = sd(impact_norm_log, na.rm = TRUE),
+    Q25 = quantile(impact_norm_log, 0.25, na.rm = TRUE),
+    Q75 = quantile(impact_norm_log, 0.75, na.rm = TRUE)
+  )
+
+print(parity_stats)
+
+temporal_comparison <- d |>
+  mutate(period = case_when(
+    year >= 2000 & year <= 2010 ~ "Early (2000-2010)",
+    year >= 2014 & year <= 2023 ~ "Recent (2014-2023)",
+    TRUE ~ NA_character_
+  )) |>
+  filter(!is.na(period)) |>
+  group_by(period, lead) |>
+  summarise(
+    N = n(),
+    Mean_impact = mean(impact_norm_log, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_wider(names_from = lead, values_from = c(N, Mean_impact))
+
+print(temporal_comparison)
+
+if (nrow(temporal_comparison) == 2) {
+  early_gap <- temporal_comparison$`Mean_impact_Vietnam-led (CA)`[1] - 
+               temporal_comparison$`Mean_impact_Japan-led (CA)`[1]
+  recent_gap <- temporal_comparison$`Mean_impact_Vietnam-led (CA)`[2] - 
+                temporal_comparison$`Mean_impact_Japan-led (CA)`[2]
+  
+  cat(sprintf("Early period gap: %.4f\n", early_gap))
+  cat(sprintf("Recent period gap: %.4f\n", recent_gap))
+  cat(sprintf("Change: %.4f (%+.1f%%)\n", 
+              recent_gap - early_gap, 
+              100 * (recent_gap - early_gap) / abs(early_gap)))
+}
+
+interaction_coef <- coef(m2)["leadVN:year"]
+interaction_pval <- summary(m2)$coefficients["leadVN:year", "Pr(>|t|)"]
+
+cat(sprintf("Estimate: %.6f\n", interaction_coef))
+cat(sprintf("P-value: %.4f\n", interaction_pval))
+
+if (interaction_pval < 0.001) {
+  sig_level <- "***"
+} else if (interaction_pval < 0.01) {
+  sig_level <- "**"
+} else if (interaction_pval < 0.05) {
+  sig_level <- "*"
+} else if (interaction_pval < 0.10) {
+  sig_level <- "†"
+} else {
+  sig_level <- "n.s."
+}
+
+if (interaction_coef > 0 & interaction_pval < 0.05) {
+  cat("The Vietnam-Japan impact gap is NARROWING over time ", sig_level, "\n")
+} else if (interaction_coef < 0 & interaction_pval < 0.05) {
+  cat("The Vietnam-Japan impact gap is WIDENING over time ", sig_level, "\n")
+} else {
+  cat("No significant temporal trend in the impact gap ", sig_level, "\n")
+}
+```
+
+# Diagnostic
+
+```{r}
+#| label: diagnostics-vif
+
+# Load car package for VIF (install if needed: install.packages("car"))
+if (!require(car)) install.packages("car")
+library(car)
+
+cat("=== MULTICOLLINEARITY CHECK (VIF) ===\n")
+cat("Note: VIF > 5 or 10 indicates problematic collinearity.\n\n")
+
+# Check VIF on Model 2 (Full Model)
+# We must use type="predictor" or construct a model without interaction 
+# to avoid artificial inflation from the product term (lead * year)
+m2_no_int <- lm(
+  impact_norm_log ~ lead + year + HS + LS + SS + PS +
+    quartile + oa + fund + log1p(n_authors) + n_countries,
+  data = d
+)
+
+vif_vals <- car::vif(m2_no_int)
+print(vif_vals)
+
+# Visual check: If all values are < 5, you are safe.
+if(any(vif_vals > 5)) {
+  cat("\nWARNING: Some variables have high VIF (>5).\n")
+} else {
+  cat("\nSUCCESS: No severe multicollinearity detected among controls.\n")
+}
+```
+
+
+```{r}
+#| label: diagnostics-plots
+
+# Set up 2x2 plotting area
+par(mfrow = c(2, 2))
+
+# Plot diagnostics for the full model (m2)
+plot(m2, which = c(1, 2, 3, 5))
+
+# Reset plotting area
+par(mfrow = c(1, 1))
+
+# --- PLOT INTERPRETATION ---
+# 1. Residuals vs Fitted (Top-Left): Should look like a random cloud (linearity).
+# 2. Normal Q-Q (Top-Right): Dots should hug the diagonal line (normality).
+# 3. Scale-Location (Bottom-Left): Line should be horizontal (homoscedasticity).
+# 4. Residuals vs Leverage (Bottom-Right): Look for points outside dashed Cook's distance lines.
+```
+
+
+```{r}
+#| label: diagnostics-heteroscedasticity
+
+library(lmtest) # For bptest
+
+cat("=== BREUSCH-PAGAN TEST FOR HETEROSCEDASTICITY ===\n")
+cat("Null Hypothesis: Variance is constant (Homoscedasticity)\n")
+cat("P-value < 0.05 implies Heteroscedasticity (bad)\n\n")
+
+bp_test <- lmtest::bptest(m2)
+print(bp_test)
+
+if(bp_test$p.value < 0.05) {
+  cat("\nRESULT: Heteroscedasticity detected.\n")
+  cat("ACTION: You should report 'Robust Standard Errors' (Step 4).\n")
+} else {
+  cat("\nRESULT: Homoscedasticity holds. Standard OLS errors are valid.\n")
+}
+```
+
+
+```{r}
+#| label: robust-se
+
+# Load sandwich package for robust covariance matrix
+if (!require(sandwich)) install.packages("sandwich")
+library(sandwich)
+library(lmtest)
+
+cat("=== ROBUST STANDARD ERRORS (HC1) ===\n")
+cat("Re-estimating significance adjusting for heteroscedasticity...\n\n")
+
+# Calculate Robust Coefficients
+robust_m2 <- lmtest::coeftest(m2, vcov = sandwich::vcovHC(m2, type = "HC1"))
+
+# Extract and print the key variables for RQ3
+# We look at the rows corresponding to our interaction term
+robust_tidy <- broom::tidy(robust_m2) |>
+  filter(term %in% c("leadVN", "year", "leadVN:year"))
+
+print(robust_tidy)
+
+cat("\nComparison: Check if the 'p.value' for 'leadVN:year' is still significant.\n")
+cat("If yes, your finding is robust to citation variance issues.")
+```
+
+
+```{r}
+# ==============================================================================
+# VARIABLE DIAGNOSTICS: IMPACT_NORM_LOG
+# ==============================================================================
+
+# 1. Descriptive Statistics Table
+desc_stats <- d |>
+  summarise(
+    n = n(),
+    mean = mean(impact_norm_log, na.rm = TRUE),
+    median = median(impact_norm_log, na.rm = TRUE),
+    sd = sd(impact_norm_log, na.rm = TRUE),
+    min = min(impact_norm_log, na.rm = TRUE),
+    max = max(impact_norm_log, na.rm = TRUE),
+    skewness = (sum((impact_norm_log - mean(impact_norm_log, na.rm = TRUE))^3) / n()) / 
+               (sd(impact_norm_log, na.rm = TRUE)^3)
+  )
+
+print(desc_stats)
+
+# 2. Diagnostic Histogram
+# Purpose: Check if the distribution is roughly bell-shaped (ideal for OLS)
+# and centered near 0 (the expected baseline).
+
+ggplot(d, aes(x = impact_norm_log)) +
+  # Histogram with reasonable bin width
+  geom_histogram(aes(y = after_stat(density)), bins = 60, 
+                 fill = "#69b3a2", color = "white", alpha = 0.8) +
+  # Overlay normal curve for comparison
+  stat_function(fun = dnorm, 
+                args = list(mean = mean(d$impact_norm_log, na.rm = TRUE), 
+                            sd = sd(d$impact_norm_log, na.rm = TRUE)),
+                color = "darkred", linewidth = 1) +
+  # Vertical line at 0 (Impact Parity)
+  geom_vline(xintercept = 0, linetype = "dashed", size = 0.8) +
+  labs(
+    title = "Distribution of Log-Normalized Impact",
+    subtitle = "Red curve = Normal distribution; Dashed line = Field average (0)",
+    x = "Normalized Impact (Log-Centered)",
+    y = "Density"
+  ) +
+  theme_minimal()
 ```
 
 
