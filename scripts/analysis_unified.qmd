@@ -324,38 +324,6 @@ dat_fig |>
         legend.background = element_rect(fill = "white", color = "gray80"))
 ```
 
-```{r}
-#| label: impact-norm
-
-macro_fields <- c("HS", "LS", "SS", "PS")
-
-field_year_mu <- dat_core |>
-  pivot_longer(all_of(macro_fields), names_to = "field", values_to = "flag") |>
-  filter(flag == 1) |>
-  summarise(
-    .by = c(year, field),
-    mu_cited = mean(cited, na.rm = TRUE),
-    mu_log1p = mean(log1p(cited), na.rm = TRUE)
-  )
-
-dat_core <- dat_core |>
-  mutate(k_field = rowSums(across(all_of(macro_fields)), na.rm = TRUE)) |>
-  pivot_longer(all_of(macro_fields), names_to = "field", values_to = "flag") |>
-  filter(flag == 1, k_field > 0) |>
-  left_join(field_year_mu, by = c("year", "field")) |>
-  mutate(w = 1 / k_field) |>
-  summarise(
-    .by = id,
-    impact_mu = sum(w * mu_cited, na.rm = TRUE),
-    impact_mu_log = sum(w * mu_log1p, na.rm = TRUE)
-  ) |>
-  right_join(dat_core, by = "id") |>
-  mutate(
-    impact_norm_log = log1p(cited) - impact_mu_log
-  )
-
-dat_fig <- dat_core |> filter(year >= 2000)
-```
 
 ```{r}
 #| label: tbl-descriptive
@@ -382,81 +350,33 @@ impact_stats <- function(x) {
 
 bind_rows(
   dat_core |> summarise(Variable = "Overall", Category = "All", N = n(), 
-                       bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+                       bind_cols(cite_stats(cited))),
   dat_core |> filter(LS == 1) |> summarise(Variable = "Field", Category = "Life Sciences", N = n(),
-                                           bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+                                           bind_cols(cite_stats(cited))),
   dat_core |> filter(SS == 1) |> summarise(Variable = "", Category = "Social Sciences", N = n(),
-                                           bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+                                           bind_cols(cite_stats(cited))),
   dat_core |> filter(PS == 1) |> summarise(Variable = "", Category = "Physical Sciences", N = n(),
-                                           bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+                                           bind_cols(cite_stats(cited))),
   dat_core |> filter(HS == 1) |> summarise(Variable = "", Category = "Health Sciences", N = n(),
-                                           bind_cols(cite_stats(cited), impact_stats(impact_norm_log))),
+                                           bind_cols(cite_stats(cited))),
   dat_core |> filter(!is.na(quartile)) |> summarise(.by = quartile, N = n(),
-                                                     bind_cols(cite_stats(cited), impact_stats(impact_norm_log))) |>
+                                                     bind_cols(cite_stats(cited))) |>
     mutate(Variable = c("Quartile", rep("", n()-1)), Category = as.character(quartile)) |> select(-quartile),
-  dat_core |> summarise(.by = oa, N = n(), bind_cols(cite_stats(cited), impact_stats(impact_norm_log))) |>
+  dat_core |> summarise(.by = oa, N = n(), bind_cols(cite_stats(cited))) |>
     mutate(Variable = c("OA", ""), Category = if_else(oa == 1, "Yes", "No")) |> select(-oa),
-  dat_core |> summarise(.by = fund, N = n(), bind_cols(cite_stats(cited), impact_stats(impact_norm_log))) |>
+  dat_core |> summarise(.by = fund, N = n(), bind_cols(cite_stats(cited))) |>
     mutate(Variable = c("Fund", ""), Category = if_else(fund == 1, "Yes", "No")) |> select(-fund),
-  dat_core |> summarise(.by = coop, N = n(), bind_cols(cite_stats(cited), impact_stats(impact_norm_log))) |>
+  dat_core |> summarise(.by = coop, N = n(), bind_cols(cite_stats(cited))) |>
     mutate(Variable = c("Coop", ""), Category = as.character(coop)) |> select(-coop)
 ) |>
   mutate(
     N = comma(N),
     across(c(median, IQR, P99, min, max), ~comma(., accuracy = 1)),
     pct_zero = sprintf("%.1f%%", pct_zero),
-    across(c(mean, SD, skewness, kurtosis), ~sprintf("%.3f", .))
   ) |>
   knitr::kable(
-    col.names = c("Variable", "Category", "N", "Median", "IQR", "P99", "Min", "Max", "% Zero",
-                  "Mean", "SD", "Skewness", "Kurtosis"),
+    col.names = c("Variable", "Category", "N", "Median", "IQR", "P99", "Min", "Max", "% Zero"),
     align = c("l", "l", "r", rep("r", 10))
   )
 ```
 
-
-```{r}
-dat_fig |>
-  filter(!is.na(ca_vn), !is.na(ca_jp), !is.na(impact_norm_log)) |>
-  mutate(
-    lead = case_when(
-      ca_vn > 0 & ca_jp == 0 ~ "Vietnam-led (CA)",
-      ca_jp > 0 & ca_vn == 0 ~ "Japan-led (CA)",
-      TRUE ~ NA_character_
-    )
-  ) |>
-  filter(!is.na(lead)) |>
-  mutate(lead = factor(lead, levels = c("Vietnam-led (CA)", "Japan-led (CA)"))) |>
-  group_by(year, lead) |>
-  summarise(
-    impact = mean(impact_norm_log, na.rm = TRUE),
-    se = sd(impact_norm_log, na.rm = TRUE) / sqrt(n()),
-    .groups = "drop"
-  ) |>
-  mutate(
-    ci_lo = impact - 1.96 * se,
-    ci_hi = impact + 1.96 * se
-  ) |>
-  ggplot(aes(year, impact, color = lead, fill = lead)) +
-  geom_ribbon(aes(ymin = ci_lo, ymax = ci_hi), alpha = 0.2, color = NA) +
-  geom_line(linewidth = 1.2) +
-  geom_smooth(method = "loess", se = FALSE, linewidth = 0.6, linetype = "dotted", alpha = 0.5) +
-  geom_hline(yintercept = 0, linetype = "solid", color = "black", linewidth = 0.8) +
-  annotate("text", x = 2023, y = 0.05, label = "Field average", hjust = 0, size = 3, color = "black") +
-  scale_color_manual(values = c("Vietnam-led (CA)" = "#1B9E77", "Japan-led (CA)" = "#D95F02")) +
-  scale_fill_manual(values = c("Vietnam-led (CA)" = "#1B9E77", "Japan-led (CA)" = "#D95F02")) +
-  scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
-  labs(x = NULL, y = "Mean normalized impact (log-centered, 0 = field average)", color = NULL, fill = NULL) +
-  theme(
-    legend.position = c(0.70, 0.98),
-    legend.justification = c(0, 1),
-    legend.background = element_rect(fill = "white", color = "gray80"),
-    legend.key.size = unit(0.8, "lines"),
-    panel.grid.major.y = element_line(color = "gray90")
-  )
-```
-
-
-```{r}
-
-```
