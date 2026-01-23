@@ -1,0 +1,22 @@
+---
+title: "Changing in Equity and Leadership in Japan–Vietnam Scientific Collaboration: A Bibliometric Assessment"
+author: 
+  - name: Nguyen Quang Duy Vu
+  - name: Pham Oanh
+  - name: Anh-Nguyet Luong
+format: pdf
+---
+
+# Abstract
+
+Tent
+
+# Introduction
+
+Since we are using the standard article class, your **R code** will now behave normally. Figures and tables will stay exactly where you put them.
+
+```{r}
+#| label: tbl-1
+#| tbl-cap: "Example Table"
+knitr::kable(head(mtcars[,1:3]), format = "latex", booktabs = TRUE)
+```
