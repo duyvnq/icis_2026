@@ -1,0 +1,1001 @@
+﻿id	keyword	occurrences	total link strength
+248	"2,3,7,8 tetrachlorodibenzo para dioxin"	28	718
+1006	acquired immune deficiency syndrome	24	863
+1174	adaptation	35	569
+1346	adolescent	436	12132
+1386	adsorption	93	655
+1416	adult	1274	30425
+1453	adverse event	63	1513
+1542	africa	54	1261
+1543	africa south of the sahara	41	1454
+1572	age	130	3413
+1579	age distribution	106	3374
+1580	age factors	43	1236
+1589	aged	605	16223
+1592	"aged, 80 and over"	150	4934
+1624	aging	46	1312
+1660	agricultural land	30	636
+1694	agriculture	88	1298
+1766	air pollutant	44	963
+1768	air pollutants	36	783
+1771	air pollution	74	1587
+1853	alanine aminotransferase	31	878
+1874	alcohol consumption	38	1225
+1917	algorithm	87	1009
+1921	algorithms	63	543
+1984	all cause mortality	30	943
+1995	allele	52	1139
+1997	alleles	29	634
+2212	alzheimer disease	19	795
+2260	amikacin	27	837
+2265	amino acid	42	878
+2274	amino acid sequence	88	2040
+2275	amino acid substitution	53	1369
+2307	ammonia	56	752
+2384	ampicillin	52	1644
+2471	analysis	88	2193
+2485	analytic method	28	462
+2545	anatomy and histology	44	538
+2581	anemia	35	1277
+2665	animal	805	14959
+2667	animal cell	190	4086
+2676	animal experiment	311	6748
+2687	animal model	193	4510
+2699	animal tissue	224	4881
+2703	animalia	93	1374
+2704	animals	975	18076
+2817	antagonists and inhibitors	27	633
+2875	anthropometry	29	694
+2883	anti human immunodeficiency virus agent	36	1202
+2889	anti-bacterial agents	128	3374
+2895	anti-hiv agents	38	1208
+2920	antibacterial activity	27	532
+2929	antibiotic agent	58	1498
+2936	antibiotic resistance	130	3590
+2939	antibiotic sensitivity	68	2121
+2942	antibiotics	46	798
+2956	"antibodies, viral"	51	1443
+2969	antibody titer	30	743
+3055	antiinfective agent	127	3229
+3056	antiinflammatory activity	22	535
+3087	antineoplastic activity	36	692
+3088	antineoplastic agent	71	1680
+3089	antineoplastic agents	25	594
+3097	antioxidant	67	1158
+3099	antioxidant activity	34	724
+3107	antioxidants	61	1009
+3125	antiretroviral therapy	41	1266
+3148	antiviral agents	27	817
+3151	antiviral therapy	19	591
+3152	antivirus agent	25	734
+3239	apoptosis	57	1126
+3296	aquaculture	39	708
+3311	aquatic environment	30	750
+3345	arabidopsis	45	579
+3413	area under the curve	28	602
+3501	arsenic	46	924
+3590	article	3525	68501
+3686	ascorbic acid	26	518
+3700	asia	373	7097
+3709	"asia, southeastern"	53	1030
+3715	asian	98	2349
+3717	asian continental ancestry group	56	1375
+3742	aspartate aminotransferase	27	762
+3809	asthma	30	854
+3924	atmospheric pollution	46	758
+4001	atrial fibrillation	20	700
+4033	attitude to health	31	621
+4091	australia	40	809
+4171	automutilation	13	782
+4187	autopsy	22	662
+4235	aves	37	848
+4238	avian influenza	42	1173
+4243	avian influenza virus	41	1067
+4297	azithromycin	23	691
+4419	bacteria	79	1400
+4420	bacteria (microorganisms)	80	1244
+4451	bacterial dna	43	1078
+4456	bacterial gene	69	1868
+4458	bacterial genome	37	832
+4459	bacterial growth	26	606
+4477	bacterial protein	43	1091
+4478	bacterial proteins	42	1118
+4487	bacterial strain	98	2358
+4512	bacterium	81	1637
+4518	bacterium culture	31	857
+4521	bacterium identification	34	900
+4522	bacterium isolate	102	2885
+4523	bacterium isolation	74	1700
+4562	bagg albino mouse	22	676
+4621	bangladesh	39	929
+4679	base sequence	74	1672
+4760	bayes theorem	58	1341
+5050	beta lactamase	33	1083
+5091	beta-lactamases	29	972
+5307	bioaccumulation	54	1200
+5318	bioassay	35	554
+5338	biochemistry	42	766
+5361	biodegradation	29	445
+5367	biodiversity	75	607
+5447	biological marker	58	1527
+5489	biomarkers	42	1105
+5491	biomass	111	1277
+5555	bioreactor	35	582
+5556	bioreactors	36	588
+5584	biosynthesis	66	1137
+5611	bird disease	23	629
+5734	bleeding	30	864
+5762	blood	169	4508
+5804	blood pressure	25	641
+5814	blood sampling	100	2563
+5818	blood transfusion	26	662
+5870	body height	34	935
+5872	body mass	149	3972
+5873	body mass index	46	1285
+5884	body weight	69	1813
+6082	bovine	38	763
+6120	brain	39	589
+6143	brain hemorrhage	31	985
+6149	brain ischemia	24	861
+6208	breast cancer	27	1013
+6216	breast milk	50	1282
+6549	c reactive protein	30	753
+6608	cadmium	31	651
+6651	calcium	57	1031
+6777	cambodia	62	1311
+6817	cancer	24	569
+6838	cancer incidence	31	1002
+6845	cancer mortality	38	1067
+6846	cancer patient	32	830
+6854	cancer risk	61	1576
+6859	cancer staging	48	1190
+6863	cancer survival	27	625
+7016	carbon	97	721
+7040	carbon dioxide	84	383
+7096	carbon nuclear magnetic resonance	65	1005
+7196	"carcinoma, hepatocellular"	23	725
+7241	cardiovascular disease	72	2045
+7243	cardiovascular diseases	31	825
+7245	cardiovascular mortality	23	677
+7321	case control study	65	1671
+7327	case report	75	1293
+7333	case-control studies	62	1640
+7492	cattle	54	986
+7513	cause of death	79	2875
+7581	cd4 lymphocyte count	49	1543
+7583	cd4+ t lymphocyte	26	694
+7635	cefotaxime	33	1164
+7636	cefoxitin	22	801
+7642	ceftazidime	25	920
+7646	ceftriaxone	27	845
+7670	cell culture	59	1063
+7691	cell differentiation	36	710
+7716	cell line	54	1205
+7717	"cell line, tumor"	54	1112
+7746	cell proliferation	70	1419
+7775	cell survival	33	737
+7786	cell viability	31	706
+7806	"cells, cultured"	39	760
+8003	cerebrovascular accident	52	1434
+8004	cerebrovascular disease	12	578
+8211	chemical analysis	66	1056
+8222	chemical composition	50	706
+8266	chemical oxygen demand	44	736
+8295	chemical structure	110	1551
+8310	chemically induced	20	622
+8318	chemistry	402	7277
+8370	chicken	73	1794
+8378	chickens	63	1654
+8384	child	496	13303
+8396	child health	33	846
+8411	"child, preschool"	256	7594
+8428	china	208	3976
+8473	chloramphenicol	40	1280
+8570	cholesterol	22	593
+8573	cholesterol blood level	24	663
+8636	chromium	29	530
+8704	chronic disease	24	603
+8717	chronic kidney failure	33	1085
+8718	chronic liver disease	10	622
+8723	chronic obstructive lung disease	30	1201
+8819	ciprofloxacin	61	1920
+8871	cities	55	1270
+8910	city	58	1342
+8922	cladistics	26	635
+8931	clarithromycin	23	696
+8947	classification	242	5083
+9016	climate change	155	1210
+9052	clinical article	202	4140
+9053	clinical assessment	29	681
+9065	clinical evaluation	38	915
+9067	clinical feature	90	2267
+9077	clinical outcome	68	1803
+9079	clinical practice	46	930
+9091	clinical trial	148	3955
+9165	cluster analysis	71	1473
+9445	cohort analysis	203	5360
+9446	cohort studies	65	1674
+9456	coinfection	31	938
+9487	colistin	34	1113
+9638	combination drug therapy	24	738
+9696	communicable disease	27	1001
+9698	communicable diseases	19	720
+9759	comorbidity	47	1296
+9782	comparative study	233	4629
+9860	complication	138	3461
+10010	computer assisted tomography	63	1283
+10032	computer simulation	80	482
+10063	concentration (composition)	195	3172
+10064	concentration (parameter)	79	1552
+10065	concentration (parameters)	83	1873
+10182	confidence interval	35	803
+10289	consensus	44	624
+10410	contamination	42	980
+10555	controlled study	1690	35843
+10671	copper	62	940
+10828	coronavirus disease 2019	114	2567
+10848	correlation analysis	33	734
+10960	cost of illness	20	702
+10980	cotrimoxazole	35	1188
+10986	coughing	29	891
+11059	covid-19	107	1855
+11149	creatinine	37	991
+11307	cross-sectional studies	207	4608
+11308	cross-sectional study	274	5818
+11416	crystal structure	46	385
+11856	cytokine	28	677
+11872	cytology	75	1123
+11897	cytotoxicity	48	928
+12030	data analysis	32	687
+12160	death	33	795
+12184	decapoda (crustacea)	58	559
+12223	decision making	78	635
+12361	degradation	61	710
+12487	demographics	37	881
+12488	demography	81	2215
+12513	dengue	73	1999
+12518	dengue virus	39	960
+12553	density functional theory	91	171
+12647	depression	44	1082
+12791	developing countries	86	1460
+12792	developing country	57	1235
+12795	developing world	48	587
+12860	diabetes mellitus	85	2685
+12863	"diabetes mellitus, type 2"	28	678
+12884	diagnosis	68	1175
+12888	diagnostic accuracy	34	726
+12896	diagnostic imaging	66	1189
+12902	diagnostic test accuracy study	46	990
+12927	diarrhea	92	2984
+12935	diastolic blood pressure	26	736
+13025	diet	67	1492
+13043	dietary intake	37	861
+13306	dioxin	73	1752
+13315	dioxins	50	1330
+13402	disability	40	1353
+13409	disability-adjusted life year	67	2204
+13411	disabled person	26	1097
+13412	disabled persons	24	1038
+13474	disease association	89	2237
+13476	disease burden	44	1223
+13480	disease control	32	641
+13481	disease course	37	942
+13487	disease exacerbation	32	951
+13493	disease model	33	834
+13495	"disease models, animal"	35	897
+13498	disease outbreaks	40	996
+13501	disease progression	20	611
+13506	disease severity	129	3419
+13513	disease surveillance	35	990
+13515	disease transmission	55	1389
+13523	diseases	52	975
+13758	dna	61	1062
+13787	dna extraction	80	2032
+13832	dna sequence	140	3326
+13858	"dna, bacterial"	38	977
+13868	"dna, ribosomal"	33	648
+13871	"dna, viral"	26	656
+13892	dog	40	946
+13897	dogs	38	906
+14010	dose response	43	859
+14013	"dose-response relationship, drug"	35	713
+14023	double blind procedure	27	807
+14064	down regulation	43	988
+14137	drinking water	49	1035
+14173	drought	62	752
+14178	droughts	31	535
+14233	drug effect	219	4739
+14234	drug effects	93	2419
+14235	drug efficacy	93	2477
+14253	drug isolation	102	1538
+14259	drug mechanism	25	537
+14280	"drug resistance, bacterial"	56	1655
+14283	"drug resistance, multiple, bacterial"	21	677
+14286	"drug resistance, viral"	19	615
+14290	drug safety	54	1382
+14291	drug screening	39	762
+14301	drug structure	84	1205
+14308	drug therapy	53	1492
+14309	"drug therapy, combination"	22	641
+14314	drug use	25	802
+14317	drug withdrawal	18	612
+14385	duck	28	683
+14425	dust	48	967
+14570	dyspnea	29	851
+14788	economics	66	905
+14794	ecosystem	60	773
+14864	education	56	946
+14886	educational status	38	1013
+14957	effluent	29	533
+14960	effluents	37	612
+15510	electrospray mass spectrometry	41	637
+16127	environmental exposure	112	3116
+16128	environmental factor	39	543
+16135	environmental impact	53	678
+16155	environmental monitoring	185	3882
+16163	environmental pollutants	62	1595
+16196	environmental temperature	34	571
+16216	enzyme activity	94	1826
+16230	enzyme inhibition	47	808
+16235	enzyme linked immunosorbent assay	146	3558
+16252	enzyme-linked immunosorbent assay	47	1196
+16254	enzymology	59	1248
+16285	epidemic	88	2199
+16297	epidemiology	271	6696
+16300	epidermal growth factor receptor	24	646
+16492	erythromycin	27	787
+16501	escherichia coli	135	3071
+16571	estimated glomerular filtration rate	26	692
+16655	ethnicity	33	727
+16677	etiology	31	707
+16734	eurasia	111	1439
+16736	europe	55	1151
+16782	evaluation study	29	592
+16989	experimental study	52	476
+17025	exposure	33	663
+17305	far east	57	808
+17366	fatigue	29	777
+17388	fatty acid	29	557
+17403	fatty acids	38	569
+17509	feces	57	1419
+17510	feces analysis	38	1053
+17567	female	1669	38953
+17695	fertility	36	966
+17738	fever	62	1813
+18055	fish	67	1086
+18085	fishes	27	611
+18119	flame retardant	27	581
+18120	flame retardants	29	601
+18242	flooding	50	406
+18247	floods	61	340
+18266	flow cytometry	39	965
+18498	follow up	208	5332
+18499	follow-up studies	43	1196
+18520	food contamination	40	1074
+18536	food intake	33	769
+18608	forecasting	115	736
+18653	forestry	68	315
+18742	fourier transform infrared spectroscopy	81	493
+18925	fresh water	33	639
+19351	gamma interferon	39	1040
+19420	gas chromatography	55	854
+19617	gender	33	747
+19627	gene	120	2876
+19630	gene amplification	46	1214
+19635	gene deletion	40	775
+19644	gene expression	168	3230
+19649	gene expression profiling	35	699
+19650	gene expression regulation	112	2046
+19656	"gene expression regulation, plant"	54	813
+19661	gene frequency	68	1583
+19664	gene identification	33	846
+19679	gene locus	31	759
+19682	gene mutation	100	2478
+19696	gene sequence	171	4103
+19750	genes	37	644
+19773	genetic analysis	88	1925
+19774	genetic association	51	1259
+19820	genetic polymorphism	37	861
+19824	genetic predisposition to disease	27	620
+19828	genetic reassortment	25	685
+19845	genetic susceptibility	23	612
+19853	genetic variability	127	3019
+19854	genetic variation	100	1972
+19859	genetics	773	16274
+19872	genome	41	687
+19873	genome analysis	28	596
+19889	"genome, viral"	49	1161
+19892	genomic dna	39	984
+19901	genomics	38	633
+19904	genotype	261	6561
+19910	gentamicin	42	1382
+19931	geographic distribution	126	3295
+19947	geography	55	1414
+19951	geologic sediments	29	640
+20080	gestational age	26	683
+20207	global burden of disease	116	3743
+20217	global disease burden	138	4290
+20220	global health	169	4855
+20298	glucose	61	1299
+20303	glucose blood level	49	1406
+20525	government	35	589
+20879	ground water	34	713
+20891	groundwater	70	743
+20931	groups by age	38	1254
+20968	"growth, development and aging"	134	2091
+21189	hanoi	110	1604
+21201	haplotype	47	1053
+21316	headache	28	882
+21320	health	39	1093
+21330	health care access	30	723
+21343	health care personnel	58	1129
+21345	health care policy	33	844
+21368	health hazard	60	1532
+21376	health insurance	30	667
+21395	health risk	62	1540
+21399	health risks	43	854
+21406	health status	37	890
+21411	health survey	127	2896
+21465	heart failure	24	726
+21470	heart infarction	27	758
+21595	heavy metal	34	569
+21645	helicobacter infection	51	1365
+21646	helicobacter infections	44	1251
+21647	helicobacter pylori	52	1419
+21674	"hemagglutinin glycoproteins, influenza virus"	21	584
+21721	hemoglobin	28	639
+21739	hemolytic anemia	11	654
+21771	hepatectomy	30	826
+21787	hepatitis b	51	1570
+21799	hepatitis b virus	29	749
+21808	hepatitis c	39	1482
+21972	heterozygote	25	634
+22068	high density lipoprotein cholesterol	27	806
+22106	high income country	43	1096
+22130	high performance liquid chromatography	73	1351
+22165	high risk population	33	872
+22218	high throughput sequencing	44	1024
+22413	histology	53	1019
+22432	histopathology	80	1758
+22446	history	22	633
+22455	hiv infections	107	3118
+22462	hiv-1	34	981
+22514	ho chi minh city	34	492
+22636	hong kong	30	855
+22639	honshu	56	555
+22693	hospital	26	608
+22695	hospital admission	36	1073
+22705	hospital discharge	22	612
+22714	hospital patient	23	634
+22725	hospitalization	96	2623
+22793	household	31	743
+22856	human	2608	54075
+22882	human cell	217	4662
+22899	human experiment	83	1387
+22915	human immunodeficiency virus	24	716
+22916	human immunodeficiency virus 1	42	1230
+22917	human immunodeficiency virus 1 infection	24	739
+22920	human immunodeficiency virus infected patient	48	1472
+22921	human immunodeficiency virus infection	124	3823
+22990	human tissue	140	3203
+23003	humans	2072	46542
+23206	hydrogen	59	305
+23233	hydrogen peroxide	35	589
+23458	hypertension	93	2617
+23566	ic50	68	1302
+23745	imipenem	28	872
+23777	immune response	49	1059
+23787	immunization	28	622
+23827	immunoglobulin g	60	1502
+23835	immunoglobulin m	34	942
+23842	immunohistochemistry	101	2165
+23855	immunology	129	3412
+23956	in vitro study	115	2604
+23959	in vivo study	49	1264
+24012	incidence	180	4922
+24042	income	32	929
+24092	india	93	2201
+24165	indonesia	86	1923
+24171	indoor air pollution	21	605
+24274	infant	284	8331
+24283	"infant, newborn"	120	3719
+24298	infection risk	33	939
+24333	inflammation	47	1056
+24350	influenza	39	1106
+24354	influenza a (h5n1)	25	673
+24357	influenza a virus	57	1463
+24363	influenza a virus (h5n1)	26	750
+24375	"influenza a virus, h5n1 subtype"	60	1731
+24385	influenza in birds	42	1164
+24394	influenza virus a h5n1	47	1297
+24410	"influenza, human"	44	1327
+24435	information processing	33	716
+24560	injury	37	1332
+24829	intensive care unit	31	803
+24983	interleukin 10	21	593
+25009	interleukin 6	48	1207
+25050	intermethod comparison	44	874
+25099	international cooperation	38	685
+25154	interstitial lung disease	12	611
+25187	interview	32	645
+25474	iron	67	1033
+25488	iron deficiency anemia	16	710
+25556	ischemic heart disease	22	1035
+25627	isolation and purification	327	8079
+25764	japan	436	7355
+25768	japanese (people)	40	885
+25928	kanamycin	27	897
+26151	klebsiella pneumoniae	24	669
+26208	korea	30	696
+26301	laboratory test	34	734
+26395	lakes	36	507
+26453	land use	61	524
+26566	laos	38	731
+26581	laparoscopy	34	882
+26840	lead	41	738
+27012	length of stay	43	1259
+27135	levofloxacin	29	875
+27178	life expectancy	55	1944
+27333	limit of detection	54	1090
+27334	limit of quantitation	21	565
+27457	lipid	38	853
+27512	liquid chromatography	32	658
+27516	liquid chromatography-mass spectrometry	30	720
+27602	liver	30	628
+27605	liver cancer	27	1020
+27610	liver cell carcinoma	37	1050
+27612	liver cirrhosis	39	1485
+27634	liver neoplasms	45	1304
+27650	liver tumor	41	1160
+27654	livestock	23	601
+27809	logistic models	36	896
+27811	logistic regression analysis	28	743
+27890	longitudinal studies	26	625
+27891	longitudinal study	50	1191
+27939	low back pain	14	623
+27955	low density lipoprotein cholesterol	30	868
+27983	low income country	53	1303
+28101	lower respiratory tract infection	28	1177
+28167	lung	26	640
+28182	lung cancer	26	1009
+28212	lung neoplasms	23	662
+28222	lung tumor	19	559
+28370	machine learning	112	701
+28414	macrophage	32	753
+28461	magnesium	27	495
+28649	major clinical study	853	21655
+28664	malaria	64	1920
+28678	malaysia	59	1628
+28682	male	1636	37864
+28711	malignant neoplasm	18	722
+28722	malnutrition	25	620
+28746	mammals	39	716
+28787	manganese	49	754
+28986	mass fragmentography	38	749
+28998	mass spectrometry	117	1945
+29277	measles	20	813
+29313	meat	31	733
+29478	medicinal plant	43	681
+29515	mekong delta	110	991
+29630	meningitis	22	806
+29651	mental disease	22	747
+29688	meropenem	35	1195
+29758	messenger rna	68	1515
+29764	meta analysis	77	1458
+29793	metabolism	523	9954
+29965	methane	63	565
+29989	methanol	39	404
+30022	methodology	50	716
+30113	mice	181	4113
+30116	"mice, inbred balb c"	31	914
+30198	microbial community	37	674
+30223	microbial sensitivity test	57	1749
+30224	microbial sensitivity tests	69	2032
+30233	microbiology	225	5337
+30454	middle aged	682	18282
+30460	middle east	28	839
+30465	middle income country	76	1854
+30507	"milk, human"	28	777
+30587	minimum inhibitory concentration	65	1899
+30653	missense mutation	28	703
+30664	mitochondrial dna	51	751
+30718	mixed infection	40	1138
+30978	molecular cloning	37	787
+30988	molecular dynamics	78	443
+30995	molecular epidemiology	52	1471
+30996	molecular evolution	27	583
+30999	molecular genetics	74	1842
+31025	molecular phylogeny	29	693
+31033	molecular sequence data	145	3483
+31039	molecular structure	67	1081
+31043	molecular weight	39	611
+31129	monoclonal antibody	29	807
+31216	morbidity	74	2246
+31243	morphology	122	570
+31259	mortality	281	7838
+31260	mortality rate	108	3156
+31277	mosquito	32	688
+31353	mouse	244	5334
+31611	multicenter study	154	4030
+31627	multidrug resistance	39	1182
+31666	multilocus sequence typing	26	689
+31776	multiplex polymerase chain reaction	31	850
+31804	multivariate analysis	29	694
+31853	mus	24	690
+31917	mutation	111	2584
+31921	"mutation, missense"	23	624
+31941	myanmar	32	920
+31961	mycobacterium tuberculosis	29	719
+32154	nalidixic acid	26	956
+32284	nanoparticle	39	717
+32294	nanoparticles	93	713
+32374	nasopharynx	22	630
+32482	nausea	19	583
+32629	neoplasm	34	952
+32635	neoplasms	29	682
+32835	neurologic disease	21	794
+32892	neutralizing antibody	40	1083
+32964	newborn	146	4475
+32967	newborn disease	15	885
+33107	nitric oxide	31	513
+33142	nitrogen	88	1222
+33273	non communicable disease	22	960
+33281	non insulin dependent diabetes mellitus	43	1013
+33399	nonhuman	1336	26683
+33455	nonnucleoside reverse transcriptase inhibitor	21	697
+33508	normal human	35	744
+33525	north america	26	631
+33635	nuclear magnetic resonance	57	674
+33636	nuclear magnetic resonance imaging	55	1133
+33637	nuclear magnetic resonance spectroscopy	70	612
+33696	nucleotide sequence	308	7048
+33739	numerical model	76	347
+33813	nutritional disorder	14	690
+33822	nutritional status	43	1121
+33855	obesity	64	1539
+33897	observational study	78	2141
+33925	occupational exposure	26	702
+33993	odds ratio	37	1021
+34238	oocyte	42	511
+34265	open reading frame	32	703
+34298	operation duration	38	953
+34651	organic pollutant	26	542
+34652	organic pollutants	71	1625
+34765	orthomyxoviridae	28	740
+34766	orthomyxoviridae infections	33	988
+34787	oryza	52	672
+34897	outcome assessment	110	2860
+34957	overall survival	38	1026
+34995	oxidation	62	536
+35007	oxidation reduction reaction	30	531
+35026	oxidative stress	58	1116
+35069	oxygen	59	588
+35160	pacific islands	40	1033
+35207	pah	31	679
+35229	pakistan	30	787
+35306	pancreas cancer	12	599
+35327	pandemic	91	1825
+35332	pandemics	57	1149
+35513	parasitology	66	1282
+35553	parkinson disease	18	623
+35649	particle size	82	1085
+35673	particulate matter	69	1245
+35746	pathogenesis	31	685
+35750	pathogenicity	72	1868
+35757	pathology	248	6021
+35760	pathophysiology	57	1394
+35772	patient care	33	606
+35839	pbde	24	505
+35852	pcb	34	777
+36052	peptic ulcer	17	711
+36374	pertussis	15	710
+36390	pesticide	27	566
+36449	ph	85	1273
+36509	phase 3 clinical trial	29	923
+36603	phenotype	131	2774
+36643	philippines	85	1916
+36750	phosphorus	44	627
+36967	phylogenetic tree	86	2183
+36970	phylogeny	432	8653
+36976	physical activity	29	655
+36984	physical chemistry	31	444
+37046	physiological stress	35	558
+37049	physiology	259	4374
+37141	pig	120	2275
+37290	placebo	28	802
+37353	plant extract	122	1949
+37354	plant extracts	75	1378
+37360	plant growth	43	743
+37368	plant leaf	90	1441
+37369	plant leaves	51	854
+37384	plant proteins	35	508
+37390	plant root	67	1080
+37392	plant roots	47	704
+37393	plant seed	35	482
+37426	plants (botany)	50	410
+37489	plasmid	51	1260
+37492	plasmids	28	807
+37499	plasmodium falciparum	38	791
+37589	platelet count	21	593
+37701	pneumonia	39	1164
+37817	pollutant	59	1536
+37818	pollutant removal	33	469
+37821	pollutant source	29	589
+37826	pollution	39	756
+37831	pollution exposure	57	1462
+37941	polybrominated diphenyl ether	22	508
+37954	polychlorinated biphenyl	43	972
+37992	polychlorinated biphenyls	41	885
+38000	polychlorinated dibenzodioxin	49	1214
+38001	polychlorinated dibenzodioxins	23	611
+38002	polychlorinated dibenzofuran	35	876
+38021	polycyclic aromatic hydrocarbon	40	900
+38023	polycyclic aromatic hydrocarbons	43	837
+38123	polymerase chain reaction	227	5193
+38144	"polymorphism, genetic"	37	836
+38146	"polymorphism, single nucleotide"	48	1100
+38282	population density	34	577
+38294	population growth	31	967
+38303	population research	55	1490
+38477	postoperative complication	47	1102
+38478	postoperative complications	34	904
+38481	postoperative period	28	615
+38500	potassium	29	599
+38562	poultry	34	990
+38563	poultry diseases	30	790
+38668	practice guideline	125	2217
+38762	prediction	90	1469
+38785	predictive value	35	884
+38804	pregnancy	103	2217
+38833	premature labor	11	606
+38870	preschool child	276	8017
+38933	prevalence	413	10467
+38937	prevention and control	59	1350
+38987	principal component analysis	55	848
+39018	priority journal	877	19433
+39092	procedures	391	7724
+39181	prognosis	61	1546
+39242	promoter region	45	899
+39317	prospective studies	101	2593
+39318	prospective study	135	3494
+39327	prostate cancer	15	615
+39374	protein	58	1187
+39398	protein blood level	30	729
+39436	protein expression	141	2969
+39442	protein function	44	895
+39512	protein phosphorylation	25	600
+39576	proteins	46	499
+39632	proton nuclear magnetic resonance	64	968
+39759	psychology	68	1132
+39818	public health	99	2151
+40118	quality adjusted life year	55	1793
+40127	quality control	95	1271
+40140	quality of life	58	1242
+40147	quality-adjusted life years	55	1793
+40156	quantitative analysis	83	1558
+40317	questionnaire	254	4912
+40321	questionnaires	30	686
+40601	rain	75	812
+40688	randomized controlled trial	94	2401
+40689	randomized controlled trial (topic)	30	588
+40743	rash	15	559
+40747	rat	49	930
+40774	rats	37	736
+40848	reactive oxygen metabolite	39	866
+40849	reactive oxygen species	25	548
+40881	real time polymerase chain reaction	124	3121
+40894	real-time polymerase chain reaction	26	638
+40920	receiver operating characteristic	44	1093
+41107	recycling	78	971
+41291	register	25	616
+41296	regression analysis	91	1151
+41536	reproducibility	45	765
+41537	reproducibility of results	44	745
+41748	respiratory tract infection	39	1235
+41749	respiratory tract infections	28	864
+41831	retrospective studies	133	3353
+41832	retrospective study	181	4379
+41867	reverse transcription polymerase chain reaction	95	2448
+41924	rheumatoid arthritis	22	659
+42024	rice	93	842
+42127	risk	27	636
+42129	risk assessment	251	5631
+42134	risk factor	403	10803
+42135	risk factors	265	7491
+42142	risk reduction	24	651
+42154	river	60	1318
+42173	river pollution	32	555
+42182	river water	29	597
+42192	rivers	118	1422
+42198	rna	35	659
+42200	rna 16s	66	1549
+42211	rna directed dna polymerase inhibitor	25	810
+42214	rna extraction	36	949
+42248	"rna, messenger"	32	690
+42253	"rna, ribosomal, 16s"	44	1045
+42260	"rna, viral"	53	1407
+42461	rotavirus	31	843
+42514	rubber	70	359
+42576	rural area	66	1460
+42585	rural population	36	905
+42699	salinity	42	435
+42716	salmonella	26	617
+42801	sampling	34	544
+42840	sanitation	27	640
+42887	sars-cov-2	47	999
+42992	scanning electron microscopy	124	782
+43075	school child	80	2054
+43141	scoring system	53	1316
+43220	season	51	1175
+43228	seasonal variation	107	1860
+43230	seasons	57	1319
+43323	sediment	53	1071
+43340	sediment pollution	27	522
+43369	sediments	39	537
+43683	sensitivity analysis	86	1432
+43685	sensitivity and specificity	119	2514
+43758	sepsis	23	788
+43765	sequence alignment	46	1058
+43767	sequence analysis	112	2707
+43768	"sequence analysis, dna"	142	3475
+43775	sequence homology	49	1197
+43820	serodiagnosis	26	664
+43821	seroepidemiologic studies	36	984
+43822	seroepidemiology	24	676
+43823	serogroup	26	704
+43828	serology	36	884
+43829	seroprevalence	44	1276
+43846	serotype	60	1521
+43920	severe acute respiratory syndrome coronavirus 2	28	748
+43927	severity of illness index	35	927
+43929	sewage	56	1065
+43949	sex	22	808
+43956	sex difference	87	2403
+43959	sex distribution	30	1214
+43960	sex factor	20	650
+43961	sex factors	29	908
+43967	sex ratio	45	1585
+44261	sialidase	22	614
+44333	signal transduction	95	1905
+44358	silica	91	330
+44486	simulation	74	719
+44526	singapore	40	1237
+44558	single nucleotide polymorphism	93	2199
+44937	smoking	85	2388
+45048	social status	32	747
+45084	socioeconomic factors	52	1560
+45088	socioeconomics	71	1905
+45091	sodium	41	553
+45108	sodium chloride	39	490
+45208	soil	64	1008
+45284	soil pollution	45	761
+45318	soils	95	782
+45589	south and central america	21	649
+45590	south asia	31	817
+45597	south korea	54	1526
+45600	southeast asia	210	3243
+45601	southeast asian	37	794
+45603	southeast asian people	28	625
+45622	soybean	39	546
+45726	spatiotemporal analysis	62	705
+45752	species difference	44	736
+45765	species specificity	53	891
+46136	sri lanka	27	626
+46263	staphylococcus aureus	53	1149
+46382	statistical model	68	1611
+46397	statistics	34	545
+46398	statistics and numerical data	82	2589
+46525	steroid	27	655
+46602	stomach cancer	50	1730
+46616	stomach neoplasms	38	1025
+46622	stomach tumor	30	817
+46777	streptococcus pneumoniae	29	842
+46795	streptomycin	33	1011
+46838	"stress, physiological"	29	489
+46876	stroke	25	648
+46983	structure activity relation	35	596
+47216	suidae	39	599
+47278	sulfur compounds	65	510
+47537	surface property	37	477
+47565	surface water	46	812
+47591	surgery	41	781
+47628	surveys and questionnaires	112	2131
+47630	survival	39	685
+47631	survival analysis	22	653
+47634	survival rate	57	1468
+47675	sustainable development	74	557
+47746	swine	131	2517
+47748	swine disease	34	806
+47749	swine diseases	42	963
+47839	synthesis	43	477
+47916	systematic review	98	2259
+47935	systolic blood pressure	48	1443
+47999	taiwan	61	1396
+48020	tandem mass spectrometry	32	670
+48238	temperature	143	1299
+48478	tetanus	11	643
+48490	tetracycline	52	1577
+48586	thailand	121	2451
+48654	therapy	38	864
+48945	thorax radiography	35	791
+49192	time factor	54	1280
+49193	time factors	84	1864
+49213	time series analysis	40	700
+49619	toxicity	57	1227
+49721	traffic accident	18	616
+49812	transcription factor	29	557
+50014	transmission electron microscopy	60	594
+50123	treatment duration	43	1240
+50133	treatment outcome	137	3667
+50143	treatment response	21	594
+50180	trend study	61	1542
+50182	trends	38	1406
+50192	triacylglycerol	29	796
+50365	tropics	35	477
+50443	tuberculosis	59	2000
+50465	tumor cell line	50	1058
+50481	tumor necrosis factor	35	922
+50491	tumor necrosis factor-alpha	25	555
+50506	tumor volume	30	695
+50695	typhoid fever	13	706
+50889	uncertainty	40	680
+50899	unclassified drug	582	11238
+50987	united states	69	1406
+51086	upper respiratory tract infection	12	578
+51092	upregulation	62	1404
+51115	urban area	115	2409
+51153	urbanization	40	573
+51180	urinalysis	24	612
+51188	urinary tract infection	12	628
+51190	urine	28	785
+51286	uterine cervix cancer	18	712
+51331	vaccination	82	2108
+51710	very elderly	159	5221
+51733	veterinary	34	686
+51738	veterinary medicine	90	1886
+51829	viet nam	2076	32886
+51830	vietnam	1117	24225
+51833	vietnamese	194	4196
+51888	viral load	30	928
+51895	viral proteins	31	907
+51911	virology	216	5601
+51921	virulence	35	912
+51926	virus antibody	56	1538
+51940	virus detection	60	1499
+51943	virus dna	31	762
+51954	virus gene	56	1578
+51955	virus genome	79	1856
+51962	virus infection	33	734
+51966	virus isolation	91	2340
+51969	virus load	64	1914
+51982	virus protein	34	940
+51992	virus replication	52	1396
+51994	virus rna	83	2276
+51998	virus strain	83	2038
+52002	virus transmission	69	1728
+52006	virus virulence	22	624
+52220	vomiting	23	692
+52354	"waste disposal, fluid"	28	571
+52368	waste management	60	736
+52390	waste water	52	1191
+52391	waste water management	38	696
+52403	wastewater	67	1311
+52412	wastewater treatment	89	1054
+52421	water	109	1572
+52426	water analysis	24	637
+52452	water contamination	41	1011
+52497	water management	74	897
+52509	water pollutant	72	1641
+52511	"water pollutants, chemical"	89	2059
+52513	water pollution	68	1412
+52517	water purification	27	509
+52518	water quality	80	1226
+52541	water sampling	41	928
+52563	water supply	62	1004
+52837	western blotting	44	966
+52908	whole genome sequencing	62	1325
+53137	world health organization	63	1267
+53155	wounds and injuries	26	913
+53198	x ray diffraction	78	477
+53391	young adult	311	8860
+53478	zinc	52	975
