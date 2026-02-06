@@ -200,19 +200,24 @@ ggplot() +
 dat_fig |>
   filter(!is.na(quartile)) |>
   count(year, quartile) |>
+  # 1. Fill in missing year/quartile combinations with 0 to prevent gaps
+  complete(year = 2000:2023, quartile, fill = list(n = 0)) |> 
   group_by(year) |>
   mutate(
-    share = n / sum(n),
+    # 2. Calculate share, using pmax to prevent division by zero if a year is empty
+    share = n / max(sum(n), 1),
     quartile = factor(quartile, levels = c("Q4", "Q3", "Q2", "Q1"))
   ) |>
   ungroup() |>
   {
     \(d) {
+      # Calculate labels based on the newly completed data
       q1_2000 <- d |> filter(year == 2000, quartile == "Q1") |> pull(share)
       q1_2023 <- d |> filter(year == 2023, quartile == "Q1") |> pull(share)
       
       ggplot(d, aes(x = year, y = share, fill = quartile)) +
-        geom_area(alpha = 0.8) +
+        # 3. geom_area now has a continuous data grid to work with
+        geom_area(alpha = 0.8, color = "white", linewidth = 0.1) + 
         annotate("text", x = 2000, y = q1_2000/2, label = sprintf("Q1: %.0f%%", q1_2000*100),
                  hjust = -0.1, size = 3.5, color = "white", fontface = "bold") +
         annotate("text", x = 2023, y = 1 - q1_2023/2, label = sprintf("Q1: %.0f%%", q1_2023*100),
@@ -221,7 +226,7 @@ dat_fig |>
           values = c("Q1" = "#1a9850", "Q2" = "#91cf60", "Q3" = "#fee08b", "Q4" = "#fc8d59"),
           breaks = c("Q1", "Q2", "Q3", "Q4")
         ) +
-        scale_y_continuous(labels = percent, breaks = seq(0, 1, 0.2), expand = c(0, 0), limits = c(0, 1)) +
+        scale_y_continuous(labels = percent, breaks = seq(0, 1, 0.2), expand = c(0, 0)) +
         scale_x_continuous(expand = expansion(mult = c(0.01, 0.01))) +
         coord_cartesian(ylim = c(0, 1), xlim = c(2000, 2023)) +
         labs(x = NULL, y = "Share", fill = NULL)

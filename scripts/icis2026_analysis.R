@@ -88,6 +88,16 @@ ggplot(sdg_counts_year, aes(year, n, color = sdg_lab, group = sdg_lab)) +
   guides(color = guide_legend(ncol = 6))
 
 
+# Ensure sdg_colors is defined as shown previously
+sdg_colors <- c(
+  "SDG 1"  = "#E5243B", "SDG 2"  = "#DDA63A", "SDG 3"  = "#4C9F38",
+  "SDG 4"  = "#C5192D", "SDG 5"  = "#FF3A21", "SDG 6"  = "#26BDE2",
+  "SDG 7"  = "#FCC30B", "SDG 8"  = "#A21942", "SDG 9"  = "#FD6925",
+  "SDG 10" = "#DD1367", "SDG 11" = "#FD9D24", "SDG 12" = "#BF8B2E",
+  "SDG 13" = "#3F7E44", "SDG 14" = "#0A97D9", "SDG 15" = "#56C02B",
+  "SDG 16" = "#00689D", "SDG 17" = "#19486A"
+)
+
 top_n <- 8
 
 keep_sdg <- sdg_counts_year |>
@@ -100,12 +110,15 @@ ggplot(
   sdg_counts_year |> filter(sdg_lab %in% keep_sdg),
   aes(year, n, color = sdg_lab, group = sdg_lab)
 ) +
-  geom_line(linewidth = 1) +
+  geom_line(linewidth = 1.2) + # Slightly thicker lines for better color visibility
   theme_minimal() +
-  labs(color = "SDG") +
-  scale_color_brewer(palette = "Dark2") +
-  theme(legend.position = "bottom") +
-  guides(color = guide_legend(ncol = top_n))
+  labs(title = "Top 8 SDGs Over Time", x = "Year", y = "Count", color = "SDG") +
+  scale_color_manual(values = sdg_colors) + # Use scale_color_manual here
+  theme(
+    legend.position = "bottom",
+    panel.grid.minor = element_blank()
+  ) +
+  guides(color = guide_legend(ncol = 4)) # 4 columns looks cleaner for 8 items
 
 # Fig 2
 library(treemapify)
@@ -115,11 +128,26 @@ sdg_counts <- sdg_list |>
   count(sdg_num, sdg_tag, name = "n") |>
   mutate(sdg_lab = factor(paste0("SDG ", sdg_num), levels = paste0("SDG ", 1:17)))
 
+# 1. Define the official SDG hex color palette
+sdg_colors <- c(
+  "SDG 1"  = "#E5243B", "SDG 2"  = "#DDA63A", "SDG 3"  = "#4C9F38",
+  "SDG 4"  = "#C5192D", "SDG 5"  = "#FF3A21", "SDG 6"  = "#26BDE2",
+  "SDG 7"  = "#FCC30B", "SDG 8"  = "#A21942", "SDG 9"  = "#FD6925",
+  "SDG 10" = "#DD1367", "SDG 11" = "#FD9D24", "SDG 12" = "#BF8B2E",
+  "SDG 13" = "#3F7E44", "SDG 14" = "#0A97D9", "SDG 15" = "#56C02B",
+  "SDG 16" = "#00689D", "SDG 17" = "#19486A"
+)
+
+# 2. Update the Treemap
 ggplot(sdg_counts, aes(area = n, fill = sdg_lab, label = paste0(sdg_lab, "\n", n))) +
-  geom_treemap(alpha = 0.7, color = "black") +
-  geom_treemap_text(reflow = TRUE, place = "centre") +
+  geom_treemap(alpha = 0.9, color = "white", size = 2) + # White borders look cleaner with SDG colors
+  geom_treemap_text(
+    reflow = TRUE, 
+    place = "centre", 
+    color = "black"
+  ) +
+  scale_fill_manual(values = sdg_colors) + # Apply the manual palette
   theme_void() +
-  scale_fill_viridis_d(option = "D", end = 0.95) +
   guides(fill = "none")
 
 # New fig
@@ -197,3 +225,4 @@ d |>
   geom_segment(aes(x = first_year, xend = peak_year, yend = sdg), linewidth = 1) +
   theme_minimal() +
   labs(x = "Year", y = "SDG")
+
